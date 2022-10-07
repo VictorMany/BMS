@@ -5,6 +5,7 @@
     :no-caps="btnCaps"
     :text-color="btnColor"
     :label="btnTitle"
+    :size="btnSize"
     @click="btnAction">
     <div v-if="iconName" class="row items-center no-wrap">
       <q-icon right :name="iconName" />
@@ -60,6 +61,12 @@ export default defineComponent({
       required: false
     },
 
+    btnSize: {
+      type: String,
+      default: 'md',
+      required: false
+    },
+
     iconName: {
       type: String,
       required: false,
@@ -69,10 +76,10 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 .btn-style {
-  background-color: v-bind(btnBackground);
-  color: v-bind(btnColor);
+  background-color: v-bind(btnBackground) !important;
+  color: v-bind(btnColor) !important;
   font-style: normal;
   font-weight: 400;
   font-size: 15px;

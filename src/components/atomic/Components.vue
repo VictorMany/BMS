@@ -1,12 +1,16 @@
 <template>
-<div>
-  <btn-action />
-</div>
+  <div>
+    <InputSearch v-model:model="vmodelSearch" />
+  </div>
+  <div>
+    <btn-action btnTitle="Agregar equipo"/>
+  </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import BtnAction from './BtnAction.vue'
+import InputSearch from './InputSearch.vue'
 
 export default defineComponent({
   name: 'EssentialLink',
@@ -28,6 +32,16 @@ export default defineComponent({
       default: ''
     }
   },
-  components: { BtnAction }
+  components: { BtnAction, InputSearch },
+  data () {
+    return {
+      vmodelSearch: ''
+    }
+  },
+  watch: {
+    vmodelSearch (value) {
+      console.log('Desde el padre', value)
+    }
+  }
 })
 </script>
