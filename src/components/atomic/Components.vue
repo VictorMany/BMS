@@ -5,12 +5,16 @@
   <div>
     <btn-action btnTitle="Agregar equipo"/>
   </div>
+  <div v-for="i in 4" :key="i" class="q-pa-sm">
+    <item-card />
+  </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import BtnAction from './BtnAction.vue'
 import InputSearch from './InputSearch.vue'
+import ItemCard from './ItemCard.vue'
 
 export default defineComponent({
   name: 'EssentialLink',
@@ -32,7 +36,7 @@ export default defineComponent({
       default: ''
     }
   },
-  components: { BtnAction, InputSearch },
+  components: { BtnAction, InputSearch, ItemCard },
   data () {
     return {
       vmodelSearch: ''
