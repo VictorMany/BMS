@@ -85,4 +85,7 @@ export default defineComponent({
   font-size: 15px;
   line-height: 18px;
 }
+.btn-style:hover {
+  transform: scale(1.05);
+}
 </style>
