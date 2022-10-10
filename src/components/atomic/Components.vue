@@ -8,6 +8,12 @@
   <div v-for="i in 4" :key="i" class="q-pa-sm">
     <item-card />
   </div>
+  <item-card
+    :cardImg="'https://cdn.quasar.dev/img/parallax2.jpg'"
+    :cardTitle="'Juan Luis Montreal'"
+    :cardLabels="[
+        { label: null, info: 'Ingeniero biomédico' }
+    ]"/>
 </template>
 
 <script>
