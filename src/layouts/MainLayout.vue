@@ -1,111 +1,72 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+  <q-layout view="lHh lpR lFf">
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left">
+      <!-- drawer content -->
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <div class="sideMenu">
+          <q-card-section>
+            <h1 class="title">BMS</h1>
+            <LayoutBtns v-for="link in layoutBtns" :key="link.title" v-bind="link" />
+          </q-card-section>
+        </div>
       </q-list>
     </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+
   </q-layout>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import LayoutBtns from 'src/components/atomic/LayoutBtns.vue'
 
-const linksList = [
+const naviBtns = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Equipos',
+    link: ''
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: 'Usuarios',
+    link: ''
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: 'Mantenimientos',
+    link: ''
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    title: 'Calendarios',
+    link: ''
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
+    title: 'Reportes',
+    link: ''
   },
   {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
+    title: 'Estadisticas',
+    link: ''
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    title: 'Configuración',
+    link: ''
   }
 ]
 
 export default defineComponent({
-  name: 'MainLayout',
+  name: 'newLayout',
 
   components: {
-    EssentialLink
+    LayoutBtns
   },
 
   setup () {
     const leftDrawerOpen = ref(false)
 
     return {
-      essentialLinks: linksList,
+      layoutBtns: naviBtns,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
@@ -114,3 +75,40 @@ export default defineComponent({
   }
 })
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
+
+.p1 {
+  margin-left: 5rem;
+}
+
+.sideMenu {
+  width: 110%;
+  height: 95%;
+  position: absolute;
+  left: 10%;
+  top: 2%;
+  border-radius: 10px;
+  background: #FEFEFE;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.title {
+  position: inherit;
+  left: 1%;
+  top: 1.15%;
+  bottom: 88.3%;
+  margin-left: 37%;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 200;
+  font-size: 30px;
+  line-height: 36px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #1A86D4;
+}
+</style>
