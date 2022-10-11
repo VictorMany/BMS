@@ -78,6 +78,9 @@ export default defineComponent({
 
 <style scoped>
 .btn-style {
+  position: relative;
+  top: 30%;
+  width: max-content;
   background-color: v-bind(btnBackground) !important;
   color: v-bind(btnColor) !important;
   font-style: normal;
