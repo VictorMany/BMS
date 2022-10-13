@@ -7,20 +7,25 @@
         </div>
 
         <div class="col-4">
-          <btn-action />
+          <btn-action class="actionBtn" />
         </div>
         <div class="col-4">
-          <input-search />
+          <input-search class="inputSearch" />
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col">.col</div>
-      <div class="col">.col</div>
-      <div class="col">.col</div>
+      <div class="col">
+        <item-card/>
+      </div>
+      <div class="col">
+        <item-card/>
+      </div>
+      <div class="col">
+        <item-card/>
+      </div>
     </div>
-
   </q-page>
 </template>
 
@@ -28,13 +33,15 @@
 import { defineComponent } from 'vue'
 import BtnAction from 'src/components/atomic/BtnAction.vue'
 import InputSearch from 'src/components/atomic/InputSearch.vue'
+import ItemCard from 'src/components/atomic/ItemCard.vue'
 
 export default defineComponent({
   name: 'IndexPage',
 
   components: {
     InputSearch,
-    BtnAction
+    BtnAction,
+    ItemCard
   }
 })
 </script>
@@ -47,7 +54,7 @@ export default defineComponent({
   top: 2.07%;
   bottom: 2.8%;
   width: 92%;
-  background: #F8F8F8;
+  background: #f8f8f8;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 }
@@ -59,7 +66,7 @@ export default defineComponent({
   top: 5.94%;
   bottom: 89.78%;
 
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 200;
   font-size: 35px;
@@ -69,6 +76,19 @@ export default defineComponent({
   display: flex;
   align-items: center;
 
-  color: #017ED9;
+  color: #017ed9;
+}
+
+.actionBtn {
+  position: relative;
+  top: 30%;
+}
+
+.inputSearch {
+  position: relative;
+  left: -10%;
+  right: 0%;
+  top: 30%;
+  bottom: 0%;
 }
 </style>
