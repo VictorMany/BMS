@@ -19,7 +19,7 @@
 <script>
 import { defineComponent } from 'vue'
 import BtnAction from './BtnAction.vue'
-import InputSearch from './InputSearch.vue'
+import InputSearch from '../compose/InputSearch.vue'
 import ItemCard from './ItemCard.vue'
 
 export default defineComponent({
