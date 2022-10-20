@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="cardPage1">
       <div class="row items-center">
         <div class="col-4 title2 q-pa-none">

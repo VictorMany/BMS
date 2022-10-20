@@ -24,7 +24,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'BtnAction',
+  name: 'ItemCard',
   props: {
     cardTitle: {
       type: String,
