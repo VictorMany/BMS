@@ -23,7 +23,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import BtnAction from './BtnAction.vue'
+import BtnAction from '../atomic/BtnAction.vue'
 
 export default defineComponent({
   name: 'InputSearch',
@@ -81,10 +81,5 @@ export default defineComponent({
   color: v-bind(inputColor);
   background: v-bind(inputBackground);
   border-radius: 50px;
-  position: relative;
-  left: -10%;
-  right: 0%;
-  top: 30%;
-  bottom: 0%;
 }
 </style>
