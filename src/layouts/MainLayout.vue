@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh lpR lFf">
-    <q-drawer style="overflow: hidden; background-color: rgba(236, 236, 236, 1);" show-if-above v-model="leftDrawerOpen">
+    <q-drawer style="overflow: hidden; background-color: rgba(236, 236, 236, 1);" show-if-above v-model="leftDrawerOpen" class="cursor-pointer non-selectable">
       <!-- drawer content -->
       <q-list style="height: 100%" class="flex flex-center">
         <div class="sideMenu">
