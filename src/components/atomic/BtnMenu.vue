@@ -64,9 +64,8 @@ export default defineComponent({
 .q-item-label {
   font-family: 'Inter';
   font-style: normal;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 17px;
+  font-weight: 500;
+  font-size: 15px;
   display: flex;
   align-items: center;
 }
