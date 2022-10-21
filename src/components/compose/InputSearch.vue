@@ -45,7 +45,7 @@ export default defineComponent({
     },
     model: {
       type: String,
-      required: true,
+      required: false,
       default: ''
     }
   },
