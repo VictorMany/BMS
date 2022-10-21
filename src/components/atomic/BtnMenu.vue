@@ -65,8 +65,6 @@ export default defineComponent({
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
+  font-size: 14px;
 }
 </style>

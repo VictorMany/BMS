@@ -89,9 +89,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
-
+<style scoped>
 .sideMenu {
   width: 96%;
   margin-left: 4%;

@@ -1,15 +1,13 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="row items-center">
-    <div class="col-4 title2 q-pa-none">
+    <div class="col title2 q-pa-none">
       {{ titlePage }}
     </div>
-    <div class="col">
         <div class="row flex justify-end">
           <btn-action v-if="btnAction.show" v-bind="btnAction" class="q-mr-md"/>
           <input-search v-if="btnAction.show" v-bind="inputSearch"/>
       </div>
-    </div>
   </div>
 </template>
 
@@ -68,7 +66,7 @@ export default defineComponent({
 .title2 {
   font-style: normal;
   font-weight: 200;
-  font-size: 35px;
+  font-size: 30px;
   color: #017ED9;
 }
 </style>
