@@ -45,6 +45,8 @@ export default defineComponent({
   },
   methods: {
     navigateTo () {
+      console.log(this.link)
+      this.$router.push({ path: this.link })
       setTimeout(function () { this.$emit('update:selected', true) }.bind(this), 100)
     }
   }

@@ -6,7 +6,7 @@
         <div class="sideMenu">
           <h1 class="title flex flex-center q-my-none"> BMS </h1>
           <q-card-section class="q-pt-none" style="overflow: scroll;">
-            <btn-menu v-for="btn in btnLinks" :key="btn.title" v-bind="btn" v-model:selected="btn.selected" @click="onChangeFunction"/>
+            <btn-menu v-for="(btn, i) in btnLinks" :key="i" v-bind="btn" v-model:selected="btn.selected" @click="onChangeFunction"/>
           </q-card-section>
         </div>
       </q-list>
@@ -43,37 +43,37 @@ export default defineComponent({
       btnLinks: [
         {
           title: 'Equipos',
-          link: '',
+          link: '/',
           selected: true
         },
         {
           title: 'Usuarios',
-          link: '',
+          link: 'users',
           selected: false
         },
         {
           title: 'Mantenimientos',
-          link: '',
+          link: 'maintenances',
           selected: false
         },
         {
-          title: 'Calendarios',
-          link: '',
+          title: 'Calendario',
+          link: 'calendar',
           selected: false
         },
         {
           title: 'Reportes',
-          link: '',
+          link: 'reports',
           selected: false
         },
         {
           title: 'Estadisticas',
-          link: '',
+          link: 'statistical',
           selected: false
         },
         {
           title: 'Configuración',
-          link: '',
+          link: 'settings',
           selected: false
         }
       ]

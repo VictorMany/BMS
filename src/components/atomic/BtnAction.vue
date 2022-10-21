@@ -22,7 +22,7 @@ export default defineComponent({
     btnTitle: {
       type: String,
       default: 'Agregar',
-      required: true
+      required: false
     },
 
     btnColor: {
