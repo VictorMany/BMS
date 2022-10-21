@@ -4,11 +4,11 @@
     <div class="col-4 title2 q-pa-none">
       {{ titlePage }}
     </div>
-    <div class="col-4">
-      <btn-action />
-    </div>
-    <div class="col-4">
-      <input-search />
+    <div class="col">
+        <div class="row flex justify-end">
+          <btn-action v-if="btnAction.show" v-bind="btnAction" class="q-mr-md"/>
+          <input-search v-if="btnAction.show" v-bind="inputSearch"/>
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +25,22 @@ export default defineComponent({
       type: String,
       required: false,
       default: ''
+    },
+    inputSearch: {
+      type: Object,
+      required: false,
+      default: () => ({
+        show: false,
+        inputLabel: 'Buscar por nombre'
+      })
+    },
+    btnAction: {
+      type: Object,
+      required: false,
+      default: () => ({
+        show: false,
+        btnTitle: 'Agregar equipo'
+      })
     }
   },
   data () {
