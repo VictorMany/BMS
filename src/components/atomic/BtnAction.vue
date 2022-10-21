@@ -83,8 +83,7 @@ export default defineComponent({
   color: v-bind(btnColor) !important;
   font-style: normal;
   font-weight: 400;
-  font-size: 15px;
-  line-height: 18px;
+  font-size: 14px;
 }
 .btn-style:hover {
   transform: scale(1.05);
