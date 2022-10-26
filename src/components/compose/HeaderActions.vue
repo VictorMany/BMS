@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div class="row items-center">
-    <div class="col title2 q-pa-none">
+  <div class="row items-center q-pb-md">
+    <div class="col title-page q-pa-none">
       {{ titlePage }}
     </div>
         <div class="row flex justify-end">
@@ -63,7 +63,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.title2 {
+.title-page {
   font-style: normal;
   font-weight: 200;
   font-size: 30px;

@@ -1,5 +1,5 @@
 <template>
-    <q-card class="my-card cursor-pointer non-selectable" @click="cardAction">
+    <q-card class="my-card cursor-pointer non-selectable q-ma-xs" @click="cardAction">
       <q-card-section class="q-pa-xs" horizontal>
         <q-img
           class="col-5 img-style"
@@ -29,18 +29,18 @@ export default defineComponent({
     cardTitle: {
       type: String,
       default: 'Monitor de signos vitales',
-      required: true
+      required: false
     },
 
     cardImg: {
       type: String,
-      required: true,
+      required: false,
       default: 'https://cdn.quasar.dev/img/parallax1.jpg'
     },
 
     cardLabels: {
       type: Array,
-      required: true,
+      required: false,
       default: () => [
         { label: 'Marca', info: 'Hisense' },
         { label: 'Serie', info: 'A7GTHYFRG' }
