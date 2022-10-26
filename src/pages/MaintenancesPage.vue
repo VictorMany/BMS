@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="cardPage1">
+    <div class="card-page">
       <header-actions :titlePage="'Mantenimientos'" :btnAction="btnAction" :inputSearch="inputSearch" />
     </div>
   </q-page>

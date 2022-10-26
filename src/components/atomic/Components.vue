@@ -1,10 +1,4 @@
 <template>
-  <div>
-    <InputSearch v-model:model="vmodelSearch" />
-  </div>
-  <div>
-    <btn-action btnTitle="Agregar equipo"/>
-  </div>
   <div v-for="i in 4" :key="i" class="q-pa-sm">
     <item-card />
   </div>
@@ -18,8 +12,6 @@
 
 <script>
 import { defineComponent } from 'vue'
-import BtnAction from './BtnAction.vue'
-import InputSearch from '../compose/InputSearch.vue'
 import ItemCard from './ItemCard.vue'
 
 export default defineComponent({
@@ -42,7 +34,7 @@ export default defineComponent({
       default: ''
     }
   },
-  components: { BtnAction, InputSearch, ItemCard },
+  components: { ItemCard },
   data () {
     return {
       vmodelSearch: ''
