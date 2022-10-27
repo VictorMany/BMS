@@ -1,24 +1,19 @@
 <template>
-  <q-btn class="btn-style q-pr-sm"
-    :unelevated="btnUnelevated"
-    :outline="btnOutlined"
-    :rounded="btnRounded"
-    :no-caps="btnCaps"
-    :text-color="btnColor"
-    :label="btnTitle"
-    :size="btnSize"
-    @click="btnAction">
-    <div v-if="iconName" class="row items-center no-wrap">
-      <q-icon right :name="iconName" />
-    </div>
-  </q-btn>
+  <q-btn-group class="btn-change-content" :unelevated="btnUnelevated" :outlined="btnOutlined">
+    <q-btn style="width: 62px; height: auto" class="btn-left" @click="modelChange(1)">
+      <q-img src="~assets/svg/card_svg.svg" />
+    </q-btn>
+    <q-btn style="width: 62px; height: auto" class="btn-right" @click="modelChange(2)">
+      <q-img src="~assets/svg/table_svg.svg" />
+    </q-btn>
+  </q-btn-group>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'BtnAction',
+  name: 'BtnSwitch',
   props: {
     btnTitle: {
       type: String,
@@ -52,7 +47,7 @@ export default defineComponent({
 
     btnOutlined: {
       type: Boolean,
-      default: false,
+      default: true,
       required: false
     },
 
@@ -91,18 +86,41 @@ export default defineComponent({
       required: false,
       default: 500
     }
+  },
+  data () {
+    return {
+      color1: this.btnBackground,
+      color2: 'white',
+      color: this.btnBackground
+    }
+  },
+  methods: {
+    modelChange (model) {
+      if (model === 1) {
+        this.color1 = this.color
+        this.color2 = 'white'
+      } else {
+        this.color2 = this.color
+        this.color1 = 'white'
+      }
+    }
   }
 })
 </script>
 
 <style scoped>
-.btn-style {
-  width: v-bind(btnWidth) !important;
-  background-color: v-bind(btnBackground) !important;
+.btn-change-content {
+  background-color: v-bind(color) !important;
   color: v-bind(btnColor) !important;
-  font-weight: v-bind(btnWeight) !important;
+  /* color: #017ED9; */
+  border-radius: 10px;
 }
-.btn-style:hover {
-  transform: scale(1.05);
+
+.btn-left {
+  background-color: v-bind(color1) !important;
+}
+
+.btn-right {
+  background-color: v-bind(color2) !important;
 }
 </style>

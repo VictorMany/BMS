@@ -5,7 +5,7 @@
       <q-list style="height: 100%" class="flex flex-center">
         <div class="sideMenu">
           <h1 class="title flex flex-center q-my-none"> BMS </h1>
-          <q-card-section class="q-pt-none" style="overflow: scroll;">
+          <q-card-section class="q-pt-none">
             <btn-menu v-for="(btn, i) in btnLinks" :key="i" v-bind="btn" v-model:selected="btn.selected" @click="onChangeFunction"/>
           </q-card-section>
         </div>
