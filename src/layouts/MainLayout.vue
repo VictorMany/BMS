@@ -1,18 +1,16 @@
 <template>
   <q-layout view="lHh lpR lFf">
-
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left">
+    <q-drawer style="overflow: hidden; background-color: rgba(236, 236, 236, 1);" show-if-above v-model="leftDrawerOpen" class="cursor-pointer non-selectable">
       <!-- drawer content -->
-      <q-list>
+      <q-list style="height: 100%" class="flex flex-center">
         <div class="sideMenu">
-          <q-card-section>
-            <h1 class="title">BMS</h1>
-            <LayoutBtns v-for="link in layoutBtns" :key="link.title" v-bind="link" />
+          <h1 class="title flex flex-center q-my-none"> BMS </h1>
+          <q-card-section class="q-pt-none" style="overflow: scroll;">
+            <btn-menu v-for="(btn, i) in btnLinks" :key="i" v-bind="btn" v-model:selected="btn.selected" @click="onChangeFunction"/>
           </q-card-section>
         </div>
       </q-list>
     </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -22,93 +20,101 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import LayoutBtns from 'src/components/atomic/LayoutBtns.vue'
-
-const naviBtns = [
-  {
-    title: 'Equipos',
-    link: ''
-  },
-  {
-    title: 'Usuarios',
-    link: ''
-  },
-  {
-    title: 'Mantenimientos',
-    link: ''
-  },
-  {
-    title: 'Calendarios',
-    link: ''
-  },
-  {
-    title: 'Reportes',
-    link: ''
-  },
-  {
-    title: 'Estadisticas',
-    link: ''
-  },
-  {
-    title: 'Configuración',
-    link: ''
-  }
-]
+import BtnMenu from 'src/components/atomic/BtnMenu.vue'
 
 export default defineComponent({
   name: 'newLayout',
 
   components: {
-    LayoutBtns
+    BtnMenu
   },
 
   setup () {
     const leftDrawerOpen = ref(false)
-
     return {
-      layoutBtns: naviBtns,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
     }
+  },
+  data () {
+    return {
+      btnLinks: [
+        {
+          title: 'Equipos',
+          link: '/',
+          selected: true
+        },
+        {
+          title: 'Usuarios',
+          link: 'users',
+          selected: false
+        },
+        {
+          title: 'Mantenimientos',
+          link: 'maintenances',
+          selected: false
+        },
+        {
+          title: 'Calendario',
+          link: 'calendar',
+          selected: false
+        },
+        {
+          title: 'Reportes',
+          link: 'reports',
+          selected: false
+        },
+        {
+          title: 'Estadisticas',
+          link: 'statistical',
+          selected: false
+        },
+        {
+          title: 'Configuración',
+          link: 'settings',
+          selected: false
+        }
+      ]
+    }
+  },
+  methods: {
+    onChangeFunction () {
+      this.btnLinks.forEach(e => {
+        e.selected = false
+      })
+    }
   }
 })
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
-
-.p1 {
-  margin-left: 5rem;
-}
-
+<style scoped>
 .sideMenu {
-  width: 110%;
+  width: 96%;
+  margin-left: 4%;
   height: 95%;
-  position: absolute;
-  left: 10%;
-  top: 2%;
   border-radius: 10px;
   background: #FEFEFE;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 
 .title {
   position: inherit;
-  left: 1%;
-  top: 1.15%;
-  bottom: 88.3%;
-  margin-left: 37%;
-  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 200;
   font-size: 30px;
-  line-height: 36px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-
   color: #1A86D4;
+}
+
+/**scrollbar in different browsers */
+::-webkit-scrollbar {
+  margin-bottom: 0rem; /* remove default margin */
+  scrollbar-width: none; /* Also needed to disable scrollbar Firefox */
+  -ms-overflow-style: none; /* Disable scrollbar IE 10+ */
+  overflow-y: scroll;
+  width: 0px;
+  background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
 }
 </style>
