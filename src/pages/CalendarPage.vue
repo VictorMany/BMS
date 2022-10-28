@@ -1,16 +1,24 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <header-actions :titlePage="'Calendario'" :btnAction="btnAction" :inputSearch="inputSearch" />
+      <header-actions
+        :titlePage="'Calendario'"
+        :btnAction="btnAction"
+        :inputSearch="inputSearch"
+      />
       <div class="main-container-page">
         <!-- Main container -->
-        <div class="row q-pb-md" style="height: auto;">
+        <div class="row q-pb-md" style="height: auto">
           <div class="col-auto">
             <q-date v-model="date" landscape />
           </div>
           <div class="col q-pl-md">
             <div class="container-colorama q-pa-sm q-mx-xs">
-              <status-badge v-for="(badge, i) in badges" :key="i" v-bind="badge" />
+              <status-badge
+                v-for="(badge, i) in badges"
+                :key="i"
+                v-bind="badge"
+              />
             </div>
             <div class="q-pa-md">
               <btn-action v-bind="btnAddPlan" />
@@ -21,12 +29,15 @@
           <label class="text-subtitle"> Resultados </label>
           <btn-switch />
         </div>
-        <div style="overflow: scroll; width: 100%;" class="row inline justify-start items-start">
-          <item-card v-for="i in 6" :key="i" />
+        <br />
+        <div
+          style="overflow: scroll; width: 100%"
+          class="row inline justify-start items-start"
+        >
+          <item-card v-for="i in 36" :key="i" />
         </div>
         <!-- Main container -->
       </div>
-
     </div>
   </q-page>
 </template>
@@ -75,7 +86,6 @@ export default defineComponent({
       }
     }
   }
-
 })
 </script>
 
@@ -89,7 +99,6 @@ export default defineComponent({
   font-style: normal;
   font-weight: 200;
   font-size: 25px;
-  color: #017ED9;
+  color: #017ed9;
 }
-
 </style>

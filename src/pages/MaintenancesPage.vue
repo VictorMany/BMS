@@ -5,11 +5,10 @@
       <div class="row justify-end">
         <btn-switch />
       </div>
-      <div class="main-container-page bg-white" style="height: 80%;">
+      <div class="main-container-page" style="height: 90%;">
         <!-- Main container -->
         <q-table
-          :rows-per-page-options="[6]"
-          class="table-style font-style"
+          class="table-style font-style my-sticky-header-table"
           :rows="rows"
           :columns="columns"
           row-key="id"
@@ -198,6 +197,54 @@ const rows = [
     date: '12-Jun-2022',
     total_cost: '$ 2000',
     actions: '+  -'
+  },
+  {
+    id: 17,
+    name: 'Correctivo',
+    encharged_name: 'Luis Andrés Pérez',
+    date: '12-Jun-2022',
+    total_cost: '$ 2000',
+    actions: '+  -'
+  },
+  {
+    id: 18,
+    name: 'Preventivo',
+    encharged_name: 'Ángel Omar Torres Padilla',
+    date: '12-Jun-2022',
+    total_cost: '$ 2000',
+    actions: '+  -'
+  },
+  {
+    id: 19,
+    name: 'Correctivo',
+    encharged_name: 'Luisa Juarez',
+    date: '12-Jun-2022',
+    total_cost: '$ 2000',
+    actions: '+  -'
+  },
+  {
+    id: 20,
+    name: 'Correctivo',
+    encharged_name: 'Luis Andrés Pérez',
+    date: '12-Jun-2022',
+    total_cost: '$ 2000',
+    actions: '+  -'
+  },
+  {
+    id: 21,
+    name: 'Preventivo',
+    encharged_name: 'Ángel Omar Torres Padilla',
+    date: '12-Jun-2022',
+    total_cost: '$ 2000',
+    actions: '+  -'
+  },
+  {
+    id: 22,
+    name: 'Correctivo',
+    encharged_name: 'Luisa Juarez',
+    date: '12-Jun-2022',
+    total_cost: '$ 258000',
+    actions: '+  -'
   }
 ]
 
@@ -223,7 +270,7 @@ export default defineComponent({
     const pagination = ref({
       descending: false,
       page: 1,
-      rowsPerPage: 6
+      rowsPerPage: 10
       // rowsNumber: xx if getting data from a server
     })
     return {
@@ -263,4 +310,23 @@ export default defineComponent({
 .icon-style {
   color: #017ED9;
 }
+
+.my-sticky-header-table {
+  /* height or max-height is important */
+  height: 90%;
+  /* this is when the loading indicator appears */ }
+  .my-sticky-header-table .q-table__top,
+  .my-sticky-header-table .q-table__bottom,
+  .my-sticky-header-table thead tr:first-child th {
+    /* bg color is important for th; just specify one */
+    background-color: #C6DFF1; }
+  .my-sticky-header-table thead tr th {
+    position: sticky;
+    z-index: 1; }
+  .my-sticky-header-table thead tr:first-child th {
+    top: 0; }
+  .my-sticky-header-table.q-table--loading thead tr:last-child th {
+    /* height of all previous header rows */
+    top: 48px; }
+
 </style>
