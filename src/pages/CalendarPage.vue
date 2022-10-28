@@ -21,7 +21,6 @@
           <label class="text-subtitle"> Resultados </label>
           <btn-switch />
         </div>
-        <br>
         <div style="overflow: scroll; width: 100%;" class="row inline justify-start items-start">
           <item-card v-for="i in 6" :key="i" />
         </div>
