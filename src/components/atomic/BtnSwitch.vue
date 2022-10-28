@@ -1,9 +1,9 @@
 <template>
-  <q-btn-group class="btn-change-content" :unelevated="btnUnelevated" :outlined="btnOutlined">
-    <q-btn style="width: 62px; height: auto" class="btn-left" @click="modelChange(1)">
+  <q-btn-group class="btn-change-content q-mb-md" :unelevated="btnUnelevated" :outlined="btnOutlined">
+    <q-btn size="sm" style="width: 62px; height: auto" class="btn-left" @click="modelChange(1)">
       <q-img src="~assets/svg/card_svg.svg" />
     </q-btn>
-    <q-btn style="width: 62px; height: auto" class="btn-right" @click="modelChange(2)">
+    <q-btn size="sm" style="width: 62px; height: auto" class="btn-right" @click="modelChange(2)">
       <q-img src="~assets/svg/table_svg.svg" />
     </q-btn>
   </q-btn-group>
