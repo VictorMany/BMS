@@ -1,5 +1,5 @@
 <template>
-  <q-btn-group class="btn-change-content q-mb-md" :unelevated="btnUnelevated" :outlined="btnOutlined">
+  <q-btn-group class="btn-change-content" :unelevated="btnUnelevated" :outlined="btnOutlined">
     <q-btn size="sm" style="width: 62px; height: auto" class="btn-left" @click="modelChange(1)">
       <q-img src="~assets/svg/card_svg.svg" />
     </q-btn>
@@ -122,5 +122,11 @@ export default defineComponent({
 
 .btn-right {
   background-color: v-bind(color2) !important;
+}
+.btn-right:hover {
+  transform: scale(1.05);
+}
+.btn-left:hover {
+  transform: scale(1.05);
 }
 </style>

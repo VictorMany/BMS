@@ -6,38 +6,39 @@
         :btnAction="btnAction"
         :inputSearch="inputSearch"
       />
+      <!-- Main container -->
       <div class="main-container-page">
-        <!-- Main container -->
-        <div class="row q-pb-md" style="height: auto">
+        <div class="row q-pb-md" style="height: 99%;">
           <div class="col-auto">
             <q-date v-model="date" landscape />
-          </div>
-          <div class="col q-pl-md">
-            <div class="container-colorama q-pa-sm q-mx-xs">
-              <status-badge
-                v-for="(badge, i) in badges"
-                :key="i"
-                v-bind="badge"
-              />
+            <div class="col q-mt-md">
+              <div class="container-colorama q-pa-sm">
+                <status-badge
+                  v-for="(badge, i) in badges"
+                  :key="i"
+                  v-bind="badge"
+                />
+              </div>
+              <div class="q-pa-md">
+                <btn-action v-bind="btnAddPlan" />
+              </div>
             </div>
-            <div class="q-pa-md">
-              <btn-action v-bind="btnAddPlan" />
+          </div>
+          <div class="col q-pl-md" style="height: 99%;">
+            <div class="row flex items-center justify-between q-mb-sm">
+              <label class="text-subtitle"> Resultados </label>
+              <btn-switch />
+            </div>
+            <div
+              style="overflow: scroll; height: 96%;"
+              class="row inline justify-start items-start"
+            >
+              <item-card v-for="i in 36" :key="i" />
             </div>
           </div>
         </div>
-        <div class="row flex items-center justify-between">
-          <label class="text-subtitle"> Resultados </label>
-          <btn-switch />
-        </div>
-        <br />
-        <div
-          style="overflow: scroll; width: 100%"
-          class="row inline justify-start items-start"
-        >
-          <item-card v-for="i in 36" :key="i" />
-        </div>
-        <!-- Main container -->
       </div>
+      <!-- Main container -->
     </div>
   </q-page>
 </template>
