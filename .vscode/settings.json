@@ -13,6 +13,6 @@
     "vue"
   ],
   "[vue]": {
-    "editor.defaultFormatter": "Vue.volar"
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   }
 }

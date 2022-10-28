@@ -1,19 +1,28 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <header-actions :titlePage="'Equipos'" :btnAction="btnAction" :inputSearch="inputSearch" />
-    </div>
-    <div class="q-pa-md" style="max-width: 95%">
-    <div style="width: 100%" class="row q-col-gutter-x-xl q-col-gutter-y-lg">
-      <div
-        class="col-lg-3 col-md-4 col-sm-6 col-xs-12"
-        v-for="(equipo, index) in Equipos"
-        :key="index"
-      >
-      <item-card/>
+      <header-actions
+        :titlePage="'Equipos'"
+        :btnAction="btnAction"
+        :inputSearch="inputSearch"
+      />
+      <div class="main-container-page">
+        <div class="q-pa-md" style="max-width: 95%">
+          <div
+            style="width: 100%"
+            class="row q-col-gutter-x-xl q-col-gutter-y-lg"
+          >
+            <div
+              class="col-lg-3 col-md-4 col-sm-6 col-xs-12"
+              v-for="(equipo, index) in Equipos"
+              :key="index"
+            >
+              <item-card />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
   </q-page>
 </template>
 
@@ -30,7 +39,7 @@ export default defineComponent({
   },
   data () {
     return {
-      Equipos: 20,
+      Equipos: 40,
       btnAction: {
         show: true,
         btnTitle: 'Añadir equipo'
@@ -42,5 +51,4 @@ export default defineComponent({
     }
   }
 })
-
 </script>
