@@ -3,7 +3,7 @@
     <div class="card-page">
       <header-actions :titlePage="'Mantenimientos'" :btnAction="btnAction" :inputSearch="inputSearch" />
       <div class="row justify-end">
-        <btn-switch />
+        <btn-switch v-model:switch-content="switchContent" />
       </div>
       <!-- Main container -->
       <div class="main-container-page" style="height: 88%; overflow-y: hidden;">
@@ -32,19 +32,17 @@ export default defineComponent({
         show: true,
         btnTitle: 'Añadir mantenimiento'
       },
-
       inputSearch: {
         show: true,
         inputLabel: 'Buscar por tipo'
       },
-
       columns: [
         {
-          name: 'type_mainteinance',
+          name: 'type_maintenance',
           required: true,
           label: 'Tipo de mantenimiento',
           align: 'left',
-          field: row => row.name,
+          field: row => row.type_maintenance,
           format: val => `${val}`,
           sortable: true
         },
@@ -53,19 +51,18 @@ export default defineComponent({
         { name: 'total_cost', label: 'Gasto total', field: 'total_cost', align: 'center', sortable: true },
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
       ],
-
       rows: [
         {
           id: 1,
-          name: 'Preventivo',
+          type_maintenance: 'Preventivo',
           encharged_name: 'Juan de Dios Balagarde',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
-          actions: '+  -'
+          actions: ''
         },
         {
           id: 2,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luis Andrés Pérez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -73,7 +70,7 @@ export default defineComponent({
         },
         {
           id: 3,
-          name: 'Preventivo',
+          type_maintenance: 'Preventivo',
           encharged_name: 'Juan de Dios Balagarde',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -81,7 +78,7 @@ export default defineComponent({
         },
         {
           id: 4,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luis Andrés Pérez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -89,7 +86,7 @@ export default defineComponent({
         },
         {
           id: 5,
-          name: 'Preventivo',
+          type_maintenance: 'Preventivo',
           encharged_name: 'Juan de Dios Balagarde',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -97,7 +94,7 @@ export default defineComponent({
         },
         {
           id: 6,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luis Andrés Pérez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -105,7 +102,7 @@ export default defineComponent({
         },
         {
           id: 7,
-          name: 'Preventivo',
+          type_maintenance: 'Preventivo',
           encharged_name: 'Juan de Dios Balagarde',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -113,7 +110,7 @@ export default defineComponent({
         },
         {
           id: 8,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luis Andrés Pérez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -121,7 +118,7 @@ export default defineComponent({
         },
         {
           id: 9,
-          name: 'Preventivo',
+          type_maintenance: 'Preventivo',
           encharged_name: 'Juan de Dios Balagarde',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -129,7 +126,7 @@ export default defineComponent({
         },
         {
           id: 10,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luis Andrés Pérez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -137,7 +134,7 @@ export default defineComponent({
         },
         {
           id: 11,
-          name: 'Preventivo',
+          type_maintenance: 'Preventivo',
           encharged_name: 'Juan de Dios Balagarde',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -145,7 +142,7 @@ export default defineComponent({
         },
         {
           id: 12,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luis Andrés Pérez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -153,7 +150,7 @@ export default defineComponent({
         },
         {
           id: 13,
-          name: 'Preventivo',
+          type_maintenance: 'Preventivo',
           encharged_name: 'Juan de Dios Balagarde',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -161,7 +158,7 @@ export default defineComponent({
         },
         {
           id: 14,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luis Andrés Pérez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -169,7 +166,7 @@ export default defineComponent({
         },
         {
           id: 15,
-          name: 'Preventivo',
+          type_maintenance: 'Preventivo',
           encharged_name: 'Ángel Omar Torres Padilla',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -177,7 +174,7 @@ export default defineComponent({
         },
         {
           id: 16,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luisa Juarez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -185,7 +182,7 @@ export default defineComponent({
         },
         {
           id: 17,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luis Andrés Pérez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -193,7 +190,7 @@ export default defineComponent({
         },
         {
           id: 18,
-          name: 'Preventivo',
+          type_maintenance: 'Preventivo',
           encharged_name: 'Ángel Omar Torres Padilla',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -201,7 +198,7 @@ export default defineComponent({
         },
         {
           id: 19,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luisa Juarez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -209,7 +206,7 @@ export default defineComponent({
         },
         {
           id: 20,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luis Andrés Pérez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -217,7 +214,7 @@ export default defineComponent({
         },
         {
           id: 21,
-          name: 'Preventivo',
+          type_maintenance: 'Preventivo',
           encharged_name: 'Ángel Omar Torres Padilla',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
@@ -225,16 +222,15 @@ export default defineComponent({
         },
         {
           id: 22,
-          name: 'Correctivo',
+          type_maintenance: 'Correctivo',
           encharged_name: 'Luisa Juarez',
           date: '12-Jun-2022',
           total_cost: '$ 258000',
           actions: '+  -'
         }
       ],
-
       rowSelected: {},
-
+      switchContent: 2,
       actionsTable: [
         {
           icnName: 'read_more',
@@ -267,6 +263,16 @@ export default defineComponent({
           this.edit(val.id)
         } else if (val.action === 'Detail') {
           this.readMore(val.id)
+        }
+      },
+      deep: true
+    },
+    switchContent: {
+      handler (val) {
+        if (val === 1) {
+          console.log('Show cards')
+        } else if (val === 2) {
+          console.log('Show table')
         }
       },
       deep: true

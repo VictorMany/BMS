@@ -6,7 +6,7 @@
         <div class="sideMenu">
           <h1 class="title flex flex-center q-my-none"> BMS </h1>
           <q-card-section class="q-pt-none">
-            <btn-menu v-for="(btn, i) in btnLinks" :key="i" v-bind="btn" v-model:selected="btn.selected" @click="onChangeFunction"/>
+            <btn-menu v-for="(btn, index) in btnLinks" :key="index" v-bind="btn" :index="index" v-model:selected-btn="btnSelected" />
           </q-card-section>
         </div>
       </q-list>
@@ -14,7 +14,6 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-
   </q-layout>
 </template>
 
@@ -40,50 +39,84 @@ export default defineComponent({
   },
   data () {
     return {
+      btnSelected: 0,
       btnLinks: [
         {
           title: 'Equipos',
           link: '/',
-          selected: true
+          selected: true,
+          color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8'
         },
         {
           title: 'Usuarios',
           link: 'users',
-          selected: false
+          selected: false,
+          color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8'
         },
         {
           title: 'Mantenimientos',
           link: 'maintenances',
-          selected: false
+          selected: false,
+          color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8'
         },
         {
           title: 'Calendario',
           link: 'calendar',
-          selected: false
+          selected: false,
+          color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8'
         },
         {
           title: 'Reportes',
           link: 'reports',
-          selected: false
+          selected: false,
+          color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8'
         },
         {
           title: 'Estadisticas',
           link: 'statistical',
-          selected: false
+          selected: false,
+          color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8'
         },
         {
           title: 'Configuración',
           link: 'settings',
-          selected: false
+          selected: false,
+          color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8'
         }
       ]
     }
   },
+
+  created () {
+    this.btnLinks.forEach((e, index) => {
+      if (e.link === this.$route.name) {
+        this.selectButton(index)
+        this.btnSelected = index
+      }
+    })
+  },
+
+  watch: {
+    btnSelected (val, oldVal) {
+      this.selectButton(val)
+      this.btnLinks[oldVal].color = 'rgba(122, 122, 122, 1)'
+      this.btnLinks[oldVal].background = '#F8F8F8'
+      this.btnLinks[oldVal].selected = false
+    }
+  },
+
   methods: {
-    onChangeFunction () {
-      this.btnLinks.forEach(e => {
-        e.selected = false
-      })
+    selectButton (val) {
+      this.btnLinks[val].selected = true
+      this.btnLinks[val].color = '#1A86D4'
+      this.btnLinks[val].background = '#CAE3F4'
     }
   }
 })
@@ -103,7 +136,7 @@ export default defineComponent({
 .title {
   position: inherit;
   font-style: normal;
-  font-weight: 200;
+  font-weight: 300;
   font-size: 30px;
   color: #1A86D4;
 }

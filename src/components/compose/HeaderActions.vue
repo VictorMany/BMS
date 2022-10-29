@@ -65,7 +65,7 @@ export default defineComponent({
 <style scoped>
 .title-page {
   font-style: normal;
-  font-weight: 200;
+  font-weight: 300;
   font-size: 30px;
   color: #017ED9;
 }

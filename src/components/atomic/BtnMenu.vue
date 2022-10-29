@@ -12,6 +12,10 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'LayoutBtns',
   props: {
+    index: {
+      type: Number,
+      required: false
+    },
     title: {
       type: String,
       required: true
@@ -25,29 +29,26 @@ export default defineComponent({
     selected: {
       type: Boolean,
       default: false
-    }
-  },
-  data () {
-    return {
-      color: 'rgba(122, 122, 122, 1)',
-      backgroundColor: '#CAE3F4'
+    },
+
+    selectedBtn: {
+      type: Number,
+      default: 1
+    },
+
+    color: {
+      type: String
+    },
+
+    background: {
+      type: String
     }
   },
 
-  updated () {
-    if (this.selected === true) {
-      this.color = '#1A86D4'
-      this.backgroundColor = '#CAE3F4'
-    } else {
-      this.color = 'rgba(122, 122, 122, 1)'
-      this.backgroundColor = '#F8F8F8'
-    }
-  },
   methods: {
     navigateTo () {
-      console.log(this.link)
       this.$router.push({ path: this.link })
-      setTimeout(function () { this.$emit('update:selected', true) }.bind(this), 100)
+      this.$emit('update:selectedBtn', this.index)
     }
   }
 })
@@ -56,7 +57,7 @@ export default defineComponent({
 <style scoped>
 .item {
   margin-top: 0.8rem;
-  background-color: v-bind(backgroundColor);
+  background-color: v-bind(background);
   border-radius: 5px;
   color: v-bind(color);
 }
@@ -64,7 +65,7 @@ export default defineComponent({
 .q-item-label {
   font-family: 'Inter';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
 }
 </style>

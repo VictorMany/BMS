@@ -1,10 +1,10 @@
 <template>
-  <q-btn-group class="btn-change-content" :unelevated="btnUnelevated" :outlined="btnOutlined">
+  <q-btn-group class="btn-change-content" :unelevated="btnUnelevated">
     <q-btn size="sm" style="width: 62px; height: auto" class="btn-left" @click="modelChange(1)">
-      <q-img src="~assets/svg/card_svg.svg" />
+      <q-img no-spinner src="~assets/svg/card_svg.svg" />
     </q-btn>
     <q-btn size="sm" style="width: 62px; height: auto" class="btn-right" @click="modelChange(2)">
-      <q-img src="~assets/svg/table_svg.svg" />
+      <q-img no-spinner src="~assets/svg/table_svg.svg" />
     </q-btn>
   </q-btn-group>
 </template>
@@ -15,12 +15,6 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'BtnSwitch',
   props: {
-    btnTitle: {
-      type: String,
-      default: 'Agregar',
-      required: false
-    },
-
     btnColor: {
       type: String,
       required: false,
@@ -45,63 +39,32 @@ export default defineComponent({
       required: false
     },
 
-    btnOutlined: {
-      type: Boolean,
-      default: true,
-      required: false
-    },
-
-    btnAction: {
-      type: Function,
+    switchContent: {
+      type: Number,
       default: () => {},
       required: false
-    },
-
-    btnCaps: {
-      type: Boolean,
-      default: true,
-      required: false
-    },
-
-    btnSize: {
-      type: String,
-      default: 'md',
-      required: false
-    },
-
-    iconName: {
-      type: String,
-      required: false,
-      default: 'add_circle'
-    },
-
-    btnWidth: {
-      type: String,
-      required: false,
-      default: 'max-content'
-    },
-
-    btnWeight: {
-      type: Number,
-      required: false,
-      default: 500
     }
   },
   data () {
     return {
       color1: this.btnBackground,
-      color2: 'white',
-      color: this.btnBackground
+      color: this.btnBackground,
+      color2: 'white'
     }
+  },
+  created () {
+    this.modelChange(this.switchContent)
   },
   methods: {
     modelChange (model) {
       if (model === 1) {
         this.color1 = this.color
         this.color2 = 'white'
+        this.$emit('update:switchContent', 1)
       } else {
         this.color2 = this.color
         this.color1 = 'white'
+        this.$emit('update:switchContent', 2)
       }
     }
   }
