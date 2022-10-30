@@ -4,7 +4,7 @@
       <!-- drawer content -->
       <q-list style="height: 100%" class="flex flex-center">
         <div class="sideMenu">
-          <h1 class="title flex flex-center q-my-none"> BMS </h1>
+          <h1 class="title flex flex-center q-my-none text-weight-light"> BMS </h1>
           <q-card-section class="q-pt-none">
             <btn-menu v-for="(btn, index) in btnLinks" :key="index" v-bind="btn" :index="index" v-model:selected-btn="btnSelected" />
           </q-card-section>
@@ -115,7 +115,7 @@ export default defineComponent({
   methods: {
     selectButton (val) {
       this.btnLinks[val].selected = true
-      this.btnLinks[val].color = '#1A86D4'
+      this.btnLinks[val].color = '#4C607D'
       this.btnLinks[val].background = '#CAE3F4'
     }
   }
@@ -134,9 +134,7 @@ export default defineComponent({
 }
 
 .title {
-  position: inherit;
-  font-style: normal;
-  font-weight: 300;
+  font-family: 'Inter';
   font-size: 30px;
   color: #1A86D4;
 }

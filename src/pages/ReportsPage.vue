@@ -235,13 +235,11 @@ export default defineComponent({
       actionsTable: [
         {
           icnName: 'read_more',
-          icnColor: '#017ED9',
           icnSize: 'sm',
           icnAction: 'Detail'
         },
         {
           icnName: 'edit',
-          icnColor: '#017ED9',
           icnSize: 'xs',
           icnAction: 'Edit'
         }
