@@ -1,10 +1,15 @@
-
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
+      { path: '', name: '/', component: () => import('src/pages/EquipmentsPage.vue') },
+      { path: 'calendar', name: 'calendar', component: () => import('src/pages/CalendarPage.vue') },
+      { path: 'maintenances', name: 'maintenances', component: () => import('src/pages/MaintenancesPage.vue') },
+      { path: 'statistical', name: 'statistical', component: () => import('src/pages/StatisticalPage.vue') },
+      { path: 'settings', name: 'settings', component: () => import('src/pages/SettingsPage.vue') },
+      { path: 'users', name: 'users', component: () => import('src/pages/UsersPage.vue') },
+      { path: 'reports', name: 'reports', component: () => import('src/pages/ReportsPage.vue') }
     ]
   },
 
