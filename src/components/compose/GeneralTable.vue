@@ -22,19 +22,20 @@
     </template>
     <template v-slot:body-cell-actions="props">
       <q-td :props="props">
-        <icon-action v-for="(action, i) in actionsTable" :key="i"  v-bind="action" class="primary-color" @click="rowClicked(props, action.icnAction)"/>
+        <icon-action v-for="(action, i) in actionsTable" :key="i" v-bind="action" @click="rowClicked(props, action.icnAction)"/>
       </q-td>
     </template>
     <template v-slot:body-cell-status="props">
       <q-td :props="props">
-        <q-badge class="justify-center" :color="checkColor(props.value)" :label="props.value" style="width: 80px; height: 22px;"/>
+        <q-badge class="justify-center" :color="checkColor(props.value)" :label="props.value" style="width: 80px; height: 22px; font-weight: 600;"/>
       </q-td>
     </template>
   </q-table>
   <div class="row justify-center">
     <q-pagination
       v-model="pagination.page"
-      class="primary-color q-mt-sm"
+      color="blue-grey-8"
+      class="q-mt-sm pagination-style"
       :max="pagesNumber"
       size="md"
     />
@@ -119,11 +120,11 @@ export default defineComponent({
   font-style: normal;
   font-size: 13px;
   font-weight: 600;
-  color: #4d4d4d;
+  color: #4C607D;
 }
 
-.primary-color {
-  color: #017ED9;
+.pagination-style {
+  color: #4C607D !important;
 }
 
 @media only screen
@@ -142,7 +143,7 @@ and (min-device-height : 820px) {
 
   .my-sticky-header-table .q-table__top,
   .my-sticky-header-table thead tr:first-child th {
-    background-color: #C6DFF1;
+    background-color: #dce1e6;
   }
   .my-sticky-header-table thead tr th {
     position: sticky;

@@ -82,16 +82,14 @@ export default defineComponent({
   }
 
   .card-typography {
-    font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 12px;
-    color: #000000;
+    color: #3e4f67;
   }
 
   .card-typography-info {
-    font-style: normal;
-    font-weight: 100;
+    font-weight: 300;
     font-size: 12px;
-    color: #2f3e43;
+    color: #283438;
   }
 </style>

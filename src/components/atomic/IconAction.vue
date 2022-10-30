@@ -2,7 +2,6 @@
   <q-icon class="icn-style q-px-xs"
     :name="icnName"
     :unelevated="icnUnelevated"
-    :text-color="icnColor"
     :size="icnSize" />
 </template>
 
@@ -15,7 +14,7 @@ export default defineComponent({
     icnColor: {
       type: String,
       required: false,
-      default: 'rgba(76, 165, 243, 0.8)'
+      default: '#4C607D'
     },
 
     icnUnelevated: {

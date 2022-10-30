@@ -10,7 +10,7 @@
       <div class="main-container-page">
         <div class="row q-pb-md" style="height: 99%;">
           <div class="col-auto">
-            <q-date v-model="date" landscape />
+            <q-date v-model="date" class="text-blue-grey-7" landscape />
             <div class="col q-mt-md">
               <div class="container-colorama q-pa-sm">
                 <status-badge
@@ -26,7 +26,7 @@
           </div>
           <div class="col q-pl-md" style="height: 99%;">
             <div class="row flex items-center justify-between q-mb-sm">
-              <label class="text-subtitle"> Resultados </label>
+              <label class="text-subtitle text-weight-light"> Resultados </label>
               <btn-switch />
             </div>
             <div
@@ -78,11 +78,7 @@ export default defineComponent({
       },
       btnAddPlan: {
         btnTitle: 'Crear un plan de mantenimientos preventivos',
-        btnBackground: '#FFFFFF',
-        btnColor: '#1C81CB',
-        btnOutlined: true,
         btnWidth: '100%',
-        btnWeight: 400,
         iconName: null
       }
     }
@@ -100,6 +96,7 @@ export default defineComponent({
   font-style: normal;
   font-weight: 200;
   font-size: 25px;
-  color: #017ed9;
+  font-family: 'Inter';
+  color: #1A86D4;
 }
 </style>
