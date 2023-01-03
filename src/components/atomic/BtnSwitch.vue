@@ -27,12 +27,6 @@ export default defineComponent({
       default: '#C6DFF1'
     },
 
-    btnRounded: {
-      type: Boolean,
-      default: true,
-      required: false
-    },
-
     btnUnelevated: {
       type: Boolean,
       default: true,
@@ -75,8 +69,8 @@ export default defineComponent({
 .btn-change-content {
   background-color: v-bind(color) !important;
   color: v-bind(btnColor) !important;
-  /* color: #017ED9; */
-  border-radius: 10px;
+  border-radius: 0.5rem !important;
+  height: 30px;
 }
 
 .btn-left {

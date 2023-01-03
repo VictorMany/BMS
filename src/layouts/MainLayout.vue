@@ -1,9 +1,9 @@
 <template>
   <q-layout view="lHh lpR lFf">
-    <q-drawer style="overflow: hidden; background-color: rgba(236, 236, 236, 1);" show-if-above v-model="leftDrawerOpen" class="cursor-pointer non-selectable">
+    <q-drawer show-if-above v-model="leftDrawerOpen" class="cursor-pointer non-selectable main-menu">
       <!-- drawer content -->
       <q-list style="height: 100%" class="flex flex-center">
-        <div class="sideMenu">
+        <div class="side-menu">
           <h1 class="title flex flex-center q-my-none text-weight-light"> BMS </h1>
           <q-card-section class="q-pt-none">
             <btn-menu v-for="(btn, index) in btnLinks" :key="index" v-bind="btn" :index="index" v-model:selected-btn="btnSelected" />
@@ -122,15 +122,20 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-.sideMenu {
-  width: 96%;
+<style>
+.side-menu {
+  width: 100%;
   margin-left: 4%;
   height: 95%;
   border-radius: 10px;
   background: #FEFEFE;
   box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.25);
   overflow: hidden;
+}
+
+.main-menu {
+  overflow: hidden;
+  background-color: rgba(236, 236, 236, 1) !important;
 }
 
 .title {

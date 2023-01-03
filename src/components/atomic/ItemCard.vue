@@ -5,8 +5,8 @@
           class="col-5 img-style"
           :src="cardImg"
         />
-        <q-card-section class="q-py-sm q-px-sm full-width">
-          <div class="card-typography full-width q-pb-xs">
+        <q-card-section class="q-py-sm q-px-sm full-width ellipsis">
+          <div class="card-typography full-width q-pb-xs ellipsis">
             {{ cardTitle }}
           </div>
           <div v-for="(label, i) in cardLabels" :key="i" class="row">
