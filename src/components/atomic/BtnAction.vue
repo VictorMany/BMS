@@ -2,11 +2,11 @@
   <q-btn class="btn-style q-pr-sm"
     :unelevated="btnUnelevated"
     :outline="btnOutlined"
-    :rounded="btnRounded"
     :no-caps="btnCaps"
     :text-color="btnColor"
     :label="btnTitle"
     :size="btnSize"
+    :to="to"
     @click="btnAction">
     <div v-if="iconName" class="row items-center no-wrap">
       <q-icon right :name="iconName" />
@@ -38,12 +38,6 @@ export default defineComponent({
       default: '#C6DFF1'
     },
 
-    btnRounded: {
-      type: Boolean,
-      default: true,
-      required: false
-    },
-
     btnUnelevated: {
       type: Boolean,
       default: true,
@@ -59,6 +53,11 @@ export default defineComponent({
     btnAction: {
       type: Function,
       default: () => {},
+      required: false
+    },
+
+    to: {
+      type: String,
       required: false
     },
 
@@ -91,6 +90,9 @@ export default defineComponent({
       required: false,
       default: 500
     }
+  },
+  created () {
+    console.log(this.$props)
   }
 })
 </script>
@@ -101,6 +103,7 @@ export default defineComponent({
   background-color: v-bind(btnBackground) !important;
   color: v-bind(btnColor) !important;
   font-weight: v-bind(btnWeight) !important;
+  border-radius: 0.5rem !important;
 }
 .btn-style:hover {
   transform: scale(1.05);
