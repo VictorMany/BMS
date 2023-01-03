@@ -3,7 +3,6 @@
   <q-input
     class="input-style q-pl-md q-pr-sm"
     borderless
-    rounded
     dense
     :placeholder="inputLabel"
     v-model="modelLocal">
@@ -76,9 +75,8 @@ export default defineComponent({
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   color: v-bind(inputColor);
   background: v-bind(inputBackground);
-  border-radius: 50px;
+  border-radius: 0.5rem !important;
 }
 </style>

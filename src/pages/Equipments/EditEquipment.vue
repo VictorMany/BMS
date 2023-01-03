@@ -42,7 +42,8 @@ export default defineComponent({
       Equipos: 40,
       btnAction: {
         show: true,
-        btnTitle: 'Añadir equipo'
+        btnTitle: 'Añadir equipo',
+        to: 'add-equipment'
       },
       inputSearch: {
         show: true,

@@ -3,7 +3,8 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', name: '/', component: () => import('src/pages/EquipmentsPage.vue') },
+      { path: '', name: '/', component: () => import('src/pages/Equipments/EquipmentsPage.vue') },
+      { path: 'add-equipment', name: 'add-equipment', component: () => import('src/pages/Equipments/AddEquipment.vue') },
       { path: 'calendar', name: 'calendar', component: () => import('src/pages/CalendarPage.vue') },
       { path: 'maintenances', name: 'maintenances', component: () => import('src/pages/MaintenancesPage.vue') },
       { path: 'statistical', name: 'statistical', component: () => import('src/pages/StatisticalPage.vue') },
