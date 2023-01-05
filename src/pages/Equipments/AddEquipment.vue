@@ -6,14 +6,7 @@
         :inputSearch="inputSearch"
       />
       <div class="main-container-page">
-        <div class="row q-pa-md" style="max-width: 95%">
-          <div class="col">
-            <form-text-field />
-          </div>
-          <div class="col">
-            // sECOND
-          </div>
-        </div>
+        <form-text-field />
       </div>
     </div>
   </q-page>
@@ -47,7 +40,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 .main-container-page {
   background-color: white;
 }
