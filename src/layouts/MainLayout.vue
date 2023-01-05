@@ -127,9 +127,9 @@ export default defineComponent({
   width: 100%;
   margin-left: 4%;
   height: 95%;
-  border-radius: 10px;
   background: #FEFEFE;
-  box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 10%) !important;
+  border-radius: 8px !important;
   overflow: hidden;
 }
 
