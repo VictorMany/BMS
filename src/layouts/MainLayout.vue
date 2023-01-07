@@ -2,14 +2,22 @@
   <q-layout view="lHh lpR lFf">
     <q-drawer show-if-above v-model="leftDrawerOpen" class="cursor-pointer non-selectable main-menu">
       <!-- drawer content -->
-      <q-list style="height: 100%" class="flex flex-center">
+      <div style="height: 100%" class="q-py-md q-pl-md">
         <div class="side-menu">
-          <h1 class="title flex flex-center q-my-none text-weight-light"> BMS </h1>
-          <q-card-section class="q-pt-none">
-            <btn-menu v-for="(btn, index) in btnLinks" :key="index" v-bind="btn" :index="index" v-model:selected-btn="btnSelected" />
-          </q-card-section>
+          <div class="title text-center text-weight-light q-pt-lg"> BMS </div>
+          <q-scroll-area class="q-px-md q-py-sm" style="height: 85%" :thumb-style="{ right: '4px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+            <q-list>
+              <div class="q-pt-none">
+                <btn-menu v-for="(btn, index) in btnLinks" :key="index" v-bind="btn" :index="index" v-model:selected-btn="btnSelected" />
+              </div>
+              <div>
+                <btn-action class="q-mt-xl" v-bind="btnCloseSesion"/>
+              </div>
+            </q-list>
+          </q-scroll-area>
         </div>
-      </q-list>
+      </div>
+
     </q-drawer>
     <q-page-container>
       <router-view />
@@ -20,12 +28,14 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import BtnMenu from 'src/components/atomic/BtnMenu.vue'
+import BtnAction from 'src/components/atomic/BtnAction.vue'
 
 export default defineComponent({
   name: 'newLayout',
 
   components: {
-    BtnMenu
+    BtnMenu,
+    BtnAction
   },
 
   setup () {
@@ -90,7 +100,14 @@ export default defineComponent({
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8'
         }
-      ]
+      ],
+      btnCloseSesion: {
+        btnTitle: 'Cerrar sesión',
+        btnColor: '#FFFFFF',
+        btnWidth: '100%',
+        iconName: '',
+        btnBackgroundGradient: 'linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%)'
+      }
     }
   },
 
@@ -125,8 +142,7 @@ export default defineComponent({
 <style>
 .side-menu {
   width: 100%;
-  margin-left: 4%;
-  height: 95%;
+  height: 100%;
   background: #FEFEFE;
   box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 10%) !important;
   border-radius: 8px !important;

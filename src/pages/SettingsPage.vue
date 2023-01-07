@@ -1,28 +1,30 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
+    <div class="card-page q-px-none">
       <header-actions :titlePage="'Configuración'" />
-      <div class="row">
+      <div class="row q-px-md">
         <img class="q-mb-md container-img" src="https://picsum.photos/id/1036/200/300" />
         <div class="info q-ml-md">
           <div class="info__title">Hospital de la Mora</div>
           <div class="info__email">admingp@hdelamora</div>
         </div>
       </div>
-      <div class="main-container-page" style="height: 68%; overflow-y: scroll">
-        <q-list>
-          <q-item v-for="(item, i) in listSettings" :key="i" class="q-mb-sm item-style flex items-center clickable v-ripple">
-            <q-item-section avatar>
-              <q-avatar>
-                <img :src="item.img">
-              </q-avatar>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ item.title }}</q-item-label>
-              <q-item-label caption>{{ item.subtitle }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
+      <div class="main-container-page" style="height: 68%">
+        <q-scroll-area class="fit" :thumb-style="{ right: '1px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+          <q-list class="q-px-md">
+            <q-item v-for="(item, i) in listSettings" :key="i" class="q-mb-sm item-style flex items-center clickable v-ripple">
+              <q-item-section avatar>
+                <q-avatar>
+                  <img :src="item.img">
+                </q-avatar>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ item.title }}</q-item-label>
+                <q-item-label caption>{{ item.subtitle }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-scroll-area>
       </div>
     </div>
   </q-page>

@@ -4,11 +4,11 @@
     <div class="col title-page q-pa-none">
       {{ titlePage }}
     </div>
-        <div class="row flex justify-end">
-          <btn-action v-if="btnAction.show" v-bind="btnAction" class="q-mr-md"/>
-          <input-search v-if="btnAction.show" v-bind="inputSearch"/>
-      </div>
-  </div>
+    <div class="row flex justify-end">
+      <btn-action v-if="btnAction.show" v-bind="btnAction"/>
+      <input-search v-if="inputSearch.show" class="q-ml-md" v-bind="inputSearch"/>
+    </div>
+</div>
 </template>
 
 <script>
@@ -43,13 +43,6 @@ export default defineComponent({
   },
   data () {
     return {
-      btnFilter: {
-        title: 'Filtro',
-        color: '#FFFFFF',
-        background: '#4CA5F3',
-        size: 'sm',
-        icon: 'keyboard_arrow_down'
-      },
       modelLocal: this.model
     }
   },

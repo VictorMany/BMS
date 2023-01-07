@@ -1,15 +1,17 @@
 <template>
-  <q-btn class="btn-style q-pr-sm"
+  <q-btn class="btn-style"
+    :class="btnTitle ? 'q-pr-sm' : 'q-pa-none'"
     :unelevated="btnUnelevated"
     :outline="btnOutlined"
     :no-caps="btnCaps"
     :text-color="btnColor"
-    :label="btnTitle"
+    :label="btnTitle ? btnTitle : ''"
     :size="btnSize"
     :to="to"
     @click="btnAction">
-    <div v-if="iconName" class="row items-center no-wrap">
-      <q-icon right :name="iconName" />
+    <div v-if="iconName != ''" class="no-wrap q-pa-none"
+      :class="{ 'q-ml-auto' : btnTitle }">
+      <q-icon right :name="iconName" :class="{ 'q-ma-xs' : !btnTitle }"/>
     </div>
   </q-btn>
 </template>
@@ -22,7 +24,6 @@ export default defineComponent({
   props: {
     btnTitle: {
       type: String,
-      default: 'Agregar',
       required: false
     },
 
@@ -36,6 +37,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: '#C6DFF1'
+    },
+
+    btnBackgroundGradient: {
+      type: String,
+      required: false
     },
 
     btnUnelevated: {
@@ -101,6 +107,7 @@ export default defineComponent({
 .btn-style {
   width: v-bind(btnWidth) !important;
   background-color: v-bind(btnBackground) !important;
+  background: v-bind(btnBackgroundGradient);
   color: v-bind(btnColor) !important;
   font-weight: v-bind(btnWeight) !important;
   border-radius: 0.5rem !important;
