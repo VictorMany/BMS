@@ -13,7 +13,7 @@
       <btn-action
         :btnTitle="btnFilter.title"
         :btnColor="btnFilter.color"
-        :btnBackground="btnFilter.background"
+        :btnBackgroundGradient="btnFilter.backgroundGradient"
         :iconName="btnFilter.icon"
         :btnSize="btnFilter.size" />
     </template>
@@ -55,7 +55,7 @@ export default defineComponent({
       btnFilter: {
         title: 'Filtro',
         color: '#FFFFFF',
-        background: '#4CA5F3',
+        backgroundGradient: 'linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%)',
         size: 'sm',
         icon: 'keyboard_arrow_down'
       },

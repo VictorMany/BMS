@@ -1,20 +1,35 @@
 <template>
-    <q-card class="my-card cursor-pointer non-selectable q-ma-xs" @click="cardAction">
-      <q-card-section class="q-pa-xs" horizontal>
+    <q-card
+      class="my-card cursor-pointer non-selectable"
+      @click="cardAction">
+      <q-card-section
+        class="q-pa-xs q-ma-none"
+        horizontal>
         <q-img
           class="col-5 img-style"
-          :src="cardImg"
-        />
+          :src="cardImg" />
         <q-card-section class="q-py-sm q-px-sm full-width ellipsis">
           <div class="card-typography full-width q-pb-xs ellipsis">
             {{ cardTitle }}
           </div>
-          <div v-for="(label, i) in cardLabels" :key="i" class="row">
-            <div class="col-6 card-typography q-pb-xs">{{ label.label }}</div>
-            <div class="col-6 card-typography-info q-pb-xs" :class="label.label === null ? 'col-12' : ''">{{ label.info }}</div>
+          <div v-for="(label, i) in cardLabels"
+            :key="i"
+            class="row">
+            <div class="col-6 card-typography q-pb-xs">
+              {{ label.label }}
+            </div>
+            <div
+              class="col-6 card-typography-info q-pb-xs"
+              :class="label.label === null ? 'col-12' : ''">
+              {{ label.info }}
+            </div>
           </div>
           <q-space />
-          <div class="card-typography-info full-width row justify-end" :class="cardLabels.length == 1 ? 'q-mt-lg' : 'q-mt-xs'">{{ cardDate }}</div>
+          <div
+            class="card-typography-info full-width row justify-end"
+            :class="cardLabels.length == 1 ? 'q-mt-lg' : 'q-mt-xs'">
+              {{ cardDate }}
+          </div>
         </q-card-section>
       </q-card-section>
     </q-card>
@@ -65,7 +80,7 @@ export default defineComponent({
 <style scoped>
   .my-card {
     max-width: 350px;
-    min-width: 266px;
+    min-width: 260px;
     height: 110px !important;
     border-radius: 10px !important;
   }

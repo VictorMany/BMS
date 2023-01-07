@@ -7,20 +7,21 @@
         :inputSearch="inputSearch"
       />
       <div class="main-container-page">
-        <div class="q-pa-md" style="max-width: 95%">
+        <q-scroll-area class="fit" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <div
-            style="width: 100%"
-            class="row q-col-gutter-x-xl q-col-gutter-y-lg"
-          >
-            <div
-              class="col-lg-3 col-md-4 col-sm-6 col-xs-12"
-              v-for="(equipo, index) in Equipos"
-              :key="index"
-            >
-              <item-card />
+            style="max-width: 100%">
+            <div class="row q-pa-none q-ma-none">
+              <div
+                class="col-auto q-pa-sm"
+                v-for="(equipo, index) in Equipos"
+                :key="index"
+              >
+                <item-card :v-bind="equipo"/>
+              </div>
             </div>
           </div>
-        </div>
+        </q-scroll-area>
+
       </div>
     </div>
   </q-page>

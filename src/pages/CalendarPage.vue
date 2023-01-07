@@ -29,11 +29,16 @@
               <label class="text-subtitle text-weight-light"> Resultados </label>
               <btn-switch />
             </div>
-            <div
-              style="overflow: scroll; height: 96%;"
-              class="row inline justify-start items-start"
-            >
-              <item-card v-for="i in 36" :key="i" />
+            <div style="overflow: scroll; height: 96%;" class="row w-100 q-pa-none q-ma-none">
+              <q-scroll-area class="fit" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+                <div
+                    class="col-auto q-pa-sm"
+                    v-for="(equipo, index) in 36"
+                    :key="index"
+                  >
+                    <item-card :v-bind="equipo"/>
+                </div>
+              </q-scroll-area>
             </div>
           </div>
         </div>
