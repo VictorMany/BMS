@@ -16,12 +16,11 @@
                 v-for="(equipo, index) in Equipos"
                 :key="index"
               >
-                <item-card :v-bind="equipo"/>
+                <item-card :v-bind="equipo" :index="index" :card-action="cardAction"/>
               </div>
             </div>
           </div>
         </q-scroll-area>
-
       </div>
     </div>
   </q-page>
@@ -50,6 +49,11 @@ export default defineComponent({
         show: true,
         inputLabel: 'Buscar por nombre'
       }
+    }
+  },
+  methods: {
+    cardAction () {
+      this.$router.push('edit-equipment')
     }
   }
 })

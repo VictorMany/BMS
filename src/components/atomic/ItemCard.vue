@@ -7,7 +7,7 @@
         horizontal>
         <q-img
           class="col-5 img-style"
-          :src="cardImg" />
+          :src="`https://picsum.photos/id/${index}/200/300`" />
         <q-card-section class="q-py-sm q-px-sm full-width ellipsis">
           <div class="card-typography full-width q-pb-xs ellipsis">
             {{ cardTitle }}
@@ -46,11 +46,11 @@ export default defineComponent({
       default: 'Monitor de signos vitales',
       required: false
     },
-
+    index: { type: Number },
     cardImg: {
       type: String,
       required: false,
-      default: 'https://cdn.quasar.dev/img/parallax1.jpg'
+      default: 'https://cdn.quasar.dev/img/parallax3.jpg'
     },
 
     cardLabels: {
@@ -70,7 +70,6 @@ export default defineComponent({
 
     cardAction: {
       type: Function,
-      default: () => {},
       required: false
     }
   }

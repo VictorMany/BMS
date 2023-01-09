@@ -37,14 +37,13 @@ export default defineComponent({
         show: true,
         btnTitle: 'Guardar',
         to: 'add-equipment',
-        btnSize: 'sm',
-        btnWidth: '100px'
+        btnWidth: 'auto'
       },
       btnCloseWindow: {
         iconName: 'close',
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
-        btnSize: 'sm',
+        btnSize: 'xs',
         to: '/'
       }
     }
