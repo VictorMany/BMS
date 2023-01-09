@@ -12,15 +12,15 @@
       <div class="main-container-page" style="height: 68%">
         <q-scroll-area class="fit" :thumb-style="{ right: '1px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <q-list class="q-px-md">
-            <q-item v-for="(item, i) in listSettings" :key="i" class="q-mb-sm item-style flex items-center clickable v-ripple">
+            <q-item v-for="(item, i) in listSettings" :key="i" class="q-mb-sm setting-item flex items-center clickable v-ripple">
               <q-item-section avatar>
                 <q-avatar>
                   <img :src="item.img">
                 </q-avatar>
               </q-item-section>
               <q-item-section>
-                <q-item-label>{{ item.title }}</q-item-label>
-                <q-item-label caption>{{ item.subtitle }}</q-item-label>
+                <q-item-label class="setting-item__title">{{ item.title }}</q-item-label>
+                <q-item-label class="setting-item__subtitle" caption>{{ item.subtitle }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -73,37 +73,44 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="sass">
-.item-style
-  background-color: $bg-clear
-  height: 80px
-  border-radius: 10px
+<style scoped lang="scss">
+.setting-item {
+  background-color: $bg-clear;
+  height: 80px;
+  border-radius: 10px;
+  &__title {
+    color: #062841;
+    font-size: 12px;
+  }
+  &__subtitle {
+    color: #06284194;
+    font-size: 10px;
+  }
+}
 
-.item-style:hover
-  background-color: #007bd218
-  transform: scale(1.01)
+.setting-item:hover {
+  background-color: #007bd218;
+  transform: scale(1.01);
+}
+.container-img{
+  object-fit: cover;
+  border-radius: 10px;
+  width: 178px;
+  height: 98px;
+}
 
-.container-img
-  border: 2px solid $bg-clear
-  object-fit: cover
-  border-radius: 10px
-  width: 178px
-  height: 98px
+.info {
+  &__title{
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 36px;
+    color: #062841;
+}
+  &__email {
+    font-weight: 400;
+    font-size: 16px;
+    color: #06284194;
 
-.info
-  &__title
-    font-family: 'Inter'
-    font-style: normal
-    font-weight: 800
-    font-size: 30px
-    line-height: 36px
-    color: $bg-dark-primary
-
-  &__email
-    font-family: 'Inter'
-    font-style: normal
-    font-weight: 400
-    font-size: 16px
-    color: $bg-dark-primary
-
+  }
+}
 </style>

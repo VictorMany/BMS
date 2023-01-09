@@ -32,11 +32,16 @@
             <div style="overflow: scroll; height: 96%;" class="row w-100 q-pa-none q-ma-none">
               <q-scroll-area class="fit" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
                 <div
-                    class="col-auto q-pa-sm"
-                    v-for="(equipo, index) in 36"
-                    :key="index"
-                  >
-                    <item-card :v-bind="equipo"/>
+                  style="max-width: 100%">
+                  <div class="row q-pa-none q-ma-none">
+                    <div
+                      class="col-auto q-pa-sm"
+                      v-for="(equipo, index) in 36"
+                      :key="index"
+                    >
+                      <item-card :v-bind="equipo" :index="index"/>
+                    </div>
+                  </div>
                 </div>
               </q-scroll-area>
             </div>
