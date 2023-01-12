@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-    <div class="row q-pa-md q-py-lg" style="max-width: 780px">
+    <div class="row q-pa-md q-py-lg" style="max-width: 1200px">
       <!-- LEFT SECTION -->
       <div class="col-auto">
         <div v-for="(item, i) in textfields.left" :key="i" class="row items-center q-px-sm q-py-xs">
@@ -16,7 +16,7 @@
         </div>
       </div>
       <!-- RIGHT SECTION -->
-      <div class="col q-px-xs q-pl-xl column items-end">
+      <div class="col q-pl-sm column items-end">
         <div v-for="(item, i) in textfields.right" :key="i" class="row items-center q-px-sm">
           <div class="col q-mr-md form__item-label text-weight-thin">
             {{ item.label }}
@@ -28,7 +28,7 @@
             v-model="item.model">
           </q-input>
         </div>
-        <div class="q-px-sm q-pt-xs q-mt-auto" style="width: 100%; height: 85%">
+        <div class="q-px-sm q-pt-xs q-mt-auto row justify-end" style="width: 100%; height: 85%">
           <input
             ref="fileUpload"
             type="file"
@@ -207,7 +207,7 @@ export default defineComponent({
   }
   &__item-input {
     color: #7A7A7A;
-    min-width: 220px !important;
+    min-width: 250px !important;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;

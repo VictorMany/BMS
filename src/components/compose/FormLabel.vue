@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-    <div class="row q-pa-md q-py-lg" style="max-width: 780px">
+    <div class="row q-pa-md q-py-lg" style="max-width: 1200px">
       <!-- LEFT SECTION -->
       <div class="col-7">
         <div v-for="(item, i) in textfields.left" :key="i">
