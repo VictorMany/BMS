@@ -7,18 +7,21 @@
         horizontal>
         <q-img
           class="col-5 img-style"
-          :src="`https://picsum.photos/id/${index}/200/300`" />
-        <q-card-section class="q-py-sm q-px-sm full-width ellipsis">
-          <div class="card-typography full-width q-pb-xs ellipsis">
+          :src="cardImg" />
+        <q-card-section class="q-py-sm q-px-sm ellipsis">
+          <div class="card-typography q-pb-xs ellipsis">
             {{ cardTitle }}
           </div>
           <div v-for="(label, i) in cardLabels"
             :key="i"
             class="row">
-            <div class="col-6 card-typography q-pb-xs">
+            <div v-if="label.label"
+              class="q-pb-xs"
+              :class="label.info === undefined ? 'card-typography-info col-12' : 'card-typography col-6'">
               {{ label.label }}
             </div>
             <div
+              v-if="label.info"
               class="col-6 card-typography-info q-pb-xs"
               :class="label.label === null ? 'col-12' : ''">
               {{ label.info }}
@@ -43,16 +46,15 @@ export default defineComponent({
   props: {
     cardTitle: {
       type: String,
-      default: 'Monitor de signos vitales',
+      default: '',
       required: false
     },
     index: { type: Number },
     cardImg: {
       type: String,
       required: false,
-      default: 'https://cdn.quasar.dev/img/parallax3.jpg'
+      default: ''
     },
-
     cardLabels: {
       type: Array,
       required: false,
@@ -65,7 +67,7 @@ export default defineComponent({
     cardDate: {
       type: String,
       required: false,
-      default: '12/10/2022'
+      default: ''
     },
 
     cardAction: {
@@ -78,10 +80,11 @@ export default defineComponent({
 
 <style scoped>
   .my-card {
-    max-width: 350px;
+    width: 270px;
     min-width: 260px;
     height: 110px !important;
     border-radius: 10px !important;
+    box-shadow: none;
   }
 
   .my-card:hover {
@@ -98,12 +101,12 @@ export default defineComponent({
   .card-typography {
     font-weight: 400;
     font-size: 12px;
-    color: #3e4f67;
+    color: #283438;
   }
 
   .card-typography-info {
     font-weight: 300;
     font-size: 12px;
-    color: #283438;
+    color: #3e4f67;
   }
 </style>

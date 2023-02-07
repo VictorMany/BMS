@@ -13,10 +13,10 @@
             <div class="row q-pa-none q-ma-none">
               <div
                 class="col-auto q-pa-sm"
-                v-for="(equipo, index) in Equipos"
+                v-for="(equipo, index) in Equipments"
                 :key="index"
               >
-                <item-card :v-bind="equipo" :index="index" :card-action="cardAction"/>
+                <item-card v-bind="equipo" :index="index" :card-action="cardAction"/>
               </div>
             </div>
           </div>
@@ -39,7 +39,188 @@ export default defineComponent({
   },
   data () {
     return {
-      Equipos: 40,
+      Equipments: [
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Kit de instrumental biomédico',
+          cardImg: 'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Incubadora',
+          cardImg: 'https://www.ibiomedico.com.mx/uploads/1/1/9/9/119919098/incubadora-155_orig.jpg',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Kit de instrumental biomédico',
+          cardImg: 'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Incubadora',
+          cardImg: 'https://www.ibiomedico.com.mx/uploads/1/1/9/9/119919098/incubadora-155_orig.jpg',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Kit de instrumental biomédico',
+          cardImg: 'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Incubadora',
+          cardImg: 'https://www.ibiomedico.com.mx/uploads/1/1/9/9/119919098/incubadora-155_orig.jpg',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Monitor de signos vitales',
+          cardImg: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Kit de instrumental biomédico',
+          cardImg: 'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        },
+        {
+          cardTitle: 'Incubadora',
+          cardImg: 'https://www.ibiomedico.com.mx/uploads/1/1/9/9/119919098/incubadora-155_orig.jpg',
+          cardLabels: [
+            { label: 'Marca:', info: 'Mendray' },
+            { label: 'Serie:', info: 'A7GTHYFRG' }
+          ],
+          cardDate: '12/02/2022'
+        }
+      ],
       btnAction: {
         show: true,
         btnTitle: 'Añadir equipo',
@@ -53,7 +234,7 @@ export default defineComponent({
   },
   methods: {
     cardAction () {
-      this.$router.push('edit-equipment')
+      this.$router.push('detail-equipment')
     }
   }
 })
