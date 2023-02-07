@@ -1,9 +1,29 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-    <div class="row q-pa-md q-py-lg" style="max-width: 1200px">
+    <div class="row q-pa-md items-stretch" style="max-width: 1200px;">
       <!-- LEFT SECTION -->
-      <div class="col-auto">
-        <div v-for="(item, i) in textfields.left" :key="i" class="row items-center q-px-sm q-py-xs">
+      <div v-if="textfields.top.length > 0" class="col-12 q-py-sm">
+        <div
+          v-for="(item, i) in textfields.top"
+          :key="i"
+          class="row items-center q-px-sm q-py-xs"
+          style="max-width: 550px;">
+          <div class="col q-mr-md form__item-label text-weight-thin">
+            {{ item.label }}
+          </div>
+          <q-input
+            class="col form__item-input-12 q-pl-md q-pr-md input"
+            borderless
+            dense
+            v-model="item.model">
+          </q-input>
+        </div>
+      </div>
+      <div class="col-auto q-py-sm">
+        <div
+          v-for="(item, i) in textfields.left"
+          :key="i"
+          class="row items-center q-px-sm q-py-xs">
           <div class="col q-mr-md form__item-label text-weight-thin">
             {{ item.label }}
           </div>
@@ -16,36 +36,58 @@
         </div>
       </div>
       <!-- RIGHT SECTION -->
-      <div class="col q-pl-sm column items-end">
-        <div v-for="(item, i) in textfields.right" :key="i" class="row items-center q-px-sm">
-          <div class="col q-mr-md form__item-label text-weight-thin">
+      <div class="col q-pl-sm column items-end q-py-sm">
+        <div
+          v-for="(item, i) in textfields.right"
+          :key="i"
+          class="row items-center q-px-sm q-py-xs">
+          <div
+            v-if="item.label"
+            class="col q-mr-md form__item-label text-weight-thin">
             {{ item.label }}
           </div>
           <q-input
+            v-if="item.label"
             class="col form__item-input q-pl-md q-pr-md input"
             borderless
             dense
             v-model="item.model">
           </q-input>
         </div>
-        <div class="q-px-sm q-pt-xs q-mt-auto row justify-end" style="width: 100%; height: 85%">
+        <div
+          class="q-px-sm q-pt-xs row"
+          :class="[type === 'user' ? 'justify-center' : 'justify-end', textfields.right.lenght > 0 ? 'q-mt-auto' : '']"
+          style="width: 100%; height: 85%">
           <input
             ref="fileUpload"
             type="file"
             style="display: none"
-            @change="uploadFile($event)">
+            @change="uploadFile($event)"
+          />
           <q-btn
             unelevated
-            style="background-color: #E7F0F7; width: 100%; max-width: 500px; min-height: 100%; height: auto;"
+            class="q-py-sm"
+            style="background-color: #e7f0f7; max-width: 500px; height: auto;"
+            :class="{ 'btn-background' : ImageBase64 && type === 'user' }"
+            :style="type === 'user' ? 'width: 254px; height: 254px; border-radius: 50%' : 'width: 100%; min-height: 100%; max-width: 350px'"
             @click="pdfObject.name
-            ? clearFileInput($refs.fileUpload)
-            : $refs.fileUpload.click()">
-            <q-img class="form__image" no-spinner :src="ImageBase64 ? ImageBase64 : getImageUrl('svg/add_img.svg')" />
+                ? clearFileInput($refs.fileUpload)
+                : $refs.fileUpload.click()">
+            <q-img
+              :class="[ImageBase64 && type === 'user'
+              ? 'form__image64'
+              : 'form__image',
+              ImageBase64 && type !== 'user'
+              ? 'form__image64-equipment'
+              : 'form__image']"
+              no-spinner
+              :src="ImageBase64 ? ImageBase64 : getImageUrl('svg/add_img.svg')"
+            />
           </q-btn>
         </div>
       </div>
       <!-- TEXT AREA -->
-      <div class="col-12 q-mt-md">
+      <div v-if="textfields.textArea.model" class="col-12 q-mt-md">
         <div class="q-pa-sm">
           <q-input
             label="Observaciones del equipo biomédico"
@@ -57,11 +99,6 @@
           />
         </div>
       </div>
-      <div class="col-12">
-        <div class="form__date column items-end q-pa-sm">
-          <div>Fecha de creación <strong> 12/02/2022</strong></div>
-        </div>
-      </div>
     </div>
 </template>
 
@@ -71,6 +108,11 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'InputSearch',
   props: {
+    type: {
+      type: String,
+      default: '',
+      required: false
+    },
     inputLabel: {
       type: String,
       default: 'Buscar por nombre',
@@ -90,65 +132,27 @@ export default defineComponent({
       type: String,
       required: false,
       default: ''
+    },
+    // PAYLOAD
+    textfields: {
+      type: Object,
+      required: false,
+      default: () => {}
     }
   },
   setup () {
     const getImageUrl = (url) => {
       try {
         return new URL(`../../assets/${url}`, import.meta.url).href
-      } catch (error) {
-
-      }
+      } catch (error) {}
     }
     return { getImageUrl }
   },
+  created () {
+    console.log(this.textfields)
+  },
   data () {
     return {
-      textfields: {
-        left: [
-          {
-            label: 'Nombre del equipo',
-            model: ''
-          },
-          {
-            label: 'Número de control',
-            model: ''
-          },
-          {
-            label: 'Marca',
-            model: ''
-          },
-          {
-            label: 'Ubicación',
-            model: ''
-          },
-          {
-            label: 'Año del equipo',
-            model: ''
-          },
-          {
-            label: 'Provedor',
-            model: ''
-          },
-          {
-            label: 'Estatus',
-            model: ''
-          },
-          {
-            label: 'Costo',
-            model: ''
-          }
-        ],
-        right: [
-          {
-            label: 'No. serie',
-            model: ''
-          }
-        ],
-        textArea: {
-          model: ''
-        }
-      },
       openDialogLocal: this.openDialog,
       pdfObject: {
         name: '',
@@ -175,9 +179,7 @@ export default defineComponent({
           this.pdfObject.name = file.name
           this.pdfObject.file = file
         }
-      } catch (error) {
-
-      }
+      } catch (error) {}
     },
     clearFileInput (ctrl) {
       try {
@@ -195,18 +197,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-
 .form {
   &__item-label {
-    color: #7A7A7A;
+    color: #7a7a7a;
     font-size: 12px;
   }
+
   &__date {
-    color: #7A7A7A;
+    color: #7a7a7a;
     font-size: 12px;
   }
+
   &__item-input {
-    color: #7A7A7A;
+    color: #7a7a7a;
     min-width: 250px !important;
     font-style: normal;
     font-weight: 400;
@@ -216,8 +219,21 @@ export default defineComponent({
     background: v-bind(inputBackground);
     border-radius: 0.3rem !important;
   }
+
+  &__item-input-12 {
+    color: #7a7a7a;
+    min-width: 100% !important;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    height: 29px !important;
+    color: v-bind(inputColor);
+    background: v-bind(inputBackground);
+    border-radius: 0.3rem !important;
+  }
+
   &__item-area {
-    color: #7A7A7A;
+    color: #7a7a7a;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -225,9 +241,35 @@ export default defineComponent({
     background: v-bind(inputBackground);
     border-radius: 0.5rem !important;
   }
+
   &__image {
-    object-fit: contain !important;
-    width: 150px;
+    object-fit: fill !important;
+    width: 150px !important;
+    height: 150px !important;
   }
+
+  &__image64 {
+    object-fit: fill !important;
+    width: 210px !important;
+    height: 210px !important;
+    background-color: white;
+    background-clip: padding-box;
+    border: 10px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
+  }
+  &__image64-equipment {
+    object-fit: fill !important;
+    width: 300px !important;
+    height: 320px !important;
+    background-color: white;
+    background-clip: padding-box;
+    border: 5px solid rgba(255,255,255,0.5);
+    border-radius: 10%;
+  }
+}
+
+.btn-background {
+  background: rgb(0,106,255);
+  background: linear-gradient(34deg, rgba(0,106,255,0.2) 0%, rgba(45,185,255,0.2) 44%, rgba(0,243,255,0.2) 100%);
 }
 </style>

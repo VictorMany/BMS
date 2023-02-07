@@ -5,17 +5,17 @@
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions
-        :titlePage="'Agregar nuevo equipo'"
+        :titlePage="'Detalles de usuario'"
         :btn-action="btnAction"
       />
       <div class="main-container-page" style="height: 82%">
         <q-scroll-area class="full-height" style="height: 95% !important" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-          <form-text-field :textfields="textfields" />
+          <form-label :textfields="textfields" type="user" />
         </q-scroll-area>
         <div class="col-12" style="background-color: #e7f0f7; height: 5%;">
-            <div class="form__date column items-end q-pa-sm q-mt-auto">
-              <div>Fecha de creación <strong> 12/02/2022</strong></div>
-            </div>
+          <div class="form__date column items-end q-pa-sm q-mt-auto">
+            <div>Fecha de creación <strong> 12/02/2022</strong></div>
+          </div>
         </div>
       </div>
     </div>
@@ -26,22 +26,58 @@
 import { defineComponent } from 'vue'
 import BtnAction from 'src/components/atomic/BtnAction.vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import FormTextField from 'src/components/compose/FormTextField.vue'
+import FormLabel from 'src/components/compose/FormLabel.vue'
 
 export default defineComponent({
   name: 'EquipmentsPage',
   components: {
     HeaderActions,
-    FormTextField,
+    FormLabel,
     BtnAction
   },
   data () {
     return {
-      Equipos: 40,
+      textfields: {
+        left: [
+          {
+            label: 'LUIS ALFREDO MARQUEZ PEREZ',
+            class: 'q-pb-md',
+            type: 'title'
+          },
+          {
+            label: 'Correo',
+            class: 'q-pb-sm',
+            model: 'vvf69351@udelasalle.edu.mx'
+          },
+          {
+            label: 'Curp',
+            class: 'q-pb-sm',
+            model: 'VEF000228HGTLNCA9'
+          },
+          {
+            label: 'Fecha de nacimiento',
+            class: 'q-pb-sm',
+            model: '28/04/2000'
+          },
+          {
+            label: 'Rol de usuario',
+            class: 'q-pb-sm',
+            model: 'Administrador'
+          },
+          {
+            label: 'Estatus',
+            class: 'q-pb-sm',
+            type: 'status',
+            model: 'Activo'
+          }
+        ],
+        right: [],
+        textarea: {}
+      },
       btnAction: {
         show: true,
-        btnTitle: 'Guardar',
-        to: 'add-equipment',
+        btnTitle: 'Editar',
+        to: 'add-user',
         btnWidth: 'auto'
       },
       btnCloseWindow: {
@@ -49,56 +85,12 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: '/'
-      },
-      textfields: {
-        top: [
-          {
-            label: 'Nombre del equipo',
-            model: ''
-          }
-        ],
-        left: [
-          {
-            label: 'Número de control',
-            model: ''
-          },
-          {
-            label: 'Marca',
-            model: ''
-          },
-          {
-            label: 'Ubicación',
-            model: ''
-          },
-          {
-            label: 'Año del equipo',
-            model: ''
-          },
-          {
-            label: 'Provedor',
-            model: ''
-          },
-          {
-            label: 'Estatus',
-            model: ''
-          },
-          {
-            label: 'Costo',
-            model: ''
-          }
-        ],
-        right: [
-          {
-            label: 'No. serie',
-            model: ''
-          }
-        ],
-        textArea: {
-          model: ''
-        }
+        to: 'users'
       }
     }
+  },
+  created () {
+    console.log(this.$route.params.id)
   }
 })
 </script>

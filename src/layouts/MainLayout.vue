@@ -1,8 +1,8 @@
 <template>
   <q-layout view="lHh lpR lFf">
-    <q-drawer show-if-above v-model="leftDrawerOpen" class="cursor-pointer non-selectable main-menu">
+    <q-drawer show-if-above v-model="leftDrawerOpen" class="cursor-pointer non-selectable main-menu row items-center">
       <!-- drawer content -->
-      <div style="height: 100%" class="q-py-md q-pl-md">
+      <div style="height: 97vh; width: 100%;" class="q-pl-md">
         <div class="side-menu">
           <div class="title text-center text-weight-light q-pt-lg"> BMS </div>
           <q-scroll-area class="q-px-md q-py-sm" style="height: 85%" :thumb-style="{ right: '4px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
@@ -17,7 +17,6 @@
           </q-scroll-area>
         </div>
       </div>
-
     </q-drawer>
     <q-page-container>
       <router-view />

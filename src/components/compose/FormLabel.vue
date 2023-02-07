@@ -2,10 +2,10 @@
 <template>
     <div class="row q-pa-md q-py-lg" style="max-width: 1200px">
       <!-- LEFT SECTION -->
-      <div class="col-7">
-        <div v-for="(item, i) in textfields.left" :key="i">
+      <div class="col-6">
+        <div v-for="(item, i) in textfields.left" v-bind="item" :key="i">
           <div class="row items-center q-px-sm q-py-xs">
-            <div v-if="item.type != 'title'" class="col q-mr-md form__item-label text-weight-thin">
+            <div v-if="item.type != 'title'" class="col-5 q-mr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
             <div v-else-if="item.type === 'title'" class="col q-mr-md form__item-label__title text-weight-thin q-mb-sm">
@@ -25,8 +25,8 @@
         </div>
       </div>
       <!-- RIGHT SECTION -->
-      <div class="col q-pl-xl column items-end">
-        <div v-for="(item, i) in textfields.right" :key="i" style="height: 12%">
+      <div class="col q-pl-xl column items-end q-mb-lg">
+        <div v-for="(item, i) in textfields.right" v-bind="item" :key="i" style="height: 12%">
           <div class="row justify-end q-px-sm q-py-xs">
             <div class="q-mr-md form__item-label text-weight-thin">
               {{ item.label }}
@@ -37,16 +37,26 @@
             </div>
           </div>
         </div>
-        <div style="width: 100%; height: 88%">
+        <div
+          class="q-px-sm q-pt-xs row"
+          :class="[type === 'user' ? 'justify-center q-ma-lg q-pa-lg' : 'justify-end', textfields.right.lenght > 0 ? 'q-mt-auto' : '']"
+          style="width: 100%; height: 85%">
           <div
             class="full-width row items-center"
-            style="border: 1px solid #ECECEC; border-radius: 5px; width: 100%; height: 100%; max-width: 500px;">
-            <q-img class="form__image q-mx-auto" no-spinner src="https://th.bing.com/th/id/R.e3fe7ba73953544a86b878b17fd9f15a?rik=b6KdNrgLWhTDJw&pid=ImgRaw&r=0" />
+            :class="type === 'user' ? 'btn-background justify-center' :  'justify-end'"
+            :style="type === 'user' ? 'width: 254px !important; height: 254px; border-radius: 50%' : 'width: 100%; min-height: 100%; max-width: 350px'">
+            <q-img
+              :class="[type === 'user'
+              ? 'form__image64'
+              : 'form__image64-equipment']"
+              no-spinner
+              :src="type === 'user' ? 'https://variety.com/wp-content/uploads/2022/08/Jonah-Hill.jpg?w=681&h=383&crop=1' : 'https://th.bing.com/th/id/R.e3fe7ba73953544a86b878b17fd9f15a?rik=b6KdNrgLWhTDJw&pid=ImgRaw&r=0'"
+            />
           </div>
         </div>
       </div>
       <!-- TEXT AREA -->
-      <div class="col-12 q-mt-md">
+      <div v-if="textfields.textarea.label" class="col-12 q-mt-lg">
         <div class="q-pa-sm" style="border: 1px solid #ECECEC; border-radius: 5px; width: 100%; height: 100%;">
           <div class="col-12 q-mr-md form__item-label text-weight-thin">
             {{  textfields.textarea.label }}
@@ -55,11 +65,6 @@
             class="col-12 form__item-model q-pr-md">
             {{  textfields.textarea.model }}
           </div>
-        </div>
-      </div>
-      <div class="col-12 q-mt-sm">
-        <div class="form__date column items-end q-pa-sm">
-          <div>Fecha de registro <strong> 12/02/2022</strong></div>
         </div>
       </div>
     </div>
@@ -71,6 +76,11 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'InputSearch',
   props: {
+    type: {
+      type: String,
+      default: '',
+      required: false
+    },
     inputLabel: {
       type: String,
       default: 'Buscar por nombre',
@@ -90,6 +100,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: ''
+    },
+    textfields: {
+      type: Object,
+      required: true,
+      default: () => {}
     }
   },
   setup () {
@@ -104,63 +119,6 @@ export default defineComponent({
   },
   data () {
     return {
-      textfields: {
-        left: [
-          {
-            label: 'Monitor de signos vitales',
-            type: 'title'
-          },
-          {
-            label: 'Número de control',
-            model: '567432'
-          },
-          {
-            label: 'Marca',
-            model: 'Mendray'
-          },
-          {
-            label: 'Ubicación',
-            model: 'Piso B - Sala 4'
-          },
-          {
-            label: 'Año del equipo',
-            model: '2012'
-          },
-          {
-            label: 'Provedor',
-            model: 'SAMSUNG'
-          },
-          {
-            label: 'Costo',
-            model: '$ 200 000. 00'
-          },
-          {
-            label: 'Fecha de garantía',
-            type: 'date',
-            model: '12/02/2022'
-          },
-          {
-            label: 'Fecha de modificación',
-            type: 'date',
-            model: '12/02/2022'
-          },
-          {
-            label: 'Estatus',
-            type: 'status',
-            model: 'Activo'
-          }
-        ],
-        right: [
-          {
-            label: 'No. de serie',
-            model: 'A7GTHYFRG'
-          }
-        ],
-        textarea: {
-          label: 'Observaciones del equipo biomédico',
-          model: 'Se han observado las siguientes irregularidades: •  El equipo está sucio. • El equipo no está funcionando correctamente. •  El equipo está dañado.'
-        }
-      },
       openDialogLocal: this.openDialog,
       pdfObject: {
         name: '',
@@ -237,9 +195,27 @@ export default defineComponent({
     background: v-bind(inputBackground);
     border-radius: 0.5rem !important;
   }
-  &__image {
-    object-fit: contain !important;
-    width: 150px;
+  &__image64 {
+    object-fit: fill !important;
+    width: 210px !important;
+    height: 210px !important;
+    background-color: white;
+    background-clip: padding-box;
+    border: 10px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
   }
+  &__image64-equipment {
+    object-fit: fill !important;
+    width: 300px !important;
+    height: 320px !important;
+    background-color: white;
+    background-clip: padding-box;
+    border: 5px solid rgba(255,255,255,0.5);
+    border-radius: 10%;
+  }
+}
+.btn-background {
+    background: rgb(0,106,255);
+    background: linear-gradient(34deg, rgba(0,106,255,0.2) 0%, rgba(45,185,255,0.2) 44%, rgba(0,243,255,0.2) 100%);
 }
 </style>
