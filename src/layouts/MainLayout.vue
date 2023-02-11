@@ -1,6 +1,10 @@
 <template>
   <q-layout view="lHh lpR lFf">
-    <q-drawer show-if-above v-model="leftDrawerOpen" class="cursor-pointer non-selectable main-menu row items-center">
+    <q-drawer show-if-above
+        :width="350"
+        :breakpoint="1000"
+        v-model="leftDrawerOpen"
+        class="cursor-pointer non-selectable main-menu row items-center">
       <!-- drawer content -->
       <div style="height: 97vh; width: 100%;" class="q-pl-md">
         <div class="side-menu">
@@ -19,6 +23,7 @@
       </div>
     </q-drawer>
     <q-page-container>
+      <q-btn class="hamburguer-menu" flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="menu" />
       <router-view />
     </q-page-container>
   </q-layout>
@@ -157,6 +162,20 @@ export default defineComponent({
   font-family: 'Inter';
   font-size: 30px;
   color: #1A86D4;
+}
+
+@media only screen
+and (min-device-width : 1000px) {
+  .hamburguer-menu {
+    display: none;
+  }
+}
+
+.hamburguer-menu {
+  position: absolute;
+  z-index: 100;
+  margin-top: 2.6rem;
+  margin-left: 2rem;
 }
 
 /**scrollbar in different browsers */

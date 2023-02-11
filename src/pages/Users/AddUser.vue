@@ -52,6 +52,7 @@ export default defineComponent({
         to: 'users'
       },
       textfields: {
+        imageInput: true,
         top: [
           {
             label: 'Nombre del usuario',
@@ -85,9 +86,7 @@ export default defineComponent({
           }
         ],
         right: [],
-        textArea: {
-          model: ''
-        }
+        textArea: {}
       }
     }
   }

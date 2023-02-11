@@ -5,7 +5,7 @@
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions
-        :titlePage="'Agregar nuevo equipo'"
+        :titlePage="'Agregar nuevo mantenimiento'"
         :btn-action="btnAction"
       />
       <div class="main-container-page" style="height: 82%">
@@ -52,51 +52,49 @@ export default defineComponent({
         to: '/'
       },
       textfields: {
-        imageInput: true,
+        readImage: true,
         top: [
           {
-            label: 'Nombre del equipo',
+            label: 'Encargado',
+            model: ''
+          },
+          {
+            label: 'Equipo',
             model: ''
           }
         ],
         left: [
           {
-            label: 'Número de control',
+            label: 'Tipo',
             model: ''
           },
           {
-            label: 'Marca',
+            label: 'Motivo',
             model: ''
           },
           {
-            label: 'Ubicación',
-            model: ''
-          },
-          {
-            label: 'Año del equipo',
-            model: ''
-          },
-          {
-            label: 'Provedor',
-            model: ''
-          },
-          {
-            label: 'Estatus',
-            model: ''
-          },
-          {
-            label: 'Costo',
-            model: ''
+            type: 'textarea',
+            items: [
+              {
+                label: 'Herramientas',
+                model: ''
+              },
+              {
+                label: 'Materiales',
+                model: ''
+              }
+            ]
           }
         ],
         right: [
           {
             label: 'No. serie',
-            model: ''
+            readonly: true,
+            model: 'NS-145424'
           }
         ],
         textArea: {
-          label: 'Observaciones del equipo',
+          label: 'Actividades y observaciones del mantenimiento',
           model: ''
         }
       }
