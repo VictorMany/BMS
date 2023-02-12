@@ -10,8 +10,7 @@
             <div class="col q-mr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
-            <q-input class="col form__item-input-12 q-pl-md q-pr-md input" borderless dense v-model="item.model">
-            </q-input>
+            <q-input class="col form__item-input-12 q-pl-md q-pr-md input" borderless dense v-model="item.model" />
           </div>
         </div>
         <div class="col-12 q-py-xs">
@@ -24,7 +23,7 @@
                       {{ textfield.label }}
                     </div>
                     <q-editor v-model="textfield.model" :placeholder="'Escribe aquí tus ' + textfield.label"
-                      class="form__item-area input q-mx-sm" dense :toolbar="[['unordered', 'ordered']]" />
+                      class="form__item-textarea input q-mx-sm" dense :toolbar="[['unordered', 'ordered']]" />
                   </div>
                 </div>
               </div>
@@ -32,8 +31,7 @@
                 <div class="col q-mr-md form__item-label text-weight-thin">
                   {{ item.label }}
                 </div>
-                <q-input class="col form__item-input q-pl-md q-pr-md input" borderless dense v-model="item.model">
-                </q-input>
+                <q-input class="col form__item-input q-pl-md q-pr-md input" borderless dense v-model="item.model" />
               </div>
             </div>
           </div>
@@ -49,8 +47,7 @@
               {{ item.label }}
             </div>
             <q-input v-if="item.label" :readonly="item.readonly" class="col form__item-input q-pl-md q-pr-md input"
-              borderless dense v-model="item.model">
-            </q-input>
+              borderless dense v-model="item.model" />
           </div>
         </div>
         <div class="col-12">
@@ -89,7 +86,7 @@
         {{ textfields.textArea.label }}
       </div>
       <q-editor v-model="textfields.textArea.model" :placeholder="'Escribe aquí tus ' + textfields.textArea.label"
-        class="form__item-area input q-mx-sm" dense :toolbar="[['unordered', 'ordered'], [{
+        class="form__item-textarea input q-mx-sm" dense :toolbar="[['unordered', 'ordered'], [{
         label: $q.lang.editor.fontSize,
         icon: $q.iconSet.editor.fontSize,
         fixedLabel: true,
@@ -127,16 +124,6 @@ export default defineComponent({
       type: String,
       default: 'Buscar por nombre',
       required: false
-    },
-    inputColor: {
-      type: String,
-      required: false,
-      default: 'rgba(122, 122, 122, 1)'
-    },
-    inputBackground: {
-      type: String,
-      required: false,
-      default: '#E7F0F7'
     },
     model: {
       type: String,
@@ -223,37 +210,34 @@ export default defineComponent({
   }
 
   &__item-input {
-    color: #7a7a7a;
     min-width: 260px !important;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
     height: 29px !important;
-    color: v-bind(inputColor);
-    background: v-bind(inputBackground);
+    background-color: #E7F0F7;
+    color: #7a7a7a;
     border-radius: 0.3rem !important;
   }
 
   &__item-input-12 {
-    color: #7a7a7a;
     min-width: 100% !important;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
     height: 29px !important;
-    color: v-bind(inputColor);
-    background: v-bind(inputBackground);
+    background-color: #E7F0F7;
+    color: #7a7a7a;
     border-radius: 0.3rem !important;
   }
 
-  &__item-area {
-    color: #7a7a7a;
+  &__item-textarea {
     border: none;
     font-style: normal;
     font-weight: 400;
+    background-color: #E7F0F7;
+    color: #7a7a7a;
     font-size: 12px;
-    color: v-bind(inputColor);
-    background: v-bind(inputBackground);
     border-radius: 0.5rem !important;
   }
 
