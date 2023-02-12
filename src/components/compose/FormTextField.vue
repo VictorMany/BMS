@@ -2,7 +2,7 @@
 <template>
   <div class="row q-pa-md items-stretch" style="max-width: 1200px;">
     <!-- LEFT SECTION -->
-    <div class="col-12 col-lg-5 col-md-6">
+    <div class="col-12 col-lg-5 col-md-6 q-pb-xs">
       <div class="row">
         <div v-if="textfields.top.length > 0" class="col-12 q-pb-xs">
           <div v-for="(item, i) in textfields.top" :key="i" class="row items-center q-px-sm q-py-xs"
@@ -20,8 +20,11 @@
               <div v-if="item.type === 'textarea'">
                 <div class="row w-100 justify-between">
                   <div v-for="(textfield, i) in item.items" :key="i" class="col-6">
-                  <q-input class="form__item-area q-pl-md q-pr-md input q-mx-sm q-mb-none" :label="textfield.label"
-                    v-model="textfield.model" borderless dense type="textarea" />
+                    <div class="q-ma-sm form__item-label text-weight-thin">
+                      {{ textfield.label }}
+                    </div>
+                    <q-editor v-model="textfield.model" :placeholder="'Escribe aquí tus ' + textfield.label"
+                      class="form__item-area input q-mx-sm" dense :toolbar="[['unordered', 'ordered']]" />
                   </div>
                 </div>
               </div>
@@ -45,8 +48,8 @@
             <div v-if="item.label" class="col q-mr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
-            <q-input v-if="item.label" :readonly="item.readonly" class="col form__item-input q-pl-md q-pr-md input" borderless dense
-              v-model="item.model">
+            <q-input v-if="item.label" :readonly="item.readonly" class="col form__item-input q-pl-md q-pr-md input"
+              borderless dense v-model="item.model">
             </q-input>
           </div>
         </div>
@@ -70,8 +73,7 @@
             </q-btn>
           </div>
           <div v-else-if="textfields.readImage" class="q-px-sm q-pt-xs row"
-            :class="['justify-end', textfields.right.lenght > 0 ? 'q-mt-auto' : '']"
-            style="width: 100%; height: 85%;">
+            :class="['justify-end', textfields.right.lenght > 0 ? 'q-mt-auto' : '']" style="width: 100%; height: 85%;">
             <div class="full-width row items-center justify-end"
               style="width: 100%; min-height: 100%; max-width: 350px;">
               <q-img :class="['form__image64-equipment']" no-spinner
@@ -83,16 +85,35 @@
     </div>
     <!-- TEXT AREA -->
     <div v-if="textfields.textArea.model != undefined" class="col-12">
-      <div class="q-pa-sm">
-        <q-input :label="textfields.textArea.label" class="form__item-area q-pl-md q-pr-md q-mt-sm input"
-          v-model="textfields.textArea.model" borderless dense type="textarea" />
+      <div class="q-ma-sm form__item-label text-weight-thin">
+        {{ textfields.textArea.label }}
       </div>
+      <q-editor v-model="textfields.textArea.model" :placeholder="'Escribe aquí tus ' + textfields.textArea.label"
+        class="form__item-area input q-mx-sm" dense :toolbar="[['unordered', 'ordered'], [{
+        label: $q.lang.editor.fontSize,
+        icon: $q.iconSet.editor.fontSize,
+        fixedLabel: true,
+        fixedIcon: true,
+        list: 'no-icons',
+        options: [
+          'size-1',
+          'size-2',
+          'size-3',
+          'size-4',
+          'size-5',
+          'size-6',
+          'size-7'
+        ]
+      },
+        'bold', 'italic', 'strike', 'underline']]" />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import {
+  defineComponent
+} from 'vue'
 
 export default defineComponent({
   name: 'InputSearch',
@@ -132,10 +153,13 @@ export default defineComponent({
   setup () {
     const getImageUrl = (url) => {
       try {
-        return new URL(`../../assets/${url}`, import.meta.url).href
+        return new URL(`../../assets/${url}`,
+          import.meta.url).href
       } catch (error) { }
     }
-    return { getImageUrl }
+    return {
+      getImageUrl
+    }
   },
   created () {
     console.log(this.textfields)
@@ -143,6 +167,7 @@ export default defineComponent({
   data () {
     return {
       openDialogLocal: this.openDialog,
+      previousLength: 0,
       pdfObject: {
         name: '',
         file: {}
@@ -223,6 +248,7 @@ export default defineComponent({
 
   &__item-area {
     color: #7a7a7a;
+    border: none;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;

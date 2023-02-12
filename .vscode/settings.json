@@ -1,11 +1,10 @@
 {
   "editor.bracketPairColorization.enabled": true,
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.colorTheme": "Night Owl",
   "editor.guides.bracketPairs": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "editor.codeActionsOnSave": [
-    "source.fixAll.eslint"
-  ],
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -15,5 +14,13 @@
   "[vue]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "nuxt.isNuxtApp": false
+  "nuxt.isNuxtApp": true,
+  "files.autoSave": "afterDelay",
+  "eslint.format.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "html.format.indentHandlebars": true,
+  "html.format.indentInnerHtml": true,
+  "html.format.wrapAttributes": "auto"
 }
