@@ -91,9 +91,9 @@ export default defineComponent({
   &__bottom-container {
     position: absolute;
     top: 19.06%;
-    bottom: 7.52%;
-    width: 80%;
-    height: 386.94px;
+    bottom: 1.52%;
+    width: 85%;
+    height: 390.94px;
     background-color: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 40px;
