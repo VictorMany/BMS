@@ -8,20 +8,22 @@
               BMS
             </div>
           </div>
-          <div class="login__bottom-container q-pa-lg">
-            <q-input class="form__item-input-login q-pl-md q-pr-md input q-mt-lg q-mb-lg" borderless dense v-model="model.user" label="Usuario">
-              <template v-slot:prepend>
-                <q-icon name="account_circle" />
-              </template>
-            </q-input>
-            <q-input ref="pass" type="password" class="form__item-input-login q-pl-md q-pr-md input" borderless dense v-model="model.password" label="Contraseña">
-              <template v-slot:prepend>
-                <q-icon name="lock" />
-              </template>
-            </q-input>
-            <label for="pass" class="login__legend text-weight-thin q-ma-sm">Olvidaste la contraseña</label>
-            <div class="col login__submit flex flex-center">
-              <btn-action v-bind="btnAction" />
+          <div class="h-100 w-100 flex flex-center">
+            <div class="login__bottom-container q-pa-lg">
+              <q-input class="form__item-input-login q-pl-md q-pr-md input q-mt-lg q-mb-lg" borderless dense v-model="model.user" label="Usuario">
+                <template v-slot:prepend>
+                  <q-icon name="account_circle" />
+                </template>
+              </q-input>
+              <q-input ref="pass" type="password" class="form__item-input-login q-pl-md q-pr-md input" borderless dense v-model="model.password" label="Contraseña">
+                <template v-slot:prepend>
+                  <q-icon name="lock" />
+                </template>
+              </q-input>
+              <label for="pass" class="login__legend text-weight-thin q-ma-sm">Olvidaste la contraseña</label>
+              <div class="col login__submit flex flex-center">
+                <btn-action v-bind="btnAction" />
+              </div>
             </div>
           </div>
         </div>
@@ -68,13 +70,15 @@ export default defineComponent({
     position: relative;
     background: #FFFFFF;
     border-radius: 40px;
-    width: 474px;
+    width: 100%;
+    max-width: 474px;
     height: 527px;
   }
   &__top-container {
     background: linear-gradient(249.89deg, #0075FF 6.95%, #89D5FF 111.53%);
     border-radius: 40px;
-    width: 474px;
+    width: 100%;
+    max-width: 474px;
     height: 251.83px;
   }
   &__title {
@@ -86,13 +90,11 @@ export default defineComponent({
   }
   &__bottom-container {
     position: absolute;
-    left: 7.18%;
-    right: 7.18%;
     top: 19.06%;
     bottom: 7.52%;
-    width: 405.93px;
+    width: 80%;
     height: 386.94px;
-    background: #FFFFFF;
+    background-color: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 40px;
   }
@@ -108,7 +110,8 @@ export default defineComponent({
   &__item-input-login {
     background-color: #F2F2F2 !important;
     border-radius: 50px !important;
-    width: 348.65px !important;
+    max-width: 348.65px !important;
+    width: 100% !important;
     height: 46.69px !important;
     padding-top: 0.2rem !important;
   }
