@@ -21,6 +21,5 @@
     "source.fixAll.eslint": true
   },
   "html.format.indentHandlebars": true,
-  "html.format.indentInnerHtml": true,
-  "html.format.wrapAttributes": "auto"
+  "html.format.indentInnerHtml": true
 }

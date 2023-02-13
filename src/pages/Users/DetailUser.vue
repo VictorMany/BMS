@@ -67,6 +67,7 @@ export default defineComponent({
           {
             label: 'Estatus',
             class: 'q-pb-sm',
+            color: '#10D13A',
             type: 'status',
             model: 'Activo'
           }

@@ -5,7 +5,7 @@
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions
-        :titlePage="'Características de un equipo'"
+        :title-page="'Detalles del mantenimiento'"
         :btn-action="btnAction"
       />
       <div class="main-container-page" style="height: 82%">
@@ -44,43 +44,31 @@ export default defineComponent({
             type: 'title'
           },
           {
-            label: 'Número de control',
-            model: '567432'
+            label: 'Encargado',
+            model: 'Victor Manuel Velázquez Fuentes'
           },
           {
-            label: 'Marca',
-            model: 'Mendray'
+            label: 'Motivo',
+            model: 'Display defectuoso'
           },
           {
-            label: 'Ubicación',
-            model: 'Piso B - Sala 4'
-          },
-          {
-            label: 'Año del equipo',
-            model: '2012'
-          },
-          {
-            label: 'Provedor',
-            model: 'SAMSUNG'
-          },
-          {
-            label: 'Costo',
-            model: '$ 200 000. 00'
-          },
-          {
-            label: 'Fecha de garantía',
-            type: 'date',
-            model: '12/02/2022'
-          },
-          {
-            label: 'Fecha de modificación',
-            type: 'date',
-            model: '12/02/2022'
-          },
-          {
-            label: 'Estatus',
+            label: 'Tipo',
             type: 'status',
-            model: 'Activo'
+            model: 'Correctivo',
+            color: '#FFAA05'
+          },
+          {
+            type: 'textarea',
+            items: [
+              {
+                label: 'Herramientas',
+                model: '<div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__value"><div class="q-badge flex inline items-center no-wrap q-badge--single-line bg-orange-8 api-row__pill cursor-pointer" role="status" aria-label="fullscreen">fullscreen</div>&nbsp;: Boolean</div></div><div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Description</div><div class="api-row__value">Fullscreen mode</div></div><div class="api-row__item col-xs-12 col-sm-3" style="width: 168.875px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Note</div><div class="api-row__value">Required to be used with v-model!</div></div>'
+              },
+              {
+                label: 'Materiales',
+                model: '<div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__value"><div class="q-badge flex inline items-center no-wrap q-badge--single-line bg-orange-8 api-row__pill cursor-pointer" role="status" aria-label="fullscreen">fullscreen</div>&nbsp;: Boolean</div></div><div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Description</div><div class="api-row__value">Fullscreen mode</div></div><div class="api-row__item col-xs-12 col-sm-3" style="width: 168.875px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Note</div><div class="api-row__value">Required to be used with v-model!</div></div>'
+              }
+            ]
           }
         ],
         right: [
@@ -91,7 +79,7 @@ export default defineComponent({
         ],
         textarea: {
           label: 'Observaciones del equipo biomédico',
-          model: 'Se han observado las siguientes irregularidades: •  El equipo está sucio. • El equipo no está funcionando correctamente. •  El equipo está dañado.'
+          model: '<font size="7" style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; ">Título de observaciones</font><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
         }
       },
       btnAction: {

@@ -37,9 +37,8 @@
                     <div
                       class="col-auto q-pa-sm"
                       v-for="(equipo, index) in Equipments"
-                      :key="index"
-                    >
-                      <item-card v-bind="equipo" :index="index"/>
+                      :key="index">
+                      <item-card v-bind="equipo" :index="index" :card-action="cardAction" />
                     </div>
                   </div>
                 </div>
@@ -217,8 +216,14 @@ export default defineComponent({
       btnAddPlan: {
         btnTitle: 'Crear un plan de mantenimientos preventivos',
         btnWidth: '100%',
+        to: 'maintenance-plan',
         iconName: null
       }
+    }
+  },
+  methods: {
+    cardAction () {
+      this.$router.push({ name: 'detail-equipment', params: { id: 100 } })
     }
   }
 })

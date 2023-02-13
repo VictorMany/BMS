@@ -1,5 +1,9 @@
 const routes = [
   {
+    path: '/login',
+    component: () => import('pages/Login.vue')
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
@@ -14,7 +18,7 @@ const routes = [
         component: () => import('src/pages/Equipments/AddEquipment.vue')
       },
       {
-        path: 'detail-equipment',
+        path: 'detail-:id-equipment',
         name: 'detail-equipment',
         component: () => import('src/pages/Equipments/DetailEquipment.vue')
       },
@@ -72,6 +76,11 @@ const routes = [
         path: 'reports',
         name: 'reports',
         component: () => import('src/pages/ReportsPage.vue')
+      },
+      {
+        path: 'maintenance-plan',
+        name: 'maintenance-plan',
+        component: () => import('src/pages/MaintenancePlan.vue')
       }
     ]
   },
@@ -82,6 +91,7 @@ const routes = [
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')
   }
+
 ]
 
 export default routes

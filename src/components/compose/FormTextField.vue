@@ -5,8 +5,7 @@
     <div class="col-12 col-lg-5 col-md-6 q-pb-xs">
       <div class="row">
         <div v-if="textfields.top.length > 0" class="col-12 q-pb-xs">
-          <div v-for="(item, i) in textfields.top" :key="i" class="row items-center q-px-sm q-py-xs"
-            style="width: 100%;">
+          <div v-for="(item, i) in textfields.top" :key="i" class="row items-center q-px-sm q-py-xs w-100">
             <div class="col q-mr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
@@ -52,9 +51,9 @@
         </div>
         <div class="col-12">
           <div v-if="textfields.imageInput" class="q-px-sm q-pt-xs row"
-            :class="[type === 'user' ? 'justify-center' : 'justify-end', textfields.right.lenght > 0 ? 'q-mt-auto' : '']"
-            style="width: 100%; height: 85%">
-            <input ref="fileUpload" type="file" style="display: none" @change="uploadFile($event)" />
+            :class="[type === 'user' ? 'justify-center w-100' : 'justify-end w-100', textfields.right.lenght > 0 ? 'q-mt-auto' : '']"
+            style="height: 85%">
+            <input ref="fileUpload" type="file" accept="image/*,.jpg, .jpeg, .png" style="display: none" @change="uploadFile($event)" />
             <q-btn unelevated class="q-py-sm" style="background-color: #e7f0f7; max-width: 500px; height: auto;"
               :class="{ 'btn-background': ImageBase64 && type === 'user' }"
               :style="type === 'user' ? 'width: 254px; height: 254px; border-radius: 50%' : 'width: 100%; min-height: 100%; max-width: 350px'"
@@ -64,16 +63,16 @@
               <q-img :class="[ImageBase64 && type === 'user'
               ? 'form__image64'
               : 'form__image',
-            ImageBase64 && type !== 'user'
+              ImageBase64 && type !== 'user'
               ? 'form__image64-equipment'
               : 'form__image']" no-spinner :src="ImageBase64 ? ImageBase64 : getImageUrl('svg/add_img.svg')" />
             </q-btn>
           </div>
-          <div v-else-if="textfields.readImage" class="q-px-sm q-pt-xs row"
-            :class="['justify-end', textfields.right.lenght > 0 ? 'q-mt-auto' : '']" style="width: 100%; height: 85%;">
-            <div class="full-width row items-center justify-end"
-              style="width: 100%; min-height: 100%; max-width: 350px;">
-              <q-img :class="['form__image64-equipment']" no-spinner
+          <div v-else-if="textfields.readImage" class="q-px-sm q-pt-xs row w-100"
+            :class="['justify-end', textfields.right.lenght > 0 ? 'q-mt-auto' : '']" style="height: 85%;">
+            <div class="full-width row items-center justify-end w-100"
+              style="min-height: 100%; max-width: 350px;">
+              <q-img class="form__image64-equipment" no-spinner
                 :src="type === 'user' ? 'https://variety.com/wp-content/uploads/2022/08/Jonah-Hill.jpg?w=681&h=383&crop=1' : 'https://th.bing.com/th/id/R.e3fe7ba73953544a86b878b17fd9f15a?rik=b6KdNrgLWhTDJw&pid=ImgRaw&r=0'" />
             </div>
           </div>
@@ -86,7 +85,7 @@
         {{ textfields.textArea.label }}
       </div>
       <q-editor v-model="textfields.textArea.model" :placeholder="'Escribe aquí tus ' + textfields.textArea.label"
-        class="form__item-textarea input q-mx-sm" dense :toolbar="[['unordered', 'ordered'], [{
+        class="form__item-textarea input q-mx-sm" dense :toolbar="[[{
         label: $q.lang.editor.fontSize,
         icon: $q.iconSet.editor.fontSize,
         fixedLabel: true,
@@ -102,7 +101,8 @@
           'size-7'
         ]
       },
-        'bold', 'italic', 'strike', 'underline']]" />
+      'bold', 'italic', 'strike', 'underline'],
+      ['unordered', 'ordered']]" />
     </div>
   </div>
 </template>
@@ -259,8 +259,8 @@ export default defineComponent({
 
   &__image64-equipment {
     object-fit: fill !important;
-    width: 230px !important;
-    height: 250px !important;
+    width: 300px !important;
+    height: 320px !important;
     background-color: white;
     background-clip: padding-box;
     border: 5px solid rgba(255, 255, 255, 0.5);

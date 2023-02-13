@@ -5,21 +5,40 @@
       <div class="col-6">
         <div v-for="(item, i) in textfields.left" v-bind="item" :key="i">
           <div class="row items-center q-px-sm q-py-xs">
-            <div v-if="item.type != 'title'" class="col-5 q-mr-md form__item-label text-weight-thin">
+            <div v-if="item.type != 'title'" class="col-4 q-mr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
-            <div v-else-if="item.type === 'title'" class="col q-mr-md form__item-label__title text-weight-thin q-mb-sm">
+            <div v-else-if="item.type === 'title'" class="col-12 q-mr-md form__item-label__title text-weight-thin q-mb-xs">
               {{ item.label }}
             </div>
             <div
               v-if="item.model && item.type !== 'status'"
-              class="col form__item-model q-pl-md q-pr-md">
+              class="col form__item-model q-px-lg">
               {{ item.model }}
             </div>
             <div
               v-if="item.model && item.type === 'status'"
-              class="col form__item-model q-pl-md q-pr-md">
-              <q-chip class="q-ma-none" dark style="background-color: #10D13A; font-size: 12px">{{ item.model }}</q-chip>
+              class="col form__item-model q-px-lg">
+              <q-chip class="q-ma-none" dark :style="`background-color: ${item.color}; font-size: 12px`">
+                {{ item.model }}
+              </q-chip>
+            </div>
+            <div v-if="item.type === 'textarea'" class="col-12">
+              <div class="row w-100 q-pa-none">
+                <div v-for="(textfield, i) in item.items" :key="i" class="col-12 q-py-xs">
+                  <div style="border: 1px solid #ECECEC; border-radius: 5px;" class="q-pa-sm">
+                    <div class="q-mb-sm form__item-label text-weight-thin">
+                      <strong>
+                        {{ textfield.label }}
+                      </strong>
+                    </div>
+                    <div
+                      class="form__item-label text-weight-thin"
+                      v-html="textfield.model">
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -38,9 +57,9 @@
           </div>
         </div>
         <div
-          class="q-px-sm q-pt-xs row"
+          class="q-px-sm q-pt-xs row w-100"
           :class="[type === 'user' ? 'justify-center q-ma-lg q-pa-lg' : 'justify-end', textfields.right.lenght > 0 ? 'q-mt-auto' : '']"
-          style="width: 100%; height: 85%">
+          style="height: 85%">
           <div
             class="full-width row items-center"
             :class="type === 'user' ? 'btn-background justify-center' :  'justify-end'"
@@ -56,15 +75,14 @@
         </div>
       </div>
       <!-- TEXT AREA -->
-      <div v-if="textfields.textarea.label" class="col-12 q-mt-lg">
-        <div class="q-pa-sm" style="border: 1px solid #ECECEC; border-radius: 5px; width: 100%; height: 100%;">
+      <div v-if="textfields.textarea.label" class="col-12 q-pa-sm">
+        <div class="q-pa-sm w-100 h-100" style="border: 1px solid #ECECEC; border-radius: 5px;">
           <div class="col-12 q-mr-md form__item-label text-weight-thin">
-            {{  textfields.textarea.label }}
+            <strong>
+              {{  textfields.textarea.label }}
+            </strong>
           </div>
-          <div
-            class="col-12 form__item-model q-pr-md">
-            {{  textfields.textarea.model }}
-          </div>
+          <div class="col-12 form__item-model q-pr-md" v-html="textfields.textarea.model" />
         </div>
       </div>
     </div>

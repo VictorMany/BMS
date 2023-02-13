@@ -80,6 +80,7 @@ export default defineComponent({
           {
             label: 'Estatus',
             type: 'status',
+            color: '#10D13A',
             model: 'Activo'
           }
         ],
@@ -91,7 +92,7 @@ export default defineComponent({
         ],
         textarea: {
           label: 'Observaciones del equipo biomédico',
-          model: 'Se han observado las siguientes irregularidades: •  El equipo está sucio. • El equipo no está funcionando correctamente. •  El equipo está dañado.'
+          model: '<font size="7" style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; ">Título de observaciones</font><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
         }
       },
       btnAction: {

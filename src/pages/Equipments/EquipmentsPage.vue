@@ -234,7 +234,7 @@ export default defineComponent({
   },
   methods: {
     cardAction () {
-      this.$router.push('detail-equipment')
+      this.$router.push({ name: 'detail-equipment', params: { id: 100 } })
     }
   }
 })

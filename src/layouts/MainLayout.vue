@@ -6,7 +6,7 @@
         v-model="leftDrawerOpen"
         class="cursor-pointer non-selectable main-menu row items-center">
       <!-- drawer content -->
-      <div style="height: 97vh; width: 100%;" class="q-pl-md">
+      <div style="height: 97vh;" class="q-pl-md w-100">
         <div class="side-menu">
           <div class="title text-center text-weight-light q-pt-lg"> BMS </div>
           <q-scroll-area class="q-px-md q-py-sm" style="height: 85%" :thumb-style="{ right: '4px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
@@ -15,7 +15,7 @@
                 <btn-menu v-for="(btn, index) in btnLinks" :key="index" v-bind="btn" :index="index" v-model:selected-btn="btnSelected" />
               </div>
               <div>
-                <btn-action class="q-mt-xl" v-bind="btnCloseSesion"/>
+                <btn-action class="q-mt-xl" v-bind="btnCloseSesion" />
               </div>
             </q-list>
           </q-scroll-area>
@@ -108,6 +108,7 @@ export default defineComponent({
       btnCloseSesion: {
         btnTitle: 'Cerrar sesión',
         btnColor: '#FFFFFF',
+        btnAction: this.logout,
         btnWidth: '100%',
         iconName: '',
         btnBackgroundGradient: 'linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%)'
@@ -138,6 +139,10 @@ export default defineComponent({
       this.btnLinks[val].selected = true
       this.btnLinks[val].color = '#4C607D'
       this.btnLinks[val].background = '#CAE3F4'
+    },
+    logout () {
+      console.log('Login')
+      this.$router.replace('/login')
     }
   }
 })
