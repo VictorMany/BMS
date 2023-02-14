@@ -9,7 +9,7 @@
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <div style="max-width: 100%">
             <div class="row q-pa-none q-ma-none">
-              <div class="col-auto q-pa-sm" v-for="(user, index) in users" :key="index">
+              <div v-for="(user, index) in users" :key="index" class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto q-pa-sm">
                 <item-card v-bind="user" :index="index" :card-action="cardAction" />
               </div>
             </div>
