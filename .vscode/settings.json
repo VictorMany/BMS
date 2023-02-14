@@ -14,7 +14,7 @@
   "[vue]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "nuxt.isNuxtApp": true,
+  "nuxt.isNuxtApp": false,
   "files.autoSave": "afterDelay",
   "eslint.format.enable": true,
   "editor.codeActionsOnSave": {

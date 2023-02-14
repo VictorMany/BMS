@@ -1,15 +1,17 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div class="row items-center q-pb-md">
-    <div class="col-6 col-md title-page q-pa-none">
+  <div class="row items-center q-pb-none">
+    <div class="col-6 col-md title-page q-py-sm">
       {{ titlePage }}
     </div>
-    <div class="row flex justify-end">
-      <div class="col-auto">
-        <btn-action v-if="btnAction.show" v-bind="btnAction"/>
-      </div>
-      <div class="col-sm-auto col-12">
-        <input-search v-if="inputSearch.show" class="q-ml-md" v-bind="inputSearch"/>
+    <div class="col-12 col-md-auto">
+      <div class="row flex justify-end align-center w-100">
+        <div class="col-auto q-py-sm">
+          <btn-action v-if="btnAction.show" v-bind="btnAction"/>
+        </div>
+        <div class="col-sm-auto col-12 q-py-sm">
+          <input-search v-if="inputSearch.show" class="q-ml-md" v-bind="inputSearch"/>
+        </div>
       </div>
     </div>
 </div>

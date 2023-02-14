@@ -8,13 +8,13 @@
         <q-img
           class="col-5 img-style"
           :src="cardImg" />
-        <q-card-section class="q-py-sm q-px-sm ellipsis">
+        <q-card-section class="q-py-sm q-px-sm ellipsis w-100">
           <div class="card-typography q-pb-xs ellipsis">
             {{ cardTitle }}
           </div>
           <div v-for="(label, i) in cardLabels"
             :key="i"
-            class="row">
+            class="row justify-between">
             <div v-if="label.label"
               class="q-pb-xs"
               :class="label.info === undefined ? 'card-typography-info col-12' : 'card-typography col-6'">
@@ -80,8 +80,7 @@ export default defineComponent({
 
 <style scoped>
   .my-card {
-    width: 270px;
-    min-width: 260px;
+    width: 254px;
     height: 110px !important;
     border-radius: 10px !important;
     box-shadow: none;
@@ -108,5 +107,18 @@ export default defineComponent({
     font-weight: 300;
     font-size: 12px;
     color: #3e4f67;
+  }
+
+  @media only screen
+  and (max-device-width : 599px)  {
+    .my-card {
+      width: 100% !important;
+    }
+  }
+  @media only screen
+  and (min-device-width : 1000px) {
+    .my-card {
+      width: 280px !important;
+    }
   }
 </style>

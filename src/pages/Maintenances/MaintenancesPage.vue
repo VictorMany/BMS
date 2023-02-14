@@ -255,7 +255,7 @@ export default defineComponent({
     },
     edit (payload) {
       console.log('Editar', payload)
-      this.$router.push({ name: 'add-maintenance', params: { id: 100 } })
+      this.$router.push({ name: 'edit-maintenance', params: { id: 100 } })
     }
   },
   watch: {
