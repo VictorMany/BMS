@@ -56,7 +56,7 @@
             <input ref="fileUpload" type="file" accept="image/*,.jpg, .jpeg, .png" style="display: none" @change="uploadFile($event)" />
             <q-btn unelevated class="q-py-sm" style="background-color: #e7f0f7; max-width: 500px; height: auto;"
               :class="{ 'btn-background': ImageBase64 && type === 'user' }"
-              :style="type === 'user' ? 'width: 254px; height: 254px; border-radius: 50%' : 'width: 100%; min-height: 100%; max-width: 350px'"
+              :style="type === 'user' ? 'width: 254px; height: 254px; border-radius: 50%' : 'width: 100%; min-height: 260px; max-width: 350px'"
               @click="pdfObject.name
               ? clearFileInput($refs.fileUpload)
               : $refs.fileUpload.click()">

@@ -7,10 +7,11 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
+      // Equipments
       {
         path: '',
         name: '/',
-        component: () => import('src/pages/Equipments/EquipmentsPage.vue')
+        component: () => import('src/pages/Equipments/Equipments.vue')
       },
       {
         path: 'add-equipment',
@@ -22,10 +23,11 @@ const routes = [
         name: 'detail-equipment',
         component: () => import('src/pages/Equipments/DetailEquipment.vue')
       },
+      // Users
       {
         path: 'users',
         name: 'users',
-        component: () => import('src/pages/Users/UsersPage.vue')
+        component: () => import('src/pages/Users/Users.vue')
       },
       {
         path: 'add-user',
@@ -37,15 +39,17 @@ const routes = [
         name: 'detail-user',
         component: () => import('src/pages/Users/DetailUser.vue')
       },
+      // Calendar
       {
         path: 'calendar',
         name: 'calendar',
         component: () => import('src/pages/CalendarPage.vue')
       },
+      // Maintenances
       {
         path: 'maintenances',
         name: 'maintenances',
-        component: () => import('src/pages/Maintenances/MaintenancesPage.vue')
+        component: () => import('src/pages/Maintenances/Maintenances.vue')
       },
       {
         path: 'add-maintenance',
@@ -62,25 +66,34 @@ const routes = [
         name: 'detail-maintenance',
         component: () => import('src/pages/Maintenances/DetailMaintenance.vue')
       },
+      // Stats
       {
         path: 'statistical',
         name: 'statistical',
         component: () => import('src/pages/StatisticalPage.vue')
       },
+      // Settings
       {
         path: 'settings',
         name: 'settings',
         component: () => import('src/pages/SettingsPage.vue')
       },
+      // Reports
       {
         path: 'reports',
         name: 'reports',
         component: () => import('src/pages/ReportsPage.vue')
       },
+      // Manintenace plan
       {
-        path: 'maintenance-plan',
-        name: 'maintenance-plan',
-        component: () => import('src/pages/MaintenancePlan.vue')
+        path: 'maintenances-plan',
+        name: 'maintenances-plan',
+        component: () => import('src/pages/Plans/MaintenancesPlan.vue')
+      },
+      {
+        path: 'add-maintenance-plan',
+        name: 'add-maintenance-plan',
+        component: () => import('src/pages/Plans/AddMaintenancePlan.vue')
       }
     ]
   },

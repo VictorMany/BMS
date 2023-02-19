@@ -77,6 +77,13 @@ export default defineComponent({
           background: '#F8F8F8'
         },
         {
+          title: 'Planes de mantenimientos',
+          link: 'maintenances-plan',
+          selected: false,
+          color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8'
+        },
+        {
           title: 'Calendario',
           link: 'calendar',
           selected: false,
@@ -178,8 +185,10 @@ and (min-device-width : 1000px) {
 
 .hamburguer-menu {
   position: absolute;
+  color: white;
   z-index: 100;
-  margin-top: 2.6rem;
+  margin-top: 3.2rem;
+  background: linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%);
   margin-left: 2rem;
 }
 

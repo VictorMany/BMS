@@ -1,20 +1,16 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="row items-center q-pb-none">
-    <div class="col-6 col-md title-page q-py-sm">
+    <div class="col-xs-auto col-sm title-page q-py-sm">
       {{ titlePage }}
     </div>
-    <div class="col-12 col-md-auto">
-      <div class="row flex justify-end align-center w-100">
-        <div class="col-auto q-py-sm">
-          <btn-action v-if="btnAction.show" v-bind="btnAction"/>
-        </div>
-        <div class="col-sm-auto col-12 q-py-sm">
-          <input-search v-if="inputSearch.show" class="q-ml-md" v-bind="inputSearch"/>
-        </div>
-      </div>
+    <div class="col-xs col-sm-auto column content-end">
+      <btn-action v-if="btnAction.show" v-bind="btnAction"/>
     </div>
-</div>
+    <div class="col-md-auto col-xs-12 column content-end">
+      <input-search v-if="inputSearch.show" class="q-ml-md" v-bind="inputSearch"/>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -72,7 +68,7 @@ export default defineComponent({
 @media only screen
 and (max-device-width : 1000px) {
   .title-page {
-    padding-left: 2rem !important;
+    padding-left: 2.4rem !important;
   }
 }
 </style>

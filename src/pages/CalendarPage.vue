@@ -9,18 +9,25 @@
       <!-- Main container -->
       <div class="main-container-page">
         <div class="row q-pb-md" style="height: 99%;">
-          <div class="col-auto">
-            <q-date v-model="date" class="text-blue-grey-7" landscape />
+          <div class="col-xs-12 col-sm-auto">
+            <q-date
+              v-model="date"
+              class="text-blue-grey-7"
+              landscape
+              :events="events"
+              :event-color="(date) => blueEvents.includes(date) ? 'positive' : 'primary'" />
             <div class="col q-mt-md">
-              <div class="container-colorama q-pa-sm">
-                <status-badge
-                  v-for="(badge, i) in badges"
+              <div class="container-colorama q-pa-xs row">
+                <q-radio  v-for="(badge, i) in optionsFilter"
                   :key="i"
-                  v-bind="badge"
-                />
-              </div>
-              <div class="q-pa-md">
-                <btn-action v-bind="btnAddPlan" />
+                  v-model="selectedFilter"
+                  checked-icon="task_alt"
+                  unchecked-icon="panorama_fish_eye"
+                  class="col-12 q-pa-xs"
+                  :val="badge.color"
+                  :dense="true"
+                  :label="badge.label"
+                  :style="`color: ${badge.color}`" />
               </div>
             </div>
           </div>
@@ -35,7 +42,7 @@
                   style="max-width: 100%">
                   <div class="row q-pa-none q-ma-none">
                     <div
-                      class="col-auto q-pa-sm"
+                      class="col-auto q-pa-sm col-xs-12"
                       v-for="(equipo, index) in Equipments"
                       :key="index">
                       <item-card v-bind="equipo" :index="index" :card-action="cardAction" />
@@ -55,8 +62,6 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import StatusBadge from 'src/components/atomic/StatusBadge.vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue'
 import ItemCard from 'src/components/atomic/ItemCard.vue'
 import BtnSwitch from 'src/components/atomic/BtnSwitch.vue'
 
@@ -64,18 +69,19 @@ export default defineComponent({
   name: 'CalendarPage',
   components: {
     HeaderActions,
-    StatusBadge,
-    BtnAction,
     ItemCard,
     BtnSwitch
   },
   data () {
     return {
-      date: ref('2022/10/24'),
-      badges: [
-        { color: '#10D13A', text: 'Mantenimientos hechos' },
-        { color: '#1C81CB', text: 'Mantenimientos programados' },
-        { color: '#FFAA05', text: 'Recordatorios' }
+      date: ref('2019/02/01'),
+      selectedFilter: '#10D13A',
+      events: ['2019/02/01', '2019/02/05', '2019/02/06', '2019/02/09', '2019/02/23'],
+      blueEvents: ['2019/02/01', '2019/02/09', '2019/02/23'],
+      optionsFilter: [
+        { color: '#10D13A', label: 'Mantenimientos hechos', value: 'opt1' },
+        { color: '#1C81CB', label: 'Mantenimientos programados', value: 'opt2' },
+        { color: '#FFAA05', label: 'Recordatorios', value: 'opt3' }
       ],
       Equipments: [
         {
@@ -207,31 +213,30 @@ export default defineComponent({
       ],
       btnAction: {
         show: true,
-        btnTitle: 'Añadir recordatorio'
+        btnTitle: 'Crear plan de mantenimientos',
+        to: 'add-maintenance-plan'
       },
       inputSearch: {
         show: true,
         inputLabel: 'Buscar por fecha'
-      },
-      btnAddPlan: {
-        btnTitle: 'Crear un plan de mantenimientos preventivos',
-        btnWidth: '100%',
-        to: 'maintenance-plan',
-        iconName: null
       }
     }
   },
   methods: {
     cardAction () {
       this.$router.push({ name: 'detail-equipment', params: { id: 100 } })
+    },
+    consultDate (event) {
+      console.log(event)
     }
   }
 })
 </script>
 
-<style scoped>
+<style>
 .container-colorama {
   background: rgba(202, 227, 244, 0.36);
+  max-width: 420px !important;;
   border-radius: 5px;
 }
 
@@ -241,5 +246,10 @@ export default defineComponent({
   font-size: 25px;
   font-family: 'Inter';
   color: #1A86D4;
+}
+
+.q-date__calendar-item > button {
+    background-color: rgba(233, 225, 235, 0.571);
+    line-height: 22px;
 }
 </style>

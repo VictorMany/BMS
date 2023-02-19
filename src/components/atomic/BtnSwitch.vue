@@ -70,7 +70,7 @@ export default defineComponent({
   background-color: v-bind(color) !important;
   color: v-bind(btnColor) !important;
   border-radius: 0.5rem !important;
-  height: 30px;
+  height: 28px;
 }
 
 .btn-left {
