@@ -42,7 +42,7 @@
                   style="max-width: 100%">
                   <div class="row q-pa-none q-ma-none">
                     <div
-                      class="col-auto q-pa-sm col-xs-12"
+                      class="col-sm-auto q-pa-sm col-xs-12"
                       v-for="(equipo, index) in Equipments"
                       :key="index">
                       <item-card v-bind="equipo" :index="index" :card-action="cardAction" />
