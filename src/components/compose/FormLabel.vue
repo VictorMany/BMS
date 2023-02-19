@@ -2,23 +2,23 @@
 <template>
     <div class="row q-pa-md q-py-lg" style="max-width: 1200px">
       <!-- LEFT SECTION -->
-      <div class="col-6">
+      <div class="col-12 col-sm-12">
         <div v-for="(item, i) in textfields.left" v-bind="item" :key="i">
           <div class="row items-center q-px-sm q-py-xs">
-            <div v-if="item.type != 'title'" class="col-4 q-mr-md form__item-label text-weight-thin">
+            <div v-if="item.type != 'title'" class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-thin">
               {{ item.label }}
             </div>
-            <div v-else-if="item.type === 'title'" class="col-12 q-mr-md form__item-label__title text-weight-thin q-mb-xs">
+            <div v-else-if="item.type === 'title'" class="col-12 q-pr-md form__item-label__title text-weight-thin q-mb-xs">
               {{ item.label }}
             </div>
             <div
               v-if="item.model && item.type !== 'status'"
-              class="col form__item-model q-px-lg">
+              class="col-12 col-sm form__item-model">
               {{ item.model }}
             </div>
             <div
               v-if="item.model && item.type === 'status'"
-              class="col form__item-model q-px-lg">
+              class="col-12 col-sm form__item-model">
               <q-chip class="q-ma-none" dark :style="`background-color: ${item.color}; font-size: 12px`">
                 {{ item.model }}
               </q-chip>
@@ -44,10 +44,10 @@
         </div>
       </div>
       <!-- RIGHT SECTION -->
-      <div class="col q-pl-xl column items-end q-mb-lg">
+      <div class="col-12 col-sm-12 q-pl-xl column items-end q-mb-lg">
         <div v-for="(item, i) in textfields.right" v-bind="item" :key="i" style="height: 12%">
           <div class="row justify-end q-px-sm q-py-xs">
-            <div class="q-mr-md form__item-label text-weight-thin">
+            <div class="q-pr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
             <div
@@ -77,7 +77,7 @@
       <!-- TEXT AREA -->
       <div v-if="textfields.textarea.label" class="col-12 q-pa-sm">
         <div class="q-pa-sm w-100 h-100" style="border: 1px solid #ECECEC; border-radius: 5px;">
-          <div class="col-12 q-mr-md form__item-label text-weight-thin">
+          <div class="col-12 q-pr-md form__item-label text-weight-thin">
             <strong>
               {{  textfields.textarea.label }}
             </strong>
@@ -188,6 +188,7 @@ export default defineComponent({
   &__item-label {
     color: #7A7A7A;
     font-size: 12px;
+    font-weight: 600;
     &__title {
       font-size: 16px;
       color: #062841;

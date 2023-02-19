@@ -4,12 +4,12 @@
     <!-- LEFT SECTION -->
     <div class="col-12 col-lg-5 col-md-6 q-pb-xs">
       <div class="row">
-        <div v-if="textfields.top.length > 0" class="col-12 q-pb-xs">
+        <div v-if="textfields.top.length > 0" class="col-12 col-sm-10 col-md-12 q-pb-xs">
           <div v-for="(item, i) in textfields.top" :key="i" class="row items-center q-px-sm q-py-xs w-100">
-            <div class="col q-mr-md form__item-label text-weight-thin">
+            <div class="col q-pr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
-            <q-input class="col form__item-input-12 q-pl-md q-pr-md input" borderless dense v-model="item.model" />
+            <q-input class="col-6 form__item-input-12 q-pl-md q-pr-md input" borderless dense v-model="item.model" />
           </div>
         </div>
         <div class="col-12 q-py-xs">
@@ -17,20 +17,20 @@
             <div class="full-width">
               <div v-if="item.type === 'textarea'">
                 <div class="row w-100 justify-between">
-                  <div v-for="(textfield, i) in item.items" :key="i" class="col-6">
+                  <div v-for="(textfield, i) in item.items" :key="i" class="col-12 col-sm-6 q-px-sm">
                     <div class="q-ma-sm form__item-label text-weight-thin">
                       {{ textfield.label }}
                     </div>
                     <q-editor v-model="textfield.model" :placeholder="'Escribe aquí tus ' + textfield.label"
-                      class="form__item-textarea input q-mx-sm" dense :toolbar="[['unordered', 'ordered']]" />
+                      class="form__item-textarea input" dense :toolbar="[['unordered', 'ordered']]" />
                   </div>
                 </div>
               </div>
               <div v-else class="row w-100 q-px-sm q-pb-sm">
-                <div class="col q-mr-md form__item-label text-weight-thin">
+                <div class="col-12 col-sm q-pr-md form__item-label text-weight-thin">
                   {{ item.label }}
                 </div>
-                <q-input class="col form__item-input q-pl-md q-pr-md input" borderless dense v-model="item.model" />
+                <q-input class="col-12 col-sm form__item-input q-pl-md q-pr-md input" borderless dense v-model="item.model" />
               </div>
             </div>
           </div>
@@ -42,7 +42,7 @@
       <div class="row w-100 justify-end">
         <div class="col-auto">
           <div v-for="(item, i) in textfields.right" :key="i" class="row items-center q-px-sm q-py-xs">
-            <div v-if="item.label" class="col q-mr-md form__item-label text-weight-thin">
+            <div v-if="item.label" class="col-12 col-md q-pr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
             <q-input v-if="item.label" :readonly="item.readonly" class="col form__item-input q-pl-md q-pr-md input"
@@ -80,12 +80,12 @@
       </div>
     </div>
     <!-- TEXT AREA -->
-    <div v-if="textfields.textArea.model != undefined" class="col-12">
-      <div class="q-ma-sm form__item-label text-weight-thin">
+    <div v-if="textfields.textArea.model != undefined" class="col-12 q-px-sm">
+      <div class="q-my-sm form__item-label text-weight-thin">
         {{ textfields.textArea.label }}
       </div>
       <q-editor v-model="textfields.textArea.model" :placeholder="'Escribe aquí tus ' + textfields.textArea.label"
-        class="form__item-textarea input q-mx-sm" dense :toolbar="[[{
+        class="form__item-textarea input" dense :toolbar="[[{
         label: $q.lang.editor.fontSize,
         icon: $q.iconSet.editor.fontSize,
         fixedLabel: true,

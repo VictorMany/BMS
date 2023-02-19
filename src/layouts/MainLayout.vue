@@ -187,9 +187,9 @@ and (min-device-width : 1000px) {
   position: absolute;
   color: white;
   z-index: 100;
-  margin-top: 3.2rem;
+  margin-top: 2.9rem;
   background: linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%);
-  margin-left: 2rem;
+  margin-left: 1.7rem;
 }
 
 /**scrollbar in different browsers */

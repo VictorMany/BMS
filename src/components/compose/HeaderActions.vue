@@ -1,14 +1,17 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div class="row items-center q-pb-none">
+  <div class="row items-center q-ma-none q-pa-none q-mb-sm">
     <div class="col-xs-auto col-sm title-page q-py-sm">
       {{ titlePage }}
     </div>
-    <div class="col-xs col-sm-auto column content-end">
+    <div class="col-xs col-sm-auto column content-end q-pr-sm mobile-hide">
       <btn-action v-if="btnAction.show" v-bind="btnAction"/>
     </div>
+    <div class="col-xs col-sm-auto column content-end desktop-hide">
+      <btn-action v-if="btnAction.show" v-bind="btnAction" :btn-title="''"/>
+    </div>
     <div class="col-md-auto col-xs-12 column content-end">
-      <input-search v-if="inputSearch.show" class="q-ml-md" v-bind="inputSearch"/>
+      <input-search v-if="inputSearch.show" class="w-100" v-bind="inputSearch"/>
     </div>
   </div>
 </template>
