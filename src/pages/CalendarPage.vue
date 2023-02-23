@@ -12,12 +12,12 @@
           <div class="col-xs-12 col-sm-auto">
             <q-date
               v-model="date"
-              class="text-blue-grey-7"
+              class="text-blue-grey-7 border-none"
               landscape
               :events="events"
               :event-color="(date) => blueEvents.includes(date) ? 'positive' : 'primary'" />
             <div class="col q-mt-md">
-              <div class="container-colorama q-pa-xs row">
+              <div class="container-colorama border-none q-pa-xs row">
                 <q-radio  v-for="(badge, i) in optionsFilter"
                   :key="i"
                   v-model="selectedFilter"
@@ -249,7 +249,7 @@ export default defineComponent({
 }
 
 .q-date__calendar-item > button {
-    background-color: rgba(233, 225, 235, 0.571);
+    background-color: rgba(233, 225, 235, 0.39);
     line-height: 22px;
 }
 </style>

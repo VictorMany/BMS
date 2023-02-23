@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <q-table
-    class="table-style font-style my-sticky-header-table q-mt-md"
+    class="table-style font-style my-sticky-header-table q-mt-md bg-white"
     :rows="rows"
     :columns="columns"
     row-key="id"

@@ -1,5 +1,5 @@
 <template>
-  <q-btn class="btn-style"
+  <q-btn class="btn-style border"
     :class="btnTitle ? 'q-pr-sm' : 'q-pa-none'"
     :unelevated="btnUnelevated"
     :outline="btnOutlined"

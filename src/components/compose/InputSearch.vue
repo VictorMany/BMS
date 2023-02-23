@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <q-input
-    class="input-style q-pl-md q-pr-sm"
+    class="input-style q-pl-md q-pr-sm border"
     borderless
     dense
     :placeholder="inputLabel"
