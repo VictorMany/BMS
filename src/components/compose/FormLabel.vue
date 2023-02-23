@@ -2,13 +2,13 @@
 <template>
     <div class="row q-pa-md q-py-lg" style="max-width: 1200px">
       <!-- LEFT SECTION -->
-      <div class="col-12 col-sm-12">
+      <div class="col-12 col-sm-6">
         <div v-for="(item, i) in textfields.left" v-bind="item" :key="i">
           <div class="row items-center q-px-sm q-py-xs">
-            <div v-if="item.type != 'title'" class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-thin">
+            <div v-if="item.type === 'title'" class="col-12 q-pr-md form__item-label__title text-weight-thin q-mb-xs">
               {{ item.label }}
             </div>
-            <div v-else-if="item.type === 'title'" class="col-12 q-pr-md form__item-label__title text-weight-thin q-mb-xs">
+            <div v-else-if="item.type != 'title'" class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-thin">
               {{ item.label }}
             </div>
             <div
@@ -44,7 +44,7 @@
         </div>
       </div>
       <!-- RIGHT SECTION -->
-      <div class="col-12 col-sm-12 q-pl-xl column items-end q-mb-lg">
+      <div class="col-12 col-sm q-pl-xl column items-end q-mb-lg">
         <div v-for="(item, i) in textfields.right" v-bind="item" :key="i" style="height: 12%">
           <div class="row justify-end q-px-sm q-py-xs">
             <div class="q-pr-md form__item-label text-weight-thin">
