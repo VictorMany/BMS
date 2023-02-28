@@ -85,6 +85,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Editar',
+        iconName: 'edit',
         to: 'add-equipment',
         btnWidth: 'auto'
       },

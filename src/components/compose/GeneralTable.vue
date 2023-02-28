@@ -31,7 +31,7 @@
       </q-td>
     </template>
   </q-table>
-  <div class="row justify-center">
+  <div v-if="showPagination" class="row justify-center">
     <q-pagination
       v-model="pagination.page"
       color="blue-grey-8"
@@ -71,6 +71,11 @@ export default defineComponent({
       type: Object,
       required: false,
       default: () => ({})
+    },
+    showPagination: {
+      type: Boolean,
+      required: false,
+      default: () => true
     }
   },
   setup (props) {

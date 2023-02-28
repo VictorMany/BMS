@@ -78,6 +78,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Editar',
+        iconName: 'edit',
         to: 'add-user',
         btnWidth: 'auto'
       },

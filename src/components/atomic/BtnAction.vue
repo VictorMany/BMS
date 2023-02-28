@@ -1,5 +1,5 @@
 <template>
-  <q-btn class="btn-style border"
+  <q-btn class="btn-style border-shadow"
     :class="btnTitle ? 'q-pr-sm' : 'q-pa-none'"
     :unelevated="btnUnelevated"
     :outline="btnOutlined"
@@ -30,13 +30,13 @@ export default defineComponent({
     btnColor: {
       type: String,
       required: false,
-      default: 'rgba(76, 165, 243, 0.8)'
+      default: '#062841'
     },
 
     btnBackground: {
       type: String,
       required: false,
-      default: '#C6DFF1'
+      default: '#06284130'
     },
 
     btnBackgroundGradient: {
@@ -113,6 +113,6 @@ export default defineComponent({
   border-radius: 0.5rem !important;
 }
 .btn-style:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 </style>

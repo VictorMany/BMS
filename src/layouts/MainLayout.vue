@@ -56,8 +56,15 @@ export default defineComponent({
       btnSelected: 0,
       btnLinks: [
         {
-          title: 'Equipos',
+          title: 'Dashboard',
           link: '/',
+          selected: false,
+          color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8'
+        },
+        {
+          title: 'Equipos',
+          link: 'equipments',
           selected: true,
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8'
@@ -98,13 +105,6 @@ export default defineComponent({
           background: '#F8F8F8'
         },
         {
-          title: 'Estadisticas',
-          link: 'statistical',
-          selected: false,
-          color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
-        },
-        {
           title: 'Configuración',
           link: 'settings',
           selected: false,
@@ -125,6 +125,11 @@ export default defineComponent({
 
   created () {
     this.btnLinks.forEach((e, index) => {
+      console.log(this.$route.name)
+      if (e.link === '/') {
+        this.selectButton(0)
+        this.btnSelected = 0
+      }
       if (e.link === this.$route.name) {
         this.selectButton(index)
         this.btnSelected = index

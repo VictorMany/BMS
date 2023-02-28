@@ -235,11 +235,11 @@ export default defineComponent({
   methods: {
     readMore (payload) {
       console.log('Ver detalle', payload)
-      this.$router.push({ name: 'detail-maintenance', params: { id: 100 } })
+      this.$router.push({ name: 'detail-maintenance-plan', params: { id: 100 } })
     },
     edit (payload) {
       console.log('Editar', payload)
-      this.$router.push({ name: 'edit-maintenance', params: { id: 100 } })
+      this.$router.push({ name: 'add-maintenance-plan', params: { id: 100 } })
     }
   },
   watch: {

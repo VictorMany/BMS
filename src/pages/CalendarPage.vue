@@ -8,17 +8,18 @@
       />
       <!-- Main container -->
       <div class="main-container-page">
-        <div class="row q-pb-md" style="height: 99%;">
+        <div class="row card-color q-pa-md" style="height: 100%;">
           <div class="col-xs-12 col-sm-auto">
             <q-date
               v-model="date"
-              class="text-blue-grey-7 border-none"
+              mask="YYYY-MM-DD"
+              class="text-blue-grey-7 border-line"
               landscape
               :events="events"
               :event-color="(date) => blueEvents.includes(date) ? 'positive' : 'primary'" />
             <div class="col q-mt-md">
               <div class="container-colorama border-none q-pa-xs row">
-                <q-radio  v-for="(badge, i) in optionsFilter"
+                <q-radio v-for="(badge, i) in optionsFilter"
                   :key="i"
                   v-model="selectedFilter"
                   checked-icon="task_alt"
@@ -31,7 +32,7 @@
               </div>
             </div>
           </div>
-          <div class="col q-pl-md" style="height: 99%;">
+          <div class="col q-pl-sm" style="height: 99%;">
             <div class="row flex items-center justify-between q-mb-sm">
               <label class="text-subtitle text-weight-light"> Resultados </label>
               <btn-switch />
@@ -42,7 +43,7 @@
                   style="max-width: 100%">
                   <div class="row q-pa-none q-ma-none">
                     <div
-                      class="col-sm-auto q-pa-sm col-xs-12"
+                      class="col-sm-auto q-pa-xs col-xs-12"
                       v-for="(equipo, index) in Equipments"
                       :key="index">
                       <item-card v-bind="equipo" :index="index" :card-action="cardAction" />
@@ -235,8 +236,8 @@ export default defineComponent({
 
 <style>
 .container-colorama {
-  background: rgba(202, 227, 244, 0.36);
-  max-width: 420px !important;;
+  background: #06284110;
+  max-width: 420px !important;
   border-radius: 5px;
 }
 
@@ -246,10 +247,5 @@ export default defineComponent({
   font-size: 25px;
   font-family: 'Inter';
   color: #1A86D4;
-}
-
-.q-date__calendar-item > button {
-    background-color: rgba(233, 225, 235, 0.39);
-    line-height: 22px;
 }
 </style>

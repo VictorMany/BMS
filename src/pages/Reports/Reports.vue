@@ -30,7 +30,8 @@ export default defineComponent({
     return {
       btnAction: {
         show: true,
-        btnTitle: 'Añadir reporte'
+        btnTitle: 'Añadir reporte',
+        to: 'add-report'
       },
       inputSearch: {
         show: true,
@@ -230,8 +231,6 @@ export default defineComponent({
           actions: ''
         }
       ],
-      rowSelected: {},
-      switchContent: 2,
       actionsTable: [
         {
           icnName: 'read_more',
@@ -243,16 +242,19 @@ export default defineComponent({
           icnSize: 'xs',
           icnAction: 'Edit'
         }
-      ]
+      ],
+      rowSelected: {},
+      switchContent: 2
     }
   },
-
   methods: {
     readMore (payload) {
       console.log('Ver detalle', payload)
+      this.$router.push({ name: 'detail-report', params: { id: 100 } })
     },
     edit (payload) {
       console.log('Editar', payload)
+      this.$router.push({ name: 'edit-report', params: { id: 100 } })
     }
   },
   watch: {

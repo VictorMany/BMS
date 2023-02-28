@@ -5,7 +5,7 @@
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions
-        :title-page="'Detalles del mantenimiento'"
+        :title-page="'Detalles de reporte'"
         :btn-action="btnAction"
       />
       <div class="main-container-page" style="height: 82%">
@@ -85,8 +85,8 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Editar',
-        to: 'add-equipment',
         iconName: 'edit',
+        to: 'add-equipment',
         btnWidth: 'auto'
       },
       btnCloseWindow: {

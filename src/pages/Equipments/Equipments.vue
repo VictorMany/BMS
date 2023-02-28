@@ -6,7 +6,7 @@
         :btnAction="btnAction"
         :inputSearch="inputSearch"
       />
-      <div class="main-container-page">
+      <div class="main-container-page card-color">
         <q-scroll-area class="fit" :thumb-style="{ borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <div
             style="max-width: 100%">

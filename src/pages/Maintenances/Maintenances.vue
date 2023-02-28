@@ -68,7 +68,7 @@ export default defineComponent({
           encharged_name: 'Luis Andrés Pérez',
           date: '12-Jun-2022',
           total_cost: '$ 2000',
-          actions: '+  -'
+          actions: ''
         },
         {
           id: 3,

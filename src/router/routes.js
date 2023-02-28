@@ -7,10 +7,15 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
+      {
+        path: '/',
+        name: 'dashboard',
+        component: () => import('src/pages/StatisticalPage.vue')
+      },
       // Equipments
       {
-        path: '',
-        name: '/',
+        path: 'equipments',
+        name: 'equipments',
         component: () => import('src/pages/Equipments/Equipments.vue')
       },
       {
@@ -67,11 +72,6 @@ const routes = [
         component: () => import('src/pages/Maintenances/DetailMaintenance.vue')
       },
       // Stats
-      {
-        path: 'statistical',
-        name: 'statistical',
-        component: () => import('src/pages/StatisticalPage.vue')
-      },
       // Settings
       {
         path: 'settings',
@@ -82,7 +82,22 @@ const routes = [
       {
         path: 'reports',
         name: 'reports',
-        component: () => import('src/pages/ReportsPage.vue')
+        component: () => import('src/pages/Reports/Reports.vue')
+      },
+      {
+        path: 'add-report',
+        name: 'add-report',
+        component: () => import('src/pages/Reports/AddReport.vue')
+      },
+      {
+        path: 'edit-:id-report',
+        name: 'edit-report',
+        component: () => import('src/pages/Reports/AddReport.vue')
+      },
+      {
+        path: 'detail-:id-report',
+        name: 'detail-report',
+        component: () => import('src/pages/Reports/DetailReport.vue')
       },
       // Manintenace plan
       {
@@ -94,10 +109,19 @@ const routes = [
         path: 'add-maintenance-plan',
         name: 'add-maintenance-plan',
         component: () => import('src/pages/Plans/AddMaintenancePlan.vue')
+      },
+      {
+        path: 'edit-:id-maintenance-plan',
+        name: 'edit-maintenance-plan',
+        component: () => import('src/pages/Plans/AddMaintenancePlan.vue')
+      },
+      {
+        path: 'detail-:id-maintenance-plan',
+        name: 'detail-maintenance-plan',
+        component: () => import('src/pages/Plans/DetailMaintenancePlan.vue')
       }
     ]
   },
-
   // Always leave this as last one,
   // but you can also remove it
   {
