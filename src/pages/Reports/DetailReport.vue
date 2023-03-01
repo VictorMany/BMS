@@ -52,21 +52,17 @@ export default defineComponent({
             model: 'Display defectuoso'
           },
           {
-            label: 'Tipo',
+            label: 'Estatus',
             type: 'status',
-            model: 'Correctivo',
-            color: '#FFAA05'
+            model: 'Activo',
+            color: '#10D13A'
           },
           {
             type: 'textarea',
             items: [
               {
-                label: 'Herramientas',
-                model: '<div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__value"><div class="q-badge flex inline items-center no-wrap q-badge--single-line bg-orange-8 api-row__pill cursor-pointer" role="status" aria-label="fullscreen">fullscreen</div>&nbsp;: Boolean</div></div><div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Description</div><div class="api-row__value">Fullscreen mode</div></div><div class="api-row__item col-xs-12 col-sm-3" style="width: 168.875px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Note</div><div class="api-row__value">Required to be used with v-model!</div></div>'
-              },
-              {
-                label: 'Materiales',
-                model: '<div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__value"><div class="q-badge flex inline items-center no-wrap q-badge--single-line bg-orange-8 api-row__pill cursor-pointer" role="status" aria-label="fullscreen">fullscreen</div>&nbsp;: Boolean</div></div><div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Description</div><div class="api-row__value">Fullscreen mode</div></div><div class="api-row__item col-xs-12 col-sm-3" style="width: 168.875px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Note</div><div class="api-row__value">Required to be used with v-model!</div></div>'
+                label: 'Observaciones del reporte',
+                model: '<font size="4" style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; ">Título de observaciones</font><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
               }
             ]
           }
@@ -77,16 +73,14 @@ export default defineComponent({
             model: 'A7GTHYFRG'
           }
         ],
-        textarea: {
-          label: 'Observaciones del equipo biomédico',
-          model: '<font size="7" style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; ">Título de observaciones</font><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
-        }
+        image: 'https://www.novamedicaltda.com/wp-content/uploads/2021/01/wato-ex-55.jpg',
+        textarea: {}
       },
       btnAction: {
         show: true,
         btnTitle: 'Editar',
         iconName: 'edit',
-        to: 'add-equipment',
+        to: 'edit-1-report',
         btnWidth: 'auto'
       },
       btnCloseWindow: {

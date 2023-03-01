@@ -4,13 +4,55 @@
       <div class="column items-end q-mt-md q-mb-xs mobile-hide">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions
-        :title-page="'Detalles del mantenimiento'"
-        :btn-action="btnAction"
-      />
+      <header-actions :title-page="'Detalles del plan de mantenimiento'" :btn-action="btnAction" />
       <div class="main-container-page" style="height: 82%">
-        <q-scroll-area class="full-height" style="height: 95% !important" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+        <q-scroll-area class="full-height" style="height: 95% !important"
+          :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <form-label :textfields="textfields" />
+          <hr class="q-mx-lg q-mb-md divider-hr">
+          <div class="row q-px-lg">
+            <div class="col-12 col-md-6 q-pr-md">
+              <div class="select__form border-line q-pa-md" style="height: 60vh;">
+                <div class="q-pb-sm title-card">
+                  Equipo biomédico
+                </div>
+                <div style="height: 90%">
+                  <q-scroll-area class="fit"
+                    :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+                    <q-tree node-key="label" class="checkbox-label" :nodes="simple" v-model:ticked="ticked"
+                      :tick-strategy="tickStrategy" default-expand-all />
+                  </q-scroll-area>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 q-pr-md">
+              <div class="select__form border-line q-pa-md" style="height: 60vh;">
+                <div class="q-pb-sm title-card">
+                  Fechas establecidas
+                </div>
+                <div style="height: 90%">
+                  <q-scroll-area class="fit"
+                    :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+                    <div class="col-12">
+                      <div v-for="(day, index) in days" :key="index" class="text-left chip-date q-mt-sm q-pa-xs q-px-sm">
+                        {{ day }}
+                      </div>
+                    </div>
+                  </q-scroll-area>
+                </div>
+              </div>
+            </div>
+            <div  v-if="payload.label != ''" class="col-12 q-pr-md q-my-md">
+              <div class="q-pa-sm w-100 h-100" style="border: 1px solid #ECECEC; border-radius: 5px;">
+                <div class="col-12 q-pr-md form__item-label text-weight-thin">
+                  <strong>
+                    Notas
+                  </strong>
+                </div>
+                <div class="col-12 form__item-model q-pr-md" v-html="payload.label" />
+              </div>
+            </div>
+          </div>
         </q-scroll-area>
         <div class="col-12" style="background-color: #e7f0f7; height: 5%;">
           <div class="form__date column items-end q-pa-sm q-mt-auto">
@@ -23,7 +65,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import BtnAction from 'src/components/atomic/BtnAction.vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import FormLabel from 'src/components/compose/FormLabel.vue'
@@ -40,53 +82,77 @@ export default defineComponent({
       textfields: {
         left: [
           {
-            label: 'Monitor de signos vitales',
+            label: 'PLAN-0001 EQUIPO DE CHOQUE',
             type: 'title'
           },
           {
             label: 'Encargado',
             model: 'Victor Manuel Velázquez Fuentes'
-          },
-          {
-            label: 'Motivo',
-            model: 'Display defectuoso'
-          },
-          {
-            label: 'Tipo',
-            type: 'status',
-            model: 'Correctivo',
-            color: '#FFAA05'
-          },
-          {
-            type: 'textarea',
-            items: [
-              {
-                label: 'Herramientas',
-                model: '<div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__value"><div class="q-badge flex inline items-center no-wrap q-badge--single-line bg-orange-8 api-row__pill cursor-pointer" role="status" aria-label="fullscreen">fullscreen</div>&nbsp;: Boolean</div></div><div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Description</div><div class="api-row__value">Fullscreen mode</div></div><div class="api-row__item col-xs-12 col-sm-3" style="width: 168.875px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Note</div><div class="api-row__value">Required to be used with v-model!</div></div>'
-              },
-              {
-                label: 'Materiales',
-                model: '<div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__value"><div class="q-badge flex inline items-center no-wrap q-badge--single-line bg-orange-8 api-row__pill cursor-pointer" role="status" aria-label="fullscreen">fullscreen</div>&nbsp;: Boolean</div></div><div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Description</div><div class="api-row__value">Fullscreen mode</div></div><div class="api-row__item col-xs-12 col-sm-3" style="width: 168.875px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Note</div><div class="api-row__value">Required to be used with v-model!</div></div>'
-              }
-            ]
           }
         ],
-        right: [
-          {
-            label: 'No. de serie',
-            model: 'A7GTHYFRG'
-          }
-        ],
-        textarea: {
-          label: 'Observaciones del equipo biomédico',
-          model: '<font size="7" style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; ">Título de observaciones</font><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
-        }
+        right: [],
+        textarea: {}
       },
+      ticked: ref(['Equipo de choque']),
+      tickStrategy: ref('none'),
+      days: [
+        'Sábado 04, Feb 2023',
+        'Sábado 18, Feb 2023',
+        'Sábado 04, Mar 2023',
+        'Sábado 18, Mar 2023',
+        'Sábado 01, Abr 2023'
+      ],
+      days2: [],
+      payload: {
+        label: '<font size="7" style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; ">Título de observaciones</font><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
+      },
+      simple: [
+        {
+          label: 'Equipo de choque',
+          children: [
+            { label: 'Good food' },
+            { label: 'Good service (disabled node)' },
+            { label: 'Pleasant surroundings' }
+          ]
+        },
+        {
+          label: 'Equipo de choque2',
+          children: [
+            { label: 'Good food' },
+            { label: 'Good service (disabled node)' },
+            { label: 'Pleasant surroundings' }
+          ]
+        },
+        {
+          label: 'Equipo de choque3',
+          children: [
+            { label: 'Good food' },
+            { label: 'Good service (disabled node)' },
+            { label: 'Pleasant surroundings' }
+          ]
+        },
+        {
+          label: 'Equipo de choque2',
+          children: [
+            { label: 'Good food' },
+            { label: 'Good service (disabled node)' },
+            { label: 'Pleasant surroundings' }
+          ]
+        },
+        {
+          label: 'Equipo de choque3',
+          children: [
+            { label: 'Good food' },
+            { label: 'Good service (disabled node)' },
+            { label: 'Pleasant surroundings' }
+          ]
+        }
+      ],
       btnAction: {
         show: true,
         btnTitle: 'Editar',
         iconName: 'edit',
-        to: 'add-equipment',
+        to: 'edit-1-maintenance-plan',
         btnWidth: 'auto'
       },
       btnCloseWindow: {
@@ -97,11 +163,22 @@ export default defineComponent({
         to: '/'
       }
     }
+  },
+  created () {
+    this.days2 = this.days
+  },
+  watch: {
+    days: {
+      handler () {
+        this.days = this.days2
+      },
+      deep: true
+    }
   }
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .main-container-page {
   background-color: white;
 }
@@ -110,4 +187,25 @@ export default defineComponent({
   padding-top: 0 !important;
 }
 
+.chip-date {
+  max-width: 420px;
+  background-color: #4C607D20;
+  color: #4C607D;
+  border-radius: 8px;
+}
+
+.title-card {
+  font-size: 18px;
+  color: #4C607D;
+}
+
+.select {
+  &__form {
+    border-radius: 8px;
+  }
+}
+
+.divider-hr {
+  border-top: 1px dashed rgb(71, 81, 86);
+}
 </style>

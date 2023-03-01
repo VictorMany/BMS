@@ -88,7 +88,7 @@
         <q-card-section style="max-height: 50vh;" class="scroll">
           <div class="row">
             <div class="col-12 col-md-auto">
-              <q-date  mask="dddd DD, MMM YYYY" v-model="days" multiple class="text-blue-grey-7 border-line" landscape />
+              <q-date mask="dddd DD, MMM YYYY" v-model="days" multiple class="text-blue-grey-7 border-line" landscape />
             </div>
             <div class="col-12 col-md q-pl-lg">
               <div class="q-mb-sm">
@@ -132,7 +132,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
-        to: 'add-equipment',
+        to: 'maintenances-plan',
         btnWidth: 'auto'
       },
       btnPersonalized: {

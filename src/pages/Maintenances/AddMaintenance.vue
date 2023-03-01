@@ -41,7 +41,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
-        to: 'add-equipment',
+        to: 'maintenances',
         btnWidth: 'auto'
       },
       btnCloseWindow: {

@@ -41,7 +41,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
-        to: 'add-equipment',
+        to: 'reports',
         btnWidth: 'auto'
       },
       btnCloseWindow: {
@@ -65,22 +65,37 @@ export default defineComponent({
         ],
         left: [
           {
-            label: 'Tipo',
+            label: 'Reporte',
             model: ''
           },
           {
-            label: 'Motivo',
+            label: 'Estatus',
             model: ''
           },
           {
             type: 'textarea',
             items: [
               {
-                label: 'Herramientas',
-                model: ''
-              },
-              {
-                label: 'Materiales',
+                label: 'Observaciones del reporte',
+                cols: 'col-12',
+                toolbar: [[{
+                  label: this.$q.lang.editor.fontSize,
+                  icon: this.$q.iconSet.editor.fontSize,
+                  fixedLabel: true,
+                  fixedIcon: true,
+                  list: 'no-icons',
+                  options: [
+                    'size-1',
+                    'size-2',
+                    'size-3',
+                    'size-4',
+                    'size-5',
+                    'size-6',
+                    'size-7'
+                  ]
+                },
+                'bold', 'italic', 'strike', 'underline'],
+                ['unordered', 'ordered']],
                 model: ''
               }
             ]
@@ -93,10 +108,7 @@ export default defineComponent({
             model: 'NS-145424'
           }
         ],
-        textArea: {
-          label: 'Actividades y observaciones del mantenimiento',
-          model: ''
-        }
+        textArea: {}
       }
     }
   }

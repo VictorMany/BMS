@@ -73,13 +73,14 @@ export default defineComponent({
           }
         ],
         right: [],
-        textarea: {}
+        textarea: {},
+        image: 'https://www.novamedicaltda.com/wp-content/uploads/2021/01/wato-ex-55.jpg'
       },
       btnAction: {
         show: true,
         btnTitle: 'Editar',
         iconName: 'edit',
-        to: 'add-user',
+        to: 'edit-1-user',
         btnWidth: 'auto'
       },
       btnCloseWindow: {

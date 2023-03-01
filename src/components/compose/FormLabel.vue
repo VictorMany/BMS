@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-    <div class="row q-pa-md q-py-lg" style="max-width: 1200px">
+    <div class="row q-pa-md q-pt-lg" style="max-width: 1200px">
       <!-- LEFT SECTION -->
       <div class="col-12 col-sm-6">
         <div v-for="(item, i) in textfields.left" v-bind="item" :key="i">
@@ -26,14 +26,11 @@
             <div v-if="item.type === 'textarea'" class="col-12">
               <div class="row w-100 q-pa-none">
                 <div v-for="(textfield, i) in item.items" :key="i" class="col-12 q-py-xs">
+                  <div class="q-mb-sm form__item-label text-weight-thin">
+                    {{ textfield.label }}
+                  </div>
                   <div style="border: 1px solid #ECECEC; border-radius: 5px;" class="q-pa-sm">
-                    <div class="q-mb-sm form__item-label text-weight-thin">
-                      <strong>
-                        {{ textfield.label }}
-                      </strong>
-                    </div>
                     <div
-                      class="form__item-label text-weight-thin"
                       v-html="textfield.model">
                     </div>
                   </div>
@@ -57,6 +54,7 @@
           </div>
         </div>
         <div
+          v-if="textfields.image"
           class="q-px-sm q-pt-xs row w-100"
           :class="[type === 'user' ? 'justify-center q-ma-lg q-pa-lg' : 'justify-end', textfields.right.lenght > 0 ? 'q-mt-auto' : '']"
           style="height: 85%">
@@ -69,20 +67,20 @@
               ? 'form__image64'
               : 'form__image64-equipment']"
               no-spinner
-              :src="type === 'user' ? 'https://variety.com/wp-content/uploads/2022/08/Jonah-Hill.jpg?w=681&h=383&crop=1' : 'https://th.bing.com/th/id/R.e3fe7ba73953544a86b878b17fd9f15a?rik=b6KdNrgLWhTDJw&pid=ImgRaw&r=0'"
+              :src="textfields.image"
             />
           </div>
         </div>
       </div>
       <!-- TEXT AREA -->
-      <div v-if="textfields.textarea.label" class="col-12 q-pa-sm">
+      <div v-if="textfields.textarea.label" class="col-12 q-pa-sm q-mb-md">
+        <div class="col-12 q-pr-md form__item-label text-weight-thin q-mb-xs">
+          {{  textfields.textarea.label }}
+        </div>
         <div class="q-pa-sm w-100 h-100" style="border: 1px solid #ECECEC; border-radius: 5px;">
           <div class="col-12 q-pr-md form__item-label text-weight-thin">
-            <strong>
-              {{  textfields.textarea.label }}
-            </strong>
           </div>
-          <div class="col-12 form__item-model q-pr-md" v-html="textfields.textarea.model" />
+          <div class="col-12 q-pr-md" v-html="textfields.textarea.model" />
         </div>
       </div>
     </div>
@@ -186,7 +184,7 @@ export default defineComponent({
 
 .form {
   &__item-label {
-    color: #7A7A7A;
+    color: #06284196;
     font-size: 12px;
     font-weight: 600;
     &__title {
