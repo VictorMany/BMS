@@ -1,37 +1,28 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page q-px-none">
+    <div class="card-page q-px-none bg-white">
       <header-actions :titlePage="'Configuración'" />
       <div class="row q-px-md">
-        <img
-          class="q-mb-md container-img"
-          src="https://picsum.photos/id/1036/200/300"
-        />
+        <img class="q-mb-md container-img" src="https://www.thinkchamplin.com/uploads/case-studies/main_MercyHealth_WestHospital_04.jpg" />
         <div class="info q-ml-md">
-          <div class="info__title">Hospital de la Mora</div>
-          <div class="info__email">admingp@hdelamora</div>
+          <div class="info__title">Hospital Mercy West</div>
+          <div class="info__email">admingp@mercywest.com</div>
         </div>
       </div>
       <div class="main-container-page" style="height: 68%">
-        <q-scroll-area
-          class="fit"
-          :thumb-style="{
-            right: '1px',
-            borderRadius: '5px',
-            background: 'rgba(135, 192, 232, 0.44)',
-            width: '5px',
-            opacity: 1,
-          }"
-        >
+        <q-scroll-area class="fit" :thumb-style="{
+          right: '1px',
+          borderRadius: '5px',
+          background: 'rgba(135, 192, 232, 0.44)',
+          width: '5px',
+          opacity: 1,
+        }">
           <q-list class="q-px-md">
-            <q-item
-              v-for="(item, i) in listSettings"
-              :key="i"
-              class="q-mb-sm setting-item flex items-center clickable v-ripple"
-            >
+            <q-item v-for="(item, i) in listSettings" :key="i"
+              class="q-mb-sm setting-item flex items-center clickable v-ripple">
               <q-item-section avatar>
-                <q-avatar>
-                  <img :src="item.img" />
+                <q-avatar class="avatar-item">
+                  <img :src="getImageUrl(item.img)" />
                 </q-avatar>
               </q-item-section>
               <q-item-section>
@@ -65,29 +56,41 @@ export default defineComponent({
         {
           title: 'Cuenta principal',
           subtitle: 'Información asociada a tu cuenta en el sistema',
-          img: 'https://picsum.photos/id/50/200/300'
+          img: 'main_account.svg'
         },
         {
           title: 'Notificaciones',
           subtitle: 'Alertas del sistema',
-          img: 'https://picsum.photos/id/70/200/300'
+          img: 'notifications.svg'
         },
         {
           title: 'Colores',
           subtitle: 'Color de énfasis, color de tema',
-          img: 'https://picsum.photos/id/80/200/300'
+          img: 'colours.svg'
         },
         {
           title: 'Roles y permisos',
           subtitle: 'Accesos y permisos dinámicos dentro del sistema',
-          img: 'https://picsum.photos/id/90/200/300'
+          img: 'roles.svg'
         },
         {
           title: 'Soporte técnico',
           subtitle: 'Ayuda, reportar error, contacto',
-          img: 'https://picsum.photos/id/100/200/300'
+          img: 'tecnical_support.svg'
         }
       ]
+    }
+  },
+  setup () {
+    const getImageUrl = (url) => {
+      try {
+        return new URL(`../../assets/svg/${url}`,
+          import.meta.url).href
+      } catch (error) { }
+    }
+    return {
+      getImageUrl,
+      basicToolBar: [['unordered', 'ordered']]
     }
   }
 })
@@ -105,7 +108,7 @@ export default defineComponent({
   }
 
   &__subtitle {
-    color: #06284194;
+    color: #798d9cda;
     font-size: 10px;
   }
 }
@@ -135,5 +138,9 @@ export default defineComponent({
     font-size: 16px;
     color: #06284194;
   }
+}
+
+.avatar-item {
+  border-radius: 3px !important;
 }
 </style>

@@ -123,16 +123,6 @@ export default defineComponent({
       default: () => {}
     }
   },
-  setup () {
-    const getImageUrl = (url) => {
-      try {
-        return new URL(`../../assets/${url}`, import.meta.url).href
-      } catch (error) {
-
-      }
-    }
-    return { getImageUrl }
-  },
   data () {
     return {
       openDialogLocal: this.openDialog,

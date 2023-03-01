@@ -85,7 +85,32 @@ const routes = [
       {
         path: 'settings',
         name: 'settings',
-        component: () => import('src/pages/SettingsPage.vue')
+        component: () => import('src/pages/Settings/Settings.vue')
+      },
+      {
+        path: 'main-account',
+        name: 'main-account',
+        component: () => import('src/pages/Settings/MainAccount.vue')
+      },
+      {
+        path: 'notifications',
+        name: 'notifications',
+        component: () => import('src/pages/Settings/Notifications.vue')
+      },
+      {
+        path: 'roles',
+        name: 'roles',
+        component: () => import('src/pages/Settings/Roles.vue')
+      },
+      {
+        path: 'colors',
+        name: 'colors',
+        component: () => import('src/pages/Settings/Colors.vue')
+      },
+      {
+        path: 'tecnical-support',
+        name: 'tecnical-support',
+        component: () => import('src/pages/Settings/TecnicalSupport.vue')
       },
       // Reports
       {

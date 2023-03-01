@@ -205,4 +205,5 @@ export default defineComponent({
 .btn-background {
   background: rgb(0, 106, 255);
   background: linear-gradient(34deg, rgba(0, 106, 255, 0.2) 0%, rgba(45, 185, 255, 0.2) 44%, rgba(0, 243, 255, 0.2) 100%);
-}</style>
+}
+</style>
