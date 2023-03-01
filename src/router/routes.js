@@ -24,6 +24,11 @@ const routes = [
         component: () => import('src/pages/Equipments/AddEquipment.vue')
       },
       {
+        path: 'edit-:id-equipment',
+        name: 'edit-equipment',
+        component: () => import('src/pages/Equipments/AddEquipment.vue')
+      },
+      {
         path: 'detail-:id-equipment',
         name: 'detail-equipment',
         component: () => import('src/pages/Equipments/DetailEquipment.vue')
@@ -76,7 +81,6 @@ const routes = [
         name: 'detail-maintenance',
         component: () => import('src/pages/Maintenances/DetailMaintenance.vue')
       },
-      // Stats
       // Settings
       {
         path: 'settings',
