@@ -358,7 +358,9 @@ export default defineComponent({
           icnSize: 'xs',
           icnAction: 'Edit'
         }
-      ]
+      ],
+      rowSelected: {}
+
     }
   },
   methods: {

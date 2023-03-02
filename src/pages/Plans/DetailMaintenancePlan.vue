@@ -43,12 +43,12 @@
               </div>
             </div>
             <div  v-if="payload.label != ''" class="col-12 q-pr-md q-my-md">
+              <div class="col-12 q-pr-md form__item-label text-weight-thin">
+                <strong>
+                  Notas
+                </strong>
+              </div>
               <div class="q-pa-sm w-100 h-100" style="border: 1px solid #ECECEC; border-radius: 5px;">
-                <div class="col-12 q-pr-md form__item-label text-weight-thin">
-                  <strong>
-                    Notas
-                  </strong>
-                </div>
                 <div class="col-12 form__item-model q-pr-md" v-html="payload.label" />
               </div>
             </div>

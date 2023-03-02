@@ -125,17 +125,11 @@ export default defineComponent({
   },
   data () {
     return {
-      openDialogLocal: this.openDialog,
       pdfObject: {
         name: '',
         file: {}
       },
       ImageBase64: null
-    }
-  },
-  watch: {
-    openDialog (value) {
-      this.openDialogLocal = value
     }
   },
   methods: {

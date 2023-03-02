@@ -60,7 +60,7 @@
               @change="uploadFile($event)" />
             <q-btn unelevated class="q-py-sm" style="background-color: #e7f0f7; max-width: 500px; height: auto;"
               :class="{ 'btn-background': ImageBase64 && type === 'user' }"
-              :style="type === 'user' ? 'width: 254px; height: 254px; border-radius: 50%' : 'width: 100%; min-height: 260px; max-width: 350px'"
+              :style="type === 'user' ? 'width: 255px; height: 255px; border-radius: 50%' : 'width: 100%; min-height: 260px; max-width: 350px; border-radius: 12px'"
               @click="pdfObject.name
                 ? clearFileInput($refs.fileUpload)
                 : $refs.fileUpload.click()">
@@ -157,18 +157,12 @@ export default defineComponent({
   },
   data () {
     return {
-      openDialogLocal: this.openDialog,
       previousLength: 0,
       pdfObject: {
         name: '',
         file: {}
       },
       ImageBase64: null
-    }
-  },
-  watch: {
-    openDialog (value) {
-      this.openDialogLocal = value
     }
   },
   methods: {
