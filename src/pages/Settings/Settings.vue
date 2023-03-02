@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
+    <div class="card-page bg-white">
       <header-actions
         :titlePage="'Configuración'"
         :btn-action="btnAction"
