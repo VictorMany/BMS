@@ -56,7 +56,7 @@
         </q-scroll-area>
         <div class="col-12" style="background-color: #e7f0f7; height: 5%;">
           <div class="form__date column items-end q-pa-sm q-mt-auto">
-            <div>Fecha de creación <strong> 12/02/2022</strong></div>
+            <div>Fecha de creación: <strong> 12/02/2022</strong></div>
           </div>
         </div>
       </div>

@@ -4,10 +4,6 @@
       <div class="column items-end q-mb-xs mobile-hide mobile-hide" >
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions
-        :titlePage="'Información de la cuenta'"
-        :btn-action="btnAction"
-      />
       <div class="row">
         <img class="q-mb-md container-img"
           src="https://www.thinkchamplin.com/uploads/case-studies/main_MercyHealth_WestHospital_04.jpg" />
@@ -16,8 +12,11 @@
           <div class="info__email">admingp@mercywest.com</div>
         </div>
       </div>
+      <div class="divider w-100 q-pb-xs" />
+        <header-actions
+          :titlePage="'Información de la cuenta'"
+          :btn-action="btnAction" />
       <div class="main-container-page" style="height: 68%">
-        <div class="divider w-100 q-pb-xs" />
         <q-scroll-area class="full-height q-pb-sm" style="height: 95% !important" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <form-text-field :textfields="textfields" />
         </q-scroll-area>

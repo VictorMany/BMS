@@ -17,7 +17,7 @@
                 <q-avatar size="25px">
                   <img src="../assets/svg/notifications_.svg">
                 </q-avatar>
-                <q-popup-proxy class="border-shadow">
+                <q-popup-proxy class="border-shadow border-radius">
                   <q-banner class="border-shadow" style="width: 400px; height: auto">
                     <div class="q-pa-sm">
                       Notificaciones

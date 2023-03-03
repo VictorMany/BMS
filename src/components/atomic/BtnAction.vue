@@ -36,7 +36,7 @@ export default defineComponent({
     btnBackground: {
       type: String,
       required: false,
-      default: '#06284130'
+      default: '#06284125'
     },
 
     btnBackgroundGradient: {
