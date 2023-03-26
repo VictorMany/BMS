@@ -96,21 +96,6 @@ export default defineComponent({
   height: 98px;
 }
 
-.info {
-  &__title {
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 36px;
-    color: #062841;
-  }
-
-  &__email {
-    font-weight: 400;
-    font-size: 16px;
-    color: #06284194;
-  }
-}
-
 .divider {
   background: rgb(0,106,255);
   border-radius: 8px;

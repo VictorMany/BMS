@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page q-px-none bg-white">
+    <div class="card-page q-px-none">
       <header-actions :titlePage="'Configuración'" />
       <div class="row q-px-md">
         <img class="q-mb-md container-img"
@@ -112,25 +112,11 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.setting-item {
-  background-color: $bg-clear;
-  height: 80px;
-  border-radius: 10px;
 
-  &__title {
-    color: #062841;
-    font-size: 12px;
+.body--light {
+  .card-page {
+    background: white;
   }
-
-  &__subtitle {
-    color: #798d9cda;
-    font-size: 10px;
-  }
-}
-
-.setting-item:hover {
-  background-color: #007bd218;
-  transform: scale(1.005);
 }
 
 .container-img {
@@ -138,21 +124,6 @@ export default defineComponent({
   border-radius: 10px;
   width: 178px;
   height: 98px;
-}
-
-.info {
-  &__title {
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 36px;
-    color: #062841;
-  }
-
-  &__email {
-    font-weight: 400;
-    font-size: 16px;
-    color: #06284194;
-  }
 }
 
 .avatar-item {

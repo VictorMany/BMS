@@ -8,7 +8,7 @@
         :title-page="'Detalles de reporte'"
         :btn-action="btnAction"
       />
-      <div class="main-container-page" style="height: 82%">
+      <div class="main-container-page main-container-page-dark" style="height: 82%">
         <q-scroll-area class="full-height" style="height: 95% !important" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <form-label :textfields="textfields" />
         </q-scroll-area>

@@ -1,11 +1,171 @@
 // app global css in SCSS form
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
 
+.body--light {
+  .card-page {
+    background: #F8F8F8;
+  }
+  .card-page {
+    background: white;
+  }
+  .setting-item {
+    background-color: $bg-clear;
+    &__title {
+      color: #062841;
+    }
+  }
+  .info {
+    &__title {
+      color: #062841;
+    }
+
+    &__email {
+      color: #06284194;
+    }
+  }
+  .table-style {
+    background-color: #ffffff00;
+  }
+  .font-style {
+    color: #000000;
+  }
+  .my-sticky-header-table .q-table__top,
+  .my-sticky-header-table thead tr:first-child th {
+    background-color: #dce1e6;
+  }
+  .card-graphics {
+    background-color: #FFFFFF;
+    &__title {
+      color: #6A7985;
+    }
+  }
+  .card-typography {
+    color: #283438;
+  }
+  .border-line {
+    border: 1px solid #E7F0F7;
+  }
+  .form {
+    &__item-label {
+      color: #06284196;
+      &__title {
+        color: #062841;
+      }
+    }
+  }
+}
+.body--dark {
+  .card-page {
+    background: #24292e;
+  }
+  .card-page {
+    background: #24292e;
+  }
+  .setting-item {
+    background-color: #334c646e;
+    &__title {
+      color: #91c8ff84;
+    }
+  }
+  .info {
+    &__title {
+      color: #91c8ff84;
+    }
+
+    &__email {
+      color: #858c9384;
+    }
+  }
+  .table-style {
+    background-color: #334c646e !important;
+  }
+  .font-style {
+    color: #dce1e6;
+  }
+  .my-sticky-header-table .q-table__top,
+  .my-sticky-header-table thead tr:first-child th {
+    background-color: #181b1e !important;
+    color: #91c8ff92;
+  }
+  .card-graphics {
+    background-color: #181b1e;
+    &__title {
+      color: #6A7985;
+    }
+  }
+  .item {
+    background-color: #181b1e7b !important;
+    color: #91c8ff84 !important;
+  }
+  .my-card {
+    background-color: #181b1e !important;
+  }
+  .card-typography {
+    color: #6A7985;
+  }
+  .input-style {
+    color: #91c8ff84 !important;
+    background: #181b1e !important;
+  }
+  .border-line {
+    border: 1px solid #181b1e;
+  }
+  .main-container-page-dark {
+    background-color: #334c646e !important;
+  }
+  .form {
+    &__item-label {
+      color: #6A7985;
+      &__title {
+        color: #91c8ff84;
+      }
+    }
+  }
+}
+
+.info {
+  &__title {
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  &__email {
+    font-weight: 400;
+    font-size: 16px;
+  }
+}
+
+.setting-item {
+  height: 80px !important;
+  border-radius: 10px;
+
+  &__title {
+    font-size: 12px;
+  }
+
+  &__subtitle {
+    color: #798d9cda !important;
+    font-size: 10px;
+  }
+}
+
+.setting-item:hover {
+  background-color: #007bd218;
+  transform: scale(1);
+}
+
+.table-style {
+  box-shadow: none;
+}
+
+
+/* #2b3137*/
+
 .card-page {
   position: absolute;
   height: 97vh;
   width: 97.5%;
-  background: #F8F8F8;
   box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 10%) !important;
   border-radius: 8px !important;
   padding: 1rem;
@@ -41,7 +201,6 @@
 }
 
 .border-line {
-  border: 1px solid #E7F0F7;
   box-shadow: none;
 }
 
@@ -136,13 +295,10 @@
 }
 
 .card-graphics {
-  background-color: #FFFFFF;
   border-radius: 5px;
-
   &__title {
     font-weight: 300;
     font-size: 13px;
-    color: #6A7985;
     border: solid #6a798588;
     border-width: 0 0 1px 0;
   }

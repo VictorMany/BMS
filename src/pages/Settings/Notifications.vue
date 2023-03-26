@@ -257,43 +257,11 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-
-.info {
-  &__title {
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 36px;
-    color: #062841;
-  }
-
-  &__email {
-    font-weight: 400;
-    font-size: 16px;
-    color: #06284194;
+.body--light {
+  .card-page {
+    background: white;
   }
 }
-
-.setting-item {
-  background-color: $bg-clear;
-  height: 60px;
-  border-radius: 10px;
-
-  &__title {
-    color: #062841;
-    font-size: 12px;
-  }
-
-  &__subtitle {
-    color: #798d9cda;
-    font-size: 10px;
-  }
-}
-
-.setting-item:hover {
-  background-color: #007bd218;
-  transform: scale(1);
-}
-
 .avatar-item {
   border-radius: 0 !important;
   width: 40px !important;

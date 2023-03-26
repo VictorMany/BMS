@@ -65,7 +65,7 @@
         </div>
       </div>
     </q-drawer>
-    <q-page-container>
+    <q-page-container class="container-style">
       <q-btn class="hamburguer-menu" flat @click="leftDrawerOpen = !leftDrawerOpen" round dense icon="menu" />
       <router-view />
     </q-page-container>
@@ -229,15 +229,33 @@ export default defineComponent({
 .side-menu {
   width: 100%;
   height: 100%;
-  background: #FEFEFE;
   box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 10%) !important;
   border-radius: 8px !important;
   overflow: hidden;
 }
 
+.body--light {
+  .main-menu {
+    background-color: rgba(236, 236, 236, 1) !important;
+  }
+  .side-menu {
+    background: #FEFEFE;
+  }
+}
+.body--dark {
+  .main-menu {
+    background: #11202e;
+  }
+  .side-menu {
+    background: #2b3137;
+  }
+  .container-style {
+    background: #11202e;
+  }
+}
+
 .main-menu {
   overflow: hidden;
-  background-color: rgba(236, 236, 236, 1) !important;
 }
 
 .title {
@@ -270,21 +288,6 @@ and (min-device-width : 1000px) {
   overflow-y: scroll;
   width: 0px;
   background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
-}
-.setting-item {
-  background-color: $bg-clear;
-  height: 50px;
-  border-radius: 10px;
-
-  &__title {
-    color: #062841;
-    font-size: 12px;
-  }
-
-  &__subtitle {
-    color: #798d9cda;
-    font-size: 10px;
-  }
 }
 
 .setting-item:hover {

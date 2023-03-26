@@ -61,13 +61,24 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.title-page {
-  font-style: normal;
-  font-family: 'Inter';
-  font-weight: 300;
-  font-size: 30px;
-  color: $primary;
+.body--light {
+  .title-page {
+    color: $primary;
+  }
 }
+.body--dark {
+  .title-page {
+    color: #91c8ff84;
+  }
+}
+
+.title-page {
+    font-style: normal;
+    font-family: 'Inter';
+    font-weight: 300;
+    font-size: 30px;
+}
+
 @media only screen
 and (max-device-width : 1000px) {
   .title-page {

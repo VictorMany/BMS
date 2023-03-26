@@ -168,12 +168,10 @@ export default defineComponent({
 
 .form {
   &__item-label {
-    color: #06284196;
     font-size: 12px;
     font-weight: 600;
     &__title {
       font-size: 16px;
-      color: #062841;
       text-transform: uppercase;
     }
   }

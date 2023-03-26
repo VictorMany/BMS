@@ -1,5 +1,5 @@
 <template>
-  <q-btn class="btn-style border-shadow"
+  <q-btn class="btn-style"
     :class="btnTitle ? 'q-pr-sm' : 'q-pa-none'"
     :unelevated="btnUnelevated"
     :outline="btnOutlined"
@@ -30,13 +30,13 @@ export default defineComponent({
     btnColor: {
       type: String,
       required: false,
-      default: '#062841'
+      default: '#2280D2'
     },
 
     btnBackground: {
       type: String,
       required: false,
-      default: '#06284125'
+      default: '#6A798530'
     },
 
     btnBackgroundGradient: {
@@ -96,9 +96,6 @@ export default defineComponent({
       required: false,
       default: 500
     }
-  },
-  created () {
-    console.log(this.$props)
   }
 })
 </script>

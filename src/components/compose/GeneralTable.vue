@@ -123,15 +123,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.table-style {
-  background-color: #ffffff00;
-  box-shadow: none;
-}
 .font-style {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  color: #000000;
 }
 .column-style {
   font-family: 'Inter';
@@ -158,11 +153,6 @@ and (min-device-height : 820px) {
     height: 90%;
   }
 }
-
-  .my-sticky-header-table .q-table__top,
-  .my-sticky-header-table thead tr:first-child th {
-    background-color: #dce1e6;
-  }
   .my-sticky-header-table thead tr th {
     position: sticky;
     z-index: 1;
