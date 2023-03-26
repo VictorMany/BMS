@@ -46,7 +46,7 @@ export default defineComponent({
 
 <style scoped>
 .icn-style {
-  color: v-bind(icnColor) !important;
+  color: v-bind(icnColor);
 }
 .icn-style:hover {
   transform: scale(1.2);

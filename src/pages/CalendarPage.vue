@@ -7,7 +7,7 @@
         :inputSearch="inputSearch"
       />
       <!-- Main container -->
-      <div class="main-container-page main-container-page-dark">
+      <div class="main-container-page main-container-page-calendar">
         <div class="row card-color q-pa-md" style="height: 100%;">
           <div class="col-xs-12 col-sm-auto">
             <q-date

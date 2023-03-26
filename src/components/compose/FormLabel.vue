@@ -29,7 +29,7 @@
                   <div class="q-mb-sm form__item-label text-weight-thin">
                     {{ textfield.label }}
                   </div>
-                  <div style="border: 1px solid #ECECEC; border-radius: 5px;" class="q-pa-sm">
+                  <div style="border-radius: 5px;" class="q-pa-sm border-line">
                     <div
                       v-html="textfield.model">
                     </div>
@@ -77,9 +77,7 @@
         <div class="col-12 q-pr-md form__item-label text-weight-thin q-mb-xs">
           {{  textfields.textarea.label }}
         </div>
-        <div class="q-pa-sm w-100 h-100" style="border: 1px solid #ECECEC; border-radius: 5px;">
-          <div class="col-12 q-pr-md form__item-label text-weight-thin">
-          </div>
+        <div class="q-pa-sm w-100 h-100 border-line" style="border-radius: 5px;">
           <div class="col-12 q-pr-md" v-html="textfields.textarea.model" />
         </div>
       </div>
@@ -165,52 +163,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-
-.form {
-  &__item-label {
-    font-size: 12px;
-    font-weight: 600;
-    &__title {
-      font-size: 16px;
-      text-transform: uppercase;
-    }
-  }
-  &__date {
-    color: #7A7A7A;
-    font-size: 12px;
-  }
-  &__item-model {
-    color: #959494;
-    font-style: normal;
-    font-weight: 200;
-    font-size: 12px;
-  }
-  &__item-area {
-    color: #7A7A7A;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    color: v-bind(inputColor);
-    background: v-bind(inputBackground);
-    border-radius: 0.5rem !important;
-  }
-  &__image64 {
-    object-fit: fill !important;
-    width: 230px !important;
-    height: 230px !important;
-    background-color: white;
-    background-clip: padding-box;
-    border-radius: 50%;
-  }
-  &__image64-equipment {
-    object-fit: fill !important;
-    width: 330px !important;
-    height: 320px !important;
-    background-color: white;
-    background-clip: padding-box;
-    border-radius: 12px;
-  }
-}
 .btn-background {
     background: rgb(0,106,255);
     background: linear-gradient(34deg, rgba(0,106,255,0.2) 0%, rgba(45,185,255,0.2) 44%, rgba(0,243,255,0.2) 100%);

@@ -67,18 +67,18 @@ export default defineComponent({
 
 <style scoped>
 .btn-change-content {
-  background-color: v-bind(color) !important;
+  background-color: v-bind(color);
   color: v-bind(btnColor) !important;
   border-radius: 0.5rem !important;
   height: 28px;
 }
 
 .btn-left {
-  background-color: v-bind(color1) !important;
+  background-color: v-bind(color1);
 }
 
 .btn-right {
-  background-color: v-bind(color2) !important;
+  background-color: v-bind(color2);
 }
 .btn-right:hover {
   transform: scale(1.05);

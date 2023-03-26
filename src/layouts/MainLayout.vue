@@ -15,7 +15,7 @@
             <q-page-sticky position="top-right" :offset="[18, 40]">
               <q-btn fab padding="xs" outline color="orange">
                 <q-avatar size="25px">
-                  <img src="../assets/svg/notifications_.svg">
+                  <img @mouseover="changeImage(0)" @mouseleave="changeImage(1)" :src="getImageUrl(imageNotification)">
                 </q-avatar>
                 <q-popup-proxy class="border-shadow border-radius">
                   <q-banner class="border-shadow" style="width: 400px; height: auto">
@@ -87,8 +87,15 @@ export default defineComponent({
 
   setup () {
     const leftDrawerOpen = ref(false)
+    const getImageUrl = (url) => {
+      try {
+        return new URL(`../assets/${url}`,
+          import.meta.url).href
+      } catch (error) { }
+    }
     return {
       leftDrawerOpen,
+      getImageUrl,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
@@ -98,6 +105,7 @@ export default defineComponent({
     return {
       btnSelected: 0,
       fixed: ref(false),
+      imageNotification: 'svg/notifications_.svg',
       btnLinks: [
         {
           title: 'Dashboard',
@@ -220,6 +228,9 @@ export default defineComponent({
     navigateTo ({ link, id }) {
       console.log('Juan')
       this.$router.push({ name: link, params: { id } })
+    },
+    changeImage (flag) {
+      if (flag === 0) { this.imageNotification = 'gif/notification.gif' } else { this.imageNotification = 'svg/notifications_.svg' }
     }
   }
 })

@@ -2,15 +2,7 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page q-px-none">
       <header-actions :titlePage="'Configuración'" />
-      <div class="row q-px-md">
-        <img class="q-mb-md container-img"
-          src="https://www.thinkchamplin.com/uploads/case-studies/main_MercyHealth_WestHospital_04.jpg" />
-        <div class="info q-ml-md">
-          <div class="info__title">Hospital Mercy West</div>
-          <div class="info__email">admingp@mercywest.com</div>
-        </div>
-      </div>
-      <div class="main-container-page" style="height: 68%">
+      <div class="main-container-page" style="height:85%">
         <q-scroll-area class="fit" :thumb-style="{
           right: '1px',
           borderRadius: '5px',
@@ -18,27 +10,11 @@
           width: '5px',
           opacity: 1,
         }">
-          <q-list class="q-px-md">
-            <div v-for="(item, i) in listSettings"
-            @click="navigateTo(item.link)"
-            :key="i">
-              <q-item class="q-mb-sm setting-item flex items-center clickable ">
-                <q-item-section avatar>
-                  <q-avatar class="avatar-item">
-                    <img :src="getImageUrl(item.img)" />
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label class="setting-item__title">{{
-                    item.title
-                  }}</q-item-label>
-                  <q-item-label class="setting-item__subtitle" caption>{{
-                    item.subtitle
-                  }}</q-item-label>
-                </q-item-section>
-              </q-item>
-            </div>
-          </q-list>
+        <q-toggle size="150px" v-model="shape" v-on:click="changeTheme()" val="150px" label="Modo obscuro" />
+        <div class="row">
+          <q-img class="image-style-parent" :src="getImageUrl(laptop)">
+          </q-img>
+        </div>
         </q-scroll-area>
       </div>
     </div>
@@ -46,7 +22,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 
 export default defineComponent({
@@ -93,20 +69,28 @@ export default defineComponent({
   setup () {
     const getImageUrl = (url) => {
       try {
-        return new URL(`../../assets/svg/${url}`,
+        return new URL(`../../assets/png/${url}`,
           import.meta.url).href
       } catch (error) { }
     }
     return {
       getImageUrl,
-      basicToolBar: [['unordered', 'ordered']]
+      shape: ref(true),
+      basicToolBar: [['unordered', 'ordered']],
+      laptop: 'laptop.png'
     }
   },
   methods: {
     navigateTo (link) {
       console.log('Juan')
       this.$router.push({ path: link })
+    },
+    changeTheme () {
+      this.$q.dark.toggle()
     }
+  },
+  created () {
+    this.shape = this.$q.dark.isActive
   }
 })
 </script>
@@ -122,6 +106,13 @@ export default defineComponent({
   border-radius: 10px;
   width: 178px;
   height: 98px;
+}
+
+.image-style-parent {
+  width: 70%;
+}
+.image-style-child {
+  width: 70%;
 }
 
 .avatar-item {

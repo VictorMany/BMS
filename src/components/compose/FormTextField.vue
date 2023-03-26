@@ -58,7 +58,7 @@
             style="height: 85%">
             <input ref="fileUpload" type="file" accept="image/*,.jpg, .jpeg, .png" style="display: none"
               @change="uploadFile($event)" />
-            <q-btn unelevated class="q-py-sm" style="background-color: #e7f0f7; max-width: 500px; height: auto;"
+            <q-btn unelevated class="q-py-sm btn-background-dark" style="background-color: #e7f0f7; max-width: 500px; height: auto;"
               :class="{ 'btn-background': ImageBase64 && type === 'user' }"
               :style="type === 'user' ? 'width: 255px; height: 255px; border-radius: 50%' : 'width: 100%; min-height: 260px; max-width: 340px; border-radius: 12px'"
               @click="pdfObject.name

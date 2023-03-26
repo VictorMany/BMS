@@ -48,13 +48,13 @@
                   Notas
                 </strong>
               </div>
-              <div class="q-pa-sm w-100 h-100" style="border: 1px solid #ECECEC; border-radius: 5px;">
+              <div class="q-pa-sm w-100 h-100 border-line" style="border-radius: 5px;">
                 <div class="col-12 form__item-model q-pr-md" v-html="payload.label" />
               </div>
             </div>
           </div>
         </q-scroll-area>
-        <div class="col-12" style="background-color: #e7f0f7; height: 5%;">
+        <div class="col-12 form__date_container" style="height: 5%;">
           <div class="form__date column items-end q-pa-sm q-mt-auto">
             <div>Fecha de creación: <strong> 12/02/2022</strong></div>
           </div>

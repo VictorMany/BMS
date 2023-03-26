@@ -52,6 +52,34 @@
         color: #062841;
       }
     }
+    &__item-input {
+      background-color: #E7F0F7;
+      color: #7a7a7a;
+    }
+    &__item-input-12 {
+      background-color: #E7F0F7;
+      color: #7a7a7a;
+    }
+
+    &__item-textarea {
+      background-color: #E7F0F7;
+      color: #7a7a7a;
+    }
+    &__date {
+      color: #7A7A7A;
+    }
+    &__item-model {
+      color: #959494;
+    }
+    &__item-area {
+      color: #7A7A7A;
+    }
+    &__image64 {
+      background-color: white;
+    }
+    &__image64-equipment {
+      background-color: white;
+    }
   }
 }
 .body--dark {
@@ -108,10 +136,21 @@
     background: #181b1e !important;
   }
   .border-line {
-    border: 1px solid #181b1e;
+    border: 1px solid #91c8ff84;
   }
   .main-container-page-dark {
-    background-color: #334c646e !important;
+    background-color: #181b1e !important;
+  }
+  .main-container-page-calendar {
+    background-color: #181b1e84 !important;
+  }
+  .select {
+    &__form {
+      background-color: #181b1e;
+    }
+  }
+  .icn-style {
+    color: #6A7985 !important;
   }
   .form {
     &__item-label {
@@ -120,6 +159,55 @@
         color: #91c8ff84;
       }
     }
+    &__date {
+      color: #7A7A7A;
+    }
+    &__date_container {
+      background-color: #334c646e !important;
+    }
+    &__item-model {
+      color: #959494;
+    }
+    &__item-area {
+      color: #7A7A7A;
+    }
+    &__image64 {
+      background-color: #181b1e !important;
+    }
+    &__image64-equipment {
+      background-color: #181b1e !important;
+    }
+    &__item-input {
+      background-color: #181b1e !important;
+      color: #7a7a7a;
+    }
+    &__item-input-12 {
+      background-color: #181b1e !important;
+      color: #7a7a7a;
+    }
+
+    &__item-textarea {
+      background-color: #181b1e !important;
+      color: #7a7a7a;
+    }
+  }
+  .input .q-field__native, .q-field__input {
+    color: #7a7a7a !important;
+  }
+  .btn-background-dark {
+    background-color: #181b1e !important;
+  }
+  .btn-change-content {
+    background-color: #334c646e !important;
+    color: #7a7a7a !important;
+  }
+
+  .btn-left {
+    background-color: #181b1e !important;
+  }
+
+  .btn-right {
+    background-color: #181b1e !important;
   }
 }
 
@@ -227,12 +315,10 @@
 
 .form {
   &__item-label {
-    color: #7a7a7a;
     font-size: 12px;
   }
 
   &__date {
-    color: #7a7a7a;
     font-size: 12px;
   }
 
@@ -242,7 +328,6 @@
     font-weight: 400;
     font-size: 12px;
     height: 29px !important;
-    background-color: #E7F0F7;
     color: #7a7a7a;
     border-radius: 0.3rem !important;
   }
@@ -253,8 +338,6 @@
     font-weight: 400;
     font-size: 12px;
     height: 29px !important;
-    background-color: #E7F0F7;
-    color: #7a7a7a;
     border-radius: 0.3rem !important;
   }
 
@@ -262,8 +345,6 @@
     border: none;
     font-style: normal;
     font-weight: 400;
-    background-color: #E7F0F7;
-    color: #7a7a7a;
     font-size: 12px;
     border-radius: 0.5rem !important;
   }
@@ -278,7 +359,6 @@
     object-fit: fill !important;
     width: 220px !important;
     height: 220px !important;
-    background-color: white;
     background-clip: padding-box;
     border-radius: 50%;
   }
@@ -288,7 +368,6 @@
     width: 100% !important;
     min-height: 240px !important;
     height: 97% !important;
-    background-color: white;
     background-clip: padding-box;
     border-radius: 12px;
   }
