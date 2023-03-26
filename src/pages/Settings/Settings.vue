@@ -63,31 +63,31 @@ export default defineComponent({
         {
           title: 'Cuenta principal',
           subtitle: 'Información asociada a tu cuenta en el sistema',
-          img: 'main_account.svg',
+          img: 'hospital.png',
           link: 'main-account'
         },
         {
           title: 'Notificaciones',
           subtitle: 'Alertas del sistema',
-          img: 'notifications.svg',
+          img: 'notification.png',
           link: 'notifications'
         },
         {
           title: 'Colores',
           subtitle: 'Color de énfasis, color de tema',
-          img: 'colours.svg',
+          img: 'color.png',
           link: 'colors'
         },
         {
           title: 'Roles y permisos',
           subtitle: 'Accesos y permisos dinámicos dentro del sistema',
-          img: 'roles.svg',
+          img: 'role.png',
           link: 'roles'
         },
         {
           title: 'Soporte técnico',
           subtitle: 'Ayuda, reportar error, contacto',
-          img: 'tecnical_support.svg',
+          img: 'tecnical.png',
           link: 'tecnical-support'
         }
       ]
@@ -96,7 +96,7 @@ export default defineComponent({
   setup () {
     const getImageUrl = (url) => {
       try {
-        return new URL(`../../assets/svg/${url}`,
+        return new URL(`../../assets/png/${url}`,
           import.meta.url).href
       } catch (error) { }
     }
@@ -133,7 +133,7 @@ export default defineComponent({
 
 .setting-item:hover {
   background-color: #007bd218;
-  transform: scale(1.005);
+  transform: scale(1);
 }
 
 .container-img {

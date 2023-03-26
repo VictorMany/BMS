@@ -1,36 +1,38 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <q-table
-    class="table-style font-style my-sticky-header-table q-mt-md bg-white"
-    :rows="rows"
-    :columns="columns"
-    row-key="id"
-    v-model:pagination="pagination"
-    hide-pagination
-    >
-    <template v-slot:header="props">
-      <q-tr :props="props">
-        <q-th
-          v-for="col in props.cols"
-          :key="col.name"
-          :props="props"
-          class="column-style"
-        >
-          {{ col.label }}
-        </q-th>
-      </q-tr>
-    </template>
-    <template v-slot:body-cell-actions="props">
-      <q-td :props="props">
-        <icon-action v-for="(action, i) in actionsTable" :key="i" v-bind="action" @click="rowClicked(props, action.icnAction)"/>
-      </q-td>
-    </template>
-    <template v-slot:body-cell-status="props">
-      <q-td :props="props">
-        <q-badge class="justify-center" :color="checkColor(props.value)" :label="props.value" style="width: 80px; height: 22px; font-weight: 600;"/>
-      </q-td>
-    </template>
-  </q-table>
+  <div style="max-width: 95vw">
+    <q-table
+      class="table-style font-style my-sticky-header-table q-mt-md bg-white"
+      :rows="rows"
+      :columns="columns"
+      row-key="id"
+      v-model:pagination="pagination"
+      hide-pagination
+      >
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th
+            v-for="col in props.cols"
+            :key="col.name"
+            :props="props"
+            class="column-style"
+          >
+            {{ col.label }}
+          </q-th>
+        </q-tr>
+      </template>
+      <template v-slot:body-cell-actions="props">
+        <q-td :props="props">
+          <icon-action v-for="(action, i) in actionsTable" :key="i" v-bind="action" @click="rowClicked(props, action.icnAction)"/>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-status="props">
+        <q-td :props="props">
+          <q-badge class="justify-center" :color="checkColor(props.value)" :label="props.value" style="width: 80px; height: 22px; font-weight: 600;"/>
+        </q-td>
+      </template>
+    </q-table>
+  </div>
   <div v-if="showPagination" class="row justify-center">
     <q-pagination
       v-model="pagination.page"
@@ -76,13 +78,19 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: () => true
+    },
+    paginationProp: {
+      type: Object,
+      required: false,
+      default: () => ({
+        rowsPerPage: 11
+      })
     }
   },
   setup (props) {
     const pagination = ref({
       descending: false,
-      page: 1,
-      rowsPerPage: 11
+      page: 1
     })
     return {
       pagination,
@@ -104,6 +112,11 @@ export default defineComponent({
           break
       }
       return color
+    }
+  },
+  created () {
+    if (this.paginationProp) {
+      this.pagination.rowsPerPage = this.paginationProp.rowsPerPage
     }
   }
 })

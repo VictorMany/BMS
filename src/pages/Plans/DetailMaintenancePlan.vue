@@ -6,7 +6,7 @@
       </div>
       <header-actions :title-page="'Detalles del plan de mantenimiento'" :btn-action="btnAction" />
       <div class="main-container-page" style="height: 82%">
-        <q-scroll-area class="full-height" style="height: 95% !important"
+        <q-scroll-area class="full-height q-pb-md" style="height: 95% !important"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <form-label :textfields="textfields" />
           <hr class="q-mx-lg q-mb-md divider-hr">

@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
+    <div class="card-page bg-dark">
       <header-actions :titlePage="'Estadísticas'" />
       <div class="main-container-page card-color">
         <q-scroll-area class="fit"
@@ -11,7 +11,7 @@
                 <div class="card-graphics__title text-center q-pa-sm ellipsis">
                   Atención a reportes por falla
                 </div>
-                <area-chart :chart-data="chartConfigReports.data" :chart-options="chartConfigReports.options" />
+                <area-chart dark :chart-data="chartConfigReports.data" :chart-options="chartConfigReports.options" />
               </div>
             </div>
             <div class="col-12 col-md q-pa-sm">

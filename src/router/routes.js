@@ -10,7 +10,7 @@ const routes = [
       {
         path: '/',
         name: 'dashboard',
-        component: () => import('src/pages/StatisticalPage.vue')
+        component: () => import('src/pages/StatisticalPageDark.vue')
       },
       // Equipments
       {

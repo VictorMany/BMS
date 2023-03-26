@@ -19,17 +19,17 @@
           <q-icon right :name="btnFilter.icon" class="q-ml-md q-ma-xs" />
         </div>
         <q-popup-proxy class="border-shadow border-radius">
-          <q-banner class="border-shadow" style="width: 300px; height: auto">
+          <q-banner class="border-shadow q-px-sm" style="width: 300px; height: auto">
             <q-scroll-area style="height: 390px !important" class="fit"
               :thumb-style="{
-                right: '1px',
                 borderRadius: '5px',
                 background: 'rgba(135, 192, 232, 0.44)',
-                width: '5px',
+                width: '0px',
                 opacity: 1,
               }">
-              <q-list>
-                <div v-for="(item, i) in listSettings"
+              <q-list class="q-px-none">
+                <div v-for="(item, i) in filterItems"
+                class="item-filter q-px-sm"
                 @click="navigateTo(item.route)"
                 :key="i">
                   <q-item class="q-mb-sm flex items-center clickable q-px-none">
@@ -105,7 +105,7 @@ export default defineComponent({
         icon: 'keyboard_arrow_down'
       },
       modelLocal: this.model,
-      listSettings: [
+      filterItems: [
         {
           title: 'Equipo',
           icon: 'equipment.svg'
@@ -180,5 +180,10 @@ export default defineComponent({
 .avatar-item {
   border-radius: 50% !important;
   background-color: rgb(0, 166, 255);
+}
+
+.item-filter:hover {
+  background-color: rgba(0, 0, 0, 0.098);
+  border-radius: 0.5rem;
 }
 </style>

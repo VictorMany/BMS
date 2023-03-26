@@ -198,21 +198,19 @@ export default defineComponent({
   }
   &__image64 {
     object-fit: fill !important;
-    width: 210px !important;
-    height: 210px !important;
+    width: 230px !important;
+    height: 230px !important;
     background-color: white;
     background-clip: padding-box;
-    border: 10px solid rgba(255,255,255,0.5);
     border-radius: 50%;
   }
   &__image64-equipment {
     object-fit: fill !important;
-    width: 300px !important;
+    width: 330px !important;
     height: 320px !important;
     background-color: white;
     background-clip: padding-box;
-    border: 5px solid rgba(255,255,255,0.5);
-    border-radius: 10%;
+    border-radius: 12px;
   }
 }
 .btn-background {

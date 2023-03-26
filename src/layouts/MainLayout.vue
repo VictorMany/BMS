@@ -273,7 +273,7 @@ and (min-device-width : 1000px) {
 }
 .setting-item {
   background-color: $bg-clear;
-  height: 80px;
+  height: 50px;
   border-radius: 10px;
 
   &__title {

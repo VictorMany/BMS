@@ -44,7 +44,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
-        to: 'equipments',
+        to: 'settings',
         btnWidth: 'auto'
       },
       btnCloseWindow: {
@@ -52,7 +52,7 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: '/'
+        to: 'settings'
       },
       textfields: {
         imageInput: true,

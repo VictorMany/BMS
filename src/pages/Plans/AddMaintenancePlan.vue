@@ -203,7 +203,7 @@ export default defineComponent({
           ]
         },
         {
-          label: 'Equipo de choque2',
+          label: 'Equipo de choque4',
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },
@@ -211,7 +211,7 @@ export default defineComponent({
           ]
         },
         {
-          label: 'Equipo de choque3',
+          label: 'Equipo de choque5',
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },
@@ -242,6 +242,7 @@ export default defineComponent({
 
 .checkbox-label {
   color: #E8F3FB;
+  font-size: 12px;
 }
 
 .q-tree__node-header-content {
