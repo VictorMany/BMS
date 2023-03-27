@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page q-px-none">
-      <header-actions :titlePage="'Configuración'" />
+      <header-actions :titlePage="'Aspecto del sistema'" />
       <div class="main-container-page" style="height:85%">
         <q-scroll-area class="fit" :thumb-style="{
           right: '1px',
@@ -10,10 +10,25 @@
           width: '5px',
           opacity: 1,
         }">
-        <q-toggle size="150px" v-model="shape" v-on:click="changeTheme()" val="150px" label="Modo obscuro" />
         <div class="row">
-          <q-img class="image-style-parent" :src="getImageUrl(laptop)">
-          </q-img>
+          <div class="col-12 col-md-5 col-lg-4 q-pa-md">
+            <div class="container-theme" @click="changeTheme('dark')">
+              <div class="flex justify-center">
+                <q-img class="image-style-parent" :src="getImageUrl(laptop)"/>
+                <q-img class="image-style-child" :src="getImageUrl(darkPic)"/>
+              </div>
+              <div class="info__email q-px-md q-py-xl w-100 text-center">Modo obscuro</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-5 col-lg-4 q-pa-md">
+            <div class="container-theme" @click="changeTheme('light')">
+              <div class="flex justify-center">
+                <q-img class="image-style-parent" :src="getImageUrl(laptop)"/>
+                <q-img class="image-style-child" :src="getImageUrl(lightPic)"/>
+              </div>
+              <div class="info__email q-px-md q-py-xl w-100 text-center">Modo claro</div>
+            </div>
+          </div>
         </div>
         </q-scroll-area>
       </div>
@@ -77,7 +92,10 @@ export default defineComponent({
       getImageUrl,
       shape: ref(true),
       basicToolBar: [['unordered', 'ordered']],
-      laptop: 'laptop.png'
+      laptop: 'laptop.png',
+      darkPic: 'dark.png',
+      currentPic: 'dark.png',
+      lightPic: 'light.png'
     }
   },
   methods: {
@@ -85,8 +103,8 @@ export default defineComponent({
       console.log('Juan')
       this.$router.push({ path: link })
     },
-    changeTheme () {
-      this.$q.dark.toggle()
+    changeTheme (theme) {
+      if (theme === 'dark') { this.$q.dark.set(true) } else { this.$q.dark.set(false) }
     }
   },
   created () {
@@ -109,10 +127,28 @@ export default defineComponent({
 }
 
 .image-style-parent {
-  width: 70%;
+  width: 300px;
+  position: absolute;
 }
 .image-style-child {
-  width: 70%;
+  width: 220px;
+  margin-top: 0.97rem;
+}
+
+.container-theme {
+  border: 3px solid #91c8ff84;
+  border-radius: 1rem;
+  height: 200px;
+  padding-top: 0.5rem;
+}
+
+.subtitle {
+  font-size: 14px;
+
+}
+
+.container-theme:hover {
+  border: 5px solid #00000034;
 }
 
 .avatar-item {

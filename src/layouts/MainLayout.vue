@@ -301,9 +301,4 @@ and (min-device-width : 1000px) {
   background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
 }
 
-.setting-item:hover {
-  background-color: #007bd218;
-  transform: scale(1.005);
-}
-
 </style>

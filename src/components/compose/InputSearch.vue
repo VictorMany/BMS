@@ -151,17 +151,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 
-.setting-item {
-  background-color: $bg-clear;
-  height: 80px;
-  border-radius: 10px;
-
-  &__title {
-    font-weight: 200;
-    font-size: 13px;
-    color: #7A7A7A;
-  }
-}
 .input-style {
   font-style: normal;
   font-weight: 400;

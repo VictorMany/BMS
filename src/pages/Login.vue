@@ -1,6 +1,6 @@
 <template>
-  <div class="fullscreen q-pa-md flex flex-center bg-white">
-    <div class="card-page" style="background-color: #ECECEC;">
+  <div class="fullscreen q-pa-md flex flex-center bg-white main-container-page-dark">
+    <div class="card-page login-page">
       <div class="flex flex-center align-center h-100 w-100">
         <div class="login__main-container">
           <div class="login__top-container flex flex-center">
@@ -68,14 +68,12 @@ export default defineComponent({
 .login {
   &__main-container {
     position: relative;
-    background: #FFFFFF;
     border-radius: 40px;
     width: 100%;
     max-width: 474px;
     height: 527px;
   }
   &__top-container {
-    background: linear-gradient(249.89deg, #0075FF 6.95%, #89D5FF 111.53%);
     border-radius: 40px;
     width: 100%;
     max-width: 474px;
@@ -94,13 +92,11 @@ export default defineComponent({
     bottom: 1.52%;
     width: 85%;
     height: 390.94px;
-    background-color: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 40px;
   }
   &__legend {
     font-size: 12px;
-    color: rgba(52, 73, 94, 0.83);
   }
   &__submit {
     margin-top: 5rem;
@@ -108,7 +104,6 @@ export default defineComponent({
 }
 .form {
   &__item-input-login {
-    background-color: #F2F2F2 !important;
     border-radius: 50px !important;
     max-width: 348.65px !important;
     width: 100% !important;

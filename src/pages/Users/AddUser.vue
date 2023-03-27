@@ -8,7 +8,7 @@
         :titlePage="'Agregar usuario'"
         :btn-action="btnAction"
       />
-      <div class="main-container-page main-container-page-calendar" style="height: 82%">
+      <div class="main-container-page main-container-page-medium-dark" style="height: 82%">
         <q-scroll-area class="full-height" style="height: 95% !important" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <form-text-field :textfields="textfields" type="user"/>
         </q-scroll-area>

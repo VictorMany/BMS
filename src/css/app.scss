@@ -80,6 +80,32 @@
     &__image64-equipment {
       background-color: white;
     }
+    &__date_container {
+      background-color: #E7F0F7 !important;
+    }
+    &__item-input-login {
+      background-color: #F2F2F2 !important;
+    }
+  }
+  .container-colorama {
+    background: #06284110;
+  }
+  .login {
+    &__main-container {
+      background: #FFFFFF;
+    }
+    &__top-container {
+      background: linear-gradient(249.89deg, #0075FF 6.95%, #89D5FF 111.53%);
+    }
+    &__title {
+      color: #FFFFFF;
+    }
+    &__bottom-container {
+      background-color: #FFFFFF;
+    }
+  }
+  .login-page {
+    background-color: #dce1e6;
   }
 }
 .body--dark {
@@ -141,7 +167,7 @@
   .main-container-page-dark {
     background-color: #181b1e !important;
   }
-  .main-container-page-calendar {
+  .main-container-page-medium-dark {
     background-color: #181b1e84 !important;
   }
   .select {
@@ -190,6 +216,9 @@
       background-color: #181b1e !important;
       color: #7a7a7a;
     }
+    &__item-input-login {
+      background-color: #142638 !important;
+    }
   }
   .input .q-field__native, .q-field__input {
     color: #7a7a7a !important;
@@ -201,13 +230,35 @@
     background-color: #334c646e !important;
     color: #7a7a7a !important;
   }
-
   .btn-left {
     background-color: #181b1e !important;
   }
-
   .btn-right {
     background-color: #181b1e !important;
+  }
+  .container-colorama {
+    background: #181b1e;
+  }
+  .q-date__calendar-item>button {
+    background-color: #91c8ff1a;
+    color: #91c8ff84;
+  }
+  .login {
+    &__main-container {
+      background: #334c646e;
+    }
+    &__top-container {
+      background: linear-gradient(249.89deg, #0077ff44 6.95%, #89d6ff6a 111.53%);
+    }
+    &__title {
+      color: #b8dbff;
+    }
+    &__bottom-container {
+      background-color: #000000ad;
+    }
+  }
+  .login-page {
+    background-color: #181b1e84;
   }
 }
 

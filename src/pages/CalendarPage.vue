@@ -7,7 +7,7 @@
         :inputSearch="inputSearch"
       />
       <!-- Main container -->
-      <div class="main-container-page main-container-page-calendar">
+      <div class="main-container-page main-container-page-medium-dark">
         <div class="row card-color q-pa-md" style="height: 100%;">
           <div class="col-xs-12 col-sm-auto">
             <q-date
@@ -236,7 +236,6 @@ export default defineComponent({
 
 <style>
 .container-colorama {
-  background: #06284110;
   max-width: 420px !important;
   border-radius: 5px;
 }
