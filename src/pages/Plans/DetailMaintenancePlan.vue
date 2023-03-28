@@ -9,7 +9,7 @@
         <q-scroll-area class="full-height q-pb-md" style="height: 95% !important"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <form-label :textfields="textfields" />
-          <hr class="q-mx-lg q-mb-md divider-hr">
+          <hr class="q-mx-lg q-mb-md border-line">
           <div class="row q-px-lg">
             <div class="col-12 col-md-6 q-pr-md">
               <div class="select__form border-line q-pa-md" style="height: 60vh;">
@@ -19,7 +19,7 @@
                 <div style="height: 90%">
                   <q-scroll-area class="fit"
                     :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-                    <q-tree node-key="label" class="checkbox-label" :nodes="simple" v-model:ticked="ticked"
+                    <q-tree node-key="label" class="checkbox-label" color="grey-8" text-color="grey-7" :nodes="simple" v-model:ticked="ticked"
                       :tick-strategy="tickStrategy" default-expand-all />
                   </q-scroll-area>
                 </div>
@@ -190,13 +190,13 @@ export default defineComponent({
 .chip-date {
   max-width: 420px;
   background-color: #4C607D20;
-  color: #4C607D;
+  color: #657ea4;
   border-radius: 8px;
 }
 
 .title-card {
   font-size: 18px;
-  color: #4C607D;
+  color: #657ea4;
 }
 
 .select {
@@ -205,7 +205,11 @@ export default defineComponent({
   }
 }
 
+.checkbox-label {
+  color: #E8F3FB;
+  font-size: 13px;
+}
 .divider-hr {
-  border-top: 1px dashed rgb(71, 81, 86);
+  border-top: 0.5px solid;
 }
 </style>
