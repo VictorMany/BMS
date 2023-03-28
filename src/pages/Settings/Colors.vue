@@ -11,25 +11,46 @@
           opacity: 1,
         }">
         <div class="row">
+          <div class="info__email w-100">Elige el tema principal para las interfaces del sistema</div>
           <div class="col-12 col-md-5 col-lg-4 q-pa-md">
             <div class="container-theme" @click="changeTheme('dark')">
               <div class="flex justify-center">
-                <q-img class="image-style-parent" :src="getImageUrl(laptop)"/>
-                <q-img class="image-style-child" :src="getImageUrl(darkPic)"/>
+                <q-img no-spinner class="image-style-parent" :src="getImageUrl(laptop)"/>
+                <q-img spinner-size="10px" class="image-style-child" :src="getImageUrl(darkPic)"/>
               </div>
-              <div class="info__email q-px-md q-py-xl w-100 text-center">Modo obscuro</div>
             </div>
           </div>
           <div class="col-12 col-md-5 col-lg-4 q-pa-md">
             <div class="container-theme" @click="changeTheme('light')">
               <div class="flex justify-center">
-                <q-img class="image-style-parent" :src="getImageUrl(laptop)"/>
-                <q-img class="image-style-child" :src="getImageUrl(lightPic)"/>
+                <q-img no-spinner class="image-style-parent" :src="getImageUrl(laptop)"/>
+                <q-img spinner-size="10px" class="image-style-child" :src="getImageUrl(lightPic)"/>
               </div>
-              <div class="info__email q-px-md q-py-xl w-100 text-center">Modo claro</div>
             </div>
           </div>
         </div>
+        <q-item class="q-mb-sm setting-item flex items-center clickable">
+          <q-item-section avatar>
+            <q-avatar class="avatar-item">
+              <img :src="getImageUrl('color.png')" />
+            </q-avatar>
+          </q-item-section>
+          <q-item-section class="q-px-none">
+            <div class="row justify-between">
+              <div class="col-auto">
+                <q-item-label class="setting-item__title">Color de realce</q-item-label>
+                <q-item-label class="setting-item__subtitle" caption>
+                  Colores de títulos de secciones, textos más importantes
+                </q-item-label>
+              </div>
+              <div class="col-auto q-pa-none q-pt-xs">
+                <div class="row">
+                  <q-btn v-for="(button, index) in buttonColors" class="q-mx-sm" unelevated :style="`background-color: ${button.color}`" :key="index" round size="7px" />
+                </div>
+              </div>
+            </div>
+          </q-item-section>
+        </q-item>
         </q-scroll-area>
       </div>
     </div>
@@ -90,7 +111,25 @@ export default defineComponent({
     }
     return {
       getImageUrl,
+      buttonColors: [
+        {
+          color: '#1e6fe8'
+        },
+        {
+          color: '#91c8ff84'
+        },
+        {
+          color: '#EC7063'
+        },
+        {
+          color: '#48C9B0'
+        },
+        {
+          color: '#F5B041'
+        }
+      ],
       shape: ref(true),
+      primaryColor: '#1e6fe8',
       basicToolBar: [['unordered', 'ordered']],
       laptop: 'laptop.png',
       darkPic: 'dark.png',
@@ -136,7 +175,6 @@ export default defineComponent({
 }
 
 .container-theme {
-  border: 3px solid #91c8ff84;
   border-radius: 1rem;
   height: 200px;
   padding-top: 0.5rem;
@@ -148,7 +186,7 @@ export default defineComponent({
 }
 
 .container-theme:hover {
-  border: 5px solid #00000034;
+  transform: scale(1.03);
 }
 
 .avatar-item {

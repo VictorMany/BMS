@@ -7,8 +7,8 @@
       <header-actions :titlePage="'Notificaciones'" :btn-action="btnAction" />
       <div class="main-container-page" style="height: 85%">
         <q-scroll-area class="full-height q-pb-sm" style="height: 95% !important"
-          :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-          <q-list>
+          :thumb-style="{ right: '0px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+          <q-list class="q-px-sm">
             <div v-for="(item, i) in listNotifications" :key="i">
               <q-item class="q-mb-sm setting-item flex items-center clickable">
                 <q-item-section avatar>
@@ -34,7 +34,6 @@
               </q-item>
             </div>
           </q-list>
-
           <div class="col-12 q-pa-sm">
               <div class="card-graphics__title q-mt-sm text-start ellipsis" style="border: none">
                 Historial de notificaciones
