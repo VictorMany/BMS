@@ -18,18 +18,18 @@
                 <div style="height: 90%">
                   <q-scroll-area class="fit"
                     :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-                    <q-tree node-key="label" class="checkbox-label" color="grey-8" text-color="grey-7" :nodes="simple" v-model:ticked="ticked"
+                    <q-tree node-key="label" class="checkbox-label" color="grey-8" text-color="blue-grey-4" :nodes="simple" v-model:ticked="ticked"
                       :tick-strategy="tickStrategy" default-expand-all />
                   </q-scroll-area>
                 </div>
               </div>
             </div>
             <div class="col-12 col-md-5">
-              <q-date mask="YYYY-MM-DD" v-model="date" class="text-blue-grey-7 border-line" minimal landscape
+              <q-date mask="YYYY-MM-DD" v-model="date" class="text-blue-blue-grey-4 border-line" minimal landscape
                 :events="events" :event-color="(date) => blueEvents.includes(date) ? 'positive' : 'primary'" />
               <div class="row q-my-md" style="max-width: 418px;">
                 <div class="col-auto">
-                  <q-checkbox size="sm" v-model="frequency" label="Frecuencia" class="frequency-button q-mr-md q-pr-md" />
+                  <q-checkbox size="sm" v-model="frequency" label="Frecuencia" class="form__checkbox q-mr-md q-pr-md" />
                 </div>
                 <div class="col q-mb-md">
                   <q-select class="form__item-select q-pl-sm q-pr-sm" label="Frecuncia" dense borderless v-model="model"
@@ -88,7 +88,7 @@
         <q-card-section style="max-height: 50vh;" class="scroll">
           <div class="row">
             <div class="col-12 col-md-auto">
-              <q-date mask="dddd DD, MMM YYYY" v-model="days" multiple class="text-blue-grey-7 border-line" landscape />
+              <q-date mask="dddd DD, MMM YYYY" v-model="days" multiple class="text-blue-blue-grey-4 border-line" landscape />
             </div>
             <div class="col-12 col-md q-pl-lg">
               <div class="q-mb-sm">
@@ -253,25 +253,6 @@ export default defineComponent({
 .title-card {
   font-size: 18px;
   color: #017ED9;
-}
-
-.frequency-button {
-  background-color: white;
-  border: #4C607D 1px solid;
-  border-radius: 5px;
-}
-
-.form {
-  &__item-select {
-    min-width: 260px !important;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    height: 37px !important;
-    background-color: #E7F0F7;
-    color: #7a7a7a;
-    border-radius: 0.3rem !important;
-  }
 }
 
 .q-field__label {

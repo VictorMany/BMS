@@ -13,7 +13,7 @@
             <q-date
               v-model="date"
               mask="YYYY-MM-DD"
-              class="text-blue-grey-7 border-line"
+              class="text-blue-blue-grey-4 border-line"
               landscape
               :events="events"
               :event-color="(date) => blueEvents.includes(date) ? 'positive' : 'primary'" />

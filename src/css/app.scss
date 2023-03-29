@@ -46,6 +46,15 @@
     border: 1px solid #E7F0F7;
   }
   .form {
+    &__item-select {
+      background-color: #E7F0F7;
+      color: #7a7a7a;
+    }
+    &__checkbox {
+      background-color: white;
+      color: #7a7a7a;
+      border: #4C607D 1px solid;
+    }
     &__item-label {
       color: #06284196;
       &__title {
@@ -54,25 +63,25 @@
     }
     &__item-input {
       background-color: #E7F0F7;
-      color: #7a7a7a;
+      color: #87909a;
     }
     &__item-input-12 {
       background-color: #E7F0F7;
-      color: #7a7a7a;
+      color: #87909a;
     }
 
     &__item-textarea {
       background-color: #E7F0F7;
-      color: #7a7a7a;
+      color: #87909a;
     }
     &__date {
-      color: #7A7A7A;
+      color: #87909a;
     }
     &__item-model {
       color: #959494;
     }
     &__item-area {
-      color: #7A7A7A;
+      color: #87909a;
     }
     &__image64 {
       background-color: white;
@@ -185,8 +194,17 @@
         color: #91c8ff84;
       }
     }
+    &__checkbox {
+      background-color: #181b1e;
+      color: #87909a;
+      border: #4C607D 1px solid;
+    }
+    &__item-select {
+      background-color: #181b1e;
+      color: #87909a !important;
+    }
     &__date {
-      color: #7A7A7A;
+      color: #87909a;
     }
     &__date_container {
       background-color: #334c646e !important;
@@ -195,7 +213,7 @@
       color: #959494;
     }
     &__item-area {
-      color: #7A7A7A;
+      color: #87909a;
     }
     &__image64 {
       background-color: #181b1e !important;
@@ -205,30 +223,30 @@
     }
     &__item-input {
       background-color: #181b1e !important;
-      color: #7a7a7a;
+      color: #87909a;
     }
     &__item-input-12 {
       background-color: #181b1e !important;
-      color: #7a7a7a;
+      color: #87909a;
     }
 
     &__item-textarea {
       background-color: #181b1e !important;
-      color: #7a7a7a;
+      color: #87909a;
     }
     &__item-input-login {
       background-color: #142638 !important;
     }
   }
   .input .q-field__native, .q-field__input {
-    color: #7a7a7a !important;
+    color: #87909a !important;
   }
   .btn-background-dark {
     background-color: #181b1e !important;
   }
   .btn-change-content {
     background-color: #334c646e !important;
-    color: #7a7a7a !important;
+    color: #87909a !important;
   }
   .btn-left {
     background-color: #181b1e !important;
@@ -241,7 +259,7 @@
   }
   .q-date__calendar-item>button {
     background-color: #91c8ff1a;
-    color: #91c8ff84;
+    color: $blue-grey-4;
   }
   .login {
     &__main-container {
@@ -297,9 +315,6 @@
 .table-style {
   box-shadow: none;
 }
-
-
-/* #2b3137*/
 
 .card-page {
   position: absolute;
@@ -369,6 +384,19 @@
     font-size: 12px;
   }
 
+  &__checkbox {
+    border-radius: 5px;
+  }
+
+  &__item-select {
+    min-width: 260px !important;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    height: 37px !important;
+    border-radius: 0.3rem !important;
+  }
+
   &__date {
     font-size: 12px;
   }
@@ -379,7 +407,7 @@
     font-weight: 400;
     font-size: 12px;
     height: 29px !important;
-    color: #7a7a7a;
+    color: #87909a;
     border-radius: 0.3rem !important;
   }
 

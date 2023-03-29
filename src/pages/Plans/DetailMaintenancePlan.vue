@@ -19,7 +19,7 @@
                 <div style="height: 90%">
                   <q-scroll-area class="fit"
                     :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-                    <q-tree node-key="label" class="checkbox-label" color="grey-8" text-color="grey-7" :nodes="simple" v-model:ticked="ticked"
+                    <q-tree node-key="label" class="checkbox-label" color="grey-8" text-color="blue-grey-4" :nodes="simple" v-model:ticked="ticked"
                       :tick-strategy="tickStrategy" default-expand-all />
                   </q-scroll-area>
                 </div>
