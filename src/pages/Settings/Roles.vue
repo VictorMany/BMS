@@ -1,44 +1,59 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page q-px-none">
-      <header-actions :titlePage="'Configuración'" />
-      <div class="row q-px-md">
-        <img class="q-mb-md container-img"
-          src="https://www.thinkchamplin.com/uploads/case-studies/main_MercyHealth_WestHospital_04.jpg" />
-        <div class="info q-ml-md">
-          <div class="info__title">Hospital Mercy West</div>
-          <div class="info__email">admingp@mercywest.com</div>
-        </div>
+    <div class="card-page">
+      <div class="column items-end q-mt-md q-mb-xs mobile-hide">
+        <btn-action v-bind="btnCloseWindow" />
       </div>
-      <div class="main-container-page" style="height: 68%">
-        <q-scroll-area class="fit" :thumb-style="{
-          right: '1px',
-          borderRadius: '5px',
-          background: 'rgba(135, 192, 232, 0.44)',
-          width: '5px',
-          opacity: 1,
-        }">
-          <q-list class="q-px-md">
-            <div v-for="(item, i) in listSettings"
-            @click="navigateTo(item.link)"
-            :key="i">
-              <q-item class="q-mb-sm setting-item flex items-center clickable ">
-                <q-item-section avatar>
-                  <q-avatar class="avatar-item">
-                    <img :src="getImageUrl(item.img)" />
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label class="setting-item__title">{{
-                    item.title
-                  }}</q-item-label>
-                  <q-item-label class="setting-item__subtitle" caption>{{
-                    item.subtitle
-                  }}</q-item-label>
-                </q-item-section>
-              </q-item>
+      <header-actions :titlePage="'Roles de usuarios y asignación de permisos'" />
+      <div class="main-container-page main-container-page-medium-dark" style="height: 85%">
+        <q-scroll-area class="full-height q-pb-sm" style="height: 100% !important"
+          :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+          <div class="row q-pa-lg justify-between">
+            <div class="col-12 col-md-7 q-pr-md">
+              <q-scroll-area class="fit" :thumb-style="{
+                right: '1px',
+                borderRadius: '5px',
+                background: 'rgba(135, 192, 232, 0.44)',
+                width: '5px',
+                opacity: 1,
+              }">
+                <q-list>
+                  <div v-for="(item, i) in listRoles"
+                  :key="i">
+                    <q-item class="q-mb-sm setting-item flex items-center clickable ">
+                      <q-item-section avatar>
+                        <q-avatar class="avatar-item">
+                          <img :src="getImageUrl(item.img)" />
+                        </q-avatar>
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label class="setting-item__title">{{
+                          item.title
+                        }}</q-item-label>
+                        <q-item-label class="setting-item__subtitle" caption>{{
+                          item.subtitle
+                        }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </div>
+                </q-list>
+              </q-scroll-area>
             </div>
-          </q-list>
+            <div class="col-12 col-md-5 q-pr-md">
+              <div class="select__form border-line q-pa-md" style="height: 60vh;">
+                <div class="q-pb-sm title-card">
+                  Listado de permisos
+                </div>
+                <div style="height: 90%">
+                  <q-scroll-area class="fit"
+                    :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+                    <q-tree node-key="label" class="checkbox-label" color="grey-8" text-color="grey-7" :nodes="simple" v-model:ticked="ticked"
+                      :tick-strategy="tickStrategy" default-expand-all />
+                  </q-scroll-area>
+                </div>
+              </div>
+            </div>
+          </div>
         </q-scroll-area>
       </div>
     </div>
@@ -46,46 +61,86 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { ref, defineComponent } from 'vue'
+import BtnAction from 'src/components/atomic/BtnAction.vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 
 export default defineComponent({
-  name: 'SettingsPage',
+  name: 'EquipmentsPage',
   components: {
-    HeaderActions
+    HeaderActions,
+    BtnAction
   },
   data () {
     return {
-      listSettings: [
+      fixed: ref(false),
+      btnCloseWindow: {
+        iconName: 'close',
+        btnBackground: '#FF9900',
+        btnColor: '#FFFFFF',
+        btnSize: 'xs',
+        to: '/'
+      },
+      model: ref(null),
+      listRoles: [
         {
-          title: 'Cuenta principal',
-          subtitle: 'Información asociada a tu cuenta en el sistema',
-          img: 'main_account.svg',
-          link: 'main-account'
+          title: 'Administrador',
+          subtitle: 'Rol con todos los permisos dentro del sistema',
+          img: 'admin.png'
         },
         {
-          title: 'Notificaciones',
-          subtitle: 'Alertas del sistema',
-          img: 'notifications.svg',
-          link: 'notifications'
+          title: 'Auxiliar',
+          subtitle: 'Rol con permisos customizables por el administrador',
+          img: 'aux.png'
         },
         {
-          title: 'Colores',
-          subtitle: 'Color de énfasis, color de tema',
-          img: 'colours.svg',
-          link: 'colors'
+          title: 'Funciones básicas',
+          subtitle: 'Role con permisos customizables por el administrador',
+          img: 'user.png'
+        }
+      ],
+      ticked: ref(['Equipo de choque']),
+      tickStrategy: ref('strict'),
+      simple: [
+        {
+          label: 'Equipo de choque',
+          children: [
+            { label: 'Good food' },
+            { label: 'Good service (disabled node)' },
+            { label: 'Pleasant surroundings' }
+          ]
         },
         {
-          title: 'Roles y permisos',
-          subtitle: 'Accesos y permisos dinámicos dentro del sistema',
-          img: 'roles.svg',
-          link: 'roles'
+          label: 'Equipo de choque2',
+          children: [
+            { label: 'Good food' },
+            { label: 'Good service (disabled node)' },
+            { label: 'Pleasant surroundings' }
+          ]
         },
         {
-          title: 'Soporte técnico',
-          subtitle: 'Ayuda, reportar error, contacto',
-          img: 'tecnical_support.svg',
-          link: 'tecnical-support'
+          label: 'Equipo de choque3',
+          children: [
+            { label: 'Good food' },
+            { label: 'Good service (disabled node)' },
+            { label: 'Pleasant surroundings' }
+          ]
+        },
+        {
+          label: 'Equipo de choque4',
+          children: [
+            { label: 'Good food' },
+            { label: 'Good service (disabled node)' },
+            { label: 'Pleasant surroundings' }
+          ]
+        },
+        {
+          label: 'Equipo de choque5',
+          children: [
+            { label: 'Good food' },
+            { label: 'Good service (disabled node)' },
+            { label: 'Pleasant surroundings' }
+          ]
         }
       ]
     }
@@ -93,40 +148,49 @@ export default defineComponent({
   setup () {
     const getImageUrl = (url) => {
       try {
-        return new URL(`../../assets/svg/${url}`,
+        return new URL(`../../assets/png/${url}`,
           import.meta.url).href
       } catch (error) { }
     }
     return {
-      getImageUrl,
-      basicToolBar: [['unordered', 'ordered']]
-    }
-  },
-  methods: {
-    navigateTo (link) {
-      console.log('Juan')
-      this.$router.push({ path: link })
+      getImageUrl
     }
   }
 })
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+.main-container-page {
+  background-color: white;
+}
 
-.body--light {
-  .card-page {
-    background: white;
+.card-page {
+  padding-top: 0 !important;
+}
+
+.select {
+  &__form {
+    border-radius: 8px;
   }
 }
 
-.container-img {
-  object-fit: cover;
-  border-radius: 10px;
-  width: 178px;
-  height: 98px;
+.checkbox-label {
+  color: #E8F3FB;
+  font-size: 13px;
 }
 
-.avatar-item {
-  border-radius: 3px !important;
+.q-tree__node-header-content {
+  font-size: 13px;
+  color: rgb(121, 123, 123) !important;
 }
+
+.title-card {
+  font-size: 18px;
+  color: #017ED9;
+}
+
+.q-field__label {
+  padding-bottom: 0.5rem !important;
+}
+
 </style>

@@ -106,7 +106,7 @@ export default defineComponent({
   .card-typography-info {
     font-weight: 300;
     font-size: 12px;
-    color: #3e4f67;
+    color: #798d9cda;
   }
 
   @media only screen
