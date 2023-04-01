@@ -23,7 +23,7 @@
               </div>
             </div>
             <div class="col-12 q-pa-sm">
-              <div class="row">
+              <div class="row q-pb-sm">
                 <div class="col">
                   <div class="card-graphics__title q-mt-sm text-start ellipsis" style="border: none">
                     Últimos reportes
@@ -35,7 +35,7 @@
                     :btn-size="btnAction.size" v-bind="btnAction" />
                 </div>
               </div>
-              <general-table :rows="rows" :columns="columns" :actions-table="actionsTable"
+              <general-table height="auto" :rows="rows" :columns="columns" :actions-table="actionsTable"
                 v-model:row-selected="rowSelected" :show-pagination="false" />
             </div>
             <div class="col-12 0 col-md-3 q-pa-sm q-pb-lg q-mt-lg">

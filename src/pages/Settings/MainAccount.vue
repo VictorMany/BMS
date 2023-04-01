@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <div class="column items-end q-mb-xs mobile-hide mobile-hide" >
+      <div class="column items-end q-mb-xs mobile-hide" >
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <div class="row">

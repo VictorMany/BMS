@@ -39,8 +39,24 @@
                 </q-list>
               </q-scroll-area>
             </div>
-            <div class="col-12 col-md-5 q-pr-md">
-              <div class="select__form border-line q-pa-md" style="height: 60vh;">
+            <div class="separator border-line q-mr-md" />
+            <div class="col-12 col-md q-pr-md">
+              <div class="info__email w-100 q-mb-md">Crea un nuevo rol o selecciona uno de la lista para editarlo</div>
+              <div class="row w-100 q-pb-sm">
+                <div class="col-12 q-pr-md form__item-label text-weight-thin">
+                  Nombre del rol
+                </div>
+                <q-input class="col-12 col-sm form__item-input q-pl-md q-pr-md input" borderless dense
+                  v-model="role.title" />
+              </div>
+              <div class="row w-100 q-pb-sm">
+                <div class="col-12 q-pr-md form__item-label text-weight-thin">
+                  Descripción del rol
+                </div>
+                <q-input class="col-12 col-sm form__item-input q-pl-md q-pr-md input" borderless dense
+                  v-model="role.title" />
+              </div>
+              <div class="select__form border-line q-pa-md" style="height: 40vh;">
                 <div class="q-pb-sm title-card">
                   Listado de permisos
                 </div>
@@ -51,6 +67,9 @@
                       :tick-strategy="tickStrategy" default-expand-all />
                   </q-scroll-area>
                 </div>
+              </div>
+              <div class="column items-end q-my-lg mobile-hide" >
+                <btn-action v-bind="btnAction"/>
               </div>
             </div>
           </div>
@@ -142,7 +161,17 @@ export default defineComponent({
             { label: 'Pleasant surroundings' }
           ]
         }
-      ]
+      ],
+      role: {
+        title: ''
+      },
+      btnAction: {
+        show: true,
+        btnTitle: 'Guardar nuevo rol',
+        iconName: 'save',
+        to: 'settings',
+        btnWidth: 'auto'
+      }
     }
   },
   setup () {

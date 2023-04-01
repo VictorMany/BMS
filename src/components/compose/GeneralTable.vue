@@ -1,13 +1,14 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div style="max-width: 95vw">
+  <div style="max-width: 95vw;" :style="`height: ${height}`">
     <q-table
-      class="table-style font-style my-sticky-header-table q-mt-md bg-white"
+      class="table-style font-style my-sticky-header-table q-mt-none bg-white"
       :rows="rows"
       :columns="columns"
       row-key="id"
+      :rows-per-page-options="[10, 20, 100]"
+      :hide-pagination="!showPagination"
       v-model:pagination="pagination"
-      hide-pagination
       >
       <template v-slot:header="props">
         <q-tr :props="props">
@@ -21,6 +22,17 @@
           </q-th>
         </q-tr>
       </template>
+      <template v-slot:pagination>
+        <div v-if="showPagination" class="row justify-center">
+          <q-pagination
+            v-model="pagination.page"
+            color="blue-grey-5"
+            class="q-mt-none pagination-style"
+            :max="pagesNumber"
+            size="md"
+          />
+        </div>
+      </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
           <icon-action v-for="(action, i) in actionsTable" :key="i" v-bind="action" @click="rowClicked(props, action.icnAction)"/>
@@ -32,15 +44,6 @@
         </q-td>
       </template>
     </q-table>
-  </div>
-  <div v-if="showPagination" class="row justify-center">
-    <q-pagination
-      v-model="pagination.page"
-      color="blue-grey-8"
-      class="q-mt-sm pagination-style"
-      :max="pagesNumber"
-      size="md"
-    />
   </div>
 </template>
 
@@ -79,11 +82,16 @@ export default defineComponent({
       required: false,
       default: () => true
     },
+    height: {
+      type: [String],
+      required: false,
+      default: () => '80vh'
+    },
     paginationProp: {
       type: Object,
       required: false,
       default: () => ({
-        rowsPerPage: 11
+        rowsPerPage: 10
       })
     }
   },
@@ -137,7 +145,7 @@ export default defineComponent({
 }
 
 .pagination-style {
-  color: #4C607D !important;
+  color: #ffffff !important;
 }
 
 @media only screen

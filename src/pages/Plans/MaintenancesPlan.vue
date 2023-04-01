@@ -7,7 +7,12 @@
       </div>
       <!-- Main container -->
       <div class="main-container-page" style="height: 88%; overflow-y: hidden;">
-        <general-table :rows="rows" :columns="columns" :actions-table="actionsTable" v-model:row-selected="rowSelected" />
+        <q-scroll-area class="full-height" :thumb-style="{ borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+          <div
+            style="max-width: 100%" class="full-height">
+              <general-table :rows="rows" :columns="columns" :actions-table="actionsTable" v-model:row-selected="rowSelected" />
+          </div>
+        </q-scroll-area>
       </div>
       <!-- Main container -->
     </div>

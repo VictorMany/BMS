@@ -85,7 +85,7 @@ export default defineComponent({
           link: 'roles'
         },
         {
-          title: 'Soporte técnico',
+          title: 'Acerca de nosotros y soporte técnico',
           subtitle: 'Ayuda, reportar error, contacto',
           img: 'tecnical.png',
           link: 'tecnical-support'
