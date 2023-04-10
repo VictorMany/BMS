@@ -1,6 +1,9 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page q-px-none">
+      <div class="column items-end q-mb-xs mobile-hide" >
+        <btn-action v-bind="btnCloseWindow" />
+      </div>
       <header-actions :titlePage="'Aspecto del sistema'" />
       <div class="main-container-page" style="height:85%">
         <q-scroll-area class="fit" :thumb-style="{
@@ -60,11 +63,13 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
+import BtnAction from 'src/components/atomic/BtnAction.vue'
 
 export default defineComponent({
   name: 'SettingsPage',
   components: {
-    HeaderActions
+    HeaderActions,
+    BtnAction
   },
   data () {
     return {
@@ -99,7 +104,14 @@ export default defineComponent({
           img: 'tecnical_support.svg',
           link: 'tecnical-support'
         }
-      ]
+      ],
+      btnCloseWindow: {
+        iconName: 'close',
+        btnBackground: '#FF9900',
+        btnColor: '#FFFFFF',
+        btnSize: 'xs',
+        to: 'settings'
+      }
     }
   },
   setup () {

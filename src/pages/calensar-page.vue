@@ -234,7 +234,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 .container-colorama {
   max-width: 420px !important;
   border-radius: 5px;

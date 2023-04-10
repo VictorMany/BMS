@@ -3,7 +3,6 @@
     <div class="card-page">
       <header-actions
         :titlePage="'Configuración'"
-        :btn-action="btnAction"
       />
       <div class="row">
         <img class="q-mb-md container-img"
@@ -85,10 +84,16 @@ export default defineComponent({
           link: 'roles'
         },
         {
-          title: 'Acerca de nosotros y soporte técnico',
-          subtitle: 'Ayuda, reportar error, contacto',
+          title: 'Soporte técnico',
+          subtitle: 'Ayuda, reportar error',
           img: 'tecnical.png',
           link: 'tecnical-support'
+        },
+        {
+          title: 'Acerca de nosotros',
+          subtitle: 'Información y contacto',
+          img: 'about.png',
+          link: 'about-us'
         }
       ]
     }

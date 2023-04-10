@@ -64,7 +64,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .login {
   &__main-container {
     position: relative;
