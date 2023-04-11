@@ -17,7 +17,7 @@ const routes = [
       {
         path: 'equipments',
         name: 'equipments',
-        component: () => import('src/pages/Equipments/equipments.vue')
+        component: () => import('src/pages/Equipments/equipments-page.vue')
       },
       {
         path: 'add-equipment',
@@ -38,7 +38,7 @@ const routes = [
       {
         path: 'users',
         name: 'users',
-        component: () => import('src/pages/Users/users.vue')
+        component: () => import('src/pages/Users/users-page.vue')
       },
       {
         path: 'add-user',
@@ -65,7 +65,7 @@ const routes = [
       {
         path: 'maintenances',
         name: 'maintenances',
-        component: () => import('src/pages/Maintenances/maintenances.vue')
+        component: () => import('src/pages/Maintenances/maintenances-page.vue')
       },
       {
         path: 'add-maintenance',
@@ -86,7 +86,7 @@ const routes = [
       {
         path: 'settings',
         name: 'settings',
-        component: () => import('src/pages/Settings/settings.vue')
+        component: () => import('src/pages/Settings/settings-page.vue')
       },
       {
         path: 'main-account',
@@ -96,17 +96,17 @@ const routes = [
       {
         path: 'notifications',
         name: 'notifications',
-        component: () => import('src/pages/Settings/notifications.vue')
+        component: () => import('src/pages/Settings/notifications-page.vue')
       },
       {
         path: 'roles',
         name: 'roles',
-        component: () => import('src/pages/Settings/roles.vue')
+        component: () => import('src/pages/Settings/roles-page.vue')
       },
       {
         path: 'colors',
         name: 'colors',
-        component: () => import('src/pages/Settings/colors.vue')
+        component: () => import('src/pages/Settings/colors-page.vue')
       },
       {
         path: 'tecnical-support',
@@ -127,7 +127,7 @@ const routes = [
       {
         path: 'reports',
         name: 'reports',
-        component: () => import('src/pages/Reports/reports.vue')
+        component: () => import('src/pages/Reports/reports-page.vue')
       },
       {
         path: 'add-report',
