@@ -15,10 +15,9 @@
     "@quasar/cli": "^2.0.0",
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
-    "chart.js": "^3.9.1",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
-    "vue-chartjs": "^5.2.0",
+    "vue-chartjs": "^5.0.0",
     "vue-router": "^4.0.0",
     "vuex": "^4.0.1"
   },
