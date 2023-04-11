@@ -5,9 +5,6 @@
   .card-page {
     background: #F8F8F8;
   }
-  .card-page {
-    background: white;
-  }
   .setting-item {
     background-color: $bg-clear;
     &__title {
@@ -118,9 +115,6 @@
   }
 }
 .body--dark {
-  .card-page {
-    background: #24292e;
-  }
   .card-page {
     background: #24292e;
   }
@@ -288,8 +282,10 @@
   }
 
   &__email {
-    font-weight: 400;
+    font-weight: 600;
     font-size: 13px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
 
@@ -324,6 +320,8 @@
   border-radius: 8px !important;
   padding: 1rem;
   overflow: hidden;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .main-container-page {

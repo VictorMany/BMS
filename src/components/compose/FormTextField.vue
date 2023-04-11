@@ -87,7 +87,7 @@
       <div class="q-my-sm form__item-label text-weight-thin">
         {{ textfields.textArea.label }}
       </div>
-      <q-editor v-model="textfields.textArea.model" :placeholder="'Escribe aquí tus ' + textfields.textArea.label"
+      <q-editor v-model="textfields.textArea.model" :placeholder="'Escribe aquí...'"
         class="form__item-textarea input" dense :toolbar="[[{
           label: $q.lang.editor.fontSize,
           icon: $q.iconSet.editor.fontSize,

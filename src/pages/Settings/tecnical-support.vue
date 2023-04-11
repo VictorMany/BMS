@@ -1,14 +1,38 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page q-px-none">
-      <div class="column items-end q-mb-xs mobile-hide" >
+    <div class="card-page">
+      <div class="column items-end q-mt-md q-mb-xs mobile-hide">
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions :titlePage="'Soporte técnico'" />
-      <div class="main-container-page" style="height: 68%">
-        <q-scroll-area class="full-height q-pb-sm" style="height: 95% !important" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-          <form-text-field :textfields="textfields" />
+      <div class="main-container-page main-container-page-medium-dark" style="height: 85%">
+        <q-scroll-area class="full-height q-pb-sm" style="height: 87% !important"
+          :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+          <div class="q-pa-md row justify-center">
+            <div style="width: 100%">
+              <q-chat-message name="BMS" :text="['Hola, aquí el equipo de BMS, ¿Cómo podemos ayudarte?']"
+                stamp="1 minutes ago" text-color="white" bg-color="blue-14">
+                <template v-slot:avatar>
+                  <q-img class="q-message-avatar q-message-avatar--received bg-white" src="../../assets/png/bms.png"
+                    fit="contain" style="width: 20px">
+                  </q-img>
+                </template>
+              </q-chat-message>
+              <q-chat-message name="me" avatar="https://cdn.quasar.dev/img/avatar3.jpg"
+                :text="['Hola, mi nombre es Franciso Pérez y tengo una duda']" stamp="7 minutes ago" sent
+                text-color="white" bg-color="light-blue-14" />
+            </div>
+          </div>
         </q-scroll-area>
+        <div class="row flex flex-center align-center q-px-lg">
+          <div class="col">
+            <q-input class="q-pl-md q-pr-md input-message" style="heigh: 120px !important" borderless
+              v-model="newMessage" />
+          </div>
+          <div class="col-auto q-pl-md">
+            <btn-action v-bind="btnAction" />
+          </div>
+        </div>
       </div>
     </div>
   </q-page>
@@ -17,14 +41,12 @@
 <script>
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import FormTextField from 'src/components/compose/FormTextField.vue'
 import BtnAction from 'src/components/atomic/BtnAction.vue'
 
 export default defineComponent({
   name: 'SettingsPage',
   components: {
     HeaderActions,
-    FormTextField,
     BtnAction
   },
   data () {
@@ -32,10 +54,10 @@ export default defineComponent({
       Equipos: 40,
       btnAction: {
         show: true,
-        btnTitle: 'Guardar',
-        to: 'settings',
-        btnWidth: 'auto'
+        btnWidth: 'auto',
+        iconName: 'send'
       },
+      newMessage: '',
       btnCloseWindow: {
         iconName: 'close',
         btnBackground: '#FF9900',
@@ -44,24 +66,13 @@ export default defineComponent({
         to: 'settings'
       },
       textfields: {
-        imageInput: true,
         top: [
           {
-            label: 'Nombre del hospital',
+            label: 'Nombre',
             model: ''
           },
           {
             label: 'Correo electrónico',
-            model: ''
-          },
-          {
-            label: 'Dirección',
-            model: ''
-          }
-        ],
-        left: [
-          {
-            label: 'Tipo de cuenta',
             model: ''
           }
         ],
@@ -69,6 +80,8 @@ export default defineComponent({
 
         ],
         textArea: {
+          label: 'Por favor, explícanos la situación o el problema específico en el que necesitas la ayuda del equipo de BMS para que podamos brindarte el apoyo adecuado.',
+          model: ''
         }
       }
     }
@@ -83,43 +96,16 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.body--light {
-  .card-page {
-    background: white;
-  }
+.main-container-page {
+  background-color: white;
 }
 
-.container-img {
-  object-fit: cover;
-  border-radius: 10px;
-  width: 178px;
-  height: 98px;
+.card-page {
+  padding-top: 0 !important;
 }
 
-.avatar-item {
-  border-radius: 3px !important;
+.input-message {
+  background-color: rgba(0, 0, 0, 0.378);
+  border-radius: 0.8rem;
 }
-
-  h1, h2, h3 {
-    color: #555555;
-  }
-  p {
-    margin-bottom: 1em;
-  }
-  .container {
-    margin: 0 auto;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  .button {
-    display: inline-block;
-    padding: 1em 2em;
-    background-color: #5d5d5d;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.2s ease;
-  }
-  .button:hover {
-    background-color: #333333;
-  }
 </style>
