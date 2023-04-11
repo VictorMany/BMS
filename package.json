@@ -12,10 +12,10 @@
     "deploy": "vercel"
   },
   "dependencies": {
-    "@quasar/cli": "^1.4.0",
+    "@quasar/cli": "^2.0.0",
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
-    "chart.js": "^4.2.1",
+    "chart.js": "^3.9.1",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
     "vue-chartjs": "^5.2.0",
