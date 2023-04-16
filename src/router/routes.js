@@ -59,7 +59,7 @@ const routes = [
       {
         path: 'calendar',
         name: 'calendar',
-        component: () => import('src/pages/calensar-page.vue')
+        component: () => import('src/pages/calendar-page.vue')
       },
       // Maintenances
       {
