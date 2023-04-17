@@ -1,6 +1,5 @@
-<!-- eslint-disable vue/no-mutating-props -->
 <template>
-    <div class="row q-pa-md q-pt-lg" style="max-width: 1200px">
+    <div class="row q-px-md q-pt-none q-pb-lg" style="max-width: 1200px">
       <!-- LEFT SECTION -->
       <div class="col-12 col-sm-6">
         <div v-for="(item, i) in textfields.left" v-bind="item" :key="i">
@@ -135,7 +134,7 @@ export default defineComponent({
       const file = e.target.files[0]
       try {
         const reader = new FileReader()
-        reader.onloadend = (file) => {
+        reader.onloadend = () => {
           this.ImageBase64 = reader.result
         }
         reader.readAsDataURL(file)
@@ -144,7 +143,7 @@ export default defineComponent({
           this.pdfObject.file = file
         }
       } catch (error) {
-
+        console.log(error)
       }
     },
     clearFileInput (ctrl) {
@@ -153,7 +152,9 @@ export default defineComponent({
         this.pdfObject.name = ''
         this.pdfObject.file = {}
         this.ImageBase64 = null
-      } catch (ex) {}
+      } catch (ex) {
+        console.log(ex)
+      }
       if (ctrl.value) {
         ctrl.parentNode.replaceChild(ctrl.cloneNode(true), ctrl)
       }

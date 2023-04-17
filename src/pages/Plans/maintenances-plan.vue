@@ -54,7 +54,7 @@ export default defineComponent({
           sortable: true
         },
         { name: 'incharged', label: 'Encargado', field: 'incharged', align: 'center', sortable: true },
-        { name: 'initial_date', label: 'Fecha inicial', field: 'initial_date', align: 'left', sortable: true },
+        { name: 'initial_date', label: 'Fecha', field: 'initial_date', align: 'left', sortable: true },
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
       ],
       rows: [

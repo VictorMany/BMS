@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div class="row q-pa-md items-stretch" style="max-width: 1200px;">
+  <div class="row q-px-md q-pb-sm items-stretch" style="max-width: 1200px;">
     <!-- LEFT SECTION -->
     <div class="col-12 col-lg-5 col-md-6 q-pb-xs">
       <div class="row">
@@ -9,7 +9,7 @@
             <div class="col q-pr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
-            <q-input class="col-6 form__item-input-12 q-pl-md q-pr-md input" borderless dense v-model="item.model" />
+            <q-input class="col-6 form__item-input-12 q-pl-sm q-pr-md input" borderless dense v-model="item.model" />
           </div>
         </div>
         <div class="col-12 q-py-xs">
@@ -32,7 +32,7 @@
                 <div class="col-12 col-sm q-pr-md form__item-label text-weight-thin">
                   {{ item.label }}
                 </div>
-                <q-input class="col-12 col-sm form__item-input q-pl-md q-pr-md input" borderless dense
+                <q-input class="col-12 col-sm form__item-input q-pl-sm q-pr-md input" borderless dense
                   v-model="item.model" />
               </div>
             </div>
@@ -48,7 +48,7 @@
             <div v-if="item.label" class="col-12 col-md q-pr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
-            <q-input v-if="item.label" :readonly="item.readonly" class="col form__item-input q-pl-md q-pr-md input"
+            <q-input v-if="item.label" :readonly="item.readonly" class="col form__item-input q-pl-sm q-pr-md input"
               borderless dense v-model="item.model" />
           </div>
         </div>
@@ -110,6 +110,7 @@
   </div>
 </template>
 
+<!-- eslint-disable no-empty -->
 <script>
 import {
   defineComponent
@@ -170,7 +171,7 @@ export default defineComponent({
       const file = e.target.files[0]
       try {
         const reader = new FileReader()
-        reader.onloadend = (file) => {
+        reader.onloadend = () => {
           this.ImageBase64 = reader.result
         }
         reader.readAsDataURL(file)

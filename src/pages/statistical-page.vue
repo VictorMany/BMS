@@ -2,11 +2,11 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Estadísticas'" />
-      <div class="main-container-page card-color">
+      <div class="main-container-page card-color q-px-sm main-container-page-medium-dark">
         <q-scroll-area class="fit"
           :thumb-style="{ right: '0px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <div class="row">
-            <div class="col-12 col-md q-pa-sm">
+            <div class="col-12 col-md q-px-sm q-pb-sm q-pt-none">
               <div class="card-graphics">
                 <div class="card-graphics__title text-center q-pa-sm ellipsis">
                   Atención a reportes por falla
@@ -14,7 +14,7 @@
                 <area-chart :chart-data="chartConfigReports.data" :chart-options="chartConfigReports.options" />
               </div>
             </div>
-            <div class="col-12 col-md q-pa-sm">
+            <div class="col-12 col-md q-px-sm q-pb-sm q-pt-none">
               <div class="card-graphics">
                 <div class="card-graphics__title text-center q-pa-sm ellipsis">
                   Equipos médicos reemplazados por obsolencia o daño
@@ -30,9 +30,13 @@
                   </div>
                 </div>
                 <div class="col-auto">
-                  <btn-action :btn-title="btnAction.title" :btn-color="btnAction.color"
-                    :btn-background-gradient="btnAction.backgroundGradient" :icon-name="btnAction.icon"
-                    :btn-size="btnAction.size" v-bind="btnAction" />
+                  <btn-action
+                    :btn-title="btnAction.title"
+                    :btn-color="btnAction.color"
+                    :btn-background-gradient="btnAction.backgroundGradient"
+                    :icon-name="btnAction.icon"
+                    :btn-size="btnAction.size"
+                    v-bind="btnAction" />
                 </div>
               </div>
               <general-table height="auto" :rows="rows" :columns="columns" :actions-table="actionsTable"

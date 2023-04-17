@@ -9,7 +9,7 @@
         <q-scroll-area class="full-height q-pb-sm" style="height: 87% !important"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <div class="q-pa-md row justify-center">
-            <div style="width: 100%">
+            <div style="width: 100%" class="q-px-md">
               <q-chat-message name="BMS" :text="['Hola, aquí el equipo de BMS, ¿Cómo podemos ayudarte?']"
                 stamp="1 minutes ago" text-color="white" bg-color="blue-14">
                 <template v-slot:avatar>

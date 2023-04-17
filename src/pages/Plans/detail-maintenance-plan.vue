@@ -34,7 +34,7 @@
                   <q-scroll-area class="fit"
                     :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
                     <div class="col-12">
-                      <div v-for="(day, index) in days" :key="index" class="text-left chip-date q-mt-sm q-pa-xs q-px-sm">
+                      <div v-for="(day, index) in days" :key="index" class="text-left chip-date q-mt-sm q-pa-xs q-px-sm text-blue-grey-4">
                         {{ day }}
                       </div>
                     </div>
@@ -54,7 +54,7 @@
             </div>
           </div>
         </q-scroll-area>
-        <div class="col-12 form__date_container" style="height: 5%;">
+        <div class="col-12 form__date_container" style="height: 5.25%;">
           <div class="form__date column items-end q-pa-sm q-mt-auto">
             <div>Fecha de creación: <strong> 12/02/2022</strong></div>
           </div>
@@ -104,7 +104,7 @@ export default defineComponent({
       ],
       days2: [],
       payload: {
-        label: '<font size="7" style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; ">Título de observaciones</font><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
+        label: '<font size="6" style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; ">Título de observaciones</font><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
       },
       simple: [
         {
@@ -190,7 +190,6 @@ export default defineComponent({
 .chip-date {
   max-width: 420px;
   background-color: #4C607D20;
-  color: #657ea4;
   border-radius: 8px;
 }
 

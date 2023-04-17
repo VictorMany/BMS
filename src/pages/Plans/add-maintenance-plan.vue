@@ -13,7 +13,7 @@
             <div class="col-12 col-md-7 q-pr-md">
               <div class="select__form border-line q-pa-md" style="height: 60vh;">
                 <div class="q-pb-sm title-card">
-                  EQUIPO BIOMÉDICO
+                  Equipo biomédico
                 </div>
                 <div style="height: 90%">
                   <q-scroll-area class="fit"
@@ -46,7 +46,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 q-px-lg">
+          <div class="col-12 col-sm-6 q-px-lg q-pb-sm">
             <div class="q-ma-sm form__item-label text-weight-thin">
               Notas
             </div>
@@ -71,7 +71,7 @@
               ['unordered', 'ordered']]" />
           </div>
         </q-scroll-area>
-        <div class="col-12 form__date_container" style="height: 5%;">
+        <div class="col-12 form__date_container" style="height: 5.25%;">
           <div class="form__date column items-end q-pa-sm q-mt-auto">
             <div>Fecha de creación: <strong> 12/02/2022</strong></div>
           </div>
@@ -96,7 +96,7 @@
               </div>
               <q-scroll-area class="fit"
                 :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-                <div v-for="(day, index) in days" :key="index" class="text-left chip-date q-mb-sm q-pa-xs q-px-sm">
+                <div v-for="(day, index) in days" :key="index" class="text-left chip-date q-mb-sm q-pa-xs q-px-sm text-blue-grey-4">
                   {{ day }}
                 </div>
               </q-scroll-area>
@@ -261,7 +261,6 @@ export default defineComponent({
 
 .chip-date {
   background-color: #4C607D20;
-  color: #4C607D;
   border-radius: 8px;
 }
 </style>

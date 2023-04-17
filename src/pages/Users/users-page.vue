@@ -4,12 +4,12 @@
       <header-actions :titlePage="'Usuarios'"
         :btnAction="btnAction"
         :inputSearch="inputSearch" />
-      <div class="main-container-page card-color">
+      <div class="main-container-page card-color main-container-page-dark">
         <q-scroll-area class="fit"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
           <div style="max-width: 100%">
-            <div class="row q-pa-none q-ma-none">
-              <div v-for="(user, index) in users" :key="index" class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto q-pa-sm">
+            <div class="row q-pa-none q-ma-none q-px-sm q-pb-sm">
+              <div v-for="(user, index) in users" :key="index" class=" col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto q-px-sm q-pb-md q-pt-none">
                 <item-card v-bind="user" :index="index" :card-action="cardAction" />
               </div>
             </div>
