@@ -19,6 +19,10 @@
     &__email {
       color: #06284194;
     }
+
+    &__detail {
+      color: #858c9384;
+    }
   }
   .table-style {
     background-color: #ffffff !important;
@@ -130,6 +134,10 @@
     }
 
     &__email {
+      color: #858c9384;
+    }
+
+    &__detail {
       color: #858c9384;
     }
   }
@@ -283,7 +291,6 @@
   &__detail {
     font-weight: 600;
     font-size: 13px;
-    padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
 }
