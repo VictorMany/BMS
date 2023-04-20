@@ -4,14 +4,17 @@
     <div class="col-xs-auto col-sm title-page q-py-sm">
       {{ titlePage }}
     </div>
-    <div class="col-xs col-sm-auto column content-end q-pr-sm mobile-hide">
-      <btn-action v-if="btnAction.show" v-bind="btnAction"/>
+    <div v-if="btnAction.show" class="col-xs col-sm-auto column content-end q-px-sm mobile-hide">
+      <btn-action v-bind="btnAction"/>
     </div>
-    <div class="col-xs col-sm-auto column content-end desktop-hide">
-      <btn-action v-if="btnAction.show" v-bind="btnAction" :btn-title="''"/>
+    <div v-if="switchContent" class="col-xs col-sm-auto column content-end q-px-sm">
+      <btn-switch v-model:switch-content="switchContentLocal" />
     </div>
-    <div class="col-md-auto col-xs-12 column content-end">
-      <input-search v-if="inputSearch.show" class="w-100" v-bind="inputSearch"/>
+    <div v-if="btnAction.show" class="col-xs col-sm-auto column content-end q-px-sm desktop-hide">
+      <btn-action v-bind="btnAction" :btn-title="''"/>
+    </div>
+    <div v-if="inputSearch" class="col-md-4 col-xs-12 column q-pl-sm content-end">
+      <input-search class="w-100" v-bind="inputSearch"/>
     </div>
   </div>
 </template>
@@ -19,6 +22,7 @@
 <script>
 import { defineComponent } from 'vue'
 import BtnAction from '../atomic/BtnAction.vue'
+import BtnSwitch from '../atomic/BtnSwitch.vue'
 import InputSearch from './InputSearch.vue'
 
 export default defineComponent({
@@ -32,10 +36,7 @@ export default defineComponent({
     inputSearch: {
       type: Object,
       required: false,
-      default: () => ({
-        show: false,
-        inputLabel: 'Buscar por nombre'
-      })
+      default: () => null
     },
     btnAction: {
       type: Object,
@@ -44,19 +45,28 @@ export default defineComponent({
         show: false,
         btnTitle: 'Agregar equipo'
       })
+    },
+    switchContent: {
+      type: Number,
+      default: () => {},
+      required: false
     }
   },
   data () {
     return {
-      modelLocal: this.model
+      modelLocal: this.model,
+      switchContentLocal: this.switchContent
     }
   },
   watch: {
     modelLocal (value) {
       this.$emit('update:model', value)
+    },
+    switchContentLocal(value) {
+      this.$emit('update:switchContent', value)
     }
   },
-  components: { BtnAction, InputSearch }
+  components: { BtnAction, InputSearch, BtnSwitch }
 })
 </script>
 
@@ -76,7 +86,7 @@ export default defineComponent({
     font-style: normal;
     font-family: 'Inter';
     font-weight: 300;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 @media only screen

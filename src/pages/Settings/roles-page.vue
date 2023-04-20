@@ -41,7 +41,7 @@
             </div>
             <div class="separator border-line q-mr-md" />
             <div class="col-12 col-md q-pr-md">
-              <div class="info__email w-100 q-mb-md">Crea un nuevo rol o selecciona uno de la lista para editarlo</div>
+              <div class="info__detail w-100 q-mb-md">Crea un nuevo rol o selecciona uno de la lista para editarlo</div>
               <div class="row w-100 q-pb-sm">
                 <div class="col-12 q-pr-md form__item-label text-weight-thin">
                   Nombre del rol

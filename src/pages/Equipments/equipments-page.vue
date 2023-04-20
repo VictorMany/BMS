@@ -5,6 +5,7 @@
         :titlePage="'Equipos'"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
+        v-model:switch-content="switchContent"
       />
       <div class="main-container-page card-color main-container-page-dark">
         <q-scroll-area class="fit" :thumb-style="{ borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
@@ -221,6 +222,7 @@ export default defineComponent({
           cardDate: '12/02/2022'
         }
       ],
+      switchContent: 1,
       btnAction: {
         show: true,
         btnTitle: 'Añadir equipo',
@@ -230,6 +232,18 @@ export default defineComponent({
         show: true,
         inputLabel: 'Buscar por nombre'
       }
+    }
+  },
+  watch: {
+    switchContent: {
+      handler (val) {
+        if (val === 1) {
+          console.log('Show cards')
+        } else if (val === 2) {
+          console.log('Show table')
+        }
+      },
+      deep: true
     }
   },
   methods: {

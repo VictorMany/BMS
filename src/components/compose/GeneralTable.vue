@@ -91,7 +91,7 @@ export default defineComponent({
       type: Object,
       required: false,
       default: () => ({
-        rowsPerPage: 10
+        rowsPerPage: 12
       })
     }
   },
@@ -158,7 +158,7 @@ and (max-device-height : 819px) {
 @media only screen
 and (min-device-height : 820px) {
   .my-sticky-header-table {
-    height: 90%;
+    height: 100%;
   }
 }
   .my-sticky-header-table thead tr th {

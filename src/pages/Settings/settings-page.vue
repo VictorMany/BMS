@@ -103,6 +103,7 @@ export default defineComponent({
       try {
         return new URL(`../../assets/png/${url}`,
           import.meta.url).href
+      // eslint-disable-next-line no-empty
       } catch (error) { }
     }
     return {

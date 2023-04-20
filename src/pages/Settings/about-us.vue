@@ -179,7 +179,7 @@ export default defineComponent({
       try {
         return new URL(`../../assets/svg/${url}`,
           import.meta.url).href
-      } catch (error) { }
+      } catch (error) { /* empty */ }
     }
     return {
       getImageUrl,

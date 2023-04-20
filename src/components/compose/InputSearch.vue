@@ -32,9 +32,9 @@
                 class="item-filter q-px-sm"
                 @click="navigateTo(item.route)"
                 :key="i">
-                  <q-item class="q-mb-sm flex items-center clickable q-px-none">
+                  <q-item class="flex items-center clickable q-px-none">
                     <q-item-section avatar>
-                      <q-avatar size="lg" class="avatar-item">
+                      <q-avatar size="md" class="avatar-item" :color="'light-blue-'+(i+3)">
                         <img :src="getImageUrl(item.icon)" class="q-pa-sm" />
                       </q-avatar>
                     </q-item-section>
@@ -88,7 +88,9 @@ export default defineComponent({
       try {
         return new URL(`../../assets/svg/filter/${url}`,
           import.meta.url).href
-      } catch (error) { }
+      } catch (error) {
+        console.log(error)
+      }
     }
     return {
       getImageUrl,

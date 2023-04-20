@@ -1,10 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <header-actions :titlePage="'Reportes'" :btnAction="btnAction" :inputSearch="inputSearch" />
-      <div class="row justify-end">
-        <btn-switch v-model:switch-content="switchContent" />
-      </div>
+      <header-actions :titlePage="'Reportes'" :btnAction="btnAction" :inputSearch="inputSearch" v-model:switch-content="switchContent" />
       <!-- Main container -->
       <div class="main-container-page" style="height: 88%; overflow-y: hidden;">
         <general-table :rows="rows" :columns="columns" :actions-table="actionsTable" v-model:row-selected="rowSelected" />
@@ -17,13 +14,11 @@
 <script>
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import BtnSwitch from 'src/components/atomic/BtnSwitch.vue'
 import GeneralTable from 'src/components/compose/GeneralTable.vue'
 export default defineComponent({
   name: 'MaintenancesPage',
   components: {
     HeaderActions,
-    BtnSwitch,
     GeneralTable
   },
   data () {

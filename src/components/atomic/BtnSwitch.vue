@@ -1,9 +1,9 @@
 <template>
-  <q-btn-group class="btn-change-content" :unelevated="btnUnelevated">
-    <q-btn size="sm" style="width: 62px; height: auto" class="btn-left" @click="modelChange(1)">
+  <q-btn-group class="btn-change-content border-shadow" :unelevated="btnUnelevated">
+    <q-btn style="width: 45px; height: auto" class="btn-left q-pa-sm" @click="modelChange(1)">
       <q-img no-spinner src="~assets/svg/card_svg.svg" />
     </q-btn>
-    <q-btn size="sm" style="width: 62px; height: auto" class="btn-right" @click="modelChange(2)">
+    <q-btn style="width: 45px; height: auto" class="btn-right q-pa-sm" @click="modelChange(2)">
       <q-img no-spinner src="~assets/svg/table_svg.svg" />
     </q-btn>
   </q-btn-group>
@@ -43,21 +43,28 @@ export default defineComponent({
     return {
       color1: this.btnBackground,
       color: this.btnBackground,
-      color2: 'white'
+      color2: 'white',
+      noSelectedColor: '#181b1e',
     }
   },
   created () {
+    if (this.$q.dark.isActive) {
+      this.color = 'dark'
+      this.noSelectedColor = '#181b1e'
+    } else {
+      this.noSelectedColor = 'white'
+    }
     this.modelChange(this.switchContent)
   },
   methods: {
     modelChange (model) {
       if (model === 1) {
         this.color1 = this.color
-        this.color2 = 'white'
+        this.color2 =  this.noSelectedColor
         this.$emit('update:switchContent', 1)
       } else {
         this.color2 = this.color
-        this.color1 = 'white'
+        this.color1 = this.noSelectedColor
         this.$emit('update:switchContent', 2)
       }
     }
@@ -70,7 +77,6 @@ export default defineComponent({
   background-color: v-bind(color);
   color: v-bind(btnColor) !important;
   border-radius: 0.5rem !important;
-  height: 28px;
 }
 
 .btn-left {

@@ -242,12 +242,6 @@
     background-color: #334c646e !important;
     color: #87909a !important;
   }
-  .btn-left {
-    background-color: #181b1e !important;
-  }
-  .btn-right {
-    background-color: #181b1e !important;
-  }
   .container-colorama {
     background: #181b1e;
   }
@@ -282,6 +276,11 @@
   }
 
   &__email {
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  &__detail {
     font-weight: 600;
     font-size: 13px;
     padding-left: 1.5rem;
