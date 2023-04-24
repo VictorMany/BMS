@@ -78,12 +78,23 @@ export default defineComponent({
           },
           {
             label: 'Rol de usuario',
-            model: ''
+            model: '',
+            type: 'select',
+            options: [
+              'Administrador',
+              'Auxiliar',
+              'Funciones básicas'
+            ]
           },
           {
             label: 'Estatus de la cuenta',
-            model: ''
-          }
+            model: '',
+            type: 'select',
+            options: [
+              'Activo',
+              'Inactivo'
+            ]
+          },
         ],
         right: [],
         textArea: {}

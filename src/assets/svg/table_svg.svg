@@ -1,8 +1,8 @@
 <svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="0.25" y="0.25" width="15.5" height="1.5" rx="0.25" stroke="#017ED9" stroke-width="0.5"/>
-<rect x="0.2" y="3.2" width="15.6" height="1.6" rx="0.3" fill="#D9EFFF" stroke="#017ED9" stroke-width="0.4"/>
-<rect x="0.2" y="6.7" width="15.6" height="1.6" rx="0.3" fill="#D9EFFF" stroke="#017ED9" stroke-width="0.4"/>
-<line x1="4.2" y1="0.5" x2="4.2" y2="8.5" stroke="#017ED9" stroke-width="0.4"/>
-<line x1="15.79" x2="15.79" y2="8" stroke="#017ED9" stroke-width="0.4"/>
-<line x1="0.2" x2="0.2" y2="8" stroke="#017ED9" stroke-width="0.4"/>
+<rect x="0.25" y="0.25" width="15.5" height="1.5" rx="0.25" fill="#D9EFFF" fill-opacity="0.24" stroke="#4FA9EB" stroke-width="0.5"/>
+<rect x="0.2" y="3.2" width="15.6" height="1.6" rx="0.3" fill="#D9EFFF" fill-opacity="0.24" stroke="#4FA9EB" stroke-width="0.4"/>
+<rect x="0.2" y="6.7" width="15.6" height="1.6" rx="0.3" fill="#D9EFFF" fill-opacity="0.24" stroke="#4FA9EB" stroke-width="0.4"/>
+<line x1="4.2" y1="0.5" x2="4.2" y2="8.5" stroke="#4FA9EB" stroke-width="0.4"/>
+<line x1="15.79" x2="15.79" y2="8" stroke="#4FA9EB" stroke-width="0.4"/>
+<line x1="0.2" x2="0.2" y2="8" stroke="#4FA9EB" stroke-width="0.4"/>
 </svg>

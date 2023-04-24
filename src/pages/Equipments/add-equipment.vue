@@ -70,7 +70,21 @@ export default defineComponent({
           },
           {
             label: 'Ubicación',
-            model: ''
+            model: '',
+            type: 'select',
+            options: [
+              'Área de choque',
+              'Consultas externas',
+              'Unidades de hospitalización',
+              'Quirófanos',
+              'Laboratorios',
+              'Radiología',
+              'Farmacia',
+              'Terapia física y rehabilitación',
+              'Cuidados intensivos',
+              'Unidades de cuidados paliativos',
+              'Servicios de apoyo'
+            ]
           },
           {
             label: 'Año del equipo',
@@ -82,7 +96,12 @@ export default defineComponent({
           },
           {
             label: 'Estatus',
-            model: ''
+            model: '',
+            type: 'select',
+            options: [
+              'Activo',
+              'Inactivo'
+            ]
           },
           {
             label: 'Costo',

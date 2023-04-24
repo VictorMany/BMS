@@ -337,7 +337,7 @@ export default defineComponent({
         {
           id: 2,
           title_report: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
+          encharged_name: 'Luis Martínez Sierra',
           date: '12-Jun-2022',
           status: 'Pendiente',
           actions: ''

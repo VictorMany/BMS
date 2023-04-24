@@ -29,19 +29,34 @@
                 :events="events" :event-color="(date) => blueEvents.includes(date) ? 'positive' : 'primary'" />
               <div class="row q-my-md" style="max-width: 418px;">
                 <div class="col-auto">
-                  <q-checkbox size="sm" v-model="frequency" label="Frecuencia" class="form__checkbox q-mr-md q-pr-md" />
+                  <q-checkbox size="sm" v-model="frequency" label="Frecuencia" class="form__checkbox q-mr-md q-pa-xs q-px-sm" dense />
                 </div>
                 <div class="col q-mb-md">
-                  <q-select class="form__item-select q-pl-sm q-pr-sm" label="Frecuncia" dense borderless v-model="model"
-                    :options="options" />
+                  <q-select class="textfield-other form__item-select q-pl-sm q-pr-sm input" dense borderless v-model="model"
+                    :options="options">
+                    <template v-slot:option="scope">
+                      <q-item v-bind="scope.itemProps" dense>
+                        <q-item-section>
+                          <q-item-label :class="scope.selected ? 'text-light-blue' : 'text-grey'">{{ scope.label }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </template>
+                  </q-select>
                 </div>
                 <btn-action class="q-mb-md" v-bind="btnPersonalized" />
                 <div class="row w-100 q-pb-sm">
                   <div class="col-12 q-pr-md form__item-label text-weight-thin">
                     Encargado
                   </div>
-                  <q-input class="col-12 form__item-input-12 q-pl-md q-pr-md input" borderless dense
-                    v-model="payload.incharged" />
+                  <q-select class="col-12 col-sm textfield-select form__item-input q-pl-sm q-pr-md input" borderless v-model="payload.incharged.model" dense :options="payload.incharged.options">
+                    <template v-slot:option="scope">
+                      <q-item v-bind="scope.itemProps" dense>
+                        <q-item-section>
+                          <q-item-label :class="scope.selected ? 'text-light-blue' : 'text-grey'">{{ scope.label }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </template>
+                  </q-select>
                 </div>
               </div>
             </div>
@@ -105,8 +120,8 @@
         </q-card-section>
         <q-separator />
         <q-card-actions align="right">
-          <q-btn flat label="Cancelar" color="primary" v-close-popup />
-          <q-btn flat label="Aceptar" color="primary" v-close-popup />
+          <q-btn flat label="Cancelar" color="primary" no-caps v-close-popup />
+          <q-btn flat label="Aceptar" color="primary" no-caps v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -170,7 +185,15 @@ export default defineComponent({
       ],
       payload: {
         notes: '',
-        incharged: ''
+        incharged: {
+          model: '',
+          type: 'select',
+            options: [
+              'Angel Omar Torres Padilla',
+              'Andres Martínez Sierra',
+              'Víctor Pérez'
+            ]
+        }
       },
       date: ref('2019/02/01'),
       events: ['2019/02/01', '2019/02/05', '2019/02/06', '2019/02/09', '2019/02/23'],
@@ -179,15 +202,27 @@ export default defineComponent({
       tickStrategy: ref('strict'),
       simple: [
         {
-          label: 'Equipo de choque',
+          label: 'Equipo de diagnóstico',
           children: [
-            { label: 'Good food' },
-            { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' }
+            { label: 'Electrocardiógrafos' },
+            { label: 'Monitores de signos vitales' },
+            { label: 'Equipos de rayos X' },
+            { label: 'Tomógrafos' },
+            { label: 'Ecógrafos' },
+            { label: 'Endoscopios' },
+            { label: 'Espectrómetros de masa' },
+            { label: 'Analizadores de gases en sangre' },
+            { label: 'Analizadores de hematología' },
+            { label: 'Analizadores de química clínica' },
+            { label: 'Sistemas de imagen digital' },
+            { label: 'Equipos de mamografía' },
+            { label: 'Equipos de resonancia magnética' },
+            { label: 'Equipos de medicina nuclear' },
+            { label: 'Microscopios' }
           ]
         },
         {
-          label: 'Equipo de choque2',
+          label: 'Equipos de oftalmología',
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },

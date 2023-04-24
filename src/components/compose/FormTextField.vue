@@ -4,8 +4,8 @@
     <!-- LEFT SECTION -->
     <div class="col-12 col-lg-5 col-md-6 q-pb-xs">
       <div class="row">
-        <div v-if="textfields.top.length > 0" class="col-12 col-sm-10 col-md-12 q-pb-xs">
-          <div v-for="(item, i) in textfields.top" :key="i" class="row items-center q-px-sm q-py-xs w-100">
+        <div v-if="localTextfields.top.length > 0" class="col-12 col-sm-10 col-md-12 q-pb-xs">
+          <div v-for="(item, i) in localTextfields.top" :key="i" class="row items-center q-px-sm q-py-xs w-100">
             <div class="col q-pr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="col-12 q-py-xs">
-          <div v-for="(item, i) in textfields.left" :key="i">
+          <div v-for="(item, i) in localTextfields.left" :key="i">
             <div class="full-width">
               <div v-if="item.type === 'textarea'">
                 <div class="row w-100 justify-between">
@@ -32,7 +32,16 @@
                 <div class="col-12 col-sm q-pr-md form__item-label text-weight-thin">
                   {{ item.label }}
                 </div>
-                <q-input class="col-12 col-sm form__item-input q-pl-sm q-pr-md input" borderless dense
+                <q-select v-if="item.type === 'select'" class="col-12 col-sm textfield-select form__item-input q-pl-sm q-pr-md input q-my-xs" borderless v-model="item.model" dense :options="item.options">
+                  <template v-slot:option="scope">
+                    <q-item v-bind="scope.itemProps" dense>
+                      <q-item-section>
+                        <q-item-label :class="scope.selected ? 'text-light-blue' : 'text-grey'">{{ scope.label }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                </q-select>
+                <q-input v-else class="col-12 col-sm form__item-input q-pl-sm q-pr-md input" borderless dense
                   v-model="item.model" />
               </div>
             </div>
@@ -44,7 +53,7 @@
     <div class="col q-pl-sm column items-end q-py-md">
       <div class="row w-100 justify-end">
         <div class="col-auto">
-          <div v-for="(item, i) in textfields.right" :key="i" class="row items-center q-px-sm q-py-xs">
+          <div v-for="(item, i) in localTextfields.right" :key="i" class="row items-center q-px-sm q-py-xs">
             <div v-if="item.label" class="col-12 col-md q-pr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
@@ -53,8 +62,8 @@
           </div>
         </div>
         <div class="col-12">
-          <div v-if="textfields.imageInput" class="q-px-sm q-pt-xs row"
-            :class="[type === 'user' ? 'justify-center w-100' : 'justify-end w-100', textfields.right.lenght > 0 ? 'q-mt-auto' : '']"
+          <div v-if="localTextfields.imageInput" class="q-px-sm q-pt-xs row"
+            :class="[type === 'user' ? 'justify-center w-100' : 'justify-end w-100', localTextfields.right.lenght > 0 ? 'q-mt-auto' : '']"
             style="height: 85%">
             <input ref="fileUpload" type="file" accept="image/*,.jpg, .jpeg, .png" style="display: none"
               @change="uploadFile($event)" />
@@ -72,8 +81,8 @@
                 : 'form__image']" no-spinner :src="ImageBase64 ? ImageBase64 : getImageUrl('svg/add_img.svg')" />
             </q-btn>
           </div>
-          <div v-else-if="textfields.readImage" class="q-px-sm q-pt-xs row w-100"
-            :class="['justify-end', textfields.right.lenght > 0 ? 'q-mt-auto' : '']" style="height: 85%;">
+          <div v-else-if="localTextfields.readImage" class="q-px-sm q-pt-xs row w-100"
+            :class="['justify-end', localTextfields.right.lenght > 0 ? 'q-mt-auto' : '']" style="height: 85%;">
             <div class="full-width row items-center justify-end w-100" style="min-height: 100%; max-width: 350px;">
               <q-img class="form__image64-equipment" no-spinner
                 :src="type === 'user' ? 'https://variety.com/wp-content/uploads/2022/08/Jonah-Hill.jpg?w=681&h=383&crop=1' : 'https://th.bing.com/th/id/R.e3fe7ba73953544a86b878b17fd9f15a?rik=b6KdNrgLWhTDJw&pid=ImgRaw&r=0'" />
@@ -83,11 +92,11 @@
       </div>
     </div>
     <!-- TEXT AREA -->
-    <div v-if="textfields.textArea.model != undefined" class="col-12 q-px-sm">
+    <div v-if="localTextfields.textArea.model != undefined" class="col-12 q-px-sm">
       <div class="q-my-sm form__item-label text-weight-thin">
-        {{ textfields.textArea.label }}
+        {{ localTextfields.textArea.label }}
       </div>
-      <q-editor v-model="textfields.textArea.model" :placeholder="'Escribe aquí...'"
+      <q-editor v-model="localTextfields.textArea.model" :placeholder="'Escribe aquí...'"
         class="form__item-textarea input" dense :toolbar="[[{
           label: $q.lang.editor.fontSize,
           icon: $q.iconSet.editor.fontSize,
@@ -115,6 +124,7 @@
 import {
   defineComponent
 } from 'vue'
+
 
 export default defineComponent({
   name: 'InputSearch',
@@ -153,17 +163,23 @@ export default defineComponent({
       basicToolBar: [['unordered', 'ordered']]
     }
   },
-  created () {
-    console.log(this.textfields)
-  },
   data () {
     return {
       previousLength: 0,
+      localTextfields: this.textfields,
       pdfObject: {
         name: '',
         file: {}
       },
       ImageBase64: null
+    }
+  },
+  watch: {
+    localTextfields: {
+      handler(val) {
+        this.$emit('update:textfields', val)
+      },
+      deep: true
     }
   },
   methods: {
@@ -200,5 +216,16 @@ export default defineComponent({
 .btn-background {
   background: rgb(0, 106, 255);
   background: linear-gradient(34deg, rgba(0, 106, 255, 0.2) 0%, rgba(45, 185, 255, 0.2) 44%, rgba(0, 243, 255, 0.2) 100%);
+}
+
+
+.textfield-select > .q-field--auto-height.q-field--dense .q-field__control, .q-field--auto-height.q-field--dense .q-field__native {
+  min-height: 30px;
+  height: 30px;
+}
+
+.q-select__dropdown-icon {
+  margin-top: -0.5rem;
+  margin-right: -0.5rem;
 }
 </style>

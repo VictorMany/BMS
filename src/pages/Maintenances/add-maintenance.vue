@@ -66,7 +66,13 @@ export default defineComponent({
         left: [
           {
             label: 'Tipo',
-            model: ''
+            model: '',
+            type: 'select',
+            options: [
+              'Preventivo',
+              'Correctivo',
+              'Mantenimiento predictivo'
+            ]
           },
           {
             label: 'Motivo',

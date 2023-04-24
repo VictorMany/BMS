@@ -73,7 +73,12 @@ export default defineComponent({
         left: [
           {
             label: 'Tipo de cuenta',
-            model: ''
+            model: '',
+            type: 'select',
+            options: [
+              'Premium',
+              'Prueba de una semana'
+            ]
           }
         ],
         right: [

@@ -70,7 +70,12 @@ export default defineComponent({
           },
           {
             label: 'Estatus',
-            model: ''
+            model: '',
+            type: 'select',
+            options: [
+              'Activo',
+              'Inactivo'
+            ]
           },
           {
             type: 'textarea',
