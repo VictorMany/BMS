@@ -49,7 +49,7 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: '/'
+        to: 'reports'
       },
       textfields: {
         readImage: true,

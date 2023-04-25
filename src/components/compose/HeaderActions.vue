@@ -5,16 +5,16 @@
       {{ titlePage }}
     </div>
     <div v-if="btnAction.show" class="col-xs col-sm-auto column content-end q-px-sm mobile-hide">
-      <btn-action v-bind="btnAction"/>
+      <btn-action v-bind="btnAction" />
     </div>
     <div v-if="switchContent" class="col-xs col-sm-auto column content-end q-px-sm">
       <btn-switch v-model:switch-content="switchContentLocal" />
     </div>
     <div v-if="btnAction.show" class="col-xs col-sm-auto column content-end q-px-sm desktop-hide">
-      <btn-action v-bind="btnAction" :btn-title="''"/>
+      <btn-action v-bind="btnAction" :btn-title="''" />
     </div>
     <div v-if="inputSearch" class="col-md-4 col-xs-12 column q-pl-sm content-end">
-      <input-search class="w-100" v-bind="inputSearch"/>
+      <input-search class="w-100" v-bind="inputSearch" />
     </div>
   </div>
 </template>

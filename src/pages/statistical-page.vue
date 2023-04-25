@@ -42,7 +42,7 @@
               <general-table height="auto" :rows="rows" :columns="columns" :actions-table="actionsTable"
                 v-model:row-selected="rowSelected" :show-pagination="false" />
             </div>
-            <div class="col-12 0 col-md-3 q-pa-sm q-pb-lg q-mt-lg">
+            <div class="col-12 0 col-md-6 col-lg-3 q-pa-sm q-pb-lg q-mt-lg">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Mantenimientos vigentes
@@ -53,7 +53,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 0 col-md-3 q-pa-sm q-pb-lg q-mt-lg">
+            <div class="col-12 0 col-md-6 col-lg-3 q-pa-sm q-pb-lg q-mt-lg">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Falla repentina
@@ -64,7 +64,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 0 col-md-3 q-pa-sm q-pb-lg q-mt-lg">
+            <div class="col-12 0 col-md-6 col-lg-3 q-pa-sm q-pb-lg q-mt-lg">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Reemplazo por daño
@@ -75,7 +75,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 0 col-md-3 q-pa-sm q-pb-lg q-mt-lg">
+            <div class="col-12 0 col-md-6 col-lg-3 q-pa-sm q-pb-lg q-mt-lg">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Mantenimientos preventivos

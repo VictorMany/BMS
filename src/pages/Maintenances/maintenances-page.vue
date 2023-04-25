@@ -34,7 +34,27 @@ export default defineComponent({
       },
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por tipo'
+        inputLabel: 'Buscar por tipo',
+        setSelectedOpt: this.setSelectedOpt,
+        heightModal: '200px',
+        items: [
+          {
+            title: 'Tipo',
+            icon: 'equipment.svg'
+          },
+          {
+            title: 'Encargado',
+            icon: 'model.svg'
+          },
+          {
+            title: 'Fecha',
+            icon: 'brand.svg'
+          },
+          {
+            title: 'Precio',
+            icon: 'brand.svg'
+          }
+        ]
       },
       columns: [
         {
@@ -253,6 +273,9 @@ export default defineComponent({
     edit (payload) {
       console.log('Editar', payload)
       this.$router.push({ name: 'edit-maintenance', params: { id: 100 } })
+    },
+    setSelectedOpt(opt) {
+      this.inputSearch.inputLabel = opt
     }
   },
   watch: {

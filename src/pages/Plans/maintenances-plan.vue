@@ -39,7 +39,23 @@ export default defineComponent({
       },
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por nombre'
+        inputLabel: 'Buscar por tipo',
+        setSelectedOpt: this.setSelectedOpt,
+        heightModal: '150px',
+        items: [
+          {
+            title: 'Nombre del plan',
+            icon: 'equipment.svg'
+          },
+          {
+            title: 'Encargado',
+            icon: 'model.svg'
+          },
+          {
+            title: 'Fecha',
+            icon: 'brand.svg'
+          }
+        ]
       },
       columns: [
         {
@@ -242,6 +258,9 @@ export default defineComponent({
     edit (payload) {
       console.log('Editar', payload)
       this.$router.push({ name: 'add-maintenance-plan', params: { id: 100 } })
+    },
+    setSelectedOpt(opt) {
+      this.inputSearch.inputLabel = opt
     }
   },
   watch: {

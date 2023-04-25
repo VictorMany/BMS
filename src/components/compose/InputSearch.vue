@@ -20,7 +20,7 @@
         </div>
         <q-popup-proxy class="border-shadow border-radius">
           <q-banner class="border-shadow q-px-sm" style="width: 300px; height: auto">
-            <q-scroll-area style="height: 390px !important" class="fit"
+            <q-scroll-area :style="`height: ${heightModal} !important`" class="fit"
               :thumb-style="{
                 borderRadius: '5px',
                 background: 'rgba(135, 192, 232, 0.44)',
@@ -28,11 +28,11 @@
                 opacity: 1,
               }">
               <q-list class="q-px-none">
-                <div v-for="(item, i) in filterItems"
-                class="item-filter q-px-sm"
-                @click="navigateTo(item.route)"
+                <div v-for="(item, i) in items"
+                class="item-filter"
+                @click="setSelectedOpt(item.title)"
                 :key="i">
-                  <q-item class="flex items-center clickable q-px-none">
+                  <q-item class="flex items-center border-radius" clickable>
                     <q-item-section avatar>
                       <q-avatar size="md" class="avatar-item" :color="'light-blue-'+(i+3)">
                         <img :src="getImageUrl(item.icon)" class="q-pa-sm" />
@@ -81,6 +81,20 @@ export default defineComponent({
       type: String,
       required: false,
       default: ''
+    },
+    setSelectedOpt: {
+      type: Function,
+      required: false,
+      default: () => { }
+    },
+    items: {
+      type: Array,
+      required: false
+    },
+    heightModal: {
+      type: String,
+      required: false,
+      default: '390px'
     }
   },
   setup () {
@@ -106,41 +120,7 @@ export default defineComponent({
         size: 'sm',
         icon: 'keyboard_arrow_down'
       },
-      modelLocal: this.model,
-      filterItems: [
-        {
-          title: 'Equipo',
-          icon: 'equipment.svg'
-        },
-        {
-          title: 'Ubicación',
-          icon: 'location.svg'
-        },
-        {
-          title: 'Modelo',
-          icon: 'model.svg'
-        },
-        {
-          title: 'Marca',
-          icon: 'brand.svg'
-        },
-        {
-          title: 'Serie',
-          icon: 'serie.svg'
-        },
-        {
-          title: 'Equipos inactivos',
-          icon: 'inactive.svg'
-        },
-        {
-          title: 'Mantenimietos pendientes',
-          icon: 'maintenances.svg'
-        },
-        {
-          title: 'Reportados este mes',
-          icon: 'reported.svg'
-        }
-      ]
+      modelLocal: this.model
     }
   },
   watch: {

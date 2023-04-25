@@ -78,7 +78,23 @@ export default defineComponent({
       },
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por nombre'
+        inputLabel: 'Buscar por nombre',
+        setSelectedOpt: this.setSelectedOpt,
+        heightModal: '150px',
+        items: [
+          {
+            title: 'Nombre',
+            icon: 'equipment.svg'
+          },
+          {
+            title: 'Puesto',
+            icon: 'model.svg'
+          },
+          {
+            title: 'Role',
+            icon: 'brand.svg'
+          }
+        ]
       },
       switchContent: 1,
       columns: [
@@ -146,6 +162,9 @@ export default defineComponent({
     edit (payload) {
       console.log('Editar', payload)
       this.$router.push({ name: 'edit-user', params: { id: 100 } })
+    },
+    setSelectedOpt(opt) {
+      this.inputSearch.inputLabel = opt
     }
   }
 })

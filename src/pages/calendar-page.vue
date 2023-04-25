@@ -227,7 +227,43 @@ export default defineComponent({
       },
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por fecha'
+        inputLabel: 'Buscar por nombre',
+        setSelectedOpt: this.setSelectedOpt,
+        heightModal: '390px',
+        items: [
+          {
+            title: 'Nombre',
+            icon: 'equipment.svg'
+          },
+          {
+            title: 'Ubicación',
+            icon: 'location.svg'
+          },
+          {
+            title: 'Modelo',
+            icon: 'model.svg'
+          },
+          {
+            title: 'Marca',
+            icon: 'brand.svg'
+          },
+          {
+            title: 'Serie',
+            icon: 'serie.svg'
+          },
+          {
+            title: 'Equipos inactivos',
+            icon: 'inactive.svg'
+          },
+          {
+            title: 'Mantenimietos pendientes',
+            icon: 'maintenances.svg'
+          },
+          {
+            title: 'Reportados este mes',
+            icon: 'reported.svg'
+          }
+        ]
       },
       columns: [
         {
@@ -273,6 +309,9 @@ export default defineComponent({
     edit (payload) {
       console.log('Editar', payload)
       this.$router.push({ name: 'edit-equipment', params: { id: 100 } })
+    },
+    setSelectedOpt(opt) {
+      this.inputSearch.inputLabel = opt
     }
   },
   watch: {

@@ -30,7 +30,27 @@ export default defineComponent({
       },
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por nombre'
+        inputLabel: 'Buscar por tipo',
+        setSelectedOpt: this.setSelectedOpt,
+        heightModal: '200px',
+        items: [
+          {
+            title: 'Reporte',
+            icon: 'equipment.svg'
+          },
+          {
+            title: 'Encargado',
+            icon: 'model.svg'
+          },
+          {
+            title: 'Fecha',
+            icon: 'brand.svg'
+          },
+          {
+            title: 'Estatus',
+            icon: 'brand.svg'
+          }
+        ]
       },
       columns: [
         {
@@ -249,6 +269,9 @@ export default defineComponent({
     edit (payload) {
       console.log('Editar', payload)
       this.$router.push({ name: 'edit-report', params: { id: 100 } })
+    },
+    setSelectedOpt(opt) {
+      this.inputSearch.inputLabel = opt
     }
   },
   watch: {

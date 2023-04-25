@@ -160,7 +160,7 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: '/'
+        to: 'maintenances-plan'
       }
     }
   },
