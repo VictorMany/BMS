@@ -108,9 +108,7 @@
             'size-2',
             'size-3',
             'size-4',
-            'size-5',
-            'size-6',
-            'size-7'
+            'size-5'
           ]
         },
           'bold', 'italic', 'strike', 'underline'],
