@@ -32,13 +32,13 @@
               </div>
             </div>
           </div>
-          <div class="col q-pl-sm" style="height: 99%;">
+          <div class="col q-pl-md" style="height: 99%;">
             <div class="row flex items-center justify-between q-mb-sm">
               <label class="text-subtitle text-weight-light"> Resultados </label>
-              <btn-switch />
+              <btn-switch v-model:switch-content="switchContent"/>
             </div>
             <div style="overflow: scroll; height: 96%;" class="row w-100 q-pa-none q-ma-none">
-              <q-scroll-area class="fit" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+              <q-scroll-area  v-if="switchContent === 1" class="fit" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
                 <div
                   style="max-width: 100%">
                   <div class="row q-pa-none q-ma-none">
@@ -46,11 +46,17 @@
                       class="col-sm-auto q-pa-xs col-xs-12"
                       v-for="(equipo, index) in Equipments"
                       :key="index">
-                      <item-card v-bind="equipo" :index="index" :card-action="cardAction" />
+                      <item-card v-bind="equipo" :index="index" :card-action="readMore" />
                     </div>
                   </div>
                 </div>
               </q-scroll-area>
+              <general-table
+                v-else-if="switchContent === 2"
+                :rows="rows" :columns="columns"
+                :actions-table="actionsTable"
+                height="100%"
+                v-model:row-selected="rowSelected" />
             </div>
           </div>
         </div>
@@ -65,12 +71,14 @@ import { defineComponent, ref } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import ItemCard from 'src/components/atomic/ItemCard.vue'
 import BtnSwitch from 'src/components/atomic/BtnSwitch.vue'
+import GeneralTable from 'src/components/compose/GeneralTable.vue'
 
 export default defineComponent({
   name: 'CalendarPage',
   components: {
     HeaderActions,
     ItemCard,
+    GeneralTable,
     BtnSwitch
   },
   data () {
@@ -220,16 +228,79 @@ export default defineComponent({
       inputSearch: {
         show: true,
         inputLabel: 'Buscar por fecha'
-      }
+      },
+      columns: [
+        {
+          name: 'equipment',
+          required: true,
+          label: 'Equipo',
+          align: 'left',
+          field: row => row.equipment,
+          format: val => `${val}`,
+          sortable: true
+        },
+        { name: 'brand', label: 'Nombre del encargado', field: 'brand', align: 'left', sortable: true },
+        { name: 'no_serie', label: 'Número de serie', field: 'no_serie', align: 'center', sortable: true },
+        { name: 'date', label: 'Fecha de mantenimiento', field: 'date', align: 'center', sortable: true },
+        { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
+      ],
+      rows: [],
+      actionsTable: [
+        {
+          icnName: 'read_more',
+          icnSize: 'sm',
+          icnAction: 'Detail'
+        },
+        {
+          icnName: 'edit',
+          icnSize: 'xs',
+          icnAction: 'Edit'
+        }
+      ],
+      showCards: true,
+      rowSelected: {},
+      switchContent: 1
     }
   },
   methods: {
-    cardAction () {
-      this.$router.push({ name: 'detail-equipment', params: { id: 100 } })
-    },
     consultDate (event) {
       console.log(event)
+    },
+    readMore (payload) {
+      console.log('Ver detalle', payload)
+      this.$router.push({ name: 'detail-equipment', params: { id: 100 } })
+    },
+    edit (payload) {
+      console.log('Editar', payload)
+      this.$router.push({ name: 'edit-equipment', params: { id: 100 } })
     }
+  },
+  watch: {
+    switchContent: {
+      handler(val) {
+        if (val === 2) {
+          this.rows = this.Equipments.map((e) => {
+            return {
+              equipment: e.cardTitle,
+              brand: e.cardLabels[0].info,
+              no_serie: e.cardLabels[1].info,
+              date: e.cardDate,
+            }
+          })
+        }
+      },
+      deep: true
+    },
+    rowSelected: {
+      handler (val) {
+        if (val.action === 'Edit') {
+          this.edit(val.id)
+        } else if (val.action === 'Detail') {
+          this.readMore(val.id)
+        }
+      },
+      deep: true
+    },
   }
 })
 </script>
@@ -243,7 +314,7 @@ export default defineComponent({
 .text-subtitle {
   font-style: normal;
   font-weight: 200;
-  font-size: 25px;
+  font-size: 20px;
   font-family: 'Inter';
   color: #1A86D4;
 }

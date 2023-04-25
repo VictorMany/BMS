@@ -4,8 +4,7 @@
       <header-actions
         :titlePage="'Planes de mantenimientos'"
         :btnAction="btnAction"
-        :inputSearch="inputSearch"
-        v-model:switch-content="switchContent" />
+        :inputSearch="inputSearch" />
       <!-- Main container -->
       <div class="main-container-page" style="height: 88%; overflow-y: hidden;">
         <q-scroll-area class="full-height" :thumb-style="{ borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
@@ -220,7 +219,6 @@ export default defineComponent({
         }
       ],
       rowSelected: {},
-      switchContent: 2,
       actionsTable: [
         {
           icnName: 'read_more',
@@ -253,16 +251,6 @@ export default defineComponent({
           this.edit(val.id)
         } else if (val.action === 'Detail') {
           this.readMore(val.id)
-        }
-      },
-      deep: true
-    },
-    switchContent: {
-      handler (val) {
-        if (val === 1) {
-          console.log('Show cards')
-        } else if (val === 2) {
-          console.log('Show table')
         }
       },
       deep: true

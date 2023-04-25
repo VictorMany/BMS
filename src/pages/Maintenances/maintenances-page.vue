@@ -4,8 +4,7 @@
       <header-actions
         :titlePage="'Mantenimientos'"
         :btnAction="btnAction"
-        :inputSearch="inputSearch"
-        v-model:switch-content="switchContent" />
+        :inputSearch="inputSearch" />
       <!-- Main container -->
       <div class="main-container-page" style="height: 88%; overflow-y: hidden;">
         <general-table :rows="rows" :columns="columns" :actions-table="actionsTable" v-model:row-selected="rowSelected" />
@@ -230,8 +229,6 @@ export default defineComponent({
           actions: '+  -'
         }
       ],
-      rowSelected: {},
-      switchContent: 2,
       actionsTable: [
         {
           icnName: 'read_more',
@@ -243,7 +240,8 @@ export default defineComponent({
           icnSize: 'xs',
           icnAction: 'Edit'
         }
-      ]
+      ],
+      rowSelected: {}
     }
   },
 
@@ -264,16 +262,6 @@ export default defineComponent({
           this.edit(val.id)
         } else if (val.action === 'Detail') {
           this.readMore(val.id)
-        }
-      },
-      deep: true
-    },
-    switchContent: {
-      handler (val) {
-        if (val === 1) {
-          console.log('Show cards')
-        } else if (val === 2) {
-          console.log('Show table')
         }
       },
       deep: true

@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <header-actions :titlePage="'Reportes'" :btnAction="btnAction" :inputSearch="inputSearch" v-model:switch-content="switchContent" />
+      <header-actions :titlePage="'Reportes'" :btnAction="btnAction" :inputSearch="inputSearch" />
       <!-- Main container -->
       <div class="main-container-page" style="height: 88%; overflow-y: hidden;">
         <general-table :rows="rows" :columns="columns" :actions-table="actionsTable" v-model:row-selected="rowSelected" />
@@ -239,7 +239,6 @@ export default defineComponent({
         }
       ],
       rowSelected: {},
-      switchContent: 2
     }
   },
   methods: {
@@ -259,16 +258,6 @@ export default defineComponent({
           this.edit(val.id)
         } else if (val.action === 'Detail') {
           this.readMore(val.id)
-        }
-      },
-      deep: true
-    },
-    switchContent: {
-      handler (val) {
-        if (val === 1) {
-          console.log('Show cards')
-        } else if (val === 2) {
-          console.log('Show table')
         }
       },
       deep: true

@@ -88,7 +88,6 @@ export default defineComponent({
   },
   methods: {
     navigateTo (link) {
-      console.log('Juan')
       this.$router.push({ path: link })
     }
   }

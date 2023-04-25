@@ -109,7 +109,7 @@ export default defineComponent({
       try {
         return new URL(`../../assets/svg/${url}`,
           import.meta.url).href
-      } catch (error) { }
+      } catch (error) { /* empty */ }
     }
     return {
       getImageUrl,
@@ -125,7 +125,6 @@ export default defineComponent({
   },
   methods: {
     navigateTo (link) {
-      console.log('Juan')
       this.$router.push({ path: link })
     }
   }

@@ -1,7 +1,7 @@
 <template>
     <q-card
       class="my-card cursor-pointer non-selectable"
-      @click="cardAction">
+      @click="cardAction(index)">
       <q-card-section
         class="q-pa-xs q-ma-none"
         horizontal>
@@ -63,13 +63,11 @@ export default defineComponent({
         { label: 'Serie', info: 'A7GTHYFRG' }
       ]
     },
-
     cardDate: {
       type: String,
       required: false,
       default: ''
     },
-
     cardAction: {
       type: Function,
       required: false

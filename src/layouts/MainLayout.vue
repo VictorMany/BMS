@@ -91,6 +91,7 @@ export default defineComponent({
       try {
         return new URL(`../assets/${url}`,
           import.meta.url).href
+      // eslint-disable-next-line no-empty
       } catch (error) { }
     }
     return {
@@ -194,7 +195,6 @@ export default defineComponent({
 
   created () {
     this.btnLinks.forEach((e, index) => {
-      console.log(this.$route.name)
       if (e.link === '/') {
         this.selectButton(0)
         this.btnSelected = 0
