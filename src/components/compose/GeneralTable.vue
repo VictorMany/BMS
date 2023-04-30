@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div style="max-width: 95vw;" :style="`height: ${height}`">
+  <div :style="`height: ${height}`" class="general-table">
     <q-table
       class="table-style font-style my-sticky-header-table q-mt-none bg-white"
       :rows="rows"

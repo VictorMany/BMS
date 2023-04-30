@@ -338,7 +338,6 @@
   padding-top: 1rem;
 }
 
-
 .input .q-field__native, .q-field__input {
   margin-bottom: 0.6rem !important;
 }
@@ -474,5 +473,44 @@
     font-size: 13px;
     border: solid #6a798588;
     border-width: 0 0 1px 0;
+  }
+}
+
+.tabs-style {
+  height: 10vh !important;
+  display: none;
+}
+
+// RESPONSIVITY
+@media only screen
+and (max-device-width : 1000px) {
+  .main-container-page {
+    height: 90%;
+    padding: 0.5;
+    width: 100%;
+  }
+
+  .card-page {
+    height: 90%;
+    margin-top: -4rem;
+    padding: 0 !important;
+  }
+
+  .title-page {
+    padding-left: 1rem;
+  }
+
+  .general-table {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .container-style {
+    height: 93vh !important;
+  }
+
+  .tabs-style {
+    height: 7vh !important;
+    display: block;
   }
 }

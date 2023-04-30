@@ -82,6 +82,33 @@
     <q-page-container class="container-style">
       <router-view />
     </q-page-container>
+    <q-tabs class="tabs-style">
+        <q-route-tab
+          icon="dashboard"
+          to="/"
+          exact
+        />
+        <q-route-tab
+          icon="computer"
+          to="/equipments"
+          exact
+        />
+        <q-route-tab
+          icon="person"
+          to="/users"
+          exact
+        />
+        <q-route-tab
+          icon="home_repair_service"
+          to="/maintenances"
+          exact
+        />
+        <q-route-tab
+          icon="settings"
+          to="/settings"
+          exact
+        />
+      </q-tabs>
   </q-layout>
 </template>
 

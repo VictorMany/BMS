@@ -88,11 +88,4 @@ export default defineComponent({
     font-weight: 300;
     font-size: 25px;
 }
-
-@media only screen
-and (max-device-width : 1000px) {
-  .title-page {
-    padding-left: 2.4rem !important;
-  }
-}
 </style>

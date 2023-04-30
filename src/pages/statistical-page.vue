@@ -5,7 +5,7 @@
       <div class="main-container-page card-color q-px-sm main-container-page-medium-dark">
         <q-scroll-area class="fit"
           :thumb-style="{ right: '0px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-          <div class="row">
+          <div class="row container-stats">
             <div class="col-12 col-md q-px-sm q-pb-sm q-pt-none">
               <div class="card-graphics">
                 <div class="card-graphics__title text-center q-pa-sm ellipsis">
@@ -401,3 +401,14 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+
+@media only screen
+and (max-device-width : 1000px) {
+  .container-stats {
+    max-width: 93.5vw;
+    overflow: scroll;
+  }
+}
+</style>
