@@ -98,7 +98,7 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: 'settings'
+        btnAction: this.goBack
       },
       model: ref(null),
       listRoles: [
@@ -183,6 +183,11 @@ export default defineComponent({
     }
     return {
       getImageUrl
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
     }
   }
 })

@@ -95,8 +95,13 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: 'maintenances'
+        btnAction: this.goBack
       }
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
     }
   }
 })

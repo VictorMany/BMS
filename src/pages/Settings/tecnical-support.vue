@@ -63,7 +63,7 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: 'settings'
+        btnAction: this.goBack
       },
       textfields: {
         top: [
@@ -89,6 +89,9 @@ export default defineComponent({
   methods: {
     navigateTo (link) {
       this.$router.push({ path: link })
+    },
+    goBack() {
+      this.$router.go(-1)
     }
   }
 })

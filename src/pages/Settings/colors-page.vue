@@ -110,7 +110,7 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: 'settings'
+        btnAction: this.goBack
       }
     }
   },
@@ -155,6 +155,9 @@ export default defineComponent({
     },
     changeTheme (theme) {
       if (theme === 'dark') { this.$q.dark.set(true) } else { this.$q.dark.set(false) }
+    },
+    goBack() {
+      this.$router.go(-1)
     }
   },
   created () {

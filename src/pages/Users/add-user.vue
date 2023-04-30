@@ -49,7 +49,7 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: 'users'
+        btnAction: this.goBack
       },
       textfields: {
         imageInput: true,
@@ -99,6 +99,11 @@ export default defineComponent({
         right: [],
         textArea: {}
       }
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
     }
   }
 })

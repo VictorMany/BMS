@@ -160,7 +160,7 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: 'maintenances-plan'
+        btnAction: this.goBack
       }
     }
   },
@@ -173,6 +173,11 @@ export default defineComponent({
         this.days = this.days2
       },
       deep: true
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
     }
   }
 })

@@ -164,7 +164,7 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: 'maintenances-plan'
+        btnAction: this.goBack
       },
       textfields: {
         readImage: false,
@@ -255,6 +255,11 @@ export default defineComponent({
         }
       ],
       frequency: false
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
     }
   }
 })

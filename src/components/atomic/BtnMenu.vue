@@ -47,7 +47,11 @@ export default defineComponent({
 
   methods: {
     navigateTo () {
-      this.$router.push({ path: this.link })
+      if (this.link.id) {
+        this.$router.push({ name: this.link.link, params: { id: this.link.id } })
+      } else {
+         this.$router.push({ path: this.link })
+      }
       this.$emit('update:selectedBtn', this.index)
     }
   }

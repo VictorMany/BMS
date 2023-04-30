@@ -74,7 +74,7 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        to: 'settings'
+        btnAction: this.goBack
       },
       textfields: {
         imageInput: true,
@@ -252,6 +252,11 @@ export default defineComponent({
     return {
       getImageUrl,
       basicToolBar: [['unordered', 'ordered']]
+    }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
     }
   }
 })
