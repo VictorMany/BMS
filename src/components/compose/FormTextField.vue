@@ -85,7 +85,7 @@
             :class="['justify-end', localTextfields.right.lenght > 0 ? 'q-mt-auto' : '']" style="height: 85%;">
             <div class="full-width row items-center justify-end w-100" style="min-height: 100%; max-width: 350px;">
               <q-img class="form__image64-equipment" no-spinner
-                :src="type === 'user' ? 'https://variety.com/wp-content/uploads/2022/08/Jonah-Hill.jpg?w=681&h=383&crop=1' : 'https://th.bing.com/th/id/R.e3fe7ba73953544a86b878b17fd9f15a?rik=b6KdNrgLWhTDJw&pid=ImgRaw&r=0'" />
+                :src="type === 'user' ? 'https://variety.com/wp-content/uploads/2022/08/Jonah-Hill.jpg?w=681&h=383&crop=1' : 'https://www.vitaingenii.com.mx/imgs/productos/quirofano/a5.jpg'" />
             </div>
           </div>
         </div>

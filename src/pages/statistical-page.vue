@@ -22,7 +22,7 @@
                 <area-chart :chart-data="chartConfigEquipments.data" :chart-options="chartConfigEquipments.options" />
               </div>
             </div>
-            <div class="col-12 q-pa-sm">
+            <div class="col-12 q-pa-sm gt-sm">
               <div class="row q-pb-sm">
                 <div class="col">
                   <div class="card-graphics__title q-mt-sm text-start ellipsis" style="border: none">

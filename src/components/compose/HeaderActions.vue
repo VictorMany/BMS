@@ -4,13 +4,13 @@
     <div class="col-xs-auto col-sm title-page q-py-sm">
       {{ titlePage }}
     </div>
-    <div v-if="btnAction.show" class="col-xs col-sm-auto column content-end q-px-sm mobile-hide">
+    <div v-if="btnAction.show" class="col-xs col-sm-auto column content-end q-px-sm gt-sm">
       <btn-action v-bind="btnAction" />
     </div>
     <div v-if="switchContent" class="col-xs col-sm-auto column content-end q-px-sm">
       <btn-switch v-model:switch-content="switchContentLocal" />
     </div>
-    <div v-if="btnAction.show" class="col-xs col-sm-auto column content-end q-px-sm desktop-hide">
+    <div v-if="btnAction.show" class="col-xs col-sm-auto column content-end q-px-sm lt-md">
       <btn-action v-bind="btnAction" :btn-title="''" />
     </div>
     <div v-if="inputSearch" class="col-md-4 col-xs-12 column q-pl-sm content-end">
