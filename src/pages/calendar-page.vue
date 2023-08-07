@@ -113,7 +113,7 @@ export default defineComponent({
         },
         {
           cardTitle: 'Incubadora',
-          cardImg: 'https://www.ibiomedico.com.mx/uploads/1/1/9/9/119919098/incubadora-155_orig.jpg',
+          cardImg: 'https://aliadascargo.com/wp-content/uploads/2020/04/equipos-medicos.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' }
@@ -176,7 +176,7 @@ export default defineComponent({
         },
         {
           cardTitle: 'Incubadora',
-          cardImg: 'https://www.ibiomedico.com.mx/uploads/1/1/9/9/119919098/incubadora-155_orig.jpg',
+          cardImg: 'https://aliadascargo.com/wp-content/uploads/2020/04/equipos-medicos.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' }

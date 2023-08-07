@@ -40,35 +40,30 @@
         </div>
       </div>
       <!-- RIGHT SECTION -->
-      <div class="col-12 col-sm q-pl-xl column items-end q-mb-lg">
-        <div v-for="(item, i) in textfields.right" v-bind="item" :key="i" style="height: 12%">
-          <div class="row justify-end q-px-sm q-py-xs">
+      <div class="col-12 col-sm q-py-lg">
+        <div v-for="(item, i) in textfields.right" v-bind="item" :key="i">
+          <div class="row justify-end items-center q-px-sm q-py-xs">
             <div class="q-pr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
             <div
-              class="form__item-model q-pl-md">
+              class="form__item-model form__item-chip q-pl-md">
               {{ item.model }}
             </div>
           </div>
         </div>
         <div
           v-if="textfields.image"
-          class="q-px-sm q-pt-xs row w-100"
-          :class="[type === 'user' ? 'justify-center q-ma-lg q-pa-lg' : 'justify-end', textfields.right.lenght > 0 ? 'q-mt-auto' : '']"
-          style="height: 85%">
-          <div
-            class="full-width row items-center"
-            :class="type === 'user' ? 'btn-background justify-center' :  'justify-end'"
-            :style="type === 'user' ? 'width: 254px !important; height: 254px; border-radius: 50%' : 'width: 100%; min-height: 100%; max-width: 350px'">
-            <q-img
-              :class="[type === 'user'
-              ? 'form__image64'
-              : 'form__image64-equipment']"
-              no-spinner
-              :src="textfields.image"
-            />
-          </div>
+          class="q-mx-auto row"
+          :style="type === 'user' ? 'width: 254px !important; height: 254px; border-radius: 50%' : 'width: 100%; min-height: 100%; max-width: 350px'">
+          <q-img
+            :class="[type === 'user'
+            ? 'form__image64'
+            : 'form__image64-equipment']"
+            no-spinner
+            class="q-mx-auto q-my-auto"
+            :src="textfields.image"
+          />
         </div>
       </div>
       <!-- TEXT AREA -->

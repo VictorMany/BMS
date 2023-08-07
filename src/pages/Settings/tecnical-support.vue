@@ -11,16 +11,16 @@
           <div class="q-pa-md row justify-center">
             <div style="width: 100%" class="q-px-md">
               <q-chat-message name="BMS" :text="['Hola, aquí el equipo de BMS, ¿Cómo podemos ayudarte?']"
-                stamp="1 minutes ago" text-color="white" bg-color="blue-14">
+                stamp="1 minutes ago" text-color="white" bg-color="blue-grey-14">
                 <template v-slot:avatar>
                   <q-img class="q-message-avatar q-message-avatar--received bg-white" src="../../assets/png/bms.png"
                     fit="contain" style="width: 20px">
                   </q-img>
                 </template>
               </q-chat-message>
-              <q-chat-message name="me" avatar="https://cdn.quasar.dev/img/avatar3.jpg"
+              <q-chat-message name="me" class="message-style" avatar="https://cdn.quasar.dev/img/avatar3.jpg"
                 :text="['Hola, mi nombre es Franciso Pérez y tengo una duda']" stamp="7 minutes ago" sent
-                text-color="white" bg-color="light-blue-14" />
+                text-color="white" bg-color="grey-14" />
             </div>
           </div>
         </q-scroll-area>
@@ -110,4 +110,6 @@ export default defineComponent({
   background-color: rgba(0, 0, 0, 0.378);
   border-radius: 0.8rem;
 }
+
+
 </style>

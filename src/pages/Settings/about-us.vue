@@ -171,18 +171,7 @@ export default defineComponent({
           img: 'tecnical_support.svg',
           link: 'tecnical-support'
         }
-      ]
-    }
-  },
-  setup () {
-    const getImageUrl = (url) => {
-      try {
-        return new URL(`../../assets/svg/${url}`,
-          import.meta.url).href
-      } catch (error) { /* empty */ }
-    }
-    return {
-      getImageUrl,
+      ],
       basicToolBar: [['unordered', 'ordered']],
       btnCloseWindow: {
         iconName: 'close',
@@ -193,6 +182,18 @@ export default defineComponent({
       }
     }
   },
+  setup () {
+    const getImageUrl = (url) => {
+      try {
+        return new URL(`../../assets/svg/${url}`,
+          import.meta.url).href
+      } catch (error) { /* empty */ }
+    }
+    return {
+      getImageUrl
+    }
+  },
+
   methods: {
     navigateTo (link) {
       this.$router.push({ path: link })

@@ -52,7 +52,7 @@ export default defineComponent({
         btnAction: this.goBack
       },
       textfields: {
-        readImage: true,
+        readImage: 'https://aliadascargo.com/wp-content/uploads/2020/04/equipos-medicos.jpg',
         top: [
           {
             label: 'Encargado',

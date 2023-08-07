@@ -73,7 +73,7 @@ export default defineComponent({
             model: 'A7GTHYFRG'
           }
         ],
-        image: 'https://www.novamedicaltda.com/wp-content/uploads/2021/01/wato-ex-55.jpg',
+        image: 'https://aliadascargo.com/wp-content/uploads/2020/04/equipos-medicos.jpg',
         textarea: {}
       },
       btnAction: {

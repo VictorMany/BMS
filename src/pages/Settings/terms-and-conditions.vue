@@ -101,7 +101,14 @@ export default defineComponent({
           img: 'tecnical_support.svg',
           link: 'tecnical-support'
         }
-      ]
+      ],
+      btnCloseWindow: {
+        iconName: 'close',
+        btnBackground: '#FF9900',
+        btnColor: '#FFFFFF',
+        btnSize: 'xs',
+        btnAction: this.goBack
+      }
     }
   },
   setup () {
@@ -114,13 +121,6 @@ export default defineComponent({
     return {
       getImageUrl,
       basicToolBar: [['unordered', 'ordered']],
-      btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack
-      }
     }
   },
   methods: {

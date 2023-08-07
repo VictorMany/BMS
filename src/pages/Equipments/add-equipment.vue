@@ -106,9 +106,7 @@ export default defineComponent({
           {
             label: 'Costo',
             model: ''
-          }
-        ],
-        right: [
+          },
           {
             label: 'No. serie',
             model: ''
