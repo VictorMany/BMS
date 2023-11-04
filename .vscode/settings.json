@@ -1,25 +1,18 @@
 {
-  "editor.bracketPairColorization.enabled": true,
-  "workbench.iconTheme": "vscode-icons",
-  "workbench.colorTheme": "Night Owl",
+  "editor.fontFamily": "JetBrains Mono",
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
   "editor.guides.bracketPairs": true,
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "vue"
-  ],
-  "[vue]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "nuxt.isNuxtApp": false,
-  "files.autoSave": "afterDelay",
-  "eslint.format.enable": true,
+  "window.commandCenter": true,
+  "terminal.integrated.fontFamily": "monospace",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+      "source.fixAll.eslint": true
   },
-  "html.format.indentHandlebars": true,
-  "html.format.indentInnerHtml": true
+  "eslint.validate": [
+      "javascript"
+  ],
+  "workbench.colorTheme": "Bearded Theme Arc Blueberry",
+  "workbench.iconTheme": "material-icon-theme",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "terminal.integrated.env.osx": {},
+  "console-ninja.featureSet": "Community"
 }
