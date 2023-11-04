@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <div class="column items-end q-mt-md q-mb-xs mobile-hide">
+      <div class="column items-end q-mt-md q-mb-xs">
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions :titlePage="'Roles de usuarios y asignación de permisos'" />
@@ -68,7 +68,7 @@
                   </q-scroll-area>
                 </div>
               </div>
-              <div class="column items-end q-my-lg mobile-hide" >
+              <div class="column items-end q-my-lg" >
                 <btn-action v-bind="btnAction"/>
               </div>
             </div>

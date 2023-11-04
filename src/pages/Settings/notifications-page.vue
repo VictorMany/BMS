@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <div class="column items-end q-mb-xs mobile-hide">
+      <div class="column items-end q-mb-xs">
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions :titlePage="'Notificaciones'" :btn-action="btnAction" />

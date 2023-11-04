@@ -7,13 +7,28 @@
   </div>
 </template>
 
+<!-- eslint-disable import/namespace -->
 <script>
-import { Doughnut } from 'vue-chartjs'
-import 'chart.js/auto'
-// eslint-disable-next-line import/namespace
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import { Doughnut } from 'vue-chartjs';
+import 'chart.js/auto';
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from 'chart.js';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
 
 export default {
   name: 'BarChart',
@@ -21,22 +36,22 @@ export default {
   props: {
     chartData: {
       type: Object,
-      required: true
+      required: true,
     },
     chartOptions: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
-  data () {
+  data() {
     return {
-      color: ''
-    }
+      color: '',
+    };
   },
-  created () {
-    this.color = this.chartData.datasets[0].borderColor[0]
-  }
-}
+  created() {
+    this.color = this.chartData.datasets[0].borderColor[0];
+  },
+};
 </script>
 
 <style lang="scss">

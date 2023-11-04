@@ -9,7 +9,7 @@
       :rows-per-page-options="[10, 20, 100]"
       :hide-pagination="!showPagination"
       v-model:pagination="pagination"
-      >
+    >
       <template v-slot:header="props">
         <q-tr :props="props">
           <q-th
@@ -35,12 +35,23 @@
       </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
-          <icon-action v-for="(action, i) in actionsTable" :key="i" v-bind="action" @click="rowClicked(props, action.icnAction)"/>
+          <icon-action
+            v-for="(action, i) in actionsTable"
+            :key="i"
+            v-bind="action"
+            @click="rowClicked(props, action.icnAction)"
+          />
         </q-td>
       </template>
       <template v-slot:body-cell-status="props">
         <q-td :props="props">
-          <q-badge class="justify-center" :color="checkColor(props.value)" :label="props.value" style="width: 80px; height: 22px; font-weight: 600;"/>
+          <q-badge
+            class="justify-center"
+            :color="checkColor(props.value)"
+            rounded
+            :label="props.value"
+            style="width: 80px; height: 22px; font-weight: 600"
+          />
         </q-td>
       </template>
     </q-table>
@@ -48,128 +59,131 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from 'vue'
-import IconAction from 'src/components/atomic/IconAction.vue'
+import { defineComponent, ref, computed } from 'vue';
+import IconAction from 'src/components/atomic/IconAction.vue';
 
 export default defineComponent({
   name: 'MaintenancesPage',
   components: {
-    IconAction
+    IconAction,
   },
   props: {
     rows: {
       type: Array,
       required: false,
-      default: () => []
+      default: () => [],
     },
     columns: {
       type: Array,
       required: false,
-      default: () => []
+      default: () => [],
     },
     actionsTable: {
       type: Array,
       required: false,
-      default: () => []
+      default: () => [],
     },
     rowSelected: {
       type: Object,
       required: false,
-      default: () => ({})
+      default: () => ({}),
     },
     showPagination: {
       type: Boolean,
       required: false,
-      default: () => true
+      default: () => true,
     },
     height: {
       type: [String],
       required: false,
-      default: () => '80vh'
+      default: () => '80vh',
     },
     paginationProp: {
       type: Object,
       required: false,
       default: () => ({
-        rowsPerPage: 12
-      })
-    }
+        rowsPerPage: 12,
+      }),
+    },
   },
-  setup (props) {
+  setup(props) {
     const pagination = ref({
       descending: false,
-      page: 1
-    })
+      page: 1,
+    });
     return {
       pagination,
-      pagesNumber: computed(() => Math.ceil(props.rows.length / pagination.value.rowsPerPage))
-    }
+      pagesNumber: computed(() =>
+        Math.ceil(props.rows.length / pagination.value.rowsPerPage)
+      ),
+    };
   },
   methods: {
-    rowClicked (props, action) {
-      this.$emit('update:rowSelected', { id: props.row.id, key: props.key, action })
+    rowClicked(props, action) {
+      this.$emit('update:rowSelected', {
+        id: props.row.id,
+        key: props.key,
+        action,
+      });
     },
-    checkColor (status) {
-      let color
+    checkColor(status) {
+      let color;
       switch (status) {
         case 'Atendido':
-          color = 'green-13'
-          break
+          color = 'primary';
+          break;
         case 'Pendiente':
-          color = 'amber-6'
-          break
+          color = 'amber-6';
+          break;
       }
-      return color
+      return color;
+    },
+  },
+  created() {
+    if (this.paginationProp) {
+      this.pagination.rowsPerPage = this.paginationProp.rowsPerPage;
     }
   },
-  created () {
-    if (this.paginationProp) {
-      this.pagination.rowsPerPage = this.paginationProp.rowsPerPage
-    }
-  }
-})
+});
 </script>
 
 <style scoped>
 .font-style {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 500;
 }
 .column-style {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-size: 13px;
   font-weight: 600;
-  color: #4C607D;
+  color: #4c607d;
 }
 
 .pagination-style {
   color: #ffffff !important;
 }
 
-@media only screen
-and (max-device-height : 819px) {
+@media only screen and (max-device-height: 819px) {
   .my-sticky-header-table {
     height: 85%;
   }
 }
 
-@media only screen
-and (min-device-height : 820px) {
+@media only screen and (min-device-height: 820px) {
   .my-sticky-header-table {
     height: 100%;
   }
 }
-  .my-sticky-header-table thead tr th {
-    position: sticky;
-    z-index: 1;
-  }
-  .my-sticky-header-table thead tr:first-child th {
-    top: 0;
-  }
-  .my-sticky-header-table.q-table--loading thead tr:last-child th {
-    top: 48px;
-  }
-
+.my-sticky-header-table thead tr th {
+  position: sticky;
+  z-index: 1;
+}
+.my-sticky-header-table thead tr:first-child th {
+  top: 0;
+}
+.my-sticky-header-table.q-table--loading thead tr:last-child th {
+  top: 48px;
+}
 </style>

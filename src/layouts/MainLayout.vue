@@ -1,9 +1,14 @@
 <template>
   <q-layout view="lHh lpR lFf">
-    <q-drawer show-if-above :width="350" :breakpoint="1000" v-model="leftDrawerOpen"
-      class="cursor-pointer non-selectable main-menu row items-center">
+    <q-drawer
+      show-if-above
+      :width="350"
+      :breakpoint="1000"
+      v-model="leftDrawerOpen"
+      class="cursor-pointer non-selectable main-menu row items-center"
+    >
       <!-- drawer content -->
-      <div style="height: 97vh;" class="q-pl-md w-100">
+      <div style="height: 97vh" class="q-pl-md w-100">
         <div class="side-menu">
           <div class="row">
             <div class="title text-center text-weight-light q-pt-lg w-100">
@@ -12,30 +17,47 @@
             <q-page-sticky position="top-right" :offset="[18, 40]">
               <q-btn fab padding="xs" outline color="orange">
                 <q-avatar size="25px">
-                  <img @mouseover="changeImage(0)" @mouseleave="changeImage(1)" :src="getImageUrl(imageNotification)">
+                  <img
+                    @mouseover="changeImage(0)"
+                    @mouseleave="changeImage(1)"
+                    :src="getImageUrl(imageNotification)"
+                  />
                 </q-avatar>
                 <q-popup-proxy class="border-shadow border-radius">
-                  <q-banner class="border-shadow" style="width: 400px; height: auto">
-                    <div class="q-pa-sm">
-                      Notificaciones
-                    </div>
-                    <q-scroll-area style="height: 490px !important" class="fit" :thumb-style="{
+                  <q-banner
+                    class="border-shadow"
+                    style="width: 400px; height: auto"
+                  >
+                    <div class="q-pa-sm">Notificaciones</div>
+                    <q-scroll-area
+                      style="height: 490px !important"
+                      class="fit"
+                      :thumb-style="{
                         right: '1px',
                         borderRadius: '5px',
                         background: 'rgba(135, 192, 232, 0.44)',
                         width: '5px',
                         opacity: 1,
-                      }">
+                      }"
+                    >
                       <q-list>
-                        <div v-for="(item, i) in listSettings" @click="navigateTo(item.route)" :key="i">
-                          <q-item class="q-mb-sm setting-item flex items-center clickable ">
+                        <div
+                          v-for="(item, i) in listSettings"
+                          @click="navigateTo(item.route)"
+                          :key="i"
+                        >
+                          <q-item
+                            class="q-mb-sm setting-item flex items-center clickable"
+                          >
                             <q-item-section>
                               <q-item-label class="setting-item__title">{{
                                 item.title
                               }}</q-item-label>
-                              <q-item-label class="setting-item__subtitle" caption>{{
-                                item.subtitle
-                              }}</q-item-label>
+                              <q-item-label
+                                class="setting-item__subtitle"
+                                caption
+                                >{{ item.subtitle }}</q-item-label
+                              >
                             </q-item-section>
                           </q-item>
                         </div>
@@ -46,16 +68,28 @@
               </q-btn>
             </q-page-sticky>
           </div>
-          <q-scroll-area class="q-px-md q-py-sm" style="height: 85%"
-            :thumb-style="{ right: '4px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+          <q-scroll-area
+            class="q-px-md q-py-sm"
+            style="height: 85%"
+            :thumb-style="{
+              right: '4px',
+              borderRadius: '5px',
+              background: 'rgba(135, 192, 232, 0.44)',
+              width: '5px',
+              opacity: 1,
+            }"
+          >
             <q-list>
               <div class="q-pt-none">
-                <div v-for="(btn, index) in btnLinks" :key="index" >
-                  <btn-menu v-if="btn != 'divider' && btn != 'qrcode'" v-bind="btn" :index="index"
-                    v-model:selected-btn="btnSelected" />
-                  <q-separator
-                    v-if="btn == 'divider'"
-                    class="q-my-md" />
+                <div v-for="(btn, index) in btnLinks" :key="index">
+                  <div v-if="btn.title">
+                    <btn-menu
+                      v-bind="btn"
+                      :index="index"
+                      :selected="selected"
+                    />
+                  </div>
+                  <q-separator v-if="btn == 'divider'" class="q-my-md" />
                   <div class="container q-pa-none" v-if="btn == 'qrcode'">
                     <qrcode-vue
                       class="border-radius"
@@ -63,9 +97,12 @@
                       :size="size"
                       foreground="#062841"
                       background="#F3F3F3"
-                      margin="3"
-                      level="H" />
-                    <div class="text column wrap justify-center items-center content-center q-pa-none">
+                      :margin="3"
+                      level="H"
+                    />
+                    <div
+                      class="text column wrap justify-center items-center content-center q-pa-none"
+                    >
                       <btn-action v-bind="btnExport" />
                     </div>
                   </div>
@@ -83,40 +120,20 @@
       <router-view />
     </q-page-container>
     <q-tabs class="tabs-style">
-        <q-route-tab
-          icon="dashboard"
-          to="/"
-          exact
-        />
-        <q-route-tab
-          icon="computer"
-          to="/equipments"
-          exact
-        />
-        <q-route-tab
-          icon="person"
-          to="/users"
-          exact
-        />
-        <q-route-tab
-          icon="home_repair_service"
-          to="/maintenances"
-          exact
-        />
-        <q-route-tab
-          icon="settings"
-          to="/settings"
-          exact
-        />
-      </q-tabs>
+      <q-route-tab icon="dashboard" to="/" exact />
+      <q-route-tab icon="computer" to="/equipments" exact />
+      <q-route-tab icon="person" to="/users" exact />
+      <q-route-tab icon="home_repair_service" to="/maintenances" exact />
+      <q-route-tab icon="settings" to="/settings" exact />
+    </q-tabs>
   </q-layout>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import BtnMenu from 'src/components/atomic/BtnMenu.vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue'
-import QrcodeVue from 'qrcode.vue'
+import { defineComponent, ref } from 'vue';
+import BtnMenu from 'src/components/atomic/BtnMenu.vue';
+import BtnAction from 'src/components/atomic/BtnAction.vue';
+import QrcodeVue from 'qrcode.vue';
 
 export default defineComponent({
   name: 'newLayout',
@@ -124,25 +141,31 @@ export default defineComponent({
   components: {
     BtnMenu,
     BtnAction,
-    QrcodeVue
+    QrcodeVue,
   },
 
   setup() {
-    const leftDrawerOpen = ref(false)
+    const leftDrawerOpen = ref(false);
     const getImageUrl = (url) => {
       try {
-        return new URL(`../assets/${url}`,
-          import.meta.url).href
+        return new URL(`../assets/${url}`, import.meta.url).href;
         // eslint-disable-next-line no-empty
-      } catch (error) { }
-    }
+      } catch (error) {}
+    };
+    const routerWatch = (route) => {
+      return route;
+    };
+
     return {
       leftDrawerOpen,
       getImageUrl,
+      routerWatchTest() {
+        return routerWatch;
+      },
       toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
+        leftDrawerOpen.value = !leftDrawerOpen.value;
+      },
+    };
   },
   data() {
     return {
@@ -152,178 +175,179 @@ export default defineComponent({
       fixed: ref(false),
       imageNotification: 'svg/notifications_.svg',
       btnLinks: [],
+      selected: null,
       btnGeneral: [
         {
           title: 'Dashboard',
           link: '/',
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Equipos',
           link: 'equipments',
-          selected: true,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Usuarios',
           link: 'users',
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Mantenimientos',
           link: 'maintenances',
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Planes de mantenimientos',
           link: 'maintenances-plan',
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Calendario',
           link: 'calendar',
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Reportes',
           link: 'reports',
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Configuración',
           link: 'settings',
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
-        }
+          background: '#F8F8F8',
+        },
       ],
       btnDetailEquipment: [
         {
           title: 'Mantenimientos',
           link: 'maintenances',
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Reportes',
           link: 'reports',
-          selected: true,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         'divider',
         {
           title: 'Editar',
           link: { link: 'edit-equipment', id: 1 },
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Registrar mantenimiento',
           link: { link: 'add-maintenance', id: 1 },
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Reportar',
           link: { link: 'add-report', id: 1 },
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         'divider',
-        'qrcode'
+        'qrcode',
       ],
       btnDetailUser: [
         {
           title: 'Mantenimientos',
           link: 'maintenances',
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Reportes',
           link: 'reports',
-          selected: true,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         'divider',
         {
           title: 'Editar',
           link: { link: 'edit-user', id: 1 },
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
-        }
+          background: '#F8F8F8',
+        },
       ],
       btnEditGeneral: [
         {
           title: 'Mantenimientos',
           link: 'maintenances',
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Reportes',
           link: 'reports',
-          selected: true,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
-        }
+          background: '#F8F8F8',
+        },
       ],
       btnGeneralEquipment: [
-      {
+        {
           title: 'Mantenimientos',
           link: 'maintenances',
-          selected: false,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         {
           title: 'Reportes',
           link: 'reports',
-          selected: true,
+
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8'
+          background: '#F8F8F8',
         },
         'divider',
-        'qrcode'
+        'qrcode',
       ],
       listSettings: [
         {
           title: 'PLAN-0001 Equipos de choque',
           subtitle: 'Viernes 12, Enero 2023',
-          route: { link: 'detail-maintenance-plan', id: 1 }
+          route: { link: 'detail-maintenance-plan', id: 1 },
         },
         {
           title: 'PLAN-0002 Equipos de urgencias',
           subtitle: 'Viernes 19, Enero 2023',
-          route: { link: 'detail-maintenance-plan', id: 1 }
+          route: { link: 'detail-maintenance-plan', id: 2 },
         },
         {
           title: 'PLAN-0003 Equipos de primeros auxilios',
           subtitle: 'Viernes 26, Enero 2023',
-          route: { link: 'detail-maintenance-plan', id: 1 }
-        }
+          route: { link: 'detail-maintenance-plan', id: 3 },
+        },
       ],
       btnCloseSesion: {
         show: true,
@@ -332,7 +356,8 @@ export default defineComponent({
         btnAction: this.logout,
         btnWidth: '100%',
         iconName: '',
-        btnBackgroundGradient: 'linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%)'
+        btnBackgroundGradient:
+          'linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%)',
       },
       btnExport: {
         btnTitle: 'Descargar QR',
@@ -340,99 +365,86 @@ export default defineComponent({
         btnAction: this.logout,
         btnWidth: 'auto',
         iconName: 'download',
-        btnBackground: 'black'
-      }
-    }
+        btnBackground: 'black',
+      },
+    };
   },
 
   created() {
-    this.btnLinks = this.btnGeneral
-    this.setMenu(this.$route)
-
-    this.btnLinks.forEach((e, index) => {
-      if (e.link === '/') {
-        this.selectButton(0)
-        this.btnSelected = 0
-      }
-      if (e.link === this.$route.name) {
-        this.selectButton(index)
-        this.btnSelected = index
-      }
-    })
+    this.btnLinks = this.btnGeneral;
+    this.setMenu(this.$route);
   },
 
-  watch: {
-    btnSelected(val, oldVal) {
-      this.selectButton(val)
-      this.btnLinks[oldVal].color = 'rgba(122, 122, 122, 1)'
-      this.btnLinks[oldVal].background = '#F8F8F8'
-      this.btnLinks[oldVal].selected = false
-    },
-    $route: {
-      handler(val) {
-        this.setMenu(val)
-      },
-      deep: true
+  beforeRouteUpdate(to, from, next) {
+    try {
+      this.setMenu(to);
+    } catch (error) {
+      console.log(error);
     }
+    next();
   },
 
   methods: {
     setMenu(route) {
-      this.btnCloseSesion.show = false
-      this.value = 'https://bms-omega.vercel.app' + route.fullPath
-      switch (route.name) {
+      try {
+        this.btnCloseSesion.show = false;
+        this.value = 'https://bms-omega.vercel.app' + route.fullPath;
+
+        switch (route.name) {
           case 'detail-equipment':
-            this.btnLinks = this.btnDetailEquipment
-          break;
+            this.btnLinks = [...this.btnDetailEquipment];
+            this.selected = null;
+            break;
           case 'edit-equipment':
-            this.btnLinks = this.btnEditGeneral
-          break;
-          case 'add-maintenance':
-            this.btnLinks = this.btnGeneralEquipment
-          break;
-          case 'edit-maintenance':
-            this.btnLinks = this.btnGeneralEquipment
-          break;
-          case 'detail-maintenance':
-            this.btnLinks = this.btnGeneralEquipment
-          break;
-          case 'add-report':
-            this.btnLinks = this.btnGeneralEquipment
-          break;
-          case 'detail-report':
-            this.btnLinks = this.btnGeneralEquipment
-          break;
-          case 'edit-report':
-            this.btnLinks = this.btnGeneralEquipment
-          break;
-          case 'detail-user':
-            this.btnLinks = this.btnDetailUser
-          break;
           case 'edit-user':
-            this.btnLinks = this.btnEditGeneral
-          break;
+            this.btnLinks = [...this.btnEditGeneral];
+            this.selected = null;
+            break;
+          case 'add-maintenance':
+          case 'edit-maintenance':
+          case 'detail-maintenance':
+          case 'add-report':
+          case 'detail-report':
+          case 'edit-report':
+            this.btnLinks = [...this.btnGeneralEquipment];
+            this.selected = null;
+            break;
+          case 'detail-user':
+            this.btnLinks = [...this.btnDetailUser];
+            this.selected = null;
+            break;
           default:
-            this.btnLinks = this.btnGeneral
-            this.btnCloseSesion.show = true
+            this.btnLinks = [...this.btnGeneral];
+            if (route.name === 'dashboard') {
+              this.selected = 0;
+            } else
+              this.selected = this.btnLinks.findIndex(
+                (e) => e.link === route.name
+              );
+            this.btnCloseSesion.show = true;
+            break;
         }
-    },
-    selectButton(val) {
-      this.btnLinks[val].selected = true
-      this.btnLinks[val].color = '#4C607D'
-      this.btnLinks[val].background = '#CAE3F4'
+      } catch (error) {
+        console.log(error);
+        this.btnLinks = this.btnGeneral;
+      }
     },
     logout() {
-      console.log('Login')
-      this.$router.replace('/login')
+      console.log('Login');
+      this.$router.replace('/login');
     },
     navigateTo({ link, id }) {
-      this.$router.push({ name: link, params: { id } })
+      this.$router.push({ name: link, params: { id } });
     },
     changeImage(flag) {
-      if (flag === 0) { this.imageNotification = 'gif/notification.gif' } else { this.imageNotification = 'svg/notifications_.svg' }
-    }
-  }
-})
+      if (flag === 0) {
+        this.imageNotification = 'gif/notification.gif';
+      } else {
+        this.imageNotification = 'svg/notifications_.svg';
+      }
+    },
+  },
+});
 </script>
 
 <style lang="scss">
@@ -450,7 +462,7 @@ export default defineComponent({
   }
 
   .side-menu {
-    background: #FEFEFE;
+    background: #fefefe;
   }
 }
 
@@ -473,12 +485,12 @@ export default defineComponent({
 }
 
 .title {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 30px;
-  color: #1A86D4;
+  color: #1a86d4;
 }
 
-@media only screen and (min-device-width : 1000px) {
+@media only screen and (min-device-width: 1000px) {
   .hamburguer-menu {
     display: none;
   }
@@ -489,7 +501,7 @@ export default defineComponent({
   color: white;
   z-index: 100;
   margin-top: 2.9rem;
-  background: linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%);
+  background: linear-gradient(269.25deg, #2280d2 -4.79%, #68befd 94.27%);
   margin-left: 1.7rem;
 }
 
@@ -521,7 +533,7 @@ export default defineComponent({
   height: 98%;
   border-radius: 8px;
   opacity: 0;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   color: #fff;
   text-align: center;
   padding: 20px;
@@ -531,5 +543,4 @@ export default defineComponent({
 .container:hover .text {
   opacity: 1;
 }
-
 </style>

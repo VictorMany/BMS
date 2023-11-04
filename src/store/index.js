@@ -18,8 +18,7 @@ export default store(function (/* { ssrContext } */) {
       // example
     },
 
-    // enable strict mode (adds overhead!)
-    // for dev mode and --debug builds only
+    // eslint-disable-next-line no-undef
     strict: process.env.DEBUGGING
   })
 

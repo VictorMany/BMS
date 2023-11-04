@@ -7,67 +7,80 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'LayoutBtns',
   props: {
     index: {
       type: Number,
-      required: false
+      required: false,
     },
     title: {
       type: String,
-      required: true
+      required: true,
     },
 
     link: {
-      type: String,
-      default: '#'
+      type: [String, Object, null],
+      default: '#',
     },
 
     selected: {
-      type: Boolean,
-      default: false
-    },
-
-    selectedBtn: {
       type: Number,
-      default: 1
+      required: false,
+      default: null,
     },
 
     color: {
-      type: String
+      type: String,
     },
 
     background: {
-      type: String
-    }
+      type: String,
+    },
   },
 
   methods: {
-    navigateTo () {
+    navigateTo() {
       if (this.link.id) {
-        this.$router.push({ name: this.link.link, params: { id: this.link.id } })
+        this.$router.push({
+          name: this.link.link,
+          params: { id: this.link.id },
+        });
       } else {
-         this.$router.push({ path: this.link })
+        this.$router.push({ path: this.link });
       }
-      this.$emit('update:selectedBtn', this.index)
-    }
-  }
-})
+    },
+  },
+
+  computed: {
+    localBackgroundColor() {
+      if (this.index === this.selected) {
+        return '#CAE3F4';
+      }
+      return this.background;
+    },
+    localColor() {
+      if (this.index === this.selected) {
+        return '#4C607D';
+      }
+      return this.color;
+    },
+  },
+});
 </script>
 
 <style scoped>
 .item {
   margin-top: 0.8rem;
-  background-color: v-bind(background);
+  background-color: v-bind(localBackgroundColor);
   border-radius: 5px;
-  color: v-bind(color);
+  color: v-bind(localColor);
 }
 
 .q-item-label {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
