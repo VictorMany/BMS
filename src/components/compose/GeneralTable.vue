@@ -48,7 +48,6 @@
           <q-badge
             class="justify-center"
             :color="checkColor(props.value)"
-            rounded
             :label="props.value"
             style="width: 80px; height: 22px; font-weight: 600"
           />

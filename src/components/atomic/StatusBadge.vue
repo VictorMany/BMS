@@ -31,7 +31,7 @@ export default defineComponent({
   background-color: v-bind(color);
   width: 15px;
   height: 15px;
-  border-radius: 50%;
+  border-radius: 8px;
 }
 .text-status {
   font-weight: 300;

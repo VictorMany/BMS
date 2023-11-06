@@ -528,3 +528,7 @@ and (max-device-width : 1000px) {
     display: block;
   }
 }
+
+.q-chip, .q-badge {
+  border-radius: 6px !important;
+}
