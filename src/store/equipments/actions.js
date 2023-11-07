@@ -1,9 +1,10 @@
-import service from 'src/api/service'
+import service from 'src/api/equipments'
 
-export function getEquipments(context) {
+export function getEquipmentsAction(context) {
     return service.getEquipments().then(async (response) => {
+        console.log(response)
         if (response.status == 200) {
-            context.commit('UPDATE_EQUIPMENTS', response.data.equipments)
+            context.commit('MUTATE_EQUIPMENTS', response.data.equipments)
             return manageResponse('Equipos', true)
         }
         else {

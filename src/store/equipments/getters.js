@@ -1,3 +1,3 @@
-export function getEquipments(state) {
+export function getEquipmentsGetter(state) {
     return state.equipments
 }

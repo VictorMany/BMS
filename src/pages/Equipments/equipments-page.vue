@@ -402,14 +402,14 @@ export default defineComponent({
   computed: {
     equipments: {
       get() {
-        return this.$store.getters['equipments/getEquipments'];
+        return this.$store.getters['equipments/getEquipmentsGetter'];
       },
     },
   },
 
   methods: {
     async getEquipments() {
-      await this.$store.dispatch('equipments/getEquipments')
+      await this.$store.dispatch('equipments/getEquipmentsAction')
     },
     readMore(payload) {
       console.log('Ver detalle', payload);
