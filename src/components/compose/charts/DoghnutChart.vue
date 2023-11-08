@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container q-py-sm">
     <Doughnut :data="chartData" :options="chartOptions" />
     <div v-if="chartData.text" class="label w-100 flex justify-center">
       {{ chartData.text }}

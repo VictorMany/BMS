@@ -84,15 +84,15 @@ export default defineComponent({
         items: [
           {
             title: 'Nombre',
-            icon: 'equipment.svg'
+            icon: 'account_circle'
           },
           {
             title: 'Puesto',
-            icon: 'model.svg'
+            icon: 'supervisor_account'
           },
           {
             title: 'Role',
-            icon: 'brand.svg'
+            icon: 'low_priority'
           }
         ]
       },

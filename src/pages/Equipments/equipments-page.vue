@@ -281,35 +281,35 @@ export default defineComponent({
         items: [
           {
             title: 'Nombre',
-            icon: 'equipment.svg',
+            icon: 'badge',
           },
           {
             title: 'Ubicación',
-            icon: 'location.svg',
+            icon: 'explore',
           },
           {
             title: 'Modelo',
-            icon: 'model.svg',
+            icon: 'compare',
           },
           {
             title: 'Marca',
-            icon: 'brand.svg',
+            icon: 'branding_watermark',
           },
           {
             title: 'Serie',
-            icon: 'serie.svg',
+            icon: 'group_work',
           },
           {
             title: 'Equipos inactivos',
-            icon: 'inactive.svg',
+            icon: 'toggle_off',
           },
           {
             title: 'Mantenimietos pendientes',
-            icon: 'maintenances.svg',
+            icon: 'pending',
           },
           {
             title: 'Reportados este mes',
-            icon: 'reported.svg',
+            icon: 'bug_report',
           },
         ],
       },
@@ -409,7 +409,7 @@ export default defineComponent({
 
   methods: {
     async getEquipments() {
-      await this.$store.dispatch('equipments/getEquipmentsAction')
+      await this.$store.dispatch('equipments/getEquipmentsAction');
     },
     readMore(payload) {
       console.log('Ver detalle', payload);

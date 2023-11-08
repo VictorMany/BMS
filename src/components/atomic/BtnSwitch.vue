@@ -1,6 +1,6 @@
 <template>
   <q-btn-group class="btn-change-content border-shadow" :unelevated="btnUnelevated">
-    <q-btn style="width: 45px; height: auto" class="btn-left q-pa-sm" @click="modelChange(1)">
+    <q-btn style="width: 48px; height: auto" class="btn-left q-pa-sm" @click="modelChange(1)">
       <q-img no-spinner src="~assets/svg/card_svg.svg" />
     </q-btn>
     <q-btn style="width: 45px; height: auto" class="btn-right q-pa-sm" @click="modelChange(2)">

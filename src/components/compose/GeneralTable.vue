@@ -46,10 +46,9 @@
       <template v-slot:body-cell-status="props">
         <q-td :props="props">
           <q-badge
-            class="justify-center"
-            :color="checkColor(props.value)"
+            class="justify-center badge-style"
+            :class="checkColor(props.value)"
             :label="props.value"
-            style="width: 80px; height: 22px; font-weight: 600"
           />
         </q-td>
       </template>
@@ -129,10 +128,10 @@ export default defineComponent({
       let color;
       switch (status) {
         case 'Atendido':
-          color = 'primary';
+          color = 'badge-attended';
           break;
         case 'Pendiente':
-          color = 'amber-6';
+          color = 'badge-pending';
           break;
       }
       return color;
@@ -159,6 +158,23 @@ export default defineComponent({
   font-weight: 600;
   color: #4c607d;
 }
+
+.badge-attended {
+  width: 80px;
+  height: 25px;
+  font-weight: bolder !important;
+  color: #0080ff;
+  background-color: #0080ff26;
+}
+
+.badge-pending {
+  width: 80px;
+  height: 25px;
+  font-weight: bolder !important;
+  color: #f98d00;
+  background-color: #f98d0026;
+}
+
 
 .pagination-style {
   color: #ffffff !important;

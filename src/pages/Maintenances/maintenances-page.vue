@@ -40,19 +40,19 @@ export default defineComponent({
         items: [
           {
             title: 'Tipo',
-            icon: 'equipment.svg'
+            icon: 'engineering'
           },
           {
             title: 'Encargado',
-            icon: 'model.svg'
+            icon: 'supervisor_account'
           },
           {
             title: 'Fecha',
-            icon: 'brand.svg'
+            icon: 'calendar_month'
           },
           {
             title: 'Precio',
-            icon: 'brand.svg'
+            icon: 'payments'
           }
         ]
       },
