@@ -110,7 +110,7 @@ export default defineComponent({
         {
           title: 'Auxiliar',
           subtitle: 'Rol con permisos customizables por el administrador',
-          img: 'aux.png'
+          img: 'admin.png'
         },
         {
           title: 'Funciones básicas',

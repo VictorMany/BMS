@@ -1,49 +1,26 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <header-actions
-        :titlePage="'Equipos'"
-        :btnAction="btnAction"
-        :inputSearch="inputSearch"
-        v-model:switch-content="switchContent"
-      />
-      <div
-        class="main-container-page"
-        :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
-      >
-        <q-scroll-area
-          v-if="switchContent === 1"
-          class="fit"
-          :thumb-style="{
-            borderRadius: '5px',
-            background: 'rgba(135, 192, 232, 0.44)',
-            width: '5px',
-            opacity: 1,
-          }"
-        >
+      <header-actions :titlePage="'Equipos'" :btnAction="btnAction" :inputSearch="inputSearch"
+        v-model:switch-content="switchContent" />
+      <div class="main-container-page" :class="{ 'card-color main-container-page-dark': switchContent === 1 }">
+        <q-scroll-area v-if="switchContent === 1" class="fit" :thumb-style="{
+          borderRadius: '5px',
+          background: 'rgba(135, 192, 232, 0.44)',
+          width: '5px',
+          opacity: 1,
+        }">
           <div style="max-width: 100%">
             <div class="row q-pa-none q-ma-none q-px-sm">
-              <div
-                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto q-px-sm q-pb-md"
-                v-for="(equipo, index) in Equipments"
-                :key="index"
-              >
-                <item-card
-                  v-bind="equipo"
-                  :index="index"
-                  :card-action="readMore"
-                />
+              <div class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto q-px-sm q-pb-md"
+                v-for="(equipo, index) in Equipments" :key="index">
+                <item-card v-bind="equipo" :index="index" :card-action="readMore" />
               </div>
             </div>
           </div>
         </q-scroll-area>
-        <general-table
-          v-else-if="switchContent === 2"
-          :rows="rows"
-          :columns="columns"
-          :actions-table="actionsTable"
-          v-model:row-selected="rowSelected"
-        />
+        <general-table v-else-if="switchContent === 2" :rows="rows" :columns="columns" :actions-table="actionsTable"
+          v-model:row-selected="rowSelected" />
       </div>
     </div>
   </q-page>

@@ -16,12 +16,12 @@ export function getEquipmentsAction(context) {
 const manageResponse = (scope, success) => {
     if (success)
         return {
-            message: scope + ' obtenidos éxitosamente',
+            message: scope + ' successfully obtained',
             success
         }
     else
         return {
-            message: 'Ocurrió un error obteniendo ' + scope.toLowerCase(),
+            message: 'An error occurred obtaining ' + scope.toLowerCase(),
             success
         }
 }

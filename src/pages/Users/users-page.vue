@@ -45,7 +45,7 @@ export default defineComponent({
   },
   data () {
     return {
-      users: [
+      users2: [
         {
           cardTitle: 'Angel Omar Torres Padilla',
           cardImg: 'https://assets.megamediaradios.fm/2022/11/ap22312071681283-0d9c328f69a7c7f15320e8750d6ea447532dff66-s1100-c50.jpg',
@@ -128,6 +128,9 @@ export default defineComponent({
       rowSelected: {}
     }
   },
+  created() {
+    this.getUsers()
+  },
   watch: {
     switchContent: {
       handler(val) {
@@ -154,7 +157,17 @@ export default defineComponent({
       deep: true
     },
   },
+  computed: {
+    users: {
+      get() {
+        return this.$store.getters['users/getUsersGetter']
+      }
+    }
+  },
   methods: {
+    async getUsers() {
+      await this.$store.dispatch('users/getUsersAction')
+    },
     readMore (payload) {
       console.log('Ver detalle', payload)
       this.$router.push({ name: 'detail-user', params: { id: 100 } })
