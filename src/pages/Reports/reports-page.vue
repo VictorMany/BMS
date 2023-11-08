@@ -36,19 +36,19 @@ export default defineComponent({
         items: [
           {
             title: 'Reporte',
-            icon: 'equipment.svg'
+            icon: 'bug_report'
           },
           {
             title: 'Encargado',
-            icon: 'model.svg'
+            icon: 'supervisor_account'
           },
           {
             title: 'Fecha',
-            icon: 'brand.svg'
+            icon: 'calendar_month'
           },
           {
             title: 'Estatus',
-            icon: 'brand.svg'
+            icon: 'list'
           }
         ]
       },

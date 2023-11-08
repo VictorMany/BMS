@@ -5,7 +5,8 @@
     borderless
     dense
     :placeholder="inputLabel"
-    v-model="modelLocal">
+    v-model="modelLocal"
+  >
     <template v-slot:prepend>
       <q-icon name="search" />
     </template>
@@ -14,35 +15,48 @@
         class="btn-style border-shadow q-pa-none q-pl-md q-pr-xs"
         :label="btnFilter.title"
         :size="'sm'"
-        no-caps>
+        no-caps
+      >
         <div class="no-wrap q-pa-none q-ml-auto">
           <q-icon right :name="btnFilter.icon" class="q-ml-md q-ma-xs" />
         </div>
         <q-popup-proxy class="border-shadow border-radius">
-          <q-banner class="border-shadow q-px-sm" style="width: 300px; height: auto">
-            <q-scroll-area :style="`height: ${heightModal} !important`" class="fit"
+          <q-banner
+            class="border-shadow q-px-sm"
+            style="width: 300px; height: auto"
+          >
+            <q-scroll-area
+              :style="`height: ${heightModal} !important`"
+              class="fit"
               :thumb-style="{
                 borderRadius: '5px',
                 background: 'rgba(135, 192, 232, 0.44)',
                 width: '0px',
                 opacity: 1,
-              }">
+              }"
+            >
               <q-list class="q-px-none">
-                <div v-for="(item, i) in items"
-                class="item-filter"
-                @click="setSelectedOpt(item.title)"
-                :key="i">
+                <div
+                  v-for="(item, i) in items"
+                  class="item-filter"
+                  @click="setSelectedOpt(item.title)"
+                  :key="i"
+                >
                   <q-item class="flex items-center border-radius" clickable>
                     <q-item-section avatar>
-                      <q-avatar size="md" class="avatar-item" :color="'light-blue-'+(i+3)">
-                        <img :src="getImageUrl(item.icon)" class="q-pa-sm" />
+                      <q-avatar
+                        size="md"
+                        class="avatar-item"
+                        :color="findColor(i)"
+                      >
+                        <!-- <img :src="getImageUrl(item.icon)" class="q-pa-sm" /> -->
+                        <q-icon :name="item.icon" />
+
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>
                       <q-item-label class="setting-item__title">
-                        {{
-                          item.title
-                        }}
+                        {{ item.title }}
                       </q-item-label>
                     </q-item-section>
                   </q-item>
@@ -57,7 +71,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'InputSearch',
@@ -65,74 +79,79 @@ export default defineComponent({
     inputLabel: {
       type: String,
       default: 'Buscar por nombre',
-      required: false
+      required: false,
     },
     inputColor: {
       type: String,
       required: false,
-      default: 'rgba(122, 122, 122, 1)'
+      default: 'rgba(122, 122, 122, 1)',
     },
     inputBackground: {
       type: String,
       required: false,
-      default: '#FFFFFF'
+      default: '#FFFFFF',
     },
     model: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     setSelectedOpt: {
       type: Function,
       required: false,
-      default: () => { }
+      default: () => {},
     },
     items: {
       type: Array,
-      required: false
+      required: false,
     },
     heightModal: {
       type: String,
       required: false,
-      default: '390px'
-    }
+      default: '390px',
+    },
   },
-  setup () {
+  setup() {
     const getImageUrl = (url) => {
       try {
-        return new URL(`../../assets/svg/filter/${url}`,
-          import.meta.url).href
+        return new URL(`../../assets/svg/filter/${url}`, import.meta.url).href;
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
     return {
       getImageUrl,
-      basicToolBar: [['unordered', 'ordered']]
-    }
+      basicToolBar: [['unordered', 'ordered']],
+    };
   },
-  data () {
+  data() {
     return {
       btnFilter: {
         title: 'Filtro',
         color: '#FFFFFF',
-        backgroundGradient: 'linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%)',
+        backgroundGradient:
+          'linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%)',
         size: 'sm',
-        icon: 'keyboard_arrow_down'
+        icon: 'keyboard_arrow_down',
       },
-      modelLocal: this.model
-    }
+      modelLocal: this.model,
+    };
   },
   watch: {
-    modelLocal (value) {
-      this.$emit('update:model', value)
-    }
-  }
-})
+    modelLocal(value) {
+      this.$emit('update:model', value);
+    },
+  },
+  methods: {
+    findColor(i) {
+      if (i < 3) i = i + 2;
+      return 'light-blue-' + (i + 3);
+    },
+  },
+});
 </script>
 
 <style scoped lang="scss">
-
 .input-style {
   font-style: normal;
   font-weight: 400;
@@ -143,7 +162,7 @@ export default defineComponent({
 }
 
 .btn-style {
-  background: linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%);
+  background: linear-gradient(269.25deg, #2280d2 -4.79%, #68befd 94.27%);
   color: white;
   border-radius: 0.5rem !important;
 }
