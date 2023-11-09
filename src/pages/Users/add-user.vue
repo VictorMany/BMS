@@ -41,8 +41,8 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
-        to: 'users',
-        btnWidth: 'auto'
+        btnWidth: 'auto',
+        btnAction: this.createUser
       },
       btnCloseWindow: {
         iconName: 'close',
@@ -65,7 +65,7 @@ export default defineComponent({
         ],
         left: [
           {
-            label: 'Curp',
+            label: 'Telefono',
             model: ''
           },
           {
@@ -81,9 +81,12 @@ export default defineComponent({
             model: '',
             type: 'select',
             options: [
-              'Administrador',
-              'Auxiliar',
-              'Funciones básicas'
+              {label: 'Administrador',
+               index: 1},
+              {label:'Auxiliar',
+               index: 2},
+              {label: 'Funciones básicas',
+               index: 3}
             ]
           },
           {
@@ -91,8 +94,10 @@ export default defineComponent({
             model: '',
             type: 'select',
             options: [
-              'Activo',
-              'Inactivo'
+              {label: 'Activo',
+               status: true},
+              {label: 'Inactivo',
+               status: false}
             ]
           },
         ],
@@ -104,6 +109,15 @@ export default defineComponent({
   methods: {
     goBack() {
       this.$router.go(-1)
+    },
+    async createUser() {
+      const res = await this.$store.dispatch('users/postUserAction', this.textfields)
+      console.log(res);
+      if (res.success) {
+        this.$router.go(-1)
+      } else {
+        console.log('PONER ALERTA');
+      }
     }
   }
 })

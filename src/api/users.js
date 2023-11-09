@@ -7,4 +7,9 @@ export default class EquipmentService {
     static getUsers() {
         return api.get(this.endpoint + 'users'); // Utiliza $api para realizar la petición
     }
+
+    // Generar nuevo usuario
+    static postUser(payload) {
+        return api.post(this.endpoint + 'createUser', payload);
+    }
 }
