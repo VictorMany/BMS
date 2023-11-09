@@ -53,6 +53,7 @@ const formatUser = (user) => {
         userRole: user.left[3].model.index,
         photo: user.top[0].model,
         userStatus: user.left[4].model.status,
+        birthday: user.left[2]
     }
     return formatedUser
 }
