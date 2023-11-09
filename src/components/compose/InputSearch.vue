@@ -50,8 +50,7 @@
                         :color="findColor(i)"
                       >
                         <!-- <img :src="getImageUrl(item.icon)" class="q-pa-sm" /> -->
-                        <q-icon :name="item.icon" />
-
+                        <q-icon color="white" :name="item.icon" />
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>
