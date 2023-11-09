@@ -4,40 +4,97 @@
       <div class="column items-end q-mt-md q-mb-xs">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions :titlePage="'Crear nuevo plan de mantenimientos'" :btn-action="btnAction" />
-      <div class="main-container-page main-container-page-medium-dark" style="height: 82%">
-        <q-scroll-area class="full-height q-pb-sm" style="height: 95% !important"
-          :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+      <header-actions
+        :titlePage="'Crear nuevo plan de mantenimientos'"
+        :btn-action="btnAction"
+      />
+      <div
+        class="main-container-page main-container-page-medium-dark"
+        style="height: 82%"
+      >
+        <q-scroll-area
+          class="full-height q-pb-sm"
+          style="height: 95% !important"
+          :thumb-style="{
+            right: '6px',
+            borderRadius: '5px',
+            background: 'rgba(135, 192, 232, 0.44)',
+            width: '5px',
+            opacity: 1,
+          }"
+        >
           <form-text-field :textfields="textfields" />
           <div class="row q-px-lg">
             <div class="col-12 col-md-7 q-pr-md">
-              <div class="select__form border-line q-pa-md" style="height: 60vh;">
-                <div class="q-pb-sm title-card">
-                  Equipo biomédico
-                </div>
+              <div
+                class="select__form border-line q-pa-md"
+                style="height: 60vh"
+              >
+                <div class="q-pb-sm title-card">Equipo biomédico</div>
                 <div style="height: 90%">
-                  <q-scroll-area class="fit"
-                    :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-                    <q-tree node-key="label" class="checkbox-label" color="grey-8" text-color="blue-grey-4" :nodes="simple" v-model:ticked="ticked"
-                      :tick-strategy="tickStrategy" default-expand-all />
+                  <q-scroll-area
+                    class="fit"
+                    :thumb-style="{
+                      right: '6px',
+                      borderRadius: '5px',
+                      background: 'rgba(135, 192, 232, 0.44)',
+                      width: '5px',
+                      opacity: 1,
+                    }"
+                  >
+                    <q-tree
+                      node-key="label"
+                      class="checkbox-label"
+                      color="grey-8"
+                      text-color="blue-grey-4"
+                      :nodes="simple"
+                      v-model:ticked="ticked"
+                      :tick-strategy="tickStrategy"
+                      default-expand-all
+                    />
                   </q-scroll-area>
                 </div>
               </div>
             </div>
             <div class="col-12 col-md-5">
-              <q-date mask="YYYY-MM-DD" v-model="date" class="text-blue-blue-grey-4 border-line" minimal landscape
-                :events="events" :event-color="(date) => blueEvents.includes(date) ? 'positive' : 'primary'" />
-              <div class="row q-my-md" style="max-width: 418px;">
+              <q-date
+                mask="YYYY-MM-DD"
+                v-model="date"
+                class="text-blue-blue-grey-4 border-line"
+                minimal
+                landscape
+                :events="events"
+                :event-color="
+                  (date) => (blueEvents.includes(date) ? 'positive' : 'primary')
+                "
+              />
+              <div class="row q-my-md" style="max-width: 418px">
                 <div class="col-auto">
-                  <q-checkbox size="sm" v-model="frequency" label="Frecuencia" class="form__checkbox q-mr-md q-pa-xs q-px-sm" dense />
+                  <q-checkbox
+                    size="sm"
+                    v-model="frequency"
+                    label="Frecuencia"
+                    class="form__checkbox q-mr-md q-pa-xs q-px-sm"
+                    dense
+                  />
                 </div>
                 <div class="col q-mb-md">
-                  <q-select class="textfield-other form__item-select q-pl-sm q-pr-sm input" dense borderless v-model="model"
-                    :options="options">
+                  <q-select
+                    class="textfield-other form__item-select q-pl-sm q-pr-sm input"
+                    dense
+                    borderless
+                    v-model="model"
+                    :options="options"
+                  >
                     <template v-slot:option="scope">
                       <q-item v-bind="scope.itemProps" dense>
                         <q-item-section>
-                          <q-item-label :class="scope.selected ? 'text-light-blue' : 'text-grey'">{{ scope.label }}</q-item-label>
+                          <q-item-label
+                            :class="
+                              scope.selected ? 'text-light-blue' : 'text-grey'
+                            "
+                            >{{ scope.label }}</q-item-label
+                          >
                         </q-item-section>
                       </q-item>
                     </template>
@@ -48,11 +105,22 @@
                   <div class="col-12 q-pr-md form__item-label text-weight-thin">
                     Encargado
                   </div>
-                  <q-select class="col-12 col-sm textfield-select form__item-input q-pl-sm q-pr-md input" borderless v-model="payload.incharged.model" dense :options="payload.incharged.options">
+                  <q-select
+                    class="col-12 col-sm textfield-select form__item-input q-pl-sm q-pr-md input"
+                    borderless
+                    v-model="payload.incharged.model"
+                    dense
+                    :options="payload.incharged.options"
+                  >
                     <template v-slot:option="scope">
                       <q-item v-bind="scope.itemProps" dense>
                         <q-item-section>
-                          <q-item-label :class="scope.selected ? 'text-light-blue' : 'text-grey'">{{ scope.label }}</q-item-label>
+                          <q-item-label
+                            :class="
+                              scope.selected ? 'text-light-blue' : 'text-grey'
+                            "
+                            >{{ scope.label }}</q-item-label
+                          >
                         </q-item-section>
                       </q-item>
                     </template>
@@ -62,31 +130,41 @@
             </div>
           </div>
           <div class="col-12 col-sm-6 q-px-lg q-pb-sm">
-            <div class="q-ma-sm form__item-label text-weight-thin">
-              Notas
-            </div>
-            <q-editor v-model="payload.notes" :placeholder="'Escribe aquí las notas del plan de mantenimientos'"
-              class="form__item-textarea input" dense :toolbar="[[{
-                label: $q.lang.editor.fontSize,
-                icon: $q.iconSet.editor.fontSize,
-                fixedLabel: true,
-                fixedIcon: true,
-                list: 'no-icons',
-                options: [
-                  'size-1',
-                  'size-2',
-                  'size-3',
-                  'size-4',
-                  'size-5',
-                  'size-6',
-                  'size-7'
-                ]
-              },
-                'bold', 'italic', 'strike', 'underline'],
-              ['unordered', 'ordered']]" />
+            <div class="q-ma-sm form__item-label text-weight-thin">Notas</div>
+            <q-editor
+              v-model="payload.notes"
+              :placeholder="'Escribe aquí las notas del plan de mantenimientos'"
+              class="form__item-textarea input"
+              dense
+              :toolbar="[
+                [
+                  {
+                    label: $q.lang.editor.fontSize,
+                    icon: $q.iconSet.editor.fontSize,
+                    fixedLabel: true,
+                    fixedIcon: true,
+                    list: 'no-icons',
+                    options: [
+                      'size-1',
+                      'size-2',
+                      'size-3',
+                      'size-4',
+                      'size-5',
+                      'size-6',
+                      'size-7',
+                    ],
+                  },
+                  'bold',
+                  'italic',
+                  'strike',
+                  'underline',
+                ],
+                ['unordered', 'ordered'],
+              ]"
+            />
           </div>
         </q-scroll-area>
-        <div class="col-12 form__date_container" style="height: 5.25%;">
+        <div class="col-12 form__date_container" style="height: 5.25%">
           <div class="form__date column items-end q-pa-sm q-mt-auto">
             <div>Fecha de creación: <strong> 12/02/2022</strong></div>
           </div>
@@ -95,24 +173,42 @@
     </div>
     <!-- DIALOGS -->
     <q-dialog v-model="fixed">
-      <q-card style="min-width: 50vw; border-radius: 10px;">
+      <q-card style="min-width: 50vw; border-radius: 10px">
         <q-card-section>
           <div class="text-h6">Fecha personalizada</div>
         </q-card-section>
         <q-separator />
-        <q-card-section style="max-height: 50vh;" class="scroll">
+        <q-card-section style="max-height: 50vh" class="scroll">
           <div class="row">
             <div class="col-12 col-md-auto">
-              <q-date mask="dddd DD, MMM YYYY" v-model="days" multiple class="text-blue-blue-grey-4 border-line" landscape />
+              <q-date
+                mask="dddd DD, MMM YYYY"
+                v-model="days"
+                multiple
+                class="text-blue-blue-grey-4 border-line"
+                landscape
+              />
             </div>
             <div class="col-12 col-md q-pl-lg">
-              <div class="q-mb-sm">
-                Siguientes mantenimientos
-              </div>
-              <q-scroll-area class="fit"
-                :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-                <div v-for="(day, index) in days" :key="index" class="text-left chip-date q-mb-sm q-pa-xs q-px-sm text-blue-grey-4">
+              <div class="q-mb-sm">Siguientes mantenimientos</div>
+              <q-scroll-area
+                class="fit q-pr-md q-pb-md"
+                :thumb-style="{
+                  borderRadius: '5px',
+                  background: 'rgba(135, 192, 232, 0.44)',
+                  width: '5px',
+                  opacity: 1,
+                }"
+              >
+                <div
+                  v-for="(day, index) in days"
+                  :key="index"
+                  class="text-left chip-date q-mb-sm q-pa-xs q-px-sm text-blue-grey-4 flex flex-center align-center justify-between"
+                >
                   {{ day }}
+                  <q-avatar size="sm" class="avatar-item">
+                    <q-icon name="delete" />
+                  </q-avatar>
                 </div>
               </q-scroll-area>
             </div>
@@ -129,74 +225,86 @@
 </template>
 
 <script>
-import { ref, defineComponent } from 'vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue'
-import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import FormTextField from 'src/components/compose/FormTextField.vue'
+import { ref, defineComponent } from 'vue';
+import BtnAction from 'src/components/atomic/BtnAction.vue';
+import HeaderActions from 'src/components/compose/HeaderActions.vue';
+import FormTextField from 'src/components/compose/FormTextField.vue';
 
 export default defineComponent({
   name: 'EquipmentsPage',
   components: {
     HeaderActions,
     FormTextField,
-    BtnAction
+    BtnAction,
   },
-  data () {
+  data() {
     return {
       fixed: ref(false),
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
         to: 'maintenances-plan',
-        btnWidth: 'auto'
+        btnWidth: 'auto',
       },
       btnPersonalized: {
         show: true,
         btnTitle: 'Personalizado',
         iconName: '',
         btnAction: () => {
-          this.fixed = true
+          this.fixed = true;
         },
-        btnWidth: '100%'
+        btnWidth: '100%',
       },
       btnCloseWindow: {
         iconName: 'close',
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        btnAction: this.goBack
+        btnAction: this.goBack,
       },
       textfields: {
         readImage: false,
         top: [
           {
             label: 'Nombre del plan',
-            model: ''
-          }
+            model: '',
+          },
         ],
         left: [],
         right: [],
-        textArea: {}
+        textArea: {},
       },
       model: ref(null),
       days: ref(['Sábado 04, Feb 2023']),
       options: [
-        'Semanal', 'Quincenal', 'Mensual', 'Bimestral', 'Trimestral', 'Semestral', 'Anual'
+        'Semanal',
+        'Quincenal',
+        'Mensual',
+        'Bimestral',
+        'Trimestral',
+        'Semestral',
+        'Anual',
       ],
       payload: {
         notes: '',
         incharged: {
           model: '',
           type: 'select',
-            options: [
-              'Angel Omar Torres Padilla',
-              'Andres Martínez Sierra',
-              'Víctor Pérez'
-            ]
-        }
+          options: [
+            'Angel Omar Torres Padilla',
+            'Andres Martínez Sierra',
+            'Víctor Pérez',
+          ],
+        },
       },
       date: ref('2019/02/01'),
-      events: ['2019/02/01', '2019/02/05', '2019/02/06', '2019/02/09', '2019/02/23'],
+      events: [
+        '2019/02/01',
+        '2019/02/05',
+        '2019/02/06',
+        '2019/02/09',
+        '2019/02/23',
+      ],
       blueEvents: ['2019/02/01', '2019/02/09', '2019/02/23'],
       ticked: ref(['Equipo de choque']),
       tickStrategy: ref('strict'),
@@ -218,51 +326,51 @@ export default defineComponent({
             { label: 'Equipos de mamografía' },
             { label: 'Equipos de resonancia magnética' },
             { label: 'Equipos de medicina nuclear' },
-            { label: 'Microscopios' }
-          ]
+            { label: 'Microscopios' },
+          ],
         },
         {
           label: 'Equipos de oftalmología',
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' }
-          ]
+            { label: 'Pleasant surroundings' },
+          ],
         },
         {
           label: 'Equipo de choque3',
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' }
-          ]
+            { label: 'Pleasant surroundings' },
+          ],
         },
         {
           label: 'Equipo de choque4',
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' }
-          ]
+            { label: 'Pleasant surroundings' },
+          ],
         },
         {
           label: 'Equipo de choque5',
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' }
-          ]
-        }
+            { label: 'Pleasant surroundings' },
+          ],
+        },
       ],
-      frequency: false
-    }
+      frequency: false,
+    };
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
-    }
-  }
-})
+      this.$router.go(-1);
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -281,7 +389,7 @@ export default defineComponent({
 }
 
 .checkbox-label {
-  color: #E8F3FB;
+  color: #e8f3fb;
   font-size: 13px;
 }
 
@@ -292,7 +400,7 @@ export default defineComponent({
 
 .title-card {
   font-size: 18px;
-  color: #017ED9;
+  color: #017ed9;
 }
 
 .q-field__label {
@@ -300,7 +408,14 @@ export default defineComponent({
 }
 
 .chip-date {
-  background-color: #4C607D20;
+  background-color: #4c607d20;
   border-radius: 8px;
+}
+
+.avatar-item {
+  border-radius: 50% !important;
+  background-color: #ea463d2b;
+  color: #ea463d;
+  cursor: pointer;
 }
 </style>
