@@ -125,7 +125,7 @@ export default defineComponent({
       getImageUrl,
       buttonColors: [
         {
-          color: '#1e6fe8'
+          color: '#1e65e8'
         },
         {
           color: '#91c8ff84'
@@ -141,7 +141,7 @@ export default defineComponent({
         }
       ],
       shape: ref(true),
-      primaryColor: '#1e6fe8',
+      primaryColor: '#1e65e8',
       basicToolBar: [['unordered', 'ordered']],
       laptop: 'laptop.png',
       darkPic: 'dark.png',

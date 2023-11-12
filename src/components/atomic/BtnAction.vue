@@ -30,13 +30,13 @@ export default defineComponent({
     btnColor: {
       type: String,
       required: false,
-      default: '#2280D2'
+      default: '#1e65e8'
     },
 
     btnBackground: {
       type: String,
       required: false,
-      default: '#6A798530'
+      default: '#1e65e820'
     },
 
     btnBackgroundGradient: {

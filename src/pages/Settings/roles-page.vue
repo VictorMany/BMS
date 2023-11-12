@@ -220,7 +220,7 @@ export default defineComponent({
 
 .title-card {
   font-size: 18px;
-  color: #017ED9;
+  color: $primary;
 }
 
 .q-field__label {

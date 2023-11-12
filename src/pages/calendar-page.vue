@@ -12,6 +12,7 @@
           <div class="col-xs-12 col-sm-auto">
             <q-date
               v-model="date"
+              color="primary"
               mask="YYYY-MM-DD"
               class="text-blue-blue-grey-4 border-line"
               landscape
@@ -122,7 +123,7 @@ export default defineComponent({
       optionsFilter: [
         { color: '#10D13A', label: 'Mantenimientos hechos', value: 'opt1' },
         {
-          color: '#1C81CB',
+          color: '#1e65e8',
           label: 'Mantenimientos programados',
           value: 'opt2',
         },
@@ -417,7 +418,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .container-colorama {
   max-width: 420px !important;
   border-radius: 5px;
@@ -428,6 +429,6 @@ export default defineComponent({
   font-weight: 200;
   font-size: 20px;
   font-family: "Inter";
-  color: #1a86d4;
+  color: $primary;
 }
 </style>

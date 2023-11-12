@@ -4,6 +4,7 @@
     class="input-style q-pl-md q-pr-sm border-shadow"
     borderless
     dense
+    :dark="false"
     :placeholder="inputLabel"
     v-model="modelLocal"
   >
@@ -44,12 +45,7 @@
                 >
                   <q-item class="flex items-center border-radius" clickable>
                     <q-item-section avatar>
-                      <q-avatar
-                        size="md"
-                        class="avatar-item"
-                        :color="findColor(i)"
-                      >
-                        <!-- <img :src="getImageUrl(item.icon)" class="q-pa-sm" /> -->
+                      <q-avatar size="md" class="avatar-item" color="primary">
                         <q-icon color="white" :name="item.icon" />
                       </q-avatar>
                     </q-item-section>
@@ -129,7 +125,7 @@ export default defineComponent({
         title: 'Filtro',
         color: '#FFFFFF',
         backgroundGradient:
-          'linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%)',
+          'linear-gradient(269.25deg, #1e65e8 -4.79%, #689afd 94.27%)',
         size: 'sm',
         icon: 'keyboard_arrow_down',
       },
@@ -139,12 +135,6 @@ export default defineComponent({
   watch: {
     modelLocal(value) {
       this.$emit('update:model', value);
-    },
-  },
-  methods: {
-    findColor(i) {
-      if (i < 3) i = i + 2;
-      return 'light-blue-' + (i + 3);
     },
   },
 });
@@ -161,18 +151,18 @@ export default defineComponent({
 }
 
 .btn-style {
-  background: linear-gradient(269.25deg, #2280d2 -4.79%, #68befd 94.27%);
+  background: linear-gradient(269.25deg, $primary -4.79%, #689afd 94.27%);
   color: white;
   border-radius: 0.5rem !important;
 }
 
 .avatar-item {
   border-radius: 50% !important;
-  background-color: rgb(0, 166, 255);
+  background-color: $primary;
 }
 
 .item-filter:hover {
-  background-color: rgba(0, 0, 0, 0.098);
+  background-color: $primary-opacity;
   border-radius: 0.5rem;
 }
 </style>

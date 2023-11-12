@@ -11,9 +11,7 @@
       <div style="height: 97vh" class="q-pl-md w-100">
         <div class="side-menu">
           <div class="row">
-            <div class="title text-center text-weight-light q-pt-lg w-100">
-              BMS
-            </div>
+            <div class="title text-center q-pt-lg w-100">BMS</div>
             <q-page-sticky position="top-right" :offset="[18, 40]">
               <q-btn fab padding="xs" outline color="orange">
                 <q-avatar size="25px">
@@ -357,7 +355,7 @@ export default defineComponent({
         btnWidth: '100%',
         iconName: '',
         btnBackgroundGradient:
-          'linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%)',
+          'linear-gradient(269.25deg, #1e65e8 -4.79%, #689afd 94.27%)',
       },
       btnExport: {
         btnTitle: 'Descargar QR',
@@ -451,7 +449,9 @@ export default defineComponent({
 .side-menu {
   width: 100%;
   height: 100%;
-  box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 10%) !important;
+  // box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 10%) !important;
+  box-shadow: none;
+
   border-radius: 8px !important;
   overflow: hidden;
 }
@@ -485,9 +485,9 @@ export default defineComponent({
 }
 
 .title {
-  font-family: "Inter";
   font-size: 30px;
-  color: #1a86d4;
+  font-weight: 800;
+  color: $primary;
 }
 
 @media only screen and (min-device-width: 1000px) {
@@ -501,7 +501,7 @@ export default defineComponent({
   color: white;
   z-index: 100;
   margin-top: 2.9rem;
-  background: linear-gradient(269.25deg, #2280d2 -4.79%, #68befd 94.27%);
+  background: linear-gradient(269.25deg, #1e65e8 -4.79%, #689afd 94.27%);
   margin-left: 1.7rem;
 }
 

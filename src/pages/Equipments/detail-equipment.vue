@@ -14,7 +14,7 @@
         </q-scroll-area>
         <div class="col-12 form__date_container" style="height: 5.25% !important">
           <div class="form__date column items-end q-pa-sm q-mt-auto">
-            <div>Fecha de creación: <strong> 12/02/2022</strong></div>
+            <div>Fecha de creación  <strong> 12/02/2022</strong></div>
           </div>
         </div>
       </div>
@@ -94,7 +94,7 @@ export default defineComponent({
           label: 'Observaciones del equipo biomédico',
           model: '<div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
         },
-        image: 'https://aliadascargo.com/wp-content/uploads/2020/04/equipos-medicos.jpg'
+        image: 'https://www.novamedicaltda.com/wp-content/uploads/2021/01/wato-ex-55.jpg'
       },
       btnAction: {
         show: true,

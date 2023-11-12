@@ -17,10 +17,17 @@
               {{ item.label }}
             </div>
             <q-input
-              class="col-6 form__item-input-12 q-pl-sm q-pr-md input"
+              class="col-6 form__item-input-12"
               borderless
               dense
+              filled
+              hide-hint
+              hide-bottom-space
+              bottom-slots
+              stack-label
+              :rules="item.rules ? item.rules : []"
               v-model="item.model"
+              :type="item.type ? item.type : 'text'"
             />
           </div>
         </div>
@@ -54,16 +61,21 @@
               </div>
               <div v-else class="row w-100 q-px-sm q-pb-sm">
                 <div
-                  class="col-12 col-sm q-pr-md form__item-label text-weight-thin"
+                  class="col-12 col-sm q-pr-md q-pt-sm form__item-label text-weight-thin"
                 >
                   {{ item.label }}
                 </div>
                 <q-select
                   v-if="item.type === 'select'"
-                  class="col-12 col-sm textfield-select form__item-input q-pl-sm q-pr-md input q-my-xs"
+                  class="textfield-select form__item-input col-12 col-sm"
                   borderless
                   v-model="item.model"
                   dense
+                  filled
+                  hide-hint
+                  hide-bottom-space
+                  bottom-slots
+                  stack-label
                   :options="item.options"
                 >
                   <template v-slot:option="scope">
@@ -79,12 +91,45 @@
                     </q-item>
                   </template>
                 </q-select>
+
                 <q-input
-                  v-else
-                  class="col-12 col-sm form__item-input q-pl-sm q-pr-md input"
+                  v-else-if="item.type === 'date'"
+                  class="col-12 col-sm form__item-input"
                   borderless
                   dense
                   v-model="item.model"
+                  filled
+                  hide-hint
+                  hide-bottom-space
+                  bottom-slots
+                  stack-label
+                >
+                  <template v-slot:append>
+                    <q-btn icon="event" size="xs" flat round>
+                      <q-popup-proxy
+                        cover
+                        transition-show="scale"
+                        transition-hide="scale"
+                      >
+                        <q-date v-model="item.model" />
+                      </q-popup-proxy>
+                    </q-btn>
+                  </template>
+                </q-input>
+                <!-- NORMAL INPUT -->
+
+                <q-input
+                  v-else
+                  v-model="item.model"
+                  class="form__item-input col-12 col-sm"
+                  filled
+                  hide-hint
+                  hide-bottom-space
+                  bottom-slots
+                  dense
+                  :type="item.type ? item.type : 'text'"
+                  :rules="item.rules ? item.rules : []"
+                  stack-label
                 />
               </div>
             </div>
@@ -109,11 +154,13 @@
           </div>
         </div>
       </div>
-      
-      <div class="row justify-center items-center q-py-md" :class="localTextfields.right ? 'h-90' : 'h-100'">
+      <div
+        class="row justify-center items-center q-pa-md"
+        :class="localTextfields.right ? 'h-90' : 'h-100'"
+      >
         <div
           v-if="localTextfields.imageInput"
-          class="q-px-sm row justify-center items-center h-100 w-100"
+          class="q-px-sm row justify-center items-top h-100 w-100"
           style="height: 85%"
         >
           <input
@@ -125,13 +172,12 @@
           />
           <q-btn
             unelevated
-            class="q-py-sm btn-background-dark"
-            style="background-color: #e7f0f7; max-width: 500px; height: auto"
+            class="btn-background-dark q-mt-xl btn-background-color"
             :class="{ 'btn-background': ImageBase64 && type === 'user' }"
             :style="
               type === 'user'
-                ? 'width: 255px; height: 255px; border-radius: 50%'
-                : 'width: 100%; min-height: 260px; max-width: 340px; border-radius: 12px'
+                ? 'width: 205px; height: 205px; border-radius: 50%'
+                : 'width: 100%; min-height: 230px; max-width: 340px; border-radius: 12px'
             "
             @click="
               pdfObject.name
@@ -149,11 +195,20 @@
                   : 'form__image',
               ]"
               no-spinner
-              :src="
-                ImageBase64 ? ImageBase64 : getImageUrl('svg/add_img.svg')
-              "
+              :src="ImageBase64 ? ImageBase64 : getImageUrl('svg/add_img.svg')"
             />
           </q-btn>
+
+          <span
+            class="form__item-label text-weight-thin text-center text-underline q-mt-sm w-100 q-mb-auto"
+            @click="
+              pdfObject.name
+                ? clearFileInput($refs.fileUpload)
+                : $refs.fileUpload.click()
+            "
+          >
+            Carga una imagen desde tus archivos
+          </span>
         </div>
 
         <div
@@ -167,20 +222,16 @@
         >
           <q-img
             :class="[
-              type === 'user'
-                ? 'form__image64'
-                : 'form__image64-equipment',
+              type === 'user' ? 'form__image64' : 'form__image64-equipment',
             ]"
             no-spinner
             class="q-mx-auto q-my-auto"
             :src="localTextfields.readImage"
           />
         </div>
-
       </div>
     </div>
 
-    
     <!-- TEXT AREA -->
     <div
       v-if="localTextfields.textArea.model != undefined"
@@ -193,7 +244,6 @@
         v-model="localTextfields.textArea.model"
         :placeholder="'Escribe aquí...'"
         class="form__item-textarea input"
-        dense
         :toolbar="[
           [
             {
@@ -307,23 +357,12 @@ export default defineComponent({
 
 <style lang="scss">
 .btn-background {
-  background: rgb(0, 106, 255);
-  background: linear-gradient(
-    34deg,
-    rgba(0, 106, 255, 0.2) 0%,
-    rgba(45, 185, 255, 0.2) 44%,
-    rgba(0, 243, 255, 0.2) 100%
-  );
+  background: $primary;
 }
 
-.textfield-select > .q-field--auto-height.q-field--dense .q-field__control,
-.q-field--auto-height.q-field--dense .q-field__native {
-  min-height: 30px;
-  height: 30px;
-}
-
-.q-select__dropdown-icon {
-  margin-top: -0.5rem;
-  margin-right: -0.5rem;
+.btn-background-color {
+  background-color: rgb(($primary), 0.07);
+  max-width: 500px;
+  height: auto;
 }
 </style>

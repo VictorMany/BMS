@@ -258,8 +258,8 @@ export default defineComponent({
             {
               label: 'My First Dataset',
               data: [70, 30],
-              backgroundColor: ['#1A86D41F', '#1A86D496'],
-              borderColor: ['#1A86D4'],
+              backgroundColor: ['#1e65e820', '#1e65e8'],
+              borderColor: ['#1e65e8'],
               hoverOffset: 4,
               cutout: '80%',
             },
@@ -283,7 +283,7 @@ export default defineComponent({
             {
               label: 'My First Dataset',
               data: [70, 30],
-              backgroundColor: ['#5C59FF7D', '#5C59FF1F'],
+              backgroundColor: ['#5C59FF', '#5C59FF20'],
               borderColor: ['#5C59FF'],
               hoverOffset: 4,
               cutout: '80%',
@@ -308,8 +308,8 @@ export default defineComponent({
             {
               label: 'My First Dataset',
               data: [30, 70],
-              backgroundColor: ['#FF59597D', '#FF59591F'],
-              borderColor: ['#FF59597D'],
+              backgroundColor: ['#FF5959', '#FF595920'],
+              borderColor: ['#FF5959'],
               hoverOffset: 4,
               cutout: '80%',
             },
@@ -333,7 +333,7 @@ export default defineComponent({
             {
               label: 'My First Dataset',
               data: [30, 70],
-              backgroundColor: ['#1AD4D496', '#1AD4D41F'],
+              backgroundColor: ['#1AD4D4', '#1AD4D420'],
               borderColor: ['#1AD4D4'],
               hoverOffset: 4,
               cutout: '80%',
@@ -362,7 +362,7 @@ export default defineComponent({
         color: '#FFFFFF',
         to: 'reports',
         backgroundGradient:
-          'linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%)',
+          'linear-gradient(269.25deg, #1e65e8 -4.79%, #689afd 94.27%)',
         size: 'sm',
         icon: '',
       },

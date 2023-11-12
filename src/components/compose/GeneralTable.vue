@@ -26,7 +26,6 @@
         <div v-if="showPagination" class="row justify-center">
           <q-pagination
             v-model="pagination.page"
-            color="blue-grey-5"
             class="q-mt-none pagination-style"
             :max="pagesNumber"
             size="md"
@@ -46,7 +45,7 @@
       <template v-slot:body-cell-status="props">
         <q-td :props="props">
           <q-badge
-            class="justify-center badge-style"
+            class="justify-center"
             :class="checkColor(props.value)"
             :label="props.value"
           />
@@ -145,7 +144,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .font-style {
   font-family: "Inter";
   font-style: normal;
@@ -163,7 +162,7 @@ export default defineComponent({
   width: 80px;
   height: 25px;
   font-weight: bolder !important;
-  color: #0080ff;
+  color: $primary;
   background-color: #0080ff26;
 }
 
@@ -174,7 +173,6 @@ export default defineComponent({
   color: #f98d00;
   background-color: #f98d0026;
 }
-
 
 .pagination-style {
   color: #ffffff !important;

@@ -4,13 +4,23 @@
       <div class="column items-end q-mt-md q-mb-xs">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions
-        :titlePage="'Agregar usuario'"
-        :btn-action="btnAction"
-      />
-      <div class="main-container-page main-container-page-medium-dark" style="height: 82%">
-        <q-scroll-area class="full-height" style="height: 95% !important" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-          <form-text-field :textfields="textfields" type="user"/>
+      <header-actions :titlePage="'Agregar usuario'" :btn-action="btnAction" />
+      <div
+        class="main-container-page main-container-page-medium-dark"
+        style="height: 82%"
+      >
+        <q-scroll-area
+          class="full-height"
+          style="height: 95% !important"
+          :thumb-style="{
+            right: '6px',
+            borderRadius: '5px',
+            background: 'rgba(135, 192, 232, 0.44)',
+            width: '5px',
+            opacity: 1,
+          }"
+        >
+          <form-text-field :textfields="textfields" type="user" />
         </q-scroll-area>
         <div class="col-12 form__date_container" style="height: 5.25%;">
             <div class="form__date column items-end q-pa-sm q-mt-auto">
@@ -23,105 +33,120 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue'
-import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import FormTextField from 'src/components/compose/FormTextField.vue'
+import { defineComponent, ref } from 'vue';
+import BtnAction from 'src/components/atomic/BtnAction.vue';
+import HeaderActions from 'src/components/compose/HeaderActions.vue';
+import FormTextField from 'src/components/compose/FormTextField.vue';
 
 export default defineComponent({
   name: 'UsersPage',
   components: {
     HeaderActions,
     FormTextField,
-    BtnAction
+    BtnAction,
   },
-  data () {
+  data() {
     return {
       Equipos: 40,
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
         btnWidth: 'auto',
-        btnAction: this.createUser
+        btnAction: this.createUser,
       },
       btnCloseWindow: {
         iconName: 'close',
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        btnAction: this.goBack
+        btnAction: this.goBack,
       },
       textfields: {
         imageInput: true,
         top: [
           {
             label: 'Nombre del usuario',
-            model: ''
+            model: '',
           },
           {
             label: 'Correo',
-            model: ''
-          }
+            type: 'email',
+            rules: [
+              (val) => /@/.test(val) || 'Debe contener "@"',
+              (val) =>
+                /\S+@\S+\.\S+/.test(val) ||
+                'Formato de correo electrónico inválido',
+              // Agrega más reglas según tus necesidades
+            ],
+            model: '',
+          },
         ],
         left: [
           {
-            label: 'Telefono',
-            model: ''
+            label: 'Teléfono',
+            rules: [
+              (val) =>
+                /^\d{10}$/.test(val) ||
+                'Debe ser un número de teléfono válido (10 dígitos)',
+              // Agrega más reglas según tus necesidades
+            ],
+            type: 'number',
+            model: '',
           },
           {
             label: 'Contraseña',
-            model: ''
-          },
-          {
-            label: 'Fecha de nacimiento',
-            model: ''
+            type: 'password',
+            model: '',
           },
           {
             label: 'Rol de usuario',
             model: '',
             type: 'select',
             options: [
-              {label: 'Administrador',
-               index: 1},
-              {label:'Auxiliar',
-               index: 2},
-              {label: 'Funciones básicas',
-               index: 3}
-            ]
+              { label: 'Administrador', index: 1 },
+              { label: 'Auxiliar', index: 2 },
+              { label: 'Funciones básicas', index: 3 },
+            ],
           },
           {
             label: 'Estatus de la cuenta',
             model: '',
             type: 'select',
             options: [
-              {label: 'Activo',
-               status: true},
-              {label: 'Inactivo',
-               status: false}
-            ]
+              { label: 'Activo', status: true },
+              { label: 'Inactivo', status: false },
+            ],
+          },
+          {
+            label: 'Fecha de nacimiento',
+            type: 'date',
+            model: ref(new Date().toLocaleDateString()),
           },
         ],
         right: [],
-        textArea: {}
-      }
-    }
+        textArea: {},
+      },
+    };
   },
+
   methods: {
     goBack() {
-      this.$router.go(-1)
+      this.$router.go(-1);
     },
     async createUser() {
-      console.log(this.textfields);
-      const res = await this.$store.dispatch('users/postUserAction', this.textfields)
+      const res = await this.$store.dispatch(
+        'users/postUserAction',
+        this.textfields
+      );
       console.log(res);
       if (res.success) {
-        this.$router.go(-1)
+        this.$router.go(-1);
       } else {
         console.log('PONER ALERTA');
       }
-    }
-  }
-})
+    },
+  },
+});
 </script>
 
 <style scoped>
@@ -132,5 +157,4 @@ export default defineComponent({
 .card-page {
   padding-top: 0 !important;
 }
-
 </style>

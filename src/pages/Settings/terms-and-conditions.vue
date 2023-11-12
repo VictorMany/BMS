@@ -180,13 +180,13 @@ span {
 }
 
 h1 {
-    color: #0080ff;
+    color: $primary;
     font-size: larger;
     line-height: 20px;
   }
 
   h2 {
-    color: #0080ff;
+    color: $primary;
     font-size:medium;
   }
 

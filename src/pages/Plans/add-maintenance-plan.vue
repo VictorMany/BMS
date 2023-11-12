@@ -166,7 +166,7 @@
         </q-scroll-area>
         <div class="col-12 form__date_container" style="height: 5.25%">
           <div class="form__date column items-end q-pa-sm q-mt-auto">
-            <div>Fecha de creación: <strong> 12/02/2022</strong></div>
+            <div>Fecha de creación  <strong> 12/02/2022</strong></div>
           </div>
         </div>
       </div>
@@ -207,7 +207,7 @@
                 >
                   {{ day }}
                   <q-avatar size="sm" class="avatar-item">
-                    <q-icon name="delete" />
+                    <q-icon name="delete_forever" />
                   </q-avatar>
                 </div>
               </q-scroll-area>
@@ -400,7 +400,7 @@ export default defineComponent({
 
 .title-card {
   font-size: 18px;
-  color: #017ed9;
+  color: $primary;
 }
 
 .q-field__label {
@@ -409,6 +409,7 @@ export default defineComponent({
 
 .chip-date {
   background-color: #4c607d20;
+  max-width: 300px;
   border-radius: 8px;
 }
 

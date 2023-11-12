@@ -57,7 +57,7 @@ export default defineComponent({
   computed: {
     localBackgroundColor() {
       if (this.index === this.selected) {
-        return '#CAE3F4';
+        return '#1e65e820';
       }
       return this.background;
     },

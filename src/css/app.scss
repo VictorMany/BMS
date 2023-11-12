@@ -1,16 +1,21 @@
 // app global css in SCSS form
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
+@import "global";
+
 
 .body--light {
   .card-page {
     background: #F8F8F8;
   }
+
   .setting-item {
     background-color: $bg-clear;
+
     &__title {
       color: #062841;
     }
   }
+
   .info {
     &__title {
       color: #062841;
@@ -24,110 +29,140 @@
       color: #858c9384;
     }
   }
+
   .table-style {
     background-color: #ffffff !important;
   }
+
   .font-style {
     color: #000000;
   }
+
   .my-sticky-header-table .q-table__top,
   .my-sticky-header-table thead tr:first-child th {
-    background-color: #dce1e6;
+    background-color: $primary-opacity;
   }
+
   .card-graphics {
     background-color: #FFFFFF;
+
     &__title {
       color: #6A7985;
     }
   }
+
   .card-typography {
     color: #283438;
   }
+
   .border-line {
-    border: 1px solid #E7F0F7;
+    border: 1px solid $primary-opacity;
   }
+
   .form {
     &__item-select {
-      background-color: #E7F0F7;
       color: #7a7a7a;
     }
+
     &__checkbox {
       background-color: white;
       color: #7a7a7a;
       border: #4C607D 1px solid;
     }
+
     &__item-label {
-      color: #06284196;
+      color: #293138;
+      font-size: 13px;
+
       &__title {
-        color: #062841;
+        color: #293138;
+        font-size: 15px;
+        font-weight: 700;
       }
     }
+
     &__item-input {
-      background-color: #E7F0F7;
-      color: #87909a;
+      color: #51565d;
     }
+
     &__item-input-12 {
-      background-color: #E7F0F7;
-      color: #87909a;
+      color: #51565d;
     }
 
     &__item-textarea {
-      background-color: #E7F0F7;
-      color: #87909a;
+      background-color: $primary-opacity;
+      color: #51565d;
     }
+
     &__date {
-      color: #87909a;
+      color: #51565d;
     }
+
     &__item-model {
       color: #959494;
     }
+
     &__item-area {
-      color: #87909a;
+      color: #51565d;
     }
+
     &__image64 {
       background-color: white;
     }
+
     &__image64-equipment {
       background-color: white;
     }
+
     &__date_container {
-      background-color: #E7F0F7 !important;
+      background-color: $primary-opacity !important;
     }
+
     &__item-input-login {
       background-color: #F2F2F2 !important;
     }
   }
+
   .container-colorama {
     background: #06284110;
   }
+
   .login {
     &__main-container {
       background: #FFFFFF;
     }
+
     &__top-container {
-      background: linear-gradient(249.89deg, #0075FF 6.95%, #89D5FF 111.53%);
+      background: linear-gradient(249.89deg, $primary 6.95%, #89D5FF 111.53%);
     }
+
     &__title {
       color: #FFFFFF;
     }
+
     &__bottom-container {
       background-color: #FFFFFF;
     }
   }
+
   .login-page {
     background-color: #dce1e6;
   }
 }
+
 .body--dark {
   .card-page {
     background: #24292e;
   }
+
   .setting-item {
     background-color: #334c646e;
+
     &__title {
       color: #91c8ff84;
     }
   }
+
   .info {
     &__title {
       color: #91c8ff84;
@@ -141,142 +176,165 @@
       color: #858c9384;
     }
   }
+
   .table-style {
     background-color: #334c646e !important;
   }
+
   .font-style {
     color: #dce1e6;
   }
+
   .my-sticky-header-table .q-table__top,
   .my-sticky-header-table thead tr:first-child th {
     background-color: #181b1e !important;
     color: #91c8ff92;
   }
+
   .card-graphics {
     background-color: #181b1e;
+
     &__title {
       color: #6A7985;
     }
   }
+
   .item {
     background-color: #181b1e7b !important;
     color: #91c8ff84 !important;
   }
+
   .my-card {
     background-color: #334c646e !important;
   }
+
   .card-typography {
     color: #91c8ff84;
   }
-  .input-style {
-    color: #91c8ff84 !important;
-    background: #181b1e !important;
-  }
+
   .border-line {
     border: 1px solid #91c8ff84;
   }
+
   .main-container-page-dark {
     background-color: #181b1e !important;
   }
+
   .main-container-page-medium-dark {
     background-color: #181b1e84 !important;
   }
-  .select {
-    &__form {
-      background-color: #181b1e;
-    }
-  }
+
   .icn-style {
     color: #6A7985 !important;
   }
+
   .form {
     &__item-label {
       color: #6A7985;
+
       &__title {
         color: #91c8ff84;
       }
     }
+
     &__checkbox {
       background-color: #181b1e;
-      color: #87909a;
+      color: #51565d;
       border: #4C607D 1px solid;
     }
+
     &__item-select {
-      background-color: #181b1e;
-      color: #87909a !important;
+      color: #51565d !important;
     }
+
     &__date {
-      color: #87909a;
+      color: #51565d;
     }
+
     &__date_container {
       background-color: #334c646e !important;
     }
+
     &__item-model {
       color: #959494;
     }
+
     &__item-area {
-      color: #87909a;
+      color: #51565d;
     }
+
     &__image64 {
       background-color: #181b1e !important;
     }
+
     &__image64-equipment {
       background-color: #181b1e !important;
     }
+
     &__item-input {
-      background-color: #181b1e !important;
-      color: #87909a;
+      color: #51565d;
     }
+
     &__item-input-12 {
-      background-color: #181b1e !important;
-      color: #87909a;
+      color: #51565d;
     }
 
     &__item-textarea {
       background-color: #181b1e !important;
-      color: #87909a;
+      color: #51565d;
     }
+
     &__item-input-login {
       background-color: #142638 !important;
     }
   }
-  .input .q-field__native, .q-field__input {
-    color: #87909a !important;
-  }
+
   .btn-background-dark {
     background-color: #181b1e !important;
   }
+
   .btn-change-content {
     background-color: #334c646e !important;
-    color: #87909a !important;
+    color: #51565d !important;
   }
+
   .container-colorama {
     background: #181b1e;
   }
+
   .q-date__calendar-item>button {
     background-color: #91c8ff1a;
     color: $blue-grey-4;
   }
+
   .login {
     &__main-container {
       background: #334c646e;
     }
+
     &__top-container {
       background: linear-gradient(249.89deg, #0077ff44 6.95%, #89d6ff6a 111.53%);
     }
+
     &__title {
       color: #b8dbff;
     }
+
     &__bottom-container {
       background-color: #000000ad;
     }
   }
+
   .login-page {
     background-color: #181b1e84;
   }
 }
 
 
+.btn-style {
+  background-color: $primary !important;
+  color: $primary-opacity !important;
+}
 
 .info {
   &__title {
@@ -312,7 +370,7 @@
 }
 
 .setting-item:hover {
-  background-color: #007bd218;
+  background-color: rgb(($primary), 0.2);
   transform: scale(1);
 }
 
@@ -324,7 +382,8 @@
   position: absolute;
   height: 97vh;
   width: 97.5%;
-  box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 10%) !important;
+  // box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 10%) !important;
+  box-shadow: none;
   border-radius: 8px !important;
   padding: 1rem;
   overflow: hidden;
@@ -340,10 +399,6 @@
   padding-top: 1rem;
 }
 
-.input .q-field__native, .q-field__input {
-  margin-bottom: 0.6rem !important;
-}
-
 .h-90 {
   height: 90% !important;
 }
@@ -357,7 +412,8 @@
 }
 
 .border-shadow {
-  box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.1) !important;
+  // box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: none;
 }
 
 .border-none {
@@ -373,7 +429,7 @@
 }
 
 .q-date__navigation {
-  background: linear-gradient(269.25deg, #2280D2 -4.79%, #68BEFD 94.27%);
+  background: linear-gradient(269.25deg, $primary -4.79%, #689afd 94.27%);
   color: white;
   border-radius: 8px;
   padding: 0.5rem;
@@ -392,12 +448,14 @@
 .form {
   &__item-chip {
     background-color: #66a1d43c;
-    border-radius: 0.2rem;
+    color: $primary !important;
+    border-radius: 4px;
     padding: 0.2rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     font-weight: bold;
   }
+
   &__item-label {
     font-size: 12px;
   }
@@ -407,11 +465,10 @@
   }
 
   &__item-select {
-    min-width: 260px !important;
+    min-width: 230px !important;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    height: 37px !important;
     border-radius: 0.3rem !important;
   }
 
@@ -420,22 +477,20 @@
   }
 
   &__item-input {
-    min-width: 260px !important;
+    min-width: 230px !important;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
-    height: 29px !important;
-    color: #87909a;
+    color: #51565d;
     border-radius: 0.3rem !important;
   }
 
   &__item-select {
-    min-width: 260px !important;
+    min-width: 230px !important;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
-    height: 29px !important;
-    color: #87909a;
+    color: #51565d;
     border-radius: 0.3rem !important;
   }
 
@@ -444,7 +499,6 @@
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
-    height: 29px !important;
     border-radius: 0.3rem !important;
   }
 
@@ -458,14 +512,14 @@
 
   &__image {
     object-fit: fill !important;
-    width: 170px !important;
-    height: 170px !important;
+    width: 50px !important;
+    height: 50px !important;
   }
 
   &__image64 {
     object-fit: fill !important;
-    width: 220px !important;
-    height: 220px !important;
+    width: 170px !important;
+    height: 170px !important;
     background-clip: padding-box;
     border-radius: 50%;
   }
@@ -482,6 +536,7 @@
 
 .card-graphics {
   border-radius: 5px;
+
   &__title {
     font-weight: 300;
     font-size: 13px;
@@ -496,8 +551,7 @@
 }
 
 // RESPONSIVITY
-@media only screen
-and (max-device-width : 1000px) {
+@media only screen and (max-device-width : 1000px) {
   .main-container-page {
     height: 90%;
     padding: 0.5;
@@ -529,6 +583,7 @@ and (max-device-width : 1000px) {
   }
 }
 
-.q-chip, .q-badge {
+.q-chip,
+.q-badge {
   border-radius: 6px !important;
 }
