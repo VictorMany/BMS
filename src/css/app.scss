@@ -90,7 +90,7 @@
     }
 
     &__item-textarea {
-      background-color: $primary-opacity;
+      background-color: rgb(($primary), 0.07);
       color: #51565d;
     }
 
@@ -370,7 +370,7 @@
 }
 
 .setting-item:hover {
-  background-color: rgb(($primary), 0.2);
+  background-color: rgb(($primary),0.2);
   transform: scale(1);
 }
 
