@@ -9,7 +9,7 @@
         <q-scroll-area class="full-height h-100" :thumb-style="{
           right: '1px',
           borderRadius: '5px',
-          background: 'rgba(135, 192, 232, 0.44)',
+          background: 'rgba(29, 100, 231, 0.2)',
           width: '5px',
           opacity: 1,
         }">

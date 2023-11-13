@@ -18,7 +18,7 @@
           :thumb-style="{
             right: '6px',
             borderRadius: '5px',
-            background: 'rgba(135, 192, 232, 0.44)',
+            background: 'rgba(29, 100, 231, 0.2)',
             width: '5px',
             opacity: 1,
           }"
@@ -30,14 +30,16 @@
                 class="select__form border-line q-pa-md"
                 style="height: 60vh"
               >
-                <div class="q-pb-sm title-card">Equipo biomédico</div>
+                <div class="q-pb-sm form__item-label__title">
+                  Equipo biomédico
+                </div>
                 <div style="height: 90%">
                   <q-scroll-area
                     class="fit"
                     :thumb-style="{
                       right: '6px',
                       borderRadius: '5px',
-                      background: 'rgba(135, 192, 232, 0.44)',
+                      background: 'rgba(29, 100, 231, 0.2)',
                       width: '5px',
                       opacity: 1,
                     }"
@@ -74,13 +76,14 @@
                     size="sm"
                     v-model="frequency"
                     label="Frecuencia"
-                    class="form__checkbox q-mr-md q-pa-xs q-px-sm"
+                    class="form__checkbox q-mr-md q-pa-sm"
                     dense
                   />
                 </div>
                 <div class="col q-mb-md">
                   <q-select
-                    class="textfield-other form__item-select q-pl-sm q-pr-sm input"
+                    class="textfield-other form__item-select"
+                    filled
                     dense
                     borderless
                     v-model="model"
@@ -90,9 +93,7 @@
                       <q-item v-bind="scope.itemProps" dense>
                         <q-item-section>
                           <q-item-label
-                            :class="
-                              scope.selected ? 'text-light-blue' : 'text-grey'
-                            "
+                            :class="scope.selected ? 'primary' : 'text-grey'"
                             >{{ scope.label }}</q-item-label
                           >
                         </q-item-section>
@@ -106,19 +107,18 @@
                     Encargado
                   </div>
                   <q-select
-                    class="col-12 col-sm textfield-select form__item-input q-pl-sm q-pr-md input"
+                    class="col-12 col-sm textfield-select form__item-input"
                     borderless
-                    v-model="payload.incharged.model"
                     dense
+                    filled
+                    v-model="payload.incharged.model"
                     :options="payload.incharged.options"
                   >
                     <template v-slot:option="scope">
                       <q-item v-bind="scope.itemProps" dense>
                         <q-item-section>
                           <q-item-label
-                            :class="
-                              scope.selected ? 'text-light-blue' : 'text-grey'
-                            "
+                            :class="scope.selected ? 'primary' : 'text-grey'"
                             >{{ scope.label }}</q-item-label
                           >
                         </q-item-section>
@@ -166,7 +166,7 @@
         </q-scroll-area>
         <div class="col-12 form__date_container" style="height: 5.25%">
           <div class="form__date column items-end q-pa-sm q-mt-auto">
-            <div>Fecha de creación  <strong> 12/02/2022</strong></div>
+            <div>Fecha de creación <strong> 12/02/2022</strong></div>
           </div>
         </div>
       </div>
@@ -175,7 +175,7 @@
     <q-dialog v-model="fixed">
       <q-card style="min-width: 50vw; border-radius: 10px">
         <q-card-section>
-          <div class="text-h6">Fecha personalizada</div>
+          <div class="form__item-label__title">Fecha personalizada</div>
         </q-card-section>
         <q-separator />
         <q-card-section style="max-height: 50vh" class="scroll">
@@ -190,12 +190,14 @@
               />
             </div>
             <div class="col-12 col-md q-pl-lg">
-              <div class="q-mb-sm">Siguientes mantenimientos</div>
+              <div class="q-mb-sm form__item-label">
+                Siguientes mantenimientos
+              </div>
               <q-scroll-area
                 class="fit q-pr-md q-pb-md"
                 :thumb-style="{
                   borderRadius: '5px',
-                  background: 'rgba(135, 192, 232, 0.44)',
+                  background: 'rgba(29, 100, 231, 0.1)',
                   width: '5px',
                   opacity: 1,
                 }"
@@ -216,8 +218,22 @@
         </q-card-section>
         <q-separator />
         <q-card-actions align="right">
-          <q-btn flat label="Cancelar" color="primary" no-caps v-close-popup />
-          <q-btn flat label="Aceptar" color="primary" no-caps v-close-popup />
+          <q-btn
+            flat
+            dense
+            label="Cancelar"
+            color="primary"
+            no-caps
+            v-close-popup
+          />
+          <q-btn
+            flat
+            dense
+            label="Aceptar"
+            color="primary"
+            no-caps
+            v-close-popup
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -249,6 +265,8 @@ export default defineComponent({
       btnPersonalized: {
         show: true,
         btnTitle: 'Personalizado',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
         iconName: '',
         btnAction: () => {
           this.fixed = true;
@@ -398,17 +416,12 @@ export default defineComponent({
   color: rgb(121, 123, 123) !important;
 }
 
-.title-card {
-  font-size: 18px;
-  color: $primary;
-}
-
 .q-field__label {
   padding-bottom: 0.5rem !important;
 }
 
 .chip-date {
-  background-color: #4c607d20;
+  background-color: rgba($primary, 0.2);
   max-width: 300px;
   border-radius: 8px;
 }

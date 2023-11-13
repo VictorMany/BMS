@@ -1,15 +1,15 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <q-input
-    class="input-style q-pl-md q-pr-sm border-shadow"
+    class="input-style q-px-sm"
     borderless
     dense
+    :label="inputLabel"
     :dark="false"
-    :placeholder="inputLabel"
     v-model="modelLocal"
   >
     <template v-slot:prepend>
-      <q-icon name="search" />
+      <q-icon color="primary" name="search" />
     </template>
     <template v-slot:append>
       <q-btn
@@ -21,7 +21,7 @@
         <div class="no-wrap q-pa-none q-ml-auto">
           <q-icon right :name="btnFilter.icon" class="q-ml-md q-ma-xs" />
         </div>
-        <q-popup-proxy class="border-shadow border-radius">
+        <q-popup-proxy class="border-radius">
           <q-banner
             class="border-shadow q-px-sm"
             style="width: 300px; height: auto"
@@ -31,7 +31,7 @@
               class="fit"
               :thumb-style="{
                 borderRadius: '5px',
-                background: 'rgba(135, 192, 232, 0.44)',
+                background: 'rgba(29, 100, 231, 0.2)',
                 width: '0px',
                 opacity: 1,
               }"
@@ -125,7 +125,7 @@ export default defineComponent({
         title: 'Filtro',
         color: '#FFFFFF',
         backgroundGradient:
-          'linear-gradient(269.25deg, #1e65e8 -4.79%, #689afd 94.27%)',
+          'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
         size: 'sm',
         icon: 'keyboard_arrow_down',
       },
@@ -151,7 +151,6 @@ export default defineComponent({
 }
 
 .btn-style {
-  background: linear-gradient(269.25deg, $primary -4.79%, #689afd 94.27%);
   color: white;
   border-radius: 0.5rem !important;
 }
@@ -162,7 +161,7 @@ export default defineComponent({
 }
 
 .item-filter:hover {
-  background-color: $primary-opacity;
+  background-color: rgb(($primary), 0.07);
   border-radius: 0.5rem;
 }
 </style>

@@ -10,7 +10,7 @@
           :thumb-style="{
             right: '0px',
             borderRadius: '5px',
-            background: 'rgba(135, 192, 232, 0.44)',
+            background: 'rgba(29, 100, 231, 0.2)',
             width: '5px',
             opacity: 1,
           }"
@@ -38,37 +38,10 @@
                 />
               </div>
             </div>
-            <div class="col-12 q-pa-sm gt-sm">
-              <div class="row q-pb-sm">
-                <div class="col">
-                  <div
-                    class="card-graphics__title q-mt-sm text-start ellipsis"
-                    style="border: none"
-                  >
-                    Últimos reportes
-                  </div>
-                </div>
-                <div class="col-auto">
-                  <btn-action
-                    :btn-title="btnAction.title"
-                    :btn-color="btnAction.color"
-                    :btn-background-gradient="btnAction.backgroundGradient"
-                    :icon-name="btnAction.icon"
-                    :btn-size="btnAction.size"
-                    v-bind="btnAction"
-                  />
-                </div>
-              </div>
-              <general-table
-                height="auto"
-                :rows="rows"
-                :columns="columns"
-                :actions-table="actionsTable"
-                v-model:row-selected="rowSelected"
-                :show-pagination="false"
-              />
-            </div>
-            <div class="col-12 0 col-md-6 col-lg-3 q-pa-sm q-pb-lg q-mt-lg">
+          </div>
+
+          <div class="row container-stats">
+            <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div
                   class="card-graphics__title w-100 text-center q-pa-sm ellipsis"
@@ -83,7 +56,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 0 col-md-6 col-lg-3 q-pa-sm q-pb-lg q-mt-lg">
+            <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div
                   class="card-graphics__title w-100 text-center q-pa-sm ellipsis"
@@ -98,7 +71,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 0 col-md-6 col-lg-3 q-pa-sm q-pb-lg q-mt-lg">
+            <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div
                   class="card-graphics__title w-100 text-center q-pa-sm ellipsis"
@@ -113,7 +86,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 0 col-md-6 col-lg-3 q-pa-sm q-pb-lg q-mt-lg">
+            <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div
                   class="card-graphics__title w-100 text-center q-pa-sm ellipsis"
@@ -128,6 +101,37 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="col-12 q-pa-sm gt-sm">
+            <div class="row q-pb-sm">
+              <div class="col">
+                <div
+                  class="card-graphics__title text-start ellipsis"
+                  style="border: none"
+                >
+                  Últimos reportes
+                </div>
+              </div>
+              <div class="col-auto">
+                <btn-action
+                  :btn-title="btnAction.title"
+                  :btn-color="btnAction.color"
+                  :btn-background-gradient="btnAction.backgroundGradient"
+                  :icon-name="btnAction.icon"
+                  :btn-size="btnAction.size"
+                  v-bind="btnAction"
+                />
+              </div>
+            </div>
+            <general-table
+              height="auto"
+              :rows="rows"
+              :columns="columns"
+              :actions-table="actionsTable"
+              v-model:row-selected="rowSelected"
+              :show-pagination="false"
+            />
           </div>
         </q-scroll-area>
       </div>
@@ -186,7 +190,7 @@ export default defineComponent({
           elements: {
             line: {
               tension: 0.4,
-              borderWidth: 0.5
+              borderWidth: 0.5,
             },
           },
           scales: {
@@ -235,7 +239,7 @@ export default defineComponent({
           elements: {
             line: {
               tension: 0.4,
-              borderWidth: 0.5
+              borderWidth: 0.5,
             },
           },
           scales: {
@@ -362,7 +366,7 @@ export default defineComponent({
         color: '#FFFFFF',
         to: 'reports',
         backgroundGradient:
-          'linear-gradient(269.25deg, #1e65e8 -4.79%, #689afd 94.27%)',
+          'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
         size: 'sm',
         icon: '',
       },

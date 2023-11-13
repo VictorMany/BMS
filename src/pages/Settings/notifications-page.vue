@@ -7,7 +7,7 @@
       <header-actions :titlePage="'Notificaciones'" :btn-action="btnAction" />
       <div class="main-container-page" style="height: 85%">
         <q-scroll-area class="full-height q-pb-sm" style="height: 95% !important"
-          :thumb-style="{ right: '0px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 0 }">
+          :thumb-style="{ right: '0px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 0 }">
           <q-list>
             <div v-for="(item, i) in listNotifications" :key="i">
               <q-item class="q-mb-sm setting-item flex items-center clickable">

@@ -33,7 +33,7 @@
                       :thumb-style="{
                         right: '1px',
                         borderRadius: '5px',
-                        background: 'rgba(135, 192, 232, 0.44)',
+                        background: 'rgba(29, 100, 231, 0.2)',
                         width: '5px',
                         opacity: 1,
                       }"
@@ -72,7 +72,7 @@
             :thumb-style="{
               right: '4px',
               borderRadius: '5px',
-              background: 'rgba(135, 192, 232, 0.44)',
+              background: 'rgba(29, 100, 231, 0.2)',
               width: '5px',
               opacity: 1,
             }"
@@ -355,7 +355,7 @@ export default defineComponent({
         btnWidth: '100%',
         iconName: '',
         btnBackgroundGradient:
-          'linear-gradient(269.25deg, #1e65e8 -4.79%, #689afd 94.27%)',
+          'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
       },
       btnExport: {
         btnTitle: 'Descargar QR',
@@ -468,7 +468,8 @@ export default defineComponent({
 
 .body--dark {
   .main-menu {
-    background: #11202e;
+    background: $dark-primary;
+    opacity: 1;
   }
 
   .side-menu {
@@ -476,7 +477,7 @@ export default defineComponent({
   }
 
   .container-style {
-    background: #11202e;
+    background: $dark-primary;
   }
 }
 
@@ -501,7 +502,7 @@ export default defineComponent({
   color: white;
   z-index: 100;
   margin-top: 2.9rem;
-  background: linear-gradient(269.25deg, #1e65e8 -4.79%, #689afd 94.27%);
+  background: linear-gradient(269.25deg, $primary -4.79%, #689afd 94.27%);
   margin-left: 1.7rem;
 }
 

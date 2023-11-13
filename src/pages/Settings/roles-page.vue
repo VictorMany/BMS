@@ -4,23 +4,41 @@
       <div class="column items-end q-mt-md q-mb-xs">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions :titlePage="'Roles de usuarios y asignación de permisos'" />
-      <div class="main-container-page main-container-page-medium-dark" style="height: 85%">
-        <q-scroll-area class="full-height q-pb-sm" style="height: 100% !important"
-          :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
+      <header-actions
+        :titlePage="'Roles de usuarios y asignación de permisos'"
+      />
+      <div
+        class="main-container-page main-container-page-medium-dark"
+        style="height: 85%"
+      >
+        <q-scroll-area
+          class="full-height q-pb-sm"
+          style="height: 100% !important"
+          :thumb-style="{
+            right: '6px',
+            borderRadius: '5px',
+            background: 'rgba(29, 100, 231, 0.2)',
+            width: '5px',
+            opacity: 1,
+          }"
+        >
           <div class="row q-pa-lg justify-between">
             <div class="col-12 col-md-7 q-pr-md">
-              <q-scroll-area class="fit" :thumb-style="{
-                right: '1px',
-                borderRadius: '5px',
-                background: 'rgba(135, 192, 232, 0.44)',
-                width: '5px',
-                opacity: 1,
-              }">
+              <q-scroll-area
+                class="fit"
+                :thumb-style="{
+                  right: '1px',
+                  borderRadius: '5px',
+                  background: 'rgba(29, 100, 231, 0.2)',
+                  width: '5px',
+                  opacity: 1,
+                }"
+              >
                 <q-list>
-                  <div v-for="(item, i) in listRoles"
-                  :key="i">
-                    <q-item class="q-mb-sm setting-item flex items-center clickable ">
+                  <div v-for="(item, i) in listRoles" :key="i">
+                    <q-item
+                      class="q-mb-sm setting-item flex items-center clickable"
+                    >
                       <q-item-section avatar>
                         <q-avatar class="avatar-item">
                           <img :src="getImageUrl(item.img)" />
@@ -41,35 +59,66 @@
             </div>
             <div class="separator border-line q-mr-md" />
             <div class="col-12 col-md q-pr-md">
-              <div class="info__detail w-100 q-mb-md">Crea un nuevo rol o selecciona uno de la lista para editarlo</div>
+              <div class="info__detail w-100 q-mb-md">
+                Crea un nuevo rol o selecciona uno de la lista para editarlo
+              </div>
               <div class="row w-100 q-pb-sm">
                 <div class="col-12 q-pr-md form__item-label text-weight-thin">
                   Nombre del rol
                 </div>
-                <q-input class="col-12 col-sm form__item-input q-pl-md q-pr-md input" borderless dense
-                  v-model="role.title" />
+                <q-input
+                  class="col-12 col-sm form__item-input"
+                  borderless
+                  dense
+                  filled
+                  v-model="role.title"
+                />
               </div>
               <div class="row w-100 q-pb-sm">
                 <div class="col-12 q-pr-md form__item-label text-weight-thin">
                   Descripción del rol
                 </div>
-                <q-input class="col-12 col-sm form__item-input q-pl-md q-pr-md input" borderless dense
-                  v-model="role.title" />
+                <q-input
+                  class="col-12 col-sm form__item-input"
+                  borderless
+                  dense
+                  filled
+                  v-model="role.title"
+                />
               </div>
-              <div class="select__form border-line q-pa-md" style="height: 40vh;">
-                <div class="q-pb-sm title-card">
+              <div
+                class="select__form border-line q-pa-md q-mt-md"
+                style="height: 40vh"
+              >
+                <div class="q-pb-sm form__item-label__title">
                   Listado de permisos
                 </div>
                 <div style="height: 90%">
-                  <q-scroll-area class="fit"
-                    :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(135, 192, 232, 0.44)', width: '5px', opacity: 1 }">
-                    <q-tree node-key="label" class="checkbox-label" color="grey-8" text-color="blue-grey-4" :nodes="simple" v-model:ticked="ticked"
-                      :tick-strategy="tickStrategy" default-expand-all />
+                  <q-scroll-area
+                    class="fit"
+                    :thumb-style="{
+                      right: '6px',
+                      borderRadius: '5px',
+                      background: 'rgba(29, 100, 231, 0.2)',
+                      width: '5px',
+                      opacity: 1,
+                    }"
+                  >
+                    <q-tree
+                      node-key="label"
+                      class="checkbox-label"
+                      color="grey-8"
+                      text-color="blue-grey-4"
+                      :nodes="simple"
+                      v-model:ticked="ticked"
+                      :tick-strategy="tickStrategy"
+                      default-expand-all
+                    />
                   </q-scroll-area>
                 </div>
               </div>
-              <div class="column items-end q-my-lg" >
-                <btn-action v-bind="btnAction"/>
+              <div class="column items-end q-my-lg">
+                <btn-action v-bind="btnAction" />
               </div>
             </div>
           </div>
@@ -80,17 +129,17 @@
 </template>
 
 <script>
-import { ref, defineComponent } from 'vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue'
-import HeaderActions from 'src/components/compose/HeaderActions.vue'
+import { ref, defineComponent } from 'vue';
+import BtnAction from 'src/components/atomic/BtnAction.vue';
+import HeaderActions from 'src/components/compose/HeaderActions.vue';
 
 export default defineComponent({
   name: 'EquipmentsPage',
   components: {
     HeaderActions,
-    BtnAction
+    BtnAction,
   },
-  data () {
+  data() {
     return {
       fixed: ref(false),
       btnCloseWindow: {
@@ -98,25 +147,25 @@ export default defineComponent({
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        btnAction: this.goBack
+        btnAction: this.goBack,
       },
       model: ref(null),
       listRoles: [
         {
           title: 'Administrador',
           subtitle: 'Rol con todos los permisos dentro del sistema',
-          img: 'admin.png'
+          img: 'admin.png',
         },
         {
           title: 'Auxiliar',
           subtitle: 'Rol con permisos customizables por el administrador',
-          img: 'admin.png'
+          img: 'admin.png',
         },
         {
           title: 'Funciones básicas',
           subtitle: 'Role con permisos customizables por el administrador',
-          img: 'user.png'
-        }
+          img: 'user.png',
+        },
       ],
       ticked: ref(['Equipo de choque']),
       tickStrategy: ref('strict'),
@@ -126,71 +175,72 @@ export default defineComponent({
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' }
-          ]
+            { label: 'Pleasant surroundings' },
+          ],
         },
         {
           label: 'Equipo de choque2',
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' }
-          ]
+            { label: 'Pleasant surroundings' },
+          ],
         },
         {
           label: 'Equipo de choque3',
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' }
-          ]
+            { label: 'Pleasant surroundings' },
+          ],
         },
         {
           label: 'Equipo de choque4',
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' }
-          ]
+            { label: 'Pleasant surroundings' },
+          ],
         },
         {
           label: 'Equipo de choque5',
           children: [
             { label: 'Good food' },
             { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' }
-          ]
-        }
+            { label: 'Pleasant surroundings' },
+          ],
+        },
       ],
       role: {
-        title: ''
+        title: '',
       },
       btnAction: {
         show: true,
         btnTitle: 'Guardar nuevo rol',
         iconName: 'save',
         to: 'settings',
-        btnWidth: 'auto'
-      }
-    }
+        btnWidth: 'auto',
+      },
+    };
   },
-  setup () {
+  setup() {
     const getImageUrl = (url) => {
       try {
-        return new URL(`../../assets/png/${url}`,
-          import.meta.url).href
-      } catch (error) { /* empty */ }
-    }
+        return new URL(`../../assets/png/${url}`, import.meta.url).href;
+      } catch (error) {
+        /* empty */
+      }
+    };
     return {
-      getImageUrl
-    }
+      getImageUrl,
+    };
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
-    }
-  }
-})
+      this.$router.go(-1);
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -209,7 +259,7 @@ export default defineComponent({
 }
 
 .checkbox-label {
-  color: #E8F3FB;
+  color: #e8f3fb;
   font-size: 13px;
 }
 
@@ -218,13 +268,7 @@ export default defineComponent({
   color: rgb(121, 123, 123) !important;
 }
 
-.title-card {
-  font-size: 18px;
-  color: $primary;
-}
-
 .q-field__label {
   padding-bottom: 0.5rem !important;
 }
-
 </style>

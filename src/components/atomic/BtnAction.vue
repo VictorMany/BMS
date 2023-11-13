@@ -1,5 +1,6 @@
 <template>
-  <q-btn class="btn-style border-shadow"
+  <q-btn
+    class="btn-style border-shadow"
     :class="btnTitle ? 'q-pr-sm' : 'q-pa-none'"
     :unelevated="btnUnelevated"
     :outline="btnOutlined"
@@ -8,96 +9,100 @@
     :label="btnTitle ? btnTitle : ''"
     :size="btnSize"
     :to="to"
-    @click="btnAction">
-    <div v-if="iconName != ''" class="no-wrap q-pa-none"
-      :class="{ 'q-ml-auto' : btnTitle }">
-      <q-icon right :name="iconName" :class="{ 'q-ma-xs' : !btnTitle }"/>
+    @click="btnAction"
+  >
+    <div
+      v-if="iconName != ''"
+      class="no-wrap q-pa-none"
+      :class="{ 'q-ml-auto': btnTitle }"
+    >
+      <q-icon right :name="iconName" :class="{ 'q-ma-xs': !btnTitle }" />
     </div>
   </q-btn>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'BtnAction',
   props: {
     btnTitle: {
       type: String,
-      required: false
+      required: false,
     },
 
     btnColor: {
       type: String,
       required: false,
-      default: '#1e65e8'
+      default: '#1e65e8',
     },
 
     btnBackground: {
       type: String,
       required: false,
-      default: '#1e65e820'
+      default: '#1e65e820',
     },
 
     btnBackgroundGradient: {
       type: String,
-      required: false
+      required: false,
     },
 
     btnUnelevated: {
       type: Boolean,
       default: true,
-      required: false
+      required: false,
     },
 
     btnOutlined: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
 
     btnAction: {
       type: Function,
       default: () => {},
-      required: false
+      required: false,
     },
 
     to: {
       type: String,
-      required: false
+      required: false,
     },
 
     btnCaps: {
       type: Boolean,
       default: true,
-      required: false
+      required: false,
     },
 
     btnSize: {
       type: String,
       default: 'md',
-      required: false
+      required: false,
     },
 
     iconName: {
       type: String,
       required: false,
-      default: 'add_circle'
+      default: 'add_circle',
     },
 
     btnWidth: {
       type: String,
       required: false,
-      default: 'max-content'
+      default: 'max-content',
     },
 
     btnWeight: {
       type: Number,
       required: false,
-      default: 500
-    }
-  }
-})
+      default: 500,
+    },
+  },
+});
 </script>
 
 <style scoped>

@@ -33,14 +33,15 @@
                   :val="badge.color"
                   :dense="true"
                   :label="badge.label"
-                  :style="`color: ${badge.color}`"
+                  :color="badge.color"
+                  :class="`text-${badge.color}`"
                 />
               </div>
             </div>
           </div>
           <div class="col q-pl-md" style="height: 99%">
             <div class="row flex items-center justify-between q-mb-sm">
-              <label class="text-subtitle text-weight-light">
+              <label class="form__item-label__title text-weight-light">
                 Resultados
               </label>
               <btn-switch v-model:switch-content="switchContent" />
@@ -55,7 +56,7 @@
                 :thumb-style="{
                   right: '6px',
                   borderRadius: '5px',
-                  background: 'rgba(135, 192, 232, 0.44)',
+                  background: 'rgba(29, 100, 231, 0.2)',
                   width: '5px',
                   opacity: 1,
                 }"
@@ -121,13 +122,13 @@ export default defineComponent({
       ],
       blueEvents: ['2019/02/01', '2019/02/09', '2019/02/23'],
       optionsFilter: [
-        { color: '#10D13A', label: 'Mantenimientos hechos', value: 'opt1' },
+        { color: 'positive', label: 'Mantenimientos hechos', value: 'opt1' },
         {
-          color: '#1e65e8',
+          color: 'primary',
           label: 'Mantenimientos programados',
           value: 'opt2',
         },
-        { color: '#FFAA05', label: 'Recordatorios', value: 'opt3' },
+        { color: 'secondary', label: 'Recordatorios', value: 'opt3' },
       ],
       Equipments: [
         {
@@ -327,13 +328,6 @@ export default defineComponent({
           sortable: true,
         },
         {
-          name: 'brand',
-          label: 'Nombre del encargado',
-          field: 'brand',
-          align: 'left',
-          sortable: true,
-        },
-        {
           name: 'no_serie',
           label: 'Número de serie',
           field: 'no_serie',
@@ -342,7 +336,7 @@ export default defineComponent({
         },
         {
           name: 'date',
-          label: 'Fecha de mantenimiento',
+          label: 'Últ. mantenimiento',
           field: 'date',
           align: 'center',
           sortable: true,

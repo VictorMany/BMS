@@ -26,6 +26,7 @@
         <div v-if="showPagination" class="row justify-center">
           <q-pagination
             v-model="pagination.page"
+            dense
             class="q-mt-none pagination-style"
             :max="pagesNumber"
             size="md"
@@ -163,15 +164,15 @@ export default defineComponent({
   height: 25px;
   font-weight: bolder !important;
   color: $primary;
-  background-color: #0080ff26;
+  background-color: rgba($primary, 0.2);
 }
 
 .badge-pending {
   width: 80px;
   height: 25px;
   font-weight: bolder !important;
-  color: #f98d00;
-  background-color: #f98d0026;
+  color: $secondary;
+  background-color: rgba($secondary, 0.2);
 }
 
 .pagination-style {

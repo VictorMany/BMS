@@ -1,14 +1,28 @@
 <template>
-    <LineChart :data="chartData" :options="chartOptions" />
-  </template>
+  <LineChart :data="chartData" :options="chartOptions" />
+</template>
 
 <script>
-import { Line as LineChart } from 'vue-chartjs'
-import 'chart.js/auto'
-// eslint-disable-next-line import/namespace
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import { Line as LineChart } from 'vue-chartjs';
+import 'chart.js/auto';
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from 'chart.js';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
 
 export default {
   name: 'BarChart',
@@ -16,12 +30,12 @@ export default {
   props: {
     chartData: {
       type: Object,
-      required: true
+      required: true,
     },
     chartOptions: {
       type: Object,
-      default: () => {}
-    }
-  }
-}
+      default: () => {},
+    },
+  },
+};
 </script>

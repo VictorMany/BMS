@@ -63,7 +63,7 @@ export default defineComponent({
     },
     localColor() {
       if (this.index === this.selected) {
-        return '#4C607D';
+        return '#1e65e8';
       }
       return this.color;
     },

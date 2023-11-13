@@ -83,7 +83,7 @@
                       <q-item-section>
                         <q-item-label
                           :class="
-                            scope.selected ? 'text-light-blue' : 'text-grey'
+                            scope.selected ? 'primary' : 'text-grey'
                           "
                           >{{ scope.label }}</q-item-label
                         >

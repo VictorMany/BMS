@@ -67,7 +67,7 @@ export default defineComponent({
         style: 'height: 40.98px',
         iconName: '',
         btnBackgroundGradient:
-          'linear-gradient(269.25deg, #1e65e8 -4.79%, #689afd 94.27%)',
+          'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
       },
     };
   },
