@@ -205,10 +205,14 @@
                 <div
                   v-for="(day, index) in days"
                   :key="index"
-                  class="text-left chip-date q-mb-sm q-pa-xs q-px-sm text-blue-grey-4 flex flex-center align-center justify-between"
+                  class="text-left chip-date q-mb-sm q-pa-xs q-px-sm text-primary flex flex-center align-center justify-between"
                 >
                   {{ day }}
-                  <q-avatar size="sm" class="avatar-item">
+                  <q-avatar
+                    @click="deleteDate(index)"
+                    size="sm"
+                    class="avatar-item"
+                  >
                     <q-icon name="delete_forever" />
                   </q-avatar>
                 </div>
@@ -386,6 +390,9 @@ export default defineComponent({
   methods: {
     goBack() {
       this.$router.go(-1);
+    },
+    deleteDate(index) {
+      this.days.splice(index, 1);
     },
   },
 });

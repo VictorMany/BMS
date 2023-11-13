@@ -21,12 +21,13 @@
                     :src="getImageUrl(imageNotification)"
                   />
                 </q-avatar>
-                <q-popup-proxy class="border-shadow border-radius">
+                <q-popup-proxy class="border-radius">
                   <q-banner
-                    class="border-shadow"
                     style="width: 400px; height: auto"
                   >
-                    <div class="q-pa-sm">Notificaciones</div>
+                    <div class="q-pa-sm form__item-label__title">
+                      Notificaciones
+                    </div>
                     <q-scroll-area
                       style="height: 490px !important"
                       class="fit"
