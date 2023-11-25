@@ -1,6 +1,6 @@
 import service from 'src/api/users'
 
-export function getUsersAction(context){
+export function getUsersAction(context) {
     return service.getUsers().then(async (response) => {
         if (response.status == 200) {
             context.commit('MUTATE_USERS', response.data.contents)
@@ -12,8 +12,28 @@ export function getUsersAction(context){
     })
 }
 
-export function postUserAction(context, user){
-    return service.postUser(formatUser(user)).then(async (response) => {
+export async function postUserAction(context, user) {
+    // Those are the keys you need in your payload and find in the textfields
+    let keys = {
+        userName: '',
+        email: '',
+        userPassword: '',
+        phone: '',
+        userRole: '',
+        photo: '',
+        userStatus: '',
+        birthday: '',
+    }
+
+    // the textfields are the user
+
+    // We call the global action to format our payload
+    const payload = await context.dispatch('global/formatPayload', {
+        keys,
+        textfields: user
+    }, { root: true });
+
+    return await service.postUser(payload).then(async (response) => {
         try {
             if (response.status == 201) {
                 console.log(response.data);
@@ -42,18 +62,4 @@ const manageResponse = (scope, success) => {
             success
         }
     }
-}
-
-const formatUser = (user) => {
-    let formatedUser = {
-        userName: user.top[0].model,
-        email: user.top[1].model,
-        userPassword: user.left[1].model,
-        phone: user.left[0].model,
-        userRole: user.left[3].model.index,
-        photo: user.top[0].model,
-        userStatus: user.left[4].model.status,
-        birthday: user.left[2]
-    }
-    return formatedUser
 }

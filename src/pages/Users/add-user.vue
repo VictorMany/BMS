@@ -22,10 +22,10 @@
         >
           <form-text-field :textfields="textfields" type="user" />
         </q-scroll-area>
-        <div class="col-12 form__date_container" style="height: 5.25%;">
-            <div class="form__date column items-end q-pa-sm q-mt-auto">
-              <div>Fecha de creación: <strong> 12/02/2022</strong></div>
-            </div>
+        <div class="col-12 form__date_container" style="height: 5.25%">
+          <div class="form__date column items-end q-pa-sm q-mt-auto">
+            <div>Fecha de creación: <strong> 12/02/2022</strong></div>
+          </div>
         </div>
       </div>
     </div>
@@ -66,10 +66,12 @@ export default defineComponent({
         top: [
           {
             label: 'Nombre del usuario',
+            name: 'userName',
             model: '',
           },
           {
             label: 'Correo',
+            name: 'email',
             type: 'email',
             rules: [
               (val) => /@/.test(val) || 'Debe contener "@"',
@@ -84,6 +86,7 @@ export default defineComponent({
         left: [
           {
             label: 'Teléfono',
+            name: 'phone',
             rules: [
               (val) =>
                 /^\d{10}$/.test(val) ||
@@ -95,30 +98,34 @@ export default defineComponent({
           },
           {
             label: 'Contraseña',
+            name: 'userPassword',
             type: 'password',
             model: '',
           },
           {
             label: 'Rol de usuario',
+            name: 'userRole',
             model: '',
             type: 'select',
             options: [
-              { label: 'Administrador', index: 1 },
-              { label: 'Auxiliar', index: 2 },
-              { label: 'Funciones básicas', index: 3 },
+              { label: 'Administrador', index: 1, value: 1 },
+              { label: 'Auxiliar', index: 2, value: 2 },
+              { label: 'Funciones básicas', index: 3, value: 3 },
             ],
           },
           {
             label: 'Estatus de la cuenta',
             model: '',
+            name: 'userStatus',
             type: 'select',
             options: [
-              { label: 'Activo', status: true },
-              { label: 'Inactivo', status: false },
+              { label: 'Activo', status: true, value: true },
+              { label: 'Inactivo', status: false, value: false },
             ],
           },
           {
             label: 'Fecha de nacimiento',
+            name: 'birthday',
             type: 'date',
             model: ref(new Date().toLocaleDateString()),
           },
@@ -135,7 +142,7 @@ export default defineComponent({
     },
 
     async createUser() {
-      console.log(this.textfields)
+      console.log(this.textfields);
       const res = await this.$store.dispatch(
         'users/postUserAction',
         this.textfields
