@@ -133,12 +133,13 @@ export default defineComponent({
     goBack() {
       this.$router.go(-1);
     },
+
     async createUser() {
+      console.log(this.textfields)
       const res = await this.$store.dispatch(
         'users/postUserAction',
         this.textfields
       );
-      console.log(res);
       if (res.success) {
         this.$router.go(-1);
       } else {

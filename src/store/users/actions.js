@@ -3,8 +3,8 @@ import service from 'src/api/users'
 export function getUsersAction(context){
     return service.getUsers().then(async (response) => {
         if (response.status == 200) {
-            console.log(response.data);
-            context.commit('MUTATE_USERS', response.data)
+            context.commit('MUTATE_USERS', response.data.contents)
+            context.commit('MUTATE_DETAILS', response.data)
             return manageResponse('Obtener usuarios', true)
         } else {
             return manageResponse('Obtener usuarios', false)

@@ -69,12 +69,13 @@ export default defineComponent({
             model: ''
           },
           {
-            label: 'Estatus',
+            label: 'Prioridad',
             model: '',
             type: 'select',
             options: [
-              'Activo',
-              'Inactivo'
+              'Alta',
+              'Media',
+              'Baja'
             ]
           },
           {
