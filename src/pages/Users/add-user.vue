@@ -53,6 +53,7 @@ export default defineComponent({
         btnTitle: 'Guardar',
         btnWidth: 'auto',
         btnAction: this.createUser,
+        loader: false,
       },
       btnCloseWindow: {
         iconName: 'close',
@@ -141,16 +142,33 @@ export default defineComponent({
       this.$router.go(-1);
     },
 
+    showNotif() {
+      this.$q.notify({
+        message: 'Ocurrió un error al crear el usuario',
+        caption: 'Intalo de nuevo más tarde',
+        color: 'secondary',
+        classes: 'border-rounded',
+      });
+    },
+
     async createUser() {
-      console.log(this.textfields);
-      const res = await this.$store.dispatch(
-        'users/postUserAction',
-        this.textfields
-      );
-      if (res.success) {
-        this.$router.go(-1);
-      } else {
-        console.log('PONER ALERTA');
+      this.btnAction.loader = true;
+
+      try {
+        const res = await this.$store.dispatch(
+          'users/postUserAction',
+          this.textfields
+        );
+        if (res.success) {
+          this.$router.go(-1);
+        } else {
+          console.log('PONER ALERTA');
+        }
+        this.btnAction.loader = false;
+      } catch (error) {
+        this.btnAction.loader = false;
+        // eslint-disable-next-line no-undef
+        this.showNotif();
       }
     },
   },
@@ -165,4 +183,5 @@ export default defineComponent({
 .card-page {
   padding-top: 0 !important;
 }
+
 </style>

@@ -134,7 +134,7 @@ export default defineComponent({
         {
           cardTitle: 'Monitor de signos vitales',
           cardImg:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' },
@@ -164,7 +164,7 @@ export default defineComponent({
         {
           cardTitle: 'Monitor de signos vitales',
           cardImg:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' },
@@ -174,7 +174,7 @@ export default defineComponent({
         {
           cardTitle: 'Monitor de signos vitales',
           cardImg:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' },
@@ -184,7 +184,7 @@ export default defineComponent({
         {
           cardTitle: 'Monitor de signos vitales',
           cardImg:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' },
@@ -194,7 +194,7 @@ export default defineComponent({
         {
           cardTitle: 'Monitor de signos vitales',
           cardImg:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' },
@@ -204,7 +204,7 @@ export default defineComponent({
         {
           cardTitle: 'Monitor de signos vitales',
           cardImg:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' },
@@ -234,7 +234,7 @@ export default defineComponent({
         {
           cardTitle: 'Monitor de signos vitales',
           cardImg:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' },
@@ -244,7 +244,7 @@ export default defineComponent({
         {
           cardTitle: 'Monitor de signos vitales',
           cardImg:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' },
@@ -254,7 +254,7 @@ export default defineComponent({
         {
           cardTitle: 'Monitor de signos vitales',
           cardImg:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' },
@@ -264,7 +264,7 @@ export default defineComponent({
         {
           cardTitle: 'Monitor de signos vitales',
           cardImg:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVou42ssgYuH0ai-PZCda4bIcBOUB1cKVKjsA998OnRG3bDJMr7kydiRq02NjNG5m75Uk&usqp=CAU',
+            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
           cardLabels: [
             { label: 'Marca:', info: 'Mendray' },
             { label: 'Serie:', info: 'A7GTHYFRG' },

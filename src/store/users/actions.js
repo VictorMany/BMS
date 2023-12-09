@@ -1,7 +1,7 @@
 import service from 'src/api/users'
 
-export function getUsersAction(context) {
-    return service.getUsers().then(async (response) => {
+export function getUsersAction(context, params) {
+    return service.getUsers(params).then(async (response) => {
         if (response.status == 200) {
             context.commit('MUTATE_USERS', response.data.contents)
             context.commit('MUTATE_DETAILS', response.data)

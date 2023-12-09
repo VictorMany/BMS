@@ -17,10 +17,9 @@
               {{ item.label }}
             </div>
             <q-input
-              class="col-6 form__item-input-12"
+              class="col-6 form__item-input-12 bg-accent"
               borderless
               dense
-              filled
               hide-hint
               hide-bottom-space
               bottom-slots
@@ -50,7 +49,7 @@
                     <q-editor
                       v-model="textfield.model"
                       :placeholder="'Escribe aquí tus ' + textfield.label"
-                      class="form__item-textarea input"
+                      class="form__item-textarea bg-accent"
                       dense
                       :toolbar="
                         textfield.toolbar ? textfield.toolbar : basicToolBar
@@ -67,11 +66,10 @@
                 </div>
                 <q-select
                   v-if="item.type === 'select'"
-                  class="textfield-select form__item-input col-12 col-sm"
+                  class="textfield-select form__item-input bg-accent col-12 col-sm"
                   borderless
                   v-model="item.model"
                   dense
-                  filled
                   hide-hint
                   hide-bottom-space
                   bottom-slots
@@ -82,9 +80,7 @@
                     <q-item v-bind="scope.itemProps" dense>
                       <q-item-section>
                         <q-item-label
-                          :class="
-                            scope.selected ? 'primary' : 'text-grey'
-                          "
+                          :class="scope.selected ? 'primary' : 'text-grey'"
                           >{{ scope.label }}</q-item-label
                         >
                       </q-item-section>
@@ -94,11 +90,10 @@
 
                 <q-input
                   v-else-if="item.type === 'date'"
-                  class="col-12 col-sm form__item-input"
+                  class="col-12 col-sm form__item-input bg-accent"
                   borderless
                   dense
                   v-model="item.model"
-                  filled
                   hide-hint
                   hide-bottom-space
                   bottom-slots
@@ -121,8 +116,7 @@
                 <q-input
                   v-else
                   v-model="item.model"
-                  class="form__item-input col-12 col-sm"
-                  filled
+                  class="form__item-input bg-accent col-12 col-sm"
                   hide-hint
                   hide-bottom-space
                   bottom-slots
@@ -130,6 +124,7 @@
                   :type="item.type ? item.type : 'text'"
                   :rules="item.rules ? item.rules : []"
                   stack-label
+                  borderless
                 />
               </div>
             </div>
@@ -199,16 +194,19 @@
             />
           </q-btn>
 
-          <span
+          <div
             class="form__item-label text-weight-thin text-center text-underline q-mt-sm w-100 q-mb-auto"
-            @click="
-              pdfObject.name
-                ? clearFileInput($refs.fileUpload)
-                : $refs.fileUpload.click()
-            "
           >
-            Carga una imagen desde tus archivos
-          </span>
+            <span
+              @click="
+                pdfObject.name
+                  ? clearFileInput($refs.fileUpload)
+                  : $refs.fileUpload.click()
+              "
+            >
+              Carga una imagen desde tus archivos
+            </span>
+          </div>
         </div>
 
         <div
@@ -243,7 +241,7 @@
       <q-editor
         v-model="localTextfields.textArea.model"
         :placeholder="'Escribe aquí...'"
-        class="form__item-textarea input"
+        class="form__item-textarea bg-accent"
         :toolbar="[
           [
             {

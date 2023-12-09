@@ -105,6 +105,11 @@ export default defineComponent({
       required: false,
       default: '390px',
     },
+    searchModel: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
   setup() {
     const getImageUrl = (url) => {
@@ -134,7 +139,7 @@ export default defineComponent({
   },
   watch: {
     modelLocal(value) {
-      this.$emit('update:model', value);
+      this.$emit('update:searchModel', value);
     },
   },
 });

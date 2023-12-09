@@ -90,7 +90,6 @@
     }
 
     &__item-textarea {
-      background-color: rgba($primary, 0.06);
       color: #51565d;
     }
 
@@ -248,7 +247,7 @@
     }
 
     &__date {
-      color: #51565d;
+      color: #91c8ff84;
     }
 
     &__date_container {
@@ -264,11 +263,11 @@
     }
 
     &__image64 {
-      background-color: #181b1e !important;
+      background-color: $accent !important;
     }
 
     &__image64-equipment {
-      background-color: #181b1e !important;
+      background-color: $accent !important;
     }
 
     &__item-input {
@@ -280,8 +279,7 @@
     }
 
     &__item-textarea {
-      background-color: #181b1e !important;
-      color: #51565d;
+      color: #b5c3d7;
     }
 
     &__item-input-login {
@@ -290,7 +288,7 @@
   }
 
   .btn-background-dark {
-    background-color: #181b1e !important;
+    background-color: $accent !important;
   }
 
   .btn-change-content {
@@ -334,6 +332,10 @@
 .btn-style {
   background-color: $primary !important;
   color: $primary-opacity !important;
+}
+
+.bottom-btn {
+  padding-bottom: 0.6rem;
 }
 
 .info {
@@ -469,7 +471,9 @@
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    border-radius: 0.3rem !important;
+    border-radius: 0.6rem !important;
+    padding-left: 0.6rem !important;
+    padding-right: 0.6rem !important;
   }
 
   &__date {
@@ -482,7 +486,9 @@
     font-weight: 400;
     font-size: 12px;
     color: #51565d;
-    border-radius: 0.3rem !important;
+    border-radius: 0.6rem !important;
+    padding-left: 0.6rem !important;
+    padding-right: 0.6rem !important;
   }
 
   &__item-select {
@@ -491,7 +497,9 @@
     font-weight: 400;
     font-size: 12px;
     color: #51565d;
-    border-radius: 0.3rem !important;
+    border-radius: 0.6rem !important;
+    padding-left: 0.6rem !important;
+    padding-right: 0.6rem !important;
   }
 
   &__item-input-12 {
@@ -499,7 +507,9 @@
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
-    border-radius: 0.3rem !important;
+    border-radius: 0.6rem !important;
+    padding-left: 0.6rem !important;
+    padding-right: 0.6rem !important;
   }
 
   &__item-textarea {
@@ -586,4 +596,8 @@
 .q-chip,
 .q-badge {
   border-radius: 6px !important;
+}
+
+.border-rounded {
+  border-radius: 0.6rem;
 }

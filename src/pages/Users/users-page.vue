@@ -5,6 +5,7 @@
         :titlePage="'Usuarios'"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
+        v-model:searchModel="searchModel"
         v-model:switch-content="switchContent"
       />
       <div
@@ -65,29 +66,9 @@ export default defineComponent({
   },
   data() {
     return {
-      users2: [
-        {
-          cardTitle: 'Angel Omar Torres Padilla',
-          cardImg:
-            'https://assets.megamediaradios.fm/2022/11/ap22312071681283-0d9c328f69a7c7f15320e8750d6ea447532dff66-s1100-c50.jpg',
-          cardLabels: [{ label: 'Ingeniero biomédico' }],
-          cardDate: 'Administrador',
-        },
-        {
-          cardTitle: 'Daniela de la Mora Süachenagher',
-          cardImg:
-            'https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/09/27/08/jennifer-lawrence.jpg?quality=75&width=982&height=726&auto=webp',
-          cardLabels: [{ label: 'Ingeniero biomédico' }],
-          cardDate: 'Auxiliar',
-        },
-        {
-          cardTitle: 'John Pérez Domínguez',
-          cardImg:
-            'https://variety.com/wp-content/uploads/2022/08/Jonah-Hill.jpg?w=681&h=383&crop=1',
-          cardLabels: [{ label: 'Ingeniero biomédico' }],
-          cardDate: 'Lector',
-        },
-      ],
+      timeoutSearch: null,
+      delaySearch: 300,
+
       btnAction: {
         show: true,
         btnTitle: 'Añadir usuario',
@@ -104,7 +85,7 @@ export default defineComponent({
             icon: 'account_circle',
           },
           {
-            title: 'Puesto',
+            title: 'Estatus',
             icon: 'supervisor_account',
           },
           {
@@ -113,6 +94,7 @@ export default defineComponent({
           },
         ],
       },
+      searchModel: null,
       switchContent: 1,
       columns: [
         {
@@ -160,10 +142,13 @@ export default defineComponent({
       ],
       showCards: true,
       rowSelected: {},
+      params: {
+        name: '',
+      },
     };
   },
   created() {
-    this.getUsers();
+    this.getUsers({});
   },
   watch: {
     switchContent: {
@@ -190,6 +175,24 @@ export default defineComponent({
       },
       deep: true,
     },
+    searchModel(val) {
+      console.log('THIS ARE MY PROPS', Object.keys(this.params));
+      let params = {};
+
+      if (Object.keys(this.params).length > 0) {
+        /**
+         * @this.params[0] -> Name, Status, Role
+         */
+        params = {
+          [Object.keys(this.params)[0]]: val,
+        };
+      }
+
+      clearTimeout(this.timeoutSearch);
+      this.timeoutSearch = setTimeout(() => {
+        this.getUsers(params);
+      }, this.delaySearch);
+    },
   },
   computed: {
     users: {
@@ -199,19 +202,39 @@ export default defineComponent({
     },
   },
   methods: {
-    async getUsers() {
-      await this.$store.dispatch('users/getUsersAction');
+    async getUsers(params) {
+      await this.$store.dispatch('users/getUsersAction', params);
     },
     readMore(payload) {
       console.log('Ver detalle', payload);
       this.$router.push({ name: 'detail-user', params: { id: 100 } });
     },
     edit(payload) {
-      console.log('Editar', payload);
+      console.log(payload);
       this.$router.push({ name: 'edit-user', params: { id: 100 } });
     },
     setSelectedOpt(opt) {
       this.inputSearch.inputLabel = opt;
+      console.log(opt);
+
+      let type = '';
+      switch (opt) {
+        case 'Nombre':
+          type = 'name';
+          break;
+        case 'Estatus':
+          type = 'status';
+          break;
+        case 'Role':
+          type = 'role';
+          break;
+      }
+
+      this.params = {
+        [type]: this.searchModel,
+      };
+
+      this.getUsers(this.params);
     },
   },
 });

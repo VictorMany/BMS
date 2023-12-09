@@ -88,7 +88,7 @@ export default defineComponent({
         right: [],
         textarea: {},
         image:
-          'https://www.novamedicaltda.com/wp-content/uploads/2021/01/wato-ex-55.jpg',
+          'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
       },
       btnAction: {
         show: true,

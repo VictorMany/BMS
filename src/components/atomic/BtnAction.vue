@@ -16,7 +16,18 @@
       class="no-wrap q-pa-none"
       :class="{ 'q-ml-auto': btnTitle }"
     >
-      <q-icon right :name="iconName" :class="{ 'q-ma-xs': !btnTitle }" />
+      <q-spinner-ball
+        v-if="loader"
+        size="sm"
+        class="q-ml-sm q-mb-xs"
+        color="primary"
+      />
+      <q-icon
+        v-else-if="loader === false"
+        right
+        :name="iconName"
+        :class="{ 'q-ma-xs': !btnTitle }"
+      />
     </div>
   </q-btn>
 </template>
@@ -100,6 +111,12 @@ export default defineComponent({
       type: Number,
       required: false,
       default: 500,
+    },
+
+    loader: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 });

@@ -26,7 +26,7 @@
       v-if="inputSearch"
       class="col-md-4 col-xs-12 column q-pl-sm content-end"
     >
-      <input-search class="w-100" v-bind="inputSearch" />
+      <input-search class="w-100" v-bind="inputSearch" v-model:search-model="searchModelLocal" />
     </div>
   </div>
 </template>
@@ -50,6 +50,11 @@ export default defineComponent({
       required: false,
       default: () => null,
     },
+    searchModel: {
+      type: String,
+      required: false,
+      default: '',
+    },
     btnAction: {
       type: Object,
       required: false,
@@ -66,13 +71,13 @@ export default defineComponent({
   },
   data() {
     return {
-      modelLocal: this.model,
+      searchModelLocal: this.searchModel,
       switchContentLocal: this.switchContent,
     };
   },
   watch: {
-    modelLocal(value) {
-      this.$emit('update:model', value);
+    searchModelLocal(value) {
+      this.$emit('update:searchModel', value);
     },
     switchContentLocal(value) {
       this.$emit('update:switchContent', value);
