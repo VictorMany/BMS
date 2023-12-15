@@ -1,7 +1,7 @@
 export function getUsersGetter(state) {
     let users = state.users.map(user => ({
         cardTitle: user.userName,
-        cardImg: 'https://www.testhouse.net/wp-content/uploads/2021/11/default-avatar.jpg',
+        cardImg: user.photo,
         cardLabels: [
             { label: 'Ingeniero biomédico' }
         ],
