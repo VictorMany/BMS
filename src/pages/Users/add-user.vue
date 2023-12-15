@@ -64,7 +64,7 @@ export default defineComponent({
       },
       textfields: {
         imageInput: true,
-        image: null,
+        photo: null,
         top: [
           {
             label: 'Nombre del usuario',

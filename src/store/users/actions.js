@@ -23,7 +23,6 @@ export async function postUserAction(context, user) {
         photo: '',
         userStatus: '',
         birthday: '',
-        image: null
     }
 
     // the textfields are the user

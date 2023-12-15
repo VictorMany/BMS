@@ -326,7 +326,7 @@ export default defineComponent({
   methods: {
     uploadFile(e) {
       const file = e.target.files[0];
-      this.localTextfields.image = file
+      this.localTextfields.photo = file
 
       try {
         const reader = new FileReader();

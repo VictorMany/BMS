@@ -4,30 +4,29 @@ export function changeMenu(context) {
 }
 
 export function formatPayload(context, { keys, textfields }) {
+    const fd = new FormData()
     for (let k in keys) {
+        if (k == 'photo' && textfields.photo) {
+            fd.append(k, textfields['photo']);
+        }
         for (let prop in textfields) {
-            // console.log('Propiedades de textfields.' + prop + ':');
             if (Array.isArray(textfields[prop])) {
                 for (let i = 0; i < textfields[prop].length; i++) {
                     for (let key in textfields[prop][i]) {
                         if (k == textfields[prop][i][key]) {
                             if (textfields[prop][i].type === 'select') {
-                                console.log('VALORES', k, textfields[prop][i].model.value)
-                                keys[k] = textfields[prop][i].model.value
+                                fd.append(k, textfields[prop][i].model.value);
                             } else {
-                                console.log('VALORES', k, textfields[prop][i].model)
-                                keys[k] = textfields[prop][i].model
+                                fd.append(k, textfields[prop][i].model);
                             }
                         }
                     }
-                    // console.log('------');
                 }
             } else {
                 // console.log('No es un array. Valor: ' + textfields[prop]);
             }
-            // console.log('======');
         }
     }
-
-    return keys
+    console.log('BODY: ', fd);
+    return fd
 }
