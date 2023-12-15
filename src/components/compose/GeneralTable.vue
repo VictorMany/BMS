@@ -147,16 +147,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .font-style {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 200;
 }
 .column-style {
-  font-family: "Inter";
-  font-style: normal;
   font-size: 13px;
-  font-weight: 600;
-  color: #4c607d;
+  font-weight: 500;
+  color: $primary;
 }
 
 .badge-attended {

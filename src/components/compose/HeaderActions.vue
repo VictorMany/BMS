@@ -100,8 +100,7 @@ export default defineComponent({
 }
 
 .title-page {
-  font-style: normal;
-  font-weight: 800;
+  font-weight: 400;
   font-size: 20px;
 }
 </style>

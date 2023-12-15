@@ -80,9 +80,7 @@ export default defineComponent({
 }
 
 .q-item-label {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 600;
+  font-weight: 300;
   font-size: 14px;
 }
 </style>

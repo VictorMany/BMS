@@ -100,7 +100,7 @@ export default defineComponent({
         {
           name: 'user',
           required: true,
-          label: 'Usuario',
+          label: 'Nombre',
           align: 'left',
           field: (row) => row.user,
           format: (val) => `${val}`,
