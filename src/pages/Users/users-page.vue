@@ -127,7 +127,7 @@ export default defineComponent({
           align: 'center',
         },
       ],
-      rows: [],
+      // rows: [],
       actionsTable: [
         {
           icnName: 'read_more',
@@ -199,6 +199,15 @@ export default defineComponent({
       get() {
         return this.$store.getters['users/getUsersGetter'];
       },
+    },
+    rows() {
+      return this.users.map((e) => {
+        return {
+          user: e.cardTitle,
+          carrer: e.cardLabels[0].label,
+          role: e.cardDate,
+        };
+      });
     },
   },
   methods: {
