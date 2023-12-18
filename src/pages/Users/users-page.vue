@@ -207,7 +207,7 @@ export default defineComponent({
     },
     readMore(payload) {
       console.log('Ver detalle', payload);
-      this.$router.push({ name: 'detail-user', params: { id: 100 } });
+      this.$router.push({ name: 'detail-user', params: { id: payload } });
     },
     edit(payload) {
       console.log(payload);
