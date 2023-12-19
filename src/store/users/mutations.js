@@ -6,7 +6,8 @@ export function MUTATE_DETAILS(state, payload) {
     state.pagination = {
         currentPage: payload.currentPage,
         totalItems: payload.totalItems,
-        totalPages: payload.totalPages
+        totalPages: payload.totalPages,
+        rowsPerPage: payload.rowsPerPage,
     }
     state.message = payload.details
 }

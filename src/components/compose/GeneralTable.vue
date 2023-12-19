@@ -109,6 +109,7 @@ export default defineComponent({
       descending: false,
       page: 1,
     });
+
     return {
       pagination,
       pagesNumber: computed(() =>
@@ -136,6 +137,29 @@ export default defineComponent({
       }
       return color;
     },
+  },
+  watch: {
+    pagination: {
+      handler(value) {
+        if (value.page > 0)
+          this.$emit('update:paginationProp', {
+            ...this.pagination,
+            ...value,
+          });
+
+        console.log(this.pagination);
+      },
+      deep: true,
+    },
+    // paginationProp: {
+    //   handler(value) {
+    //     if (value.page > 0 && this.pagination.totalPages != value.totalPages)
+    //       this.pagination = {
+    //         ...this.pagination,
+    //         ...value,
+    //       };
+    //   },
+    // },
   },
   created() {
     if (this.paginationProp) {

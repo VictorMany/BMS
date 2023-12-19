@@ -24,7 +24,10 @@
           }"
         >
           <div style="max-width: 100%">
-            <div class="row q-pa-none q-ma-none q-px-sm q-pb-sm">
+            <div
+              v-if="users.length > 0"
+              class="row q-pa-none q-ma-none q-px-sm q-pb-sm"
+            >
               <div
                 v-for="(user, index) in users"
                 :key="index"
@@ -37,6 +40,10 @@
                 />
               </div>
             </div>
+            <div class="q-ma-xl q-pa-xl text-center no-info" v-else>
+              No hay usuarios para mostrar
+              <strong class="text-negative">!</strong>
+            </div>
           </div>
         </q-scroll-area>
         <general-table
@@ -44,6 +51,7 @@
           :rows="rows"
           :columns="columns"
           :actions-table="actionsTable"
+          v-model:pagination-prop="pagination"
           v-model:row-selected="rowSelected"
         />
       </div>
@@ -66,36 +74,34 @@ export default defineComponent({
   },
   data() {
     return {
-      timeoutSearch: null,
       delaySearch: 300,
+      searchModel: null,
+      showCards: true,
+      switchContent: 1,
+      timeoutSearch: null,
 
+      pagination: {
+        rowsPerPage: 12,
+        totalPages: 2,
+      },
+
+      actionsTable: [
+        {
+          icnName: 'read_more',
+          icnSize: 'sm',
+          icnAction: 'Detail',
+        },
+        {
+          icnName: 'edit',
+          icnSize: 'xs',
+          icnAction: 'Edit',
+        },
+      ],
       btnAction: {
         show: true,
         btnTitle: 'Añadir usuario',
         to: 'add-user',
       },
-      inputSearch: {
-        show: true,
-        inputLabel: 'Buscar por nombre',
-        setSelectedOpt: this.setSelectedOpt,
-        heightModal: '150px',
-        items: [
-          {
-            title: 'Nombre',
-            icon: 'account_circle',
-          },
-          {
-            title: 'Estatus',
-            icon: 'supervisor_account',
-          },
-          {
-            title: 'Role',
-            icon: 'low_priority',
-          },
-        ],
-      },
-      searchModel: null,
-      switchContent: 1,
       columns: [
         {
           name: 'user',
@@ -127,44 +133,50 @@ export default defineComponent({
           align: 'center',
         },
       ],
-      // rows: [],
-      actionsTable: [
-        {
-          icnName: 'read_more',
-          icnSize: 'sm',
-          icnAction: 'Detail',
-        },
-        {
-          icnName: 'edit',
-          icnSize: 'xs',
-          icnAction: 'Edit',
-        },
-      ],
-      showCards: true,
-      rowSelected: {},
+      inputSearch: {
+        show: true,
+        inputLabel: 'Buscar por nombre',
+        setSelectedOpt: this.setSelectedOpt,
+        heightModal: '150px',
+        items: [
+          {
+            title: 'Nombre',
+            icon: 'account_circle',
+          },
+          {
+            title: 'Estatus',
+            icon: 'supervisor_account',
+          },
+          {
+            title: 'Role',
+            icon: 'low_priority',
+          },
+        ],
+      },
       params: {
         name: '',
       },
+      rowSelected: {},
     };
   },
   created() {
     this.getUsers({});
   },
   watch: {
-    switchContent: {
-      handler(val) {
-        if (val === 2) {
-          this.rows = this.users.map((e) => {
-            return {
-              user: e.cardTitle,
-              carrer: e.cardLabels[0].label,
-              role: e.cardDate,
-            };
-          });
-        }
-      },
-      deep: true,
-    },
+    // switchContent: {
+    //   handler(val) {
+    //     if (val === 2) {
+    //       this.rows = this.users.map((e) => {
+    //         return {
+    //           user: e.cardTitle,
+    //           carrer: e.cardLabels[0].label,
+    //           role: e.cardDate,
+    //         };
+    //       });
+    //     }
+    //   },
+    //   deep: true,
+    // },
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
@@ -193,6 +205,23 @@ export default defineComponent({
         this.getUsers(params);
       }, this.delaySearch);
     },
+
+    /**
+     * When change something in my pagination
+     */
+    // pagination: {
+    //   handler(value) {
+    //     console.log('EN EL PADRE', value);
+    //     // this.$emit('update:paginationProp', value);
+
+    //     this.getUsers({
+    //       ...this.params,
+    //       ...value,
+    //     });
+    //   },
+    //   deep: true,
+    // },
+
   },
   computed: {
     users: {
@@ -213,6 +242,11 @@ export default defineComponent({
   methods: {
     async getUsers(params) {
       await this.$store.dispatch('users/getUsersAction', params);
+
+      this.pagination = this.$store.getters['users/getPaginationGetter'];
+      console.log(this.pagination, 'HERE')
+
+      // this.pagination.rowsPerPage = 5 // add from back
     },
     readMore(payload) {
       console.log('Ver detalle', payload);
@@ -248,3 +282,11 @@ export default defineComponent({
   },
 });
 </script>
+
+
+<style lang="scss" scoped>
+.no-info {
+  background-color: $accent;
+  border-radius: 0.6rem;
+}
+</style>

@@ -11,6 +11,10 @@ export function getUsersGetter(state) {
     return users
 }
 
+export function getPaginationGetter(state) {
+    return state.pagination
+}
+
 const roleFormater = (role) => {
     switch (role) {
         case 1:
