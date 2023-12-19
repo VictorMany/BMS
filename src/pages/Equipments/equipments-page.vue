@@ -1,41 +1,20 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <header-actions
-        :titlePage="'Equipos'"
-        :btnAction="btnAction"
-        :inputSearch="inputSearch"
-        v-model:switch-content="switchContent"
-      />
-      <div
-        class="main-container-page"
-        :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
-      >
-        <q-scroll-area
-          v-if="switchContent === 1"
-          class="fit"
-          :thumb-style="{
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 1,
-          }"
-        >
+      <header-actions :titlePage="'Equipos'" :btnAction="btnAction" :inputSearch="inputSearch"
+        v-model:switch-content="switchContent" />
+      <div class="main-container-page" :class="{ 'card-color main-container-page-dark': switchContent === 1 }">
+        <q-scroll-area v-if="switchContent === 1" class="fit" :thumb-style="{
+          borderRadius: '5px',
+          background: 'rgba(29, 100, 231, 0.2)',
+          width: '5px',
+          opacity: 1,
+        }">
           <div style="max-width: 100%">
-            <div
-              v-if="Equipments && Equipments.length > 0"
-              class="row q-pa-none q-ma-none q-px-sm"
-            >
-              <div
-                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto q-px-sm q-pb-md"
-                v-for="(equipo, index) in Equipments"
-                :key="index"
-              >
-                <item-card
-                  v-bind="equipo"
-                  :index="index"
-                  :card-action="readMore"
-                />
+            <div v-if="equipments && equipments.length > 0" class="row q-pa-none q-ma-none q-px-sm">
+              <div class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto q-px-sm q-pb-md"
+                v-for="(equipment, index) in equipments" :key="index">
+                <item-card v-bind="equipment" :index="index" :card-action="readMore" />
               </div>
             </div>
             <div v-else>
@@ -43,13 +22,8 @@
             </div>
           </div>
         </q-scroll-area>
-        <general-table
-          v-else-if="switchContent === 2"
-          :rows="rows"
-          :columns="columns"
-          :actions-table="actionsTable"
-          v-model:row-selected="rowSelected"
-        />
+        <general-table v-else-if="switchContent === 2" :rows="rows" :columns="columns" :actions-table="actionsTable"
+          v-model:row-selected="rowSelected" />
       </div>
     </div>
   </q-page>
@@ -70,209 +44,6 @@ export default defineComponent({
   },
   data() {
     return {
-      Equipments: [
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Kit de instrumental biomédico',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Incubadora',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Kit de instrumental biomédico',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Incubadora',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Kit de instrumental biomédico',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Incubadora',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Monitor de signos vitales',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Kit de instrumental biomédico',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-        {
-          cardTitle: 'Incubadora',
-          cardImg:
-            'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
-          cardLabels: [
-            { label: 'Marca:', info: 'Mendray' },
-            { label: 'Serie:', info: 'A7GTHYFRG' },
-          ],
-          cardDate: '12/02/2022',
-        },
-      ],
-
       switchContent: 1,
       btnAction: {
         show: true,
@@ -289,34 +60,7 @@ export default defineComponent({
             title: 'Nombre',
             icon: 'badge',
           },
-          {
-            title: 'Ubicación',
-            icon: 'explore',
-          },
-          {
-            title: 'Modelo',
-            icon: 'compare',
-          },
-          {
-            title: 'Marca',
-            icon: 'branding_watermark',
-          },
-          {
-            title: 'Serie',
-            icon: 'group_work',
-          },
-          {
-            title: 'Equipos inactivos',
-            icon: 'toggle_off',
-          },
-          {
-            title: 'Mantenimietos pendientes',
-            icon: 'pending',
-          },
-          {
-            title: 'Reportados este mes',
-            icon: 'bug_report',
-          },
+          // Resto de opciones...
         ],
       },
       columns: [
@@ -325,28 +69,28 @@ export default defineComponent({
           required: true,
           label: 'Equipo',
           align: 'left',
-          field: (row) => row.equipment,
+          field: (row) => row.cardTitle,
           format: (val) => `${val}`,
           sortable: true,
         },
         {
           name: 'brand',
-          label: 'Nombre del encargado',
-          field: 'brand',
+          label: 'Marca del equipo',
+          field: (row) => row.cardLabels[0].brand,
           align: 'left',
           sortable: true,
         },
         {
           name: 'no_serie',
-          label: 'Fecha de mantenimiento',
-          field: 'no_serie',
+          label: 'Numero de serie',
+          field: (row) => row.cardLabels[1].serie,
           align: 'center',
           sortable: true,
         },
         {
           name: 'date',
-          label: 'Gasto total',
-          field: 'date',
+          label: 'fecha de creacion',
+          field: 'cardDate',
           align: 'center',
           sortable: true,
         },
@@ -357,7 +101,6 @@ export default defineComponent({
           align: 'center',
         },
       ],
-      rows: [],
       actionsTable: [
         {
           icnName: 'read_more',
@@ -370,7 +113,6 @@ export default defineComponent({
           icnAction: 'Edit',
         },
       ],
-      showCards: true,
       rowSelected: {},
     };
   },
@@ -381,11 +123,11 @@ export default defineComponent({
     switchContent: {
       handler(val) {
         if (val === 2) {
-          this.rows = this.Equipments.map((e) => {
+          this.rows = this.equipments.map((e) => {
             return {
               equipment: e.cardTitle,
-              brand: e.cardLabels[0].info,
-              no_serie: e.cardLabels[1].info,
+              brand: e.cardLabels[0].brand,
+              no_serie: e.cardLabels[1].serie,
               date: e.cardDate,
             };
           });
@@ -403,13 +145,39 @@ export default defineComponent({
       },
       deep: true,
     },
-  },
+    searchModel(val) {
+      console.log('THIS ARE MY PROPS', Object.keys(this.params));
+      let params = {};
 
+      if (Object.keys(this.params).length > 0) {
+        /**
+         * @this.params[0] -> Name, Status, Role
+         */
+        params = {
+          [Object.keys(this.params)[0]]: val,
+        };
+      }
+
+      clearTimeout(this.timeoutSearch);
+      this.timeoutSearch = setTimeout(() => {
+        this.getEquipments(params);
+      }, this.delaySearch);
+    },
+  },
   computed: {
-    equipments: {
-      get() {
-        return this.$store.getters['equipments/getEquipmentsGetter'];
-      },
+    equipments() {
+      return this.$store.getters['equipments/getEquipmentsGetter'];
+    },
+    rows() {
+      // Mapea la información de equipos a las filas requeridas por la tabla
+      return this.equipments.map((e) => {
+        return {
+          equipment: e.cardTitle,
+          brand: e.cardLabels[0].brand,
+          no_serie: e.cardLabels[1].serie,
+          date: e.cardDate,
+        };
+      });
     },
   },
 
@@ -419,11 +187,11 @@ export default defineComponent({
     },
     readMore(payload) {
       console.log('Ver detalle', payload);
-      this.$router.push({ name: 'detail-equipment', params: { id: 100 } });
+      this.$router.push({ name: 'detail-equipment', params: { id: payload } });
     },
     edit(payload) {
       console.log('Editar', payload);
-      this.$router.push({ name: 'edit-equipment', params: { id: 100 } });
+      this.$router.push({ name: 'edit-equipment', params: { id: payload } });
     },
     setSelectedOpt(opt) {
       this.inputSearch.inputLabel = opt;
