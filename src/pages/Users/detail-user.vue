@@ -106,7 +106,7 @@ export default defineComponent({
     async fetchUserData() {
       try {
 
-        const userId = this.$route.params.id;;
+        const userId = this.$route.params.id;
         const response = await service.getUsers(userId);
         const userData = response.data.contents[userId];
 
@@ -122,7 +122,7 @@ export default defineComponent({
         };
 
         this.textfields.left = [
-          { label: 'Nombre', class: 'q-pb-md', type: 'title', model: userData.userName },
+          { label: userData.userName, class: 'q-pb-md', type: 'title' },
           { label: 'Correo', class: 'q-pb-sm', model: userData.email },
           { label: 'Telefono', class: 'q-pb-sm', model: userData.phone },
           { label: 'Rol de usuario', class: 'q-pb-sm', model: roleMap[userData.userRole] },

@@ -4,10 +4,11 @@ export function MUTATE_USERS(state, payload) {
 
 export function MUTATE_DETAILS(state, payload) {
     state.pagination = {
-        currentPage: payload.currentPage,
+        page: payload.currentPage,
         totalItems: payload.totalItems,
         totalPages: payload.totalPages,
         rowsPerPage: payload.rowsPerPage,
+        rowsNumber: state.users.length > 0 ? state.users.length : 0
     }
     state.message = payload.details
 }

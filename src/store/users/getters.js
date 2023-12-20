@@ -7,7 +7,6 @@ export function getUsersGetter(state) {
         ],
         cardDate: roleFormater(user.userRole)
     }));
-    console.log(users);
     return users
 }
 

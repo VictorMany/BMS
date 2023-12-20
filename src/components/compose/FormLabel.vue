@@ -6,7 +6,7 @@
         <div class="row items-center q-px-sm q-py-xs">
           <div
             v-if="item.type === 'title'"
-            class="col-12 q-pr-md form__item-label__title text-weight-thin q-mb-xs"
+            class="col-12 col-sm q-pr-md form__item-label__title text-weight-thin q-mb-xs"
           >
             {{ item.label }}
           </div>

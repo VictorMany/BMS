@@ -6,8 +6,17 @@
       </div>
       <header-actions :titlePage="'Notificaciones'" :btn-action="btnAction" />
       <div class="main-container-page" style="height: 85%">
-        <q-scroll-area class="full-height q-pb-sm" style="height: 95% !important"
-          :thumb-style="{ right: '0px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 0 }">
+        <q-scroll-area
+          class="full-height q-pb-sm"
+          style="height: 95% !important"
+          :thumb-style="{
+            right: '0px',
+            borderRadius: '5px',
+            background: 'rgba(29, 100, 231, 0.2)',
+            width: '5px',
+            opacity: 0,
+          }"
+        >
           <q-list>
             <div v-for="(item, i) in listNotifications" :key="i">
               <q-item class="q-mb-sm setting-item flex items-center clickable">
@@ -35,11 +44,20 @@
             </div>
           </q-list>
           <div class="col-12 q-py-sm">
-              <div class="card-graphics__title q-mt-sm text-start ellipsis" style="border: none">
-                Historial de notificaciones
-              </div>
-              <general-table :rows="rows" :columns="columns" :actions-table="actionsTable"
-                v-model:row-selected="rowSelected" :pagination-prop="paginationProp" height="auto"/>
+            <div
+              class="card-graphics__title q-mt-sm text-start ellipsis"
+              style="border: none"
+            >
+              Historial de notificaciones
+            </div>
+            <general-table
+              :rows="rows"
+              :columns="columns"
+              :actions-table="actionsTable"
+              v-model:row-selected="rowSelected"
+              :pagination-prop="paginationProp"
+              height="auto"
+            />
           </div>
         </q-scroll-area>
       </div>
@@ -48,61 +66,61 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue'
-import GeneralTable from 'src/components/compose/GeneralTable.vue'
+import { defineComponent } from 'vue';
+import HeaderActions from 'src/components/compose/HeaderActions.vue';
+import BtnAction from 'src/components/atomic/BtnAction.vue';
+import GeneralTable from 'src/components/compose/GeneralTable.vue';
 
 export default defineComponent({
   name: 'SettingsPage',
   components: {
     HeaderActions,
     BtnAction,
-    GeneralTable
+    GeneralTable,
   },
-  data () {
+  data() {
     return {
       Equipos: 40,
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
         to: 'settings',
-        btnWidth: 'auto'
+        btnWidth: 'auto',
       },
       btnCloseWindow: {
         iconName: 'close',
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        btnAction: this.goBack
+        btnAction: this.goBack,
       },
       textfields: {
         imageInput: true,
         top: [
           {
             label: 'Nombre del hospital',
-            model: ''
+            model: '',
           },
           {
             label: 'Correo electrónico',
-            model: ''
+            model: '',
           },
           {
             label: 'Dirección',
-            model: ''
-          }
+            model: '',
+          },
         ],
         left: [
           {
             label: 'Tipo de cuenta',
-            model: ''
-          }
+            model: '',
+          },
         ],
         right: [],
-        textArea: {}
+        textArea: {},
       },
       paginationProp: {
-        rowsPerPage: 7
+        rowsPerPage: 7,
       },
       listNotifications: [
         {
@@ -110,15 +128,15 @@ export default defineComponent({
           subtitle: 'Información asociada a tu cuenta en el sistema',
           img: 'messages.png',
           model: false,
-          link: 'main-account'
+          link: 'main-account',
         },
         {
           title: 'Recibir notificaciones en el escritorio',
           subtitle: 'Alertas del sistema',
           img: 'notification.png',
           model: false,
-          link: 'notifications'
-        }
+          link: 'notifications',
+        },
       ],
       // Table
       columns: [
@@ -127,139 +145,162 @@ export default defineComponent({
           required: true,
           label: 'Notificación',
           align: 'left',
-          field: row => row.title_notification,
-          format: val => `${val}`,
-          sortable: true
+          field: (row) => row.title_notification,
+          format: (val) => `${val}`,
+          sortable: true,
         },
-        { name: 'date', label: 'Fecha', field: 'date', align: 'right', sortable: true }
+        {
+          name: 'date',
+          label: 'Fecha',
+          field: 'date',
+          align: 'right',
+          sortable: true,
+        },
       ],
       rows: [
         {
           id: 1,
-          title_notification: 'Hoy esta programado el plan PL-0003 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0003 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 2,
-          title_notification: 'Hoy esta programado el plan PL-0004 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0004 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 3,
-          title_notification: 'Hoy esta programado el plan PL-0006 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0006 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 4,
-          title_notification: 'Hoy esta programado el plan PL-0003 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0003 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 5,
-          title_notification: 'Hoy esta programado el plan PL-0004 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0004 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 6,
-          title_notification: 'Hoy esta programado el plan PL-0006 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0006 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 7,
-          title_notification: 'Hoy esta programado el plan PL-0003 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0003 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 8,
-          title_notification: 'Hoy esta programado el plan PL-0004 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0004 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 9,
-          title_notification: 'Hoy esta programado el plan PL-0006 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0006 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 10,
-          title_notification: 'Hoy esta programado el plan PL-0003 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0003 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 11,
-          title_notification: 'Hoy esta programado el plan PL-0004 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0004 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 12,
-          title_notification: 'Hoy esta programado el plan PL-0006 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0006 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 13,
-          title_notification: 'Hoy esta programado el plan PL-0003 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0003 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 14,
-          title_notification: 'Hoy esta programado el plan PL-0004 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0004 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 15,
-          title_notification: 'Hoy esta programado el plan PL-0006 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0006 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 16,
-          title_notification: 'Hoy esta programado el plan PL-0003 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0003 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 17,
-          title_notification: 'Hoy esta programado el plan PL-0004 Equipos de choque',
-          date: '12-Jun-2022'
+          title_notification:
+            'Hoy esta programado el plan PL-0004 Equipos de choque',
+          date: '12-Jun-2022',
         },
         {
           id: 18,
-          title_notification: 'Hoy esta programado el plan PL-0006 Equipos de choque',
-          date: '12-Jun-2022'
-        }
+          title_notification:
+            'Hoy esta programado el plan PL-0006 Equipos de choque',
+          date: '12-Jun-2022',
+        },
       ],
       actionsTable: [
         {
           icnName: 'read_more',
           icnSize: 'sm',
-          icnAction: 'Detail'
+          icnAction: 'Detail',
         },
         {
           icnName: 'edit',
           icnSize: 'xs',
-          icnAction: 'Edit'
-        }
+          icnAction: 'Edit',
+        },
       ],
-      rowSelected: {}
-    }
+      rowSelected: {},
+    };
   },
-  setup () {
+  setup() {
     const getImageUrl = (url) => {
       try {
-        return new URL(`../../assets/png/${url}`,
-          import.meta.url).href
+        return new URL(`../../assets/png/${url}`, import.meta.url).href;
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
     return {
       getImageUrl,
-      basicToolBar: [['unordered', 'ordered']]
-    }
+      basicToolBar: [['unordered', 'ordered']],
+    };
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
-    }
-  }
-})
+      this.$router.go(-1);
+    },
+  },
+});
 </script>
 
 <style scoped lang="scss">
@@ -273,5 +314,4 @@ export default defineComponent({
   width: 40px !important;
   height: 40px !important;
 }
-
 </style>

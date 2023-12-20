@@ -1,12 +1,12 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <q-input
+    v-model="modelLocal"
     class="input-style q-px-sm"
     borderless
     dense
     :label="inputLabel"
     :dark="false"
-    v-model="modelLocal"
   >
     <template v-slot:prepend>
       <q-icon color="primary" name="search" />
@@ -134,6 +134,7 @@ export default defineComponent({
         size: 'sm',
         icon: 'keyboard_arrow_down',
       },
+      options: ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'],
       modelLocal: this.model,
     };
   },

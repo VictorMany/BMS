@@ -36,7 +36,6 @@ export async function postUserAction(context, user) {
     return await service.postUser(payload).then(async (response) => {
         try {
             if (response.status == 201) {
-                console.log(response.data);
                 context.commit('ADD_USERS', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
                 return manageResponse('Añadir usuario', true)
             } else {

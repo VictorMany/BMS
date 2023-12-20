@@ -6,7 +6,7 @@
       :rows="rows"
       :columns="columns"
       row-key="id"
-      :rows-per-page-options="[10, 20, 100]"
+      :rows-per-page-options="[-1]"
       :hide-pagination="!showPagination"
       v-model:pagination="pagination"
     >
@@ -28,8 +28,10 @@
             v-model="pagination.page"
             dense
             class="q-mt-none pagination-style"
-            :max="pagesNumber"
+            :max="pagination.pagesNumber"
             size="md"
+            @update:model-value="changePagination"
+            direction-links
           />
         </div>
       </template>
@@ -57,7 +59,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref } from 'vue';
 import IconAction from 'src/components/atomic/IconAction.vue';
 
 export default defineComponent({
@@ -104,17 +106,16 @@ export default defineComponent({
       }),
     },
   },
-  setup(props) {
+  setup() {
     const pagination = ref({
       descending: false,
+      rowsPerPage: 12,
       page: 1,
     });
 
     return {
       pagination,
-      pagesNumber: computed(() =>
-        Math.ceil(props.rows.length / pagination.value.rowsPerPage)
-      ),
+      pagesNumber: 1,
     };
   },
   methods: {
@@ -125,6 +126,7 @@ export default defineComponent({
         action,
       });
     },
+
     checkColor(status) {
       let color;
       switch (status) {
@@ -137,34 +139,49 @@ export default defineComponent({
       }
       return color;
     },
+
+    // Changing pagination obj
+    changePagination(page) {
+      let pag = {
+        ...this.pagination,
+        page: page,
+      };
+      this.$emit('change-pagination', pag);
+    },
   },
   watch: {
-    pagination: {
-      handler(value) {
-        if (value.page > 0)
-          this.$emit('update:paginationProp', {
-            ...this.pagination,
-            ...value,
-          });
-
-        console.log(this.pagination);
+    // Changing pagination rows
+    'pagination.rowsPerPage': {
+      handler(rowsPerPage) {
+        console.log('CHANGING THE ROWS PER PAGE');
+        let pag = {
+          ...this.pagination,
+          rowsPerPage: rowsPerPage,
+        };
+        this.$emit('change-pagination', pag);
       },
+    },
+
+    paginationProp: {
+      handler(value) {
+        this.pagination.rowsPerPage = value.rowsPerPage;
+        this.pagination.pagesNumber = value.totalPages;
+        this.pagination.rowsNumber = value.rowsNumber;
+
+        if (value.page) this.pagination.page = value.page;
+      },
+      immediate: true,
       deep: true,
     },
-    // paginationProp: {
-    //   handler(value) {
-    //     if (value.page > 0 && this.pagination.totalPages != value.totalPages)
-    //       this.pagination = {
-    //         ...this.pagination,
-    //         ...value,
-    //       };
-    //   },
-    // },
-  },
-  created() {
-    if (this.paginationProp) {
-      this.pagination.rowsPerPage = this.paginationProp.rowsPerPage;
-    }
+
+    rows: {
+      handler(value) {
+        console.log('SU VALOR', value);
+        console.log(this.pagination.rowsPerPage);
+      },
+      immediate: true,
+      deep: true,
+    },
   },
 });
 </script>

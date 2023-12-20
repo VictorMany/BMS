@@ -3,7 +3,7 @@ export default function () {
         users: [],
         message: '',
         pagination: {
-            currentPage: 1,
+            page: 1,
             totalItems: 0,
             rowsPerPage: 12,
             totalPages: 1

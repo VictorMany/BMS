@@ -14,6 +14,7 @@
       >
         <q-scroll-area
           v-if="switchContent === 1"
+          style="height: 85% !important"
           class="fit"
           :thumb-style="{
             right: '6px',
@@ -46,13 +47,30 @@
             </div>
           </div>
         </q-scroll-area>
+        <div
+          v-if="switchContent === 1"
+          style="height: 5.25%"
+          class="row justify-center"
+        >
+          <q-pagination
+            v-model="paginationCards.page"
+            dense
+            class="q-mt-none pagination-style"
+            :max="paginationCards.pagesNumber"
+            size="md"
+            @update:model-value="changePaginationCards"
+            direction-links
+          />
+        </div>
+
         <general-table
           v-else-if="switchContent === 2"
+          v-model:row-selected="rowSelected"
           :rows="rows"
           :columns="columns"
           :actions-table="actionsTable"
-          v-model:pagination-prop="pagination"
-          v-model:row-selected="rowSelected"
+          :pagination-prop="pagination"
+          @change-pagination="changePagination"
         />
       </div>
     </div>
@@ -66,7 +84,7 @@ import ItemCard from 'src/components/atomic/ItemCard.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
 
 export default defineComponent({
-  name: 'EquipmentsPage',
+  name: 'UsersPage',
   components: {
     GeneralTable,
     HeaderActions,
@@ -80,10 +98,7 @@ export default defineComponent({
       switchContent: 1,
       timeoutSearch: null,
 
-      pagination: {
-        rowsPerPage: 12,
-        totalPages: 2,
-      },
+      localPagination: {},
 
       actionsTable: [
         {
@@ -157,26 +172,18 @@ export default defineComponent({
         name: '',
       },
       rowSelected: {},
+
+      paginationCards: {
+        descending: false,
+        rowsPerPage: 12,
+        page: 1,
+      },
     };
   },
   created() {
     this.getUsers({});
   },
   watch: {
-    // switchContent: {
-    //   handler(val) {
-    //     if (val === 2) {
-    //       this.rows = this.users.map((e) => {
-    //         return {
-    //           user: e.cardTitle,
-    //           carrer: e.cardLabels[0].label,
-    //           role: e.cardDate,
-    //         };
-    //       });
-    //     }
-    //   },
-    //   deep: true,
-    // },
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
@@ -187,10 +194,9 @@ export default defineComponent({
       },
       deep: true,
     },
-    searchModel(val) {
-      console.log('THIS ARE MY PROPS', Object.keys(this.params));
-      let params = {};
 
+    searchModel(val) {
+      let params = {};
       if (Object.keys(this.params).length > 0) {
         /**
          * @this.params[0] -> Name, Status, Role
@@ -206,22 +212,23 @@ export default defineComponent({
       }, this.delaySearch);
     },
 
-    /**
-     * When change something in my pagination
-     */
-    // pagination: {
-    //   handler(value) {
-    //     console.log('EN EL PADRE', value);
-    //     // this.$emit('update:paginationProp', value);
+    pagination: {
+      handler(value) {
+        this.paginationCards.rowsPerPage = value.rowsPerPage;
+        this.paginationCards.pagesNumber = value.totalPages;
+        this.paginationCards.rowsNumber = value.rowsNumber;
+      },
+      immediate: true,
+      deep: true,
+    },
 
-    //     this.getUsers({
-    //       ...this.params,
-    //       ...value,
-    //     });
-    //   },
-    //   deep: true,
-    // },
-
+    switchContent: {
+      handler(val) {
+        if (val === 1) this.paginationCards.page = this.pagination.page;
+        else this.pagination.page = this.paginationCards.page;
+      },
+      deep: true,
+    },
   },
   computed: {
     users: {
@@ -229,6 +236,13 @@ export default defineComponent({
         return this.$store.getters['users/getUsersGetter'];
       },
     },
+
+    pagination: {
+      get() {
+        return this.$store.getters['users/getPaginationGetter'];
+      },
+    },
+
     rows() {
       return this.users.map((e) => {
         return {
@@ -239,23 +253,23 @@ export default defineComponent({
       });
     },
   },
+
   methods: {
     async getUsers(params) {
       await this.$store.dispatch('users/getUsersAction', params);
-
-      this.pagination = this.$store.getters['users/getPaginationGetter'];
-      console.log(this.pagination, 'HERE')
-
-      // this.pagination.rowsPerPage = 5 // add from back
+      // this.localPagination = this.$store.getters['users/getPaginationGetter'];
     },
+
     readMore(payload) {
       console.log('Ver detalle', payload);
       this.$router.push({ name: 'detail-user', params: { id: payload } });
     },
+
     edit(payload) {
       console.log(payload);
       this.$router.push({ name: 'edit-user', params: { id: 100 } });
     },
+
     setSelectedOpt(opt) {
       this.inputSearch.inputLabel = opt;
       console.log(opt);
@@ -278,6 +292,22 @@ export default defineComponent({
       };
 
       this.getUsers(this.params);
+    },
+
+    changePagination(pagination) {
+      console.log('Cambia la paginacion', pagination);
+      this.getUsers({
+        page: pagination.page,
+        rowsPerPage: pagination.rowsPerPage,
+      });
+    },
+
+    // Changing pagination obj
+    changePaginationCards(page) {
+      this.getUsers({
+        page,
+        rowsPerPage: 12,
+      });
     },
   },
 });
