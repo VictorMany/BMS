@@ -1,75 +1,38 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <q-input
-    v-model="modelLocal"
-    class="input-style q-px-sm"
-    borderless
-    dense
-    :label="inputLabel"
-    :dark="false"
-  >
+  <q-input v-model="modelLocal" class="input-style q-px-sm" borderless dense :label="inputLabel" :dark="false">
     <template v-slot:prepend>
-      <q-icon
-        color="primary"
-        name="search"
-      />
+      <q-icon color="primary" name="search" />
     </template>
     <template v-slot:append>
-      <q-btn
-        class="btn-style border-shadow q-pa-none q-pl-md q-pr-xs"
-        :label="btnFilter.title"
-        :size="'sm'"
-        no-caps
-      >
+      <q-btn class="btn-style border-shadow q-pa-none q-pl-md q-pr-xs" :label="btnFilter.title" :size="'sm'" no-caps>
         <div class="no-wrap q-pa-none q-ml-auto">
-          <q-icon
-            right
-            :name="btnFilter.icon"
-            class="q-ml-md q-ma-xs"
-          />
+          <q-icon right :name="btnFilter.icon" class="q-ml-md q-ma-xs" />
         </div>
         <q-popup-proxy class="border-radius">
-          <q-banner
-            class="border-shadow q-px-sm"
-            style="width: 300px; height: auto"
-          >
-            <q-scroll-area
-              :style="`height: ${heightModal} !important`"
-              class="fit"
-              :thumb-style="{
-                borderRadius: '5px',
-                background: 'rgba(29, 100, 231, 0.2)',
-                width: '0px',
-                opacity: 1,
-              }"
-            >
+          <q-banner class="border-shadow q-px-sm" style="width: 300px; height: auto">
+            <q-scroll-area :style="`height: ${heightModal} !important`" class="fit" :thumb-style="{
+              borderRadius: '5px',
+              background: 'rgba(29, 100, 231, 0.2)',
+              width: '0px',
+              opacity: 1,
+            }">
               <q-list class="q-px-none">
-                <div
-                  v-for="(item, i) in items"
-                  class="item-filter"
-                  @click="setSelectedOpt(item.title)"
-                  :key="i"
-                >
-                  <q-item
-                    class="flex items-center border-radius"
-                    clickable
-                  >
+                <div v-for="(item, i) in items" class="item-filter" @click="setSelectedOpt(item.title)" :key="i">
+
+                  <q-item class="flex items-center border-radius" clickable>
                     <q-item-section avatar>
-                      <q-avatar
-                        size="md"
-                        class="avatar-item"
-                        color="primary"
-                      >
-                        <q-icon
-                          color="white"
-                          :name="item.icon"
-                        />
+                      <q-avatar size="md" class="avatar-item" color="primary">
+                        <q-icon color="white" :name="item.icon" />
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>
                       <q-item-label class="setting-item__title">
                         {{ item.title }}
                       </q-item-label>
+                    </q-item-section>
+                    <q-item-section side v-if="item.toggle">
+                      <q-toggle @update:model-value="setSelectedStatus" color="blue" v-model="status" />
                     </q-item-section>
                   </q-item>
                 </div>
@@ -83,7 +46,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'InputSearch',
@@ -113,6 +76,11 @@ export default defineComponent({
       required: false,
       default: () => { },
     },
+    setSelectedStatus: {
+      type: Function,
+      required: false,
+      default: () => { },
+    },
     items: {
       type: Array,
       required: false,
@@ -138,6 +106,7 @@ export default defineComponent({
     };
     return {
       getImageUrl,
+      status: ref(true),
       basicToolBar: [['unordered', 'ordered']],
     };
   },

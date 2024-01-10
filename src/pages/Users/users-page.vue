@@ -154,6 +154,7 @@ export default defineComponent({
         show: true,
         inputLabel: 'Buscar por nombre',
         setSelectedOpt: this.setSelectedOpt,
+        setSelectedStatus: this.setSelectedStatus,
         heightModal: '150px',
         items: [
           {
@@ -163,6 +164,7 @@ export default defineComponent({
           {
             title: 'Estatus',
             icon: 'supervisor_account',
+            toggle: true
           },
           {
             title: 'Role',
@@ -298,6 +300,15 @@ export default defineComponent({
       };
 
       this.getUsers(this.params);
+    },
+
+    
+    setSelectedStatus(opt) {
+      this.params = {
+        status: opt? 1 : 0,
+      };
+     this.getUsers(this.params)
+     console.log(opt);
     },
 
     changePagination(pagination) {
