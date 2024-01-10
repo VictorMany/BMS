@@ -9,7 +9,10 @@
     :dark="false"
   >
     <template v-slot:prepend>
-      <q-icon color="primary" name="search" />
+      <q-icon
+        color="primary"
+        name="search"
+      />
     </template>
     <template v-slot:append>
       <q-btn
@@ -19,7 +22,11 @@
         no-caps
       >
         <div class="no-wrap q-pa-none q-ml-auto">
-          <q-icon right :name="btnFilter.icon" class="q-ml-md q-ma-xs" />
+          <q-icon
+            right
+            :name="btnFilter.icon"
+            class="q-ml-md q-ma-xs"
+          />
         </div>
         <q-popup-proxy class="border-radius">
           <q-banner
@@ -43,10 +50,20 @@
                   @click="setSelectedOpt(item.title)"
                   :key="i"
                 >
-                  <q-item class="flex items-center border-radius" clickable>
+                  <q-item
+                    class="flex items-center border-radius"
+                    clickable
+                  >
                     <q-item-section avatar>
-                      <q-avatar size="md" class="avatar-item" color="primary">
-                        <q-icon color="white" :name="item.icon" />
+                      <q-avatar
+                        size="md"
+                        class="avatar-item"
+                        color="primary"
+                      >
+                        <q-icon
+                          color="white"
+                          :name="item.icon"
+                        />
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>
@@ -94,7 +111,7 @@ export default defineComponent({
     setSelectedOpt: {
       type: Function,
       required: false,
-      default: () => {},
+      default: () => { },
     },
     items: {
       type: Array,

@@ -4,9 +4,7 @@
       <div class="column items-end q-mt-md q-mb-xs">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions
-        :titlePage="'Roles de usuarios y asignación de permisos'"
-      />
+      <header-actions :titlePage="'Roles de usuarios y asignación de permisos'" />
       <div
         class="main-container-page main-container-page-medium-dark"
         style="height: 85%"
@@ -14,13 +12,7 @@
         <q-scroll-area
           class="full-height q-pb-sm"
           style="height: 100% !important"
-          :thumb-style="{
-            right: '6px',
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 1,
-          }"
+          :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <div class="row q-pa-lg justify-between">
             <div class="col-12 col-md-7 q-pr-md">
@@ -35,10 +27,11 @@
                 }"
               >
                 <q-list>
-                  <div v-for="(item, i) in listRoles" :key="i">
-                    <q-item
-                      class="q-mb-sm setting-item flex items-center clickable"
-                    >
+                  <div
+                    v-for="(item, i) in listRoles"
+                    :key="i"
+                  >
+                    <q-item class="q-mb-sm setting-item flex items-center clickable">
                       <q-item-section avatar>
                         <q-avatar class="avatar-item">
                           <img :src="getImageUrl(item.img)" />
@@ -48,7 +41,10 @@
                         <q-item-label class="setting-item__title">{{
                           item.title
                         }}</q-item-label>
-                        <q-item-label class="setting-item__subtitle" caption>{{
+                        <q-item-label
+                          class="setting-item__subtitle"
+                          caption
+                        >{{
                           item.subtitle
                         }}</q-item-label>
                       </q-item-section>

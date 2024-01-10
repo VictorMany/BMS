@@ -26,13 +26,7 @@
         <q-scroll-area
           class="full-height q-pb-sm"
           style="height: 95% !important"
-          :thumb-style="{
-            right: '6px',
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 1,
-          }"
+          :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <form-text-field :textfields="textfields" />
         </q-scroll-area>

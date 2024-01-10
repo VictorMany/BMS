@@ -3,8 +3,15 @@
     class="my-card cursor-pointer non-selectable"
     @click="cardAction(index)"
   >
-    <q-card-section class="q-pa-xs q-ma-none" horizontal>
-      <q-img class="col-5 img-style" :src="cardImg" />
+    <q-card-section
+      class="q-pa-xs q-ma-none"
+      horizontal
+    >
+      <q-img
+        v-if="cardImg"
+        class="col-5 img-style"
+        :src="cardImg"
+      />
       <q-card-section class="q-py-sm q-px-sm ellipsis w-100">
         <div class="card-typography q-pb-xs ellipsis">
           {{ cardTitle }}
@@ -17,11 +24,10 @@
           <div
             v-if="label.label"
             class="q-pb-xs"
-            :class="
-              label.info === undefined
-                ? 'card-typography-info col-12'
-                : 'card-typography col-6'
-            "
+            :class="label.info === undefined
+              ? 'card-typography-info col-12'
+              : 'card-typography col-6'
+              "
           >
             {{ label.label }}
           </div>
@@ -119,6 +125,7 @@ export default defineComponent({
     width: 100% !important;
   }
 }
+
 @media only screen and (min-device-width: 1000px) {
   .my-card {
     width: 280px !important;

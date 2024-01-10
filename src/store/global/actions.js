@@ -17,7 +17,6 @@ export function formatPayload(context, { keys, textfields }) {
                         if (k == textfields[prop][i][key]) {
                             // Verificar si la clave ya existe en FormData
                             if (!fd.has(k)) {
-                                console.log('LA KEY', k);
                                 if (textfields[prop][i].type === 'select') {
                                     fd.append(k, textfields[prop][i].model.value);
                                 } else {
@@ -28,13 +27,48 @@ export function formatPayload(context, { keys, textfields }) {
                     }
                 }
             } else {
-                // Verificar si la clave ya existe en FormData
-                if (!fd.has(k)) {
-                    // console.log('No es un array. Valor: ' + textfields[prop]);
+                for (let key in textfields[prop]) {
+                    if (k == textfields[prop][key]) {
+                        // Verificar si la clave ya existe en FormData
+                        if (!fd.has(k)) {
+                            fd.append(k, textfields[prop].model);
+                        }
+                    }
                 }
             }
         }
     }
-    // console.log('BODY: ', fd);
     return fd;
+}
+
+export function formatTextfields(inputJson, { keys, textfields }) {
+    const filledModel = {};
+
+    for (const side of ['left', 'right']) {
+        if (inputJson[side] && Array.isArray(inputJson[side])) {
+            filledModel[side] = inputJson[side].map((item) => {
+                const modelKey = keys.find((k) => k === item.model);
+
+                if (modelKey) {
+                    if (item.type === 'select') {
+                        return { ...item, model: textfields[modelKey].value };
+                    } else {
+                        return { ...item, model: textfields[modelKey] };
+                    }
+                }
+
+                return item;
+            });
+        }
+    }
+
+    if (inputJson.textarea) {
+        filledModel.textarea = textfields[inputJson.textarea.model];
+    }
+
+    if (inputJson.image) {
+        filledModel.image = textfields[inputJson.image.model];
+    }
+
+    return filledModel;
 }

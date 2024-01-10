@@ -7,6 +7,11 @@ export default class EquipmentService {
     static getEquipments(params) {
         return api.get(this.endpoint + 'list', {
             params
-        }); // Utiliza $api para realizar la petición
+        });
+    }
+
+    // Generar nuevo equipo
+    static postEquipment(payload) {
+        return api.post(this.endpoint + 'create', payload);
     }
 }

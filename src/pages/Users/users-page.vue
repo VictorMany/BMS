@@ -16,13 +16,7 @@
           v-if="switchContent === 1"
           style="height: 85% !important"
           class="fit"
-          :thumb-style="{
-            right: '6px',
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 1,
-          }"
+          :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <div style="max-width: 100%">
             <div
@@ -41,16 +35,20 @@
                 />
               </div>
             </div>
-            <div class="q-ma-xl q-pa-xl text-center no-info" v-else>
+            <div
+              class="q-ma-xl q-pa-xl text-center no-info"
+              v-else-if="loading === false"
+            >
               No hay usuarios para mostrar
               <strong class="text-negative">!</strong>
             </div>
           </div>
         </q-scroll-area>
+
         <div
-          v-if="switchContent === 1"
-          style="height: 5.25%"
-          class="row justify-center"
+          v-if="switchContent === 1 && users.length > 0"
+          style="height: 6.55%"
+          class="row justify-center q-pt-sm"
         >
           <q-pagination
             v-model="paginationCards.page"
@@ -97,6 +95,7 @@ export default defineComponent({
       showCards: true,
       switchContent: 1,
       timeoutSearch: null,
+      loading: true,
 
       localPagination: {},
 
@@ -112,11 +111,13 @@ export default defineComponent({
           icnAction: 'Edit',
         },
       ],
+
       btnAction: {
         show: true,
         btnTitle: 'Añadir usuario',
         to: 'add-user',
       },
+
       columns: [
         {
           name: 'user',
@@ -148,6 +149,7 @@ export default defineComponent({
           align: 'center',
         },
       ],
+
       inputSearch: {
         show: true,
         inputLabel: 'Buscar por nombre',
@@ -168,9 +170,11 @@ export default defineComponent({
           },
         ],
       },
+
       params: {
         name: '',
       },
+
       rowSelected: {},
 
       paginationCards: {
@@ -256,8 +260,9 @@ export default defineComponent({
 
   methods: {
     async getUsers(params) {
+      this.loading = true
       await this.$store.dispatch('users/getUsersAction', params);
-      // this.localPagination = this.$store.getters['users/getPaginationGetter'];
+      this.loading = false
     },
 
     readMore(payload) {
@@ -312,11 +317,3 @@ export default defineComponent({
   },
 });
 </script>
-
-
-<style lang="scss" scoped>
-.no-info {
-  background-color: $accent;
-  border-radius: 0.6rem;
-}
-</style>

@@ -13,6 +13,10 @@ export function MUTATE_DETAILS(state, payload) {
     state.message = payload.details
 }
 
-export function ADD_USERS(state, payload) {
+export function ADD_USER(state, payload) {
     state.users = [...state.users, payload];
+}
+
+export function UPDATE_USER(state, payload) {
+    console.log('Tratando de actuializar el usuario', payload)
 }

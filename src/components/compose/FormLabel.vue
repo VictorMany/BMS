@@ -1,14 +1,21 @@
 <template>
-  <div class="row q-px-md q-pt-none q-pb-lg" style="max-width: 1200px">
+  <div
+    class="row q-px-md q-pt-none q-pb-lg"
+    style="max-width: 1200px"
+  >
     <!-- LEFT SECTION -->
     <div class="col-12 col-sm-6">
-      <div v-for="(item, i) in textfields.left" v-bind="item" :key="i">
+      <div
+        v-for="(item, i) in textfields.left"
+        v-bind="item"
+        :key="i"
+      >
         <div class="row items-center q-px-sm q-py-xs">
           <div
             v-if="item.type === 'title'"
             class="col-12 col-sm q-pr-md form__item-label__title text-weight-thin q-mb-xs"
           >
-            {{ item.label }}
+            {{ getTitle(item) }}
           </div>
           <div
             v-else-if="item.type != 'title'"
@@ -34,7 +41,10 @@
               {{ item.model }}
             </q-chip>
           </div>
-          <div v-if="item.type === 'textarea'" class="col-12">
+          <div
+            v-if="item.type === 'textarea'"
+            class="col-12"
+          >
             <div class="row w-100 q-pa-none">
               <div
                 v-for="(textfield, i) in item.items"
@@ -44,7 +54,10 @@
                 <div class="q-mb-sm form__item-label text-weight-thin">
                   {{ textfield.label }}
                 </div>
-                <div style="border-radius: 5px" class="q-pa-sm border-line">
+                <div
+                  style="border-radius: 5px"
+                  class="q-pa-sm border-line"
+                >
                   <div v-html="textfield.model"></div>
                 </div>
               </div>
@@ -55,7 +68,11 @@
     </div>
     <!-- RIGHT SECTION -->
     <div class="col-12 col-sm q-py-lg">
-      <div v-for="(item, i) in textfields.right" v-bind="item" :key="i">
+      <div
+        v-for="(item, i) in textfields.right"
+        v-bind="item"
+        :key="i"
+      >
         <div class="row justify-end items-center q-px-sm q-py-xs">
           <div class="q-pr-md form__item-label text-weight-thin">
             {{ item.label }}
@@ -68,11 +85,10 @@
       <div
         v-if="textfields.image"
         class="q-mx-auto row"
-        :style="
-          type === 'user'
-            ? 'width: 254px !important; height: 254px; border-radius: 50%'
-            : 'width: 100%; min-height: 100%; max-width: 350px'
-        "
+        :style="type === 'user'
+          ? 'width: 254px !important; height: 254px; border-radius: 50%'
+          : 'width: 100%; min-height: 100%; max-width: 350px'
+          "
       >
         <q-img
           :class="[
@@ -85,12 +101,21 @@
       </div>
     </div>
     <!-- TEXT AREA -->
-    <div v-if="textfields.textarea.label" class="col-12 q-pa-sm q-mb-md">
+    <div
+      v-if="textfields.textarea.label"
+      class="col-12 q-pa-sm q-mb-md"
+    >
       <div class="col-12 q-pr-md form__item-label text-weight-thin q-mb-xs">
         {{ textfields.textarea.label }}
       </div>
-      <div class="q-pa-sm w-100 h-100 border-line" style="border-radius: 5px">
-        <div class="col-12 q-pr-md" v-html="textfields.textarea.model" />
+      <div
+        class="q-pa-sm w-100 h-100 border-line"
+        style="border-radius: 5px"
+      >
+        <div
+          class="col-12 q-pr-md"
+          v-html="textfields.textarea.model"
+        />
       </div>
     </div>
   </div>
@@ -130,7 +155,7 @@ export default defineComponent({
     textfields: {
       type: Object,
       required: true,
-      default: () => {},
+      default: () => { },
     },
   },
   data() {
@@ -143,6 +168,10 @@ export default defineComponent({
     };
   },
   methods: {
+    getTitle(item) {
+      if (item.label)
+        return item.label.toUpperCase()
+    },
     uploadFile(e) {
       const file = e.target.files[0];
       try {
@@ -179,11 +208,9 @@ export default defineComponent({
 <style lang="scss">
 .btn-background {
   background: rgb(0, 106, 255);
-  background: linear-gradient(
-    34deg,
-    rgba(0, 106, 255, 0.2) 0%,
-    rgba(45, 185, 255, 0.2) 44%,
-    rgba(0, 243, 255, 0.2) 100%
-  );
+  background: linear-gradient(34deg,
+      rgba(0, 106, 255, 0.2) 0%,
+      rgba(45, 185, 255, 0.2) 44%,
+      rgba(0, 243, 255, 0.2) 100%);
 }
 </style>

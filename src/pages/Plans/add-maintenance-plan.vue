@@ -15,13 +15,7 @@
         <q-scroll-area
           class="full-height q-pb-sm"
           style="height: 95% !important"
-          :thumb-style="{
-            right: '6px',
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 1,
-          }"
+          :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <form-text-field :textfields="textfields" />
           <div class="row q-px-lg">
@@ -66,11 +60,13 @@
                 minimal
                 landscape
                 :events="events"
-                :event-color="
-                  (date) => (blueEvents.includes(date) ? 'positive' : 'primary')
-                "
+                :event-color="(date) => (blueEvents.includes(date) ? 'positive' : 'primary')
+                  "
               />
-              <div class="row q-my-md" style="max-width: 418px">
+              <div
+                class="row q-my-md"
+                style="max-width: 418px"
+              >
                 <div class="col-auto">
                   <q-checkbox
                     size="sm"
@@ -82,45 +78,54 @@
                 </div>
                 <div class="col q-mb-md">
                   <q-select
-                    class="textfield-other form__item-select"
-                    filled
-                    dense
-                    borderless
                     v-model="model"
                     :options="options"
+                    dense
+                    hide-hint
+                    hide-bottom-space
+                    bottom-slots
+                    stack-label
+                    class="textfield-other form__item-input bg-accent"
+                    borderless
                   >
                     <template v-slot:option="scope">
-                      <q-item v-bind="scope.itemProps" dense>
+                      <q-item
+                        v-bind="scope.itemProps"
+                        dense
+                      >
                         <q-item-section>
-                          <q-item-label
-                            :class="scope.selected ? 'primary' : 'text-grey'"
-                            >{{ scope.label }}</q-item-label
-                          >
+                          <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
                         </q-item-section>
                       </q-item>
                     </template>
                   </q-select>
                 </div>
-                <btn-action class="q-mb-md" v-bind="btnPersonalized" />
+                <btn-action
+                  class="q-mb-md"
+                  v-bind="btnPersonalized"
+                />
                 <div class="row w-100 q-pb-sm">
                   <div class="col-12 q-pr-md form__item-label text-weight-thin">
                     Encargado
                   </div>
                   <q-select
-                    class="col-12 col-sm textfield-select form__item-input"
-                    borderless
                     dense
-                    filled
                     v-model="payload.incharged.model"
                     :options="payload.incharged.options"
+                    hide-hint
+                    hide-bottom-space
+                    bottom-slots
+                    stack-label
+                    class="textfield-select form__item-input bg-accent col-12 col-sm"
+                    borderless
                   >
                     <template v-slot:option="scope">
-                      <q-item v-bind="scope.itemProps" dense>
+                      <q-item
+                        v-bind="scope.itemProps"
+                        dense
+                      >
                         <q-item-section>
-                          <q-item-label
-                            :class="scope.selected ? 'primary' : 'text-grey'"
-                            >{{ scope.label }}</q-item-label
-                          >
+                          <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
                         </q-item-section>
                       </q-item>
                     </template>
@@ -164,7 +169,10 @@
             />
           </div>
         </q-scroll-area>
-        <div class="col-12 form__date_container" style="height: 5.25%">
+        <div
+          class="col-12 form__date_container"
+          style="height: 5.25%"
+        >
           <div class="form__date column items-end q-pa-sm q-mt-auto">
             <div>Fecha de creación <strong> 12/02/2022</strong></div>
           </div>
@@ -178,7 +186,10 @@
           <div class="form__item-label__title">Fecha personalizada</div>
         </q-card-section>
         <q-separator />
-        <q-card-section style="max-height: 50vh" class="scroll">
+        <q-card-section
+          style="max-height: 50vh"
+          class="scroll"
+        >
           <div class="row">
             <div class="col-12 col-md-auto">
               <q-date

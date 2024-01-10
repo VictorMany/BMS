@@ -20,13 +20,20 @@
       v-if="btnAction.show"
       class="col-xs col-sm-auto column content-end q-px-sm lt-md"
     >
-      <btn-action v-bind="btnAction" :btn-title="''" />
+      <btn-action
+        v-bind="btnAction"
+        :btn-title="''"
+      />
     </div>
     <div
       v-if="inputSearch"
       class="col-md-4 col-xs-12 column q-pl-sm content-end"
     >
-      <input-search class="w-100" v-bind="inputSearch" v-model:search-model="searchModelLocal" />
+      <input-search
+        class="w-100"
+        v-bind="inputSearch"
+        v-model:search-model="searchModelLocal"
+      />
     </div>
   </div>
 </template>
@@ -65,7 +72,7 @@ export default defineComponent({
     },
     switchContent: {
       type: Number,
-      default: () => {},
+      default: () => { },
       required: false,
     },
   },
@@ -93,6 +100,7 @@ export default defineComponent({
     color: $primary;
   }
 }
+
 .body--dark {
   .title-page {
     color: #91c8ff84;

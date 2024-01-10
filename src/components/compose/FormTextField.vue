@@ -1,7 +1,9 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div class="row q-px-md q-pb-sm items-stretch" style="max-width: 1200px">
-    <!-- LEFT SECTION -->
+  <div
+    class="row q-px-md q-pb-sm items-stretch"
+    style="max-width: 1200px"
+  >
     <div class="col-12 col-lg-5 col-md-6 q-pb-xs">
       <div class="row">
         <div
@@ -30,8 +32,13 @@
             />
           </div>
         </div>
+
+        <!-- LEFT SECTION -->
         <div class="col-12 q-py-xs">
-          <div v-for="(item, i) in localTextfields.left" :key="i">
+          <div
+            v-for="(item, i) in localTextfields.left"
+            :key="i"
+          >
             <div class="full-width">
               <div v-if="item.type === 'textarea'">
                 <div class="row w-100 justify-between">
@@ -39,9 +46,8 @@
                     v-for="(textfield, i) in item.items"
                     :key="i"
                     class="q-px-sm"
-                    :class="
-                      textfield.cols ? textfield.cols : 'col-12 col-sm-6 '
-                    "
+                    :class="textfield.cols ? textfield.cols : 'col-12 col-sm-6 '
+                      "
                   >
                     <div class="q-ma-sm form__item-label text-weight-thin">
                       {{ textfield.label }}
@@ -51,17 +57,17 @@
                       :placeholder="'Escribe aquí tus ' + textfield.label"
                       class="form__item-textarea bg-accent"
                       dense
-                      :toolbar="
-                        textfield.toolbar ? textfield.toolbar : basicToolBar
-                      "
+                      :toolbar="textfield.toolbar ? textfield.toolbar : basicToolBar
+                        "
                     />
                   </div>
                 </div>
               </div>
-              <div v-else class="row w-100 q-px-sm q-pb-sm">
-                <div
-                  class="col-12 col-sm q-pr-md q-pt-sm form__item-label text-weight-thin"
-                >
+              <div
+                v-else
+                class="row w-100 q-px-sm q-pb-sm"
+              >
+                <div class="col-12 col-md-12 col-lg-5 q-pr-md q-pt-sm form__item-label text-weight-thin">
                   {{ item.label }}
                 </div>
                 <q-select
@@ -77,12 +83,12 @@
                   :options="item.options"
                 >
                   <template v-slot:option="scope">
-                    <q-item v-bind="scope.itemProps" dense>
+                    <q-item
+                      v-bind="scope.itemProps"
+                      dense
+                    >
                       <q-item-section>
-                        <q-item-label
-                          :class="scope.selected ? 'primary' : 'text-grey'"
-                          >{{ scope.label }}</q-item-label
-                        >
+                        <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
                       </q-item-section>
                     </q-item>
                   </template>
@@ -100,7 +106,12 @@
                   stack-label
                 >
                   <template v-slot:append>
-                    <q-btn icon="event" size="xs" flat round>
+                    <q-btn
+                      icon="event"
+                      size="xs"
+                      flat
+                      round
+                    >
                       <q-popup-proxy
                         cover
                         transition-show="scale"
@@ -169,16 +180,15 @@
             unelevated
             class="btn-background-dark q-mt-xl btn-background-color"
             :class="{ 'btn-background': ImageBase64 && type === 'user' }"
-            :style="
-              type === 'user'
-                ? 'width: 205px; height: 205px; border-radius: 50%'
-                : 'width: 100%; min-height: 230px; max-width: 340px; border-radius: 12px'
-            "
+            :style="type === 'user'
+              ? 'width: 205px; height: 205px; border-radius: 50%'
+              : 'width: 100%; min-height: 230px; max-width: 340px; border-radius: 12px'
+              "
             @click="
               pdfObject.name
                 ? clearFileInput($refs.fileUpload)
                 : $refs.fileUpload.click()
-            "
+              "
           >
             <q-img
               :class="[
@@ -194,16 +204,12 @@
             />
           </q-btn>
 
-          <div
-            class="form__item-label text-weight-thin text-center text-underline q-mt-sm w-100 q-mb-auto"
-          >
-            <span
-              @click="
-                pdfObject.name
-                  ? clearFileInput($refs.fileUpload)
-                  : $refs.fileUpload.click()
-              "
-            >
+          <div class="form__item-label text-weight-thin text-center text-underline q-mt-sm w-100 q-mb-auto">
+            <span @click="
+              pdfObject.name
+                ? clearFileInput($refs.fileUpload)
+                : $refs.fileUpload.click()
+              ">
               Carga una imagen desde tus archivos
             </span>
           </div>
@@ -212,11 +218,10 @@
         <div
           v-if="localTextfields.readImage"
           class="row"
-          :style="
-            type === 'user'
-              ? 'width: 254px !important; height: 254px; border-radius: 50%'
-              : 'width: 100%; max-width: 350px;'
-          "
+          :style="type === 'user'
+            ? 'width: 254px !important; height: 254px; border-radius: 50%'
+            : 'width: 100%; max-width: 350px;'
+            "
         >
           <q-img
             :class="[
@@ -290,14 +295,14 @@ export default defineComponent({
     textfields: {
       type: Object,
       required: false,
-      default: () => {},
+      default: () => { },
     },
   },
   setup() {
     const getImageUrl = (url) => {
       try {
         return new URL(`../../assets/${url}`, import.meta.url).href;
-      } catch (error) {}
+      } catch (error) { }
     };
     return {
       getImageUrl,
@@ -338,15 +343,16 @@ export default defineComponent({
           this.pdfObject.name = file.name;
           this.pdfObject.file = file;
         }
-      } catch (error) {}
+      } catch (error) { }
     },
+
     clearFileInput(ctrl) {
       try {
         ctrl.value = null;
         this.pdfObject.name = '';
         this.pdfObject.file = {};
         this.ImageBase64 = null;
-      } catch (ex) {}
+      } catch (ex) { }
       if (ctrl.value) {
         ctrl.parentNode.replaceChild(ctrl.cloneNode(true), ctrl);
       }

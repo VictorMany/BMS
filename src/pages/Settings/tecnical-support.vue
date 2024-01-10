@@ -12,16 +12,13 @@
         <q-scroll-area
           class="full-height q-pb-sm"
           style="height: 87% !important"
-          :thumb-style="{
-            right: '6px',
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 1,
-          }"
+          :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <div class="q-pa-md row justify-center">
-            <div style="width: 100%" class="q-px-md">
+            <div
+              style="width: 100%"
+              class="q-px-md"
+            >
               <q-chat-message
                 name="BMS"
                 :text="['Hola, aquí el equipo de BMS, ¿Cómo podemos ayudarte?']"
@@ -140,5 +137,4 @@ export default defineComponent({
 .input-message {
   background-color: rgba($primary, 0.2);
   border-radius: 0.8rem;
-}
-</style>
+}</style>

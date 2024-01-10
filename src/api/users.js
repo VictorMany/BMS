@@ -7,11 +7,21 @@ export default class EquipmentService {
     static getUsers(params) {
         return api.get(this.endpoint + 'list', {
             params
-        }); // Utiliza $api para realizar la petición
+        });
+    }
+
+    // Obtiene todos los usuarios
+    static getUser(id) {
+        return api.get(this.endpoint + 'get/' + id);
     }
 
     // Generar nuevo usuario
     static postUser(payload) {
         return api.post(this.endpoint + 'create', payload);
+    }
+
+    // Actualizar nuevo usuario
+    static updateUser(payload) {
+        return api.post(this.endpoint + 'update', payload);
     }
 }
