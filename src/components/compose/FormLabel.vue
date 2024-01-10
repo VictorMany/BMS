@@ -12,13 +12,7 @@
       >
         <div class="row items-center q-px-sm q-py-xs">
           <div
-            v-if="item.type === 'title' && getTitle(item)"
-            class="col-12 col-sm q-pr-md form__item-label__title text-weight-thin q-mb-xs"
-          >
-            {{ getTitle(item) }}
-          </div>
-          <div
-            v-else-if="item.type != 'title'"
+            v-if="item.type != 'title'"
             class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-thin"
           >
             {{ item.label }}
@@ -168,10 +162,6 @@ export default defineComponent({
     };
   },
   methods: {
-    getTitle(item) {
-      if (item.label)
-        return item.label.toUpperCase()
-    },
     uploadFile(e) {
       const file = e.target.files[0];
       try {

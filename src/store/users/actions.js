@@ -15,15 +15,11 @@ export async function getUsersAction(context, params) {
 export async function getUserAction(context, params) {
     return service.getUser(params.id).then(async (response) => {
         if (response.status == 200) {
-
             // We call the global action to format our payload
             const payload = await context.dispatch('global/formatTextfields', {
                 keys: response.data.contents.user,
                 textfields: params.textfields
             }, { root: true });
-
-            console.log('ESTOS SON LOS TEXTFIELDS FORMATEADOS', payload)
-
             return payload
         } else {
             return manageResponse('Obtener usuario', false)

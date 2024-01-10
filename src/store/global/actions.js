@@ -41,23 +41,21 @@ export function formatPayload(context, { keys, textfields }) {
     return fd;
 }
 
-export function formatTextfields(context, { keys, textfields }) {
+export async function formatTextfields(context, { keys, textfields }) {
+    textfields.image = keys.photo
+    textfields.createdAt = await context.dispatch('formatDate', keys.createdAt);
 
     for (let k in keys) {
-        textfields.image = keys.photo
-
         for (let prop in textfields) {
             if (Array.isArray(textfields[prop])) {
                 for (let i = 0; i < textfields[prop].length; i++) {
                     for (let key in textfields[prop][i]) {
                         if (k == textfields[prop][i][key]) {
-                            // Verificar si la clave ya existe en FormData
-                            if (textfields[prop][i].type === 'select') {
-                                textfields[prop][i].model.value = keys[k]
-                            } if (textfields[prop][i].type === 'status') {
+                            if (textfields[prop][i].type === 'status') {
                                 textfields[prop][i] = getColorStatus(textfields[prop][i], keys[k])
+                            } else if (textfields[prop][i].key === 'userRole') {
+                                textfields[prop][i] = getRole(textfields[prop][i], keys[k])
                             } else {
-                                console.log(keys[k], k, keys)
                                 textfields[prop][i].model = keys[k]
                             }
                         }
@@ -74,15 +72,45 @@ export function formatTextfields(context, { keys, textfields }) {
         }
     }
 
-    console.log('ESTOS SON LOS TEXTFIELDS LLENOS', this.textfields)
     return textfields;
 }
 
+export function formatDate(context, date) {
+    // Crear un objeto Date a partir de la cadena
+    const initialDate = new Date(date);
+    // Definir las opciones de formato deseado
+    const optFormat = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    // Obtener la fecha formateada
+    const fechaFormateada = initialDate.toLocaleDateString('es-ES', optFormat);
 
-function getColorStatus(item, keys) {
-    console.log(item, keys)
-    item.model = 'Activo'
-    item.color = '#10D13A'
+    return fechaFormateada;
+}
 
+
+function getColorStatus(item, status) {
+    if (status) {
+        item.model = 'Activo'
+        item.color = '#10D13A'
+    } else {
+        item.model = 'Inactivo'
+        item.color = '#d1b410'
+    }
     return item
 }
+
+
+function getRole(item, role) {
+    switch (role) {
+        case 1:
+            item.model = 'Administrador'
+            break;
+        case 2:
+            item.model = 'Auxiliar'
+            break;
+        case 3:
+            item.model = 'Lector'
+            break;
+    }
+    return item
+}
+

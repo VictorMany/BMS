@@ -2,9 +2,7 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Estadísticas'" />
-      <div
-        class="main-container-page card-color q-px-sm main-container-page-medium-dark"
-      >
+      <div class="main-container-page card-color q-px-sm main-container-page-medium-dark">
         <q-scroll-area
           class="fit"
           :thumb-style="{
@@ -43,9 +41,7 @@
           <div class="row container-stats">
             <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
               <div class="card-graphics q-pb-lg row justify-center">
-                <div
-                  class="card-graphics__title w-100 text-center q-pa-sm ellipsis"
-                >
+                <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Mantenimientos vigentes
                 </div>
                 <div style="height: 200px; width: 200px">
@@ -58,9 +54,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
               <div class="card-graphics q-pb-lg row justify-center">
-                <div
-                  class="card-graphics__title w-100 text-center q-pa-sm ellipsis"
-                >
+                <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Falla repentina
                 </div>
                 <div style="height: 200px; width: 200px">
@@ -73,9 +67,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
               <div class="card-graphics q-pb-lg row justify-center">
-                <div
-                  class="card-graphics__title w-100 text-center q-pa-sm ellipsis"
-                >
+                <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Reemplazo por daño
                 </div>
                 <div style="height: 200px; width: 200px">
@@ -88,9 +80,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
               <div class="card-graphics q-pb-lg row justify-center">
-                <div
-                  class="card-graphics__title w-100 text-center q-pa-sm ellipsis"
-                >
+                <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Mantenimientos preventivos
                 </div>
                 <div style="height: 200px; width: 200px">

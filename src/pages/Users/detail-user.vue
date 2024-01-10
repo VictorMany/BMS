@@ -26,7 +26,7 @@
           class="col-12 form__date_container form__date column justify-center q-px-lg"
           style="height: 6%"
         >
-          <div>Fecha de creación: <strong>{{ formattedDate }}</strong></div>
+          <div>Fecha de creación: <strong>{{ textfields.createdAt }}</strong></div>
         </div>
       </div>
     </div>
@@ -48,14 +48,14 @@ export default defineComponent({
   },
   data() {
     return {
-      formattedDate: '',
       textfields: {
+        createdAt: '',
         left: [
           {
             key: 'userName',
-            model: '',
             class: 'q-pb-md',
             type: 'title',
+            model: '',
           },
           {
             key: 'email',
@@ -85,9 +85,9 @@ export default defineComponent({
             key: 'userStatus',
             label: 'Estatus',
             class: 'q-pb-sm',
-            color: '#10D13A',
+            color: '',
             type: 'status',
-            model: 'Activo',
+            model: '',
           },
         ],
         right: [],

@@ -155,20 +155,20 @@ export default defineComponent({
         inputLabel: 'Buscar por nombre',
         setSelectedOpt: this.setSelectedOpt,
         setSelectedStatus: this.setSelectedStatus,
-        heightModal: '150px',
+        heightModal: '160px',
         items: [
           {
             title: 'Nombre',
             icon: 'account_circle',
           },
           {
+            title: 'Role',
+            icon: 'low_priority',
+          },
+          {
             title: 'Estatus',
             icon: 'supervisor_account',
             toggle: true
-          },
-          {
-            title: 'Role',
-            icon: 'low_priority',
           },
         ],
       },
@@ -302,13 +302,13 @@ export default defineComponent({
       this.getUsers(this.params);
     },
 
-    
+
     setSelectedStatus(opt) {
       this.params = {
-        status: opt? 1 : 0,
+        status: opt ? 1 : 0,
       };
-     this.getUsers(this.params)
-     console.log(opt);
+      this.getUsers(this.params)
+      console.log(opt);
     },
 
     changePagination(pagination) {
