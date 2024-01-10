@@ -52,31 +52,37 @@ export default defineComponent({
       textfields: {
         left: [
           {
-            label: 'LUIS ALFREDO MARQUEZ PEREZ',
+            key: 'userName',
+            model: '',
             class: 'q-pb-md',
             type: 'title',
           },
           {
+            key: 'email',
             label: 'Correo',
             class: 'q-pb-sm',
-            model: 'vvf69351@udelasalle.edu.mx',
+            model: '',
           },
           {
-            label: 'Curp',
+            key: 'phone',
+            label: 'Teléfono',
             class: 'q-pb-sm',
-            model: 'VEF000228HGTLNCA9',
+            model: '',
           },
           {
-            label: 'Fecha de nacimiento',
-            class: 'q-pb-sm',
-            model: '28/04/2000',
-          },
-          {
+            key: 'userRole',
             label: 'Rol de usuario',
             class: 'q-pb-sm',
-            model: 'Administrador',
+            model: '',
           },
           {
+            key: 'birthday',
+            label: 'Fecha de nacimiento',
+            class: 'q-pb-sm',
+            model: '',
+          },
+          {
+            key: 'userStatus',
             label: 'Estatus',
             class: 'q-pb-sm',
             color: '#10D13A',
@@ -86,8 +92,7 @@ export default defineComponent({
         ],
         right: [],
         textarea: {},
-        image:
-          'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
+        image: '',
       },
       btnAction: {
         show: true,
@@ -162,7 +167,7 @@ export default defineComponent({
     // },
   },
   mounted() {
-    this.fetchUserData();
+    this.getUser();
   },
 });
 </script>

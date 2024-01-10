@@ -130,7 +130,7 @@ export default defineComponent({
             key: 'birthday',
             label: 'Fecha de nacimiento',
             type: 'date',
-            model: ref(new Date().toISOString().split('T')[0]),
+            model: ref(new Date().toLocaleDateString().split('T')[0]),
           },
         ],
         right: [],

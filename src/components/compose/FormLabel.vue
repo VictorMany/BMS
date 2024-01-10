@@ -12,7 +12,7 @@
       >
         <div class="row items-center q-px-sm q-py-xs">
           <div
-            v-if="item.type === 'title'"
+            v-if="item.type === 'title' && getTitle(item)"
             class="col-12 col-sm q-pr-md form__item-label__title text-weight-thin q-mb-xs"
           >
             {{ getTitle(item) }}

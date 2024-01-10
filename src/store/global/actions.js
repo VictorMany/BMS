@@ -41,34 +41,48 @@ export function formatPayload(context, { keys, textfields }) {
     return fd;
 }
 
-export function formatTextfields(inputJson, { keys, textfields }) {
-    const filledModel = {};
+export function formatTextfields(context, { keys, textfields }) {
 
-    for (const side of ['left', 'right']) {
-        if (inputJson[side] && Array.isArray(inputJson[side])) {
-            filledModel[side] = inputJson[side].map((item) => {
-                const modelKey = keys.find((k) => k === item.model);
+    for (let k in keys) {
+        textfields.image = keys.photo
 
-                if (modelKey) {
-                    if (item.type === 'select') {
-                        return { ...item, model: textfields[modelKey].value };
-                    } else {
-                        return { ...item, model: textfields[modelKey] };
+        for (let prop in textfields) {
+            if (Array.isArray(textfields[prop])) {
+                for (let i = 0; i < textfields[prop].length; i++) {
+                    for (let key in textfields[prop][i]) {
+                        if (k == textfields[prop][i][key]) {
+                            // Verificar si la clave ya existe en FormData
+                            if (textfields[prop][i].type === 'select') {
+                                textfields[prop][i].model.value = keys[k]
+                            } if (textfields[prop][i].type === 'status') {
+                                textfields[prop][i] = getColorStatus(textfields[prop][i], keys[k])
+                            } else {
+                                console.log(keys[k], k, keys)
+                                textfields[prop][i].model = keys[k]
+                            }
+                        }
                     }
                 }
-
-                return item;
-            });
+            } else {
+                for (let key in textfields[prop]) {
+                    if (k == textfields[prop][key]) {
+                        // Verificar si la clave ya existe en FormData
+                        textfields[prop][key].model = keys[k]
+                    }
+                }
+            }
         }
     }
 
-    if (inputJson.textarea) {
-        filledModel.textarea = textfields[inputJson.textarea.model];
-    }
+    console.log('ESTOS SON LOS TEXTFIELDS LLENOS', this.textfields)
+    return textfields;
+}
 
-    if (inputJson.image) {
-        filledModel.image = textfields[inputJson.image.model];
-    }
 
-    return filledModel;
+function getColorStatus(item, keys) {
+    console.log(item, keys)
+    item.model = 'Activo'
+    item.color = '#10D13A'
+
+    return item
 }
