@@ -250,6 +250,7 @@ export default defineComponent({
     rows() {
       return this.users.map((e) => {
         return {
+          id: e.id,
           user: e.cardTitle,
           carrer: e.cardLabels[0].label,
           role: e.cardDate,

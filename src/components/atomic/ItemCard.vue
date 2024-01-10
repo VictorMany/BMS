@@ -1,7 +1,7 @@
 <template>
   <q-card
     class="my-card cursor-pointer non-selectable"
-    @click="cardAction(index)"
+    @click="cardAction(id)"
   >
     <q-card-section
       class="q-pa-xs q-ma-none"
@@ -63,6 +63,7 @@ export default defineComponent({
       required: false,
     },
     index: { type: Number },
+    id: { type: [Number, String] },
     cardImg: {
       type: String,
       required: false,

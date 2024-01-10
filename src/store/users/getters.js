@@ -1,5 +1,6 @@
 export function getUsersGetter(state) {
     let users = state.users.map(user => ({
+        id: user.UserId,
         cardTitle: user.userName,
         cardImg: user.photo,
         cardLabels: [
