@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "bms project",
   "productName": "bms",
-  "author": "Victor Manuel Velazquez Fuentes <vvelazquez@bapcorporativo.com>",
+  "author": "Ledgers Legacy",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
