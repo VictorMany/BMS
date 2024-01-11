@@ -107,7 +107,7 @@
         style="border-radius: 5px"
       >
         <div
-          class="col-12 q-pr-md"
+          class="col-12 q-pr-md form__item-model"
           v-html="textfields.textarea.model"
         />
       </div>

@@ -441,7 +441,7 @@ export default defineComponent({
     };
   },
   methods: {
-    readMore(payload) {
+    goToDetails(payload) {
       console.log('Ver detalle', payload);
       this.$router.push({ name: 'detail-report', params: { id: 100 } });
     },
@@ -456,7 +456,7 @@ export default defineComponent({
         if (val.action === 'Edit') {
           this.edit(val.id);
         } else if (val.action === 'Detail') {
-          this.readMore(val.id);
+          this.goToDetails(val.id);
         }
       },
       deep: true,

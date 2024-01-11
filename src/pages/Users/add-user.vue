@@ -27,7 +27,7 @@
           class="col-12 form__date_container form__date column justify-center q-px-lg"
           style="height: 6%"
         >
-          <div>Fecha de creación: <strong> 12/02/2022</strong></div>
+          <div>Fecha de captura: <strong>{{ textfields.createdAt }}</strong></div>
         </div>
       </div>
     </div>
@@ -134,7 +134,7 @@ export default defineComponent({
           },
         ],
         right: [],
-        textArea: {},
+        textarea: {},
       },
     };
   },
@@ -169,7 +169,6 @@ export default defineComponent({
 
     async createUser() {
       this.btnAction.loader = true;
-
       try {
         const res = await this.$store.dispatch(
           'users/postUserAction',
@@ -188,57 +187,17 @@ export default defineComponent({
     },
 
     async getUser() {
-      // Getting user
-      const userId = this.$route.params.id;
-      // const response = await service.getUsers(userId);
-
-      try {
-        const response = await this.$store.dispatch(
-          'users/getUserAction',
-          userId
-        );
-        if (response) {
-          const userData = response.data.contents[userId];
-          const roleMap = {
-            1: 'Administrador',
-            2: 'Biomedico',
-            3: 'Lector',
-          };
-
-          const statusMap = {
-            true: { label: 'Activo', color: '#10D13A' },
-            false: { label: 'Inactivo', color: '#d1b410' }
-          };
-
-          this.textfields.left = [
-            { label: userData.userName, class: 'q-pb-md', type: 'title' },
-            { label: 'Correo', class: 'q-pb-sm', model: userData.email },
-            { label: 'Telefono', class: 'q-pb-sm', model: userData.phone },
-            { label: 'Rol de usuario', class: 'q-pb-sm', model: roleMap[userData.userRole] },
-            { label: 'Estatus', class: 'q-pb-sm', color: statusMap[userData.userStatus].color, type: 'status', model: statusMap[userData.userStatus].label }
-          ];
-
-          this.textfields.image = userData.photo;
-
-          const date = new Date(userData.createdAt);
-          this.formattedDate = date.toLocaleDateString('es-MX', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          });
-        } else {
-          console.log('PONER ALERTA');
-        }
-        this.btnAction.loader = false;
-      } catch (error) {
-        this.btnAction.loader = false;
-        this.showNotif();
+      this.loading = true
+      const params = {
+        id: this.$route.params.id,
+        textfields: this.textfields
       }
+      await this.$store.dispatch('users/getUserAction', params)
+      this.loading = false
     },
 
     async editUser() {
       this.btnAction.loader = true;
-
       try {
         const res = await this.$store.dispatch(
           'users/updateUserAction',

@@ -31,7 +31,7 @@
                 <item-card
                   v-bind="user"
                   :index="index"
-                  :card-action="readMore"
+                  :card-action="goToDetails"
                 />
               </div>
             </div>
@@ -186,16 +186,18 @@ export default defineComponent({
       },
     };
   },
+
   created() {
     this.getUsers({});
   },
+
   watch: {
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
           this.edit(val.id);
         } else if (val.action === 'Detail') {
-          this.readMore(val.id);
+          this.goToDetails(val.id);
         }
       },
       deep: true,
@@ -268,19 +270,18 @@ export default defineComponent({
       this.loading = false
     },
 
-    readMore(payload) {
+    goToDetails(payload) {
       console.log('Ver detalle', payload);
       this.$router.push({ name: 'detail-user', params: { id: payload } });
     },
 
     edit(payload) {
       console.log(payload);
-      this.$router.push({ name: 'edit-user', params: { id: 100 } });
+      this.$router.push({ name: 'edit-user', params: { id: payload } });
     },
 
     setSelectedOpt(opt) {
       this.inputSearch.inputLabel = opt;
-      console.log(opt);
 
       let type = '';
       switch (opt) {
@@ -308,11 +309,9 @@ export default defineComponent({
         status: opt ? 1 : 0,
       };
       this.getUsers(this.params)
-      console.log(opt);
     },
 
     changePagination(pagination) {
-      console.log('Cambia la paginacion', pagination);
       this.getUsers({
         page: pagination.page,
         rowsPerPage: pagination.rowsPerPage,

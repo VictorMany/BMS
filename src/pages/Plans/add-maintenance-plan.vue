@@ -305,7 +305,7 @@ export default defineComponent({
         ],
         left: [],
         right: [],
-        textArea: {},
+        textarea: {},
       },
       model: ref(null),
       days: ref(['Sábado 04, Feb 2023']),

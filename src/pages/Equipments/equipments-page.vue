@@ -31,7 +31,7 @@
                 <item-card
                   v-bind="equipment"
                   :index="index"
-                  :card-action="readMore"
+                  :card-action="goToDetails"
                 />
               </div>
             </div>
@@ -122,6 +122,7 @@ export default defineComponent({
         show: true,
         inputLabel: 'Buscar por nombre',
         setSelectedOpt: this.setSelectedOpt,
+        setSelectedStatus: this.setSelectedStatus,
         heightModal: '290px',
         items: [
           {
@@ -146,7 +147,8 @@ export default defineComponent({
           },
           {
             title: 'Estatus',
-            icon: 'toggle_on',
+            icon: 'supervisor_account',
+            toggle: true
           },
           // Resto de opciones...
         ],
@@ -216,7 +218,7 @@ export default defineComponent({
         if (val.action === 'Edit') {
           this.edit(val.id);
         } else if (val.action === 'Detail') {
-          this.readMore(val.id);
+          this.goToDetails(val.id);
         }
       },
       deep: true,
@@ -263,6 +265,7 @@ export default defineComponent({
       // Mapea la información de equipos a las filas requeridas por la tabla
       return this.equipments.map((e) => {
         return {
+          id: e.id,
           equipment: e.cardTitle,
           brand: e.cardLabels[0].info,
           no_serie: e.cardLabels[1].info,
@@ -285,7 +288,14 @@ export default defineComponent({
       this.loading = false
     },
 
-    readMore(payload) {
+    setSelectedStatus(opt) {
+      this.params = {
+        status: opt ? 1 : 0,
+      };
+      this.getEquipments(this.params)
+    },
+
+    goToDetails(payload) {
       console.log('Ver detalle', payload);
       this.$router.push({ name: 'detail-equipment', params: { id: payload } });
     },

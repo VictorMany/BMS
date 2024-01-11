@@ -2,7 +2,6 @@ import service from 'src/api/equipments'
 
 export async function getEquipmentsAction(context, params) {
     return service.getEquipments(params).then(async (response) => {
-        console.log(response)
         if (response.status == 200) {
             context.commit('MUTATE_EQUIPMENTS', response.data.contents.equipments)
             context.commit('MUTATE_DETAILS', response.data.contents)
@@ -10,6 +9,21 @@ export async function getEquipmentsAction(context, params) {
         }
         else {
             return manageResponse('Equipos', false)
+        }
+    })
+}
+
+export async function getEquipmentAction(context, params) {
+    return service.getEquipment(params.id).then(async (response) => {
+        if (response.status == 200) {
+            // We call the global action to format our payload
+            const payload = await context.dispatch('global/formatTextfields', {
+                keys: response.data.contents.equipment,
+                textfields: params.textfields
+            }, { root: true });
+            return payload
+        } else {
+            return manageResponse('Obtener equipo', false)
         }
     })
 }
@@ -27,7 +41,7 @@ export async function postEquipmentAction(context, equipment) {
         price: '',
         provider: '',
         serialNumber: '',
-        tracking_number: '',
+        trackingNumber: '',
         warrantyDate: '',
         photo: ''
     }

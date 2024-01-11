@@ -8,14 +8,22 @@
         :titlePage="'Características de un equipo'"
         :btn-action="btnAction"
       />
-      <div class="main-container-page main-container-page-dark" style="height: 82%">
-        <q-scroll-area class="full-height" style="height: 95% !important" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }">
+      <div
+        class="main-container-page main-container-page-dark"
+        style="height: 82%"
+      >
+        <q-scroll-area
+          class="full-height"
+          style="height: 92% !important"
+          :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
+        >
           <form-label :textfields="textfields" />
         </q-scroll-area>
-        <div class="col-12 form__date_container" style="height: 5.25% !important">
-          <div class="form__date column items-end q-pa-sm q-mt-auto">
-            <div>Fecha de creación  <strong> 12/02/2022</strong></div>
-          </div>
+        <div
+          class="col-12 form__date_container form__date column justify-center q-px-lg"
+          style="height: 6%"
+        >
+          <div>Fecha de creación: <strong>{{ textfields.createdAt }}</strong></div>
         </div>
       </div>
     </div>
@@ -35,72 +43,90 @@ export default defineComponent({
     FormLabel,
     BtnAction
   },
-  data () {
+  data() {
     return {
+      loading: false,
       textfields: {
+        createdAt: '',
         left: [
           {
-            label: 'Monitor de signos vitales',
+            key: 'equipmentName',
+            model: '',
             type: 'title'
           },
           {
+            key: 'trackingNumber',
             label: 'Número de control',
-            model: '567432'
+            model: ''
           },
           {
+            key: 'equipmentBrand',
             label: 'Marca',
-            model: 'Mendray'
+            model: ''
           },
           {
+            key: 'equipmentModel',
+            label: 'Modelo',
+            model: ''
+          },
+          {
+            key: 'location',
             label: 'Ubicación',
-            model: 'Piso B - Sala 4'
+            model: ''
           },
           {
+            key: 'manufacturingYear',
             label: 'Año del equipo',
-            model: '2012'
+            model: ''
           },
           {
+            key: 'provider',
             label: 'Provedor',
-            model: 'SAMSUNG'
+            model: ''
           },
           {
+            key: 'price',
             label: 'Costo',
-            model: '$ 200 000. 00'
+            model: ''
           },
           {
+            key: 'warrantyDate',
             label: 'Fecha de garantía',
             type: 'date',
-            model: '12/02/2022'
+            model: ''
           },
           {
+            key: 'updatedAt',
             label: 'Fecha de modificación',
             type: 'date',
-            model: '12/02/2022'
+            model: ''
           },
           {
+            key: 'equipmentStatus',
             label: 'Estatus',
             type: 'status',
-            color: '#10D13A',
-            model: 'Activo'
+            color: '',
+            model: ''
           }
         ],
         right: [
           {
+            key: 'serialNumber',
             label: 'No. de serie',
-            model: 'A7GTHYFRG'
+            model: ''
           }
         ],
         textarea: {
           label: 'Observaciones del equipo biomédico',
-          model: '<div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
+          model: ''
         },
-        image: 'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg'
+        image: ''
       },
       btnAction: {
         show: true,
         btnTitle: 'Editar',
         iconName: 'edit',
-        to: 'edit-1-equipment',
+        to: this.getIdToEdit(),
         btnWidth: 'auto'
       },
       btnCloseWindow: {
@@ -115,8 +141,27 @@ export default defineComponent({
   methods: {
     goBack() {
       this.$router.go(-1)
-    }
-  }
+    },
+
+    async getEquipment() {
+      this.loading = true
+
+      const params = {
+        id: this.$route.params.id,
+        textfields: this.textfields
+      }
+
+      await this.$store.dispatch('equipments/getEquipmentAction', params)
+      this.loading = false
+    },
+
+    getIdToEdit() {
+      return `edit-${this.$route.params.id}-equipment`
+    },
+  },
+  mounted() {
+    this.getEquipment();
+  },
 })
 </script>
 
@@ -128,5 +173,4 @@ export default defineComponent({
 .card-page {
   padding-top: 0 !important;
 }
-
 </style>

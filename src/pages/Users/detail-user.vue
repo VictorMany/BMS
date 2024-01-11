@@ -98,7 +98,7 @@ export default defineComponent({
         show: true,
         btnTitle: 'Editar',
         iconName: 'edit',
-        to: 'edit-1-user',
+        to: this.getIdToEdit(),
         btnWidth: 'auto',
       },
       btnCloseWindow: {
@@ -111,6 +111,10 @@ export default defineComponent({
     };
   },
   methods: {
+    getIdToEdit() {
+      return `edit-${this.$route.params.id}-user`
+    },
+
     goBack() {
       this.$router.go(-1);
     },
@@ -126,45 +130,6 @@ export default defineComponent({
       await this.$store.dispatch('users/getUserAction', params)
       this.loading = false
     },
-
-    // async fetchUserData() {
-    //   try {
-    //     const userId = this.$route.params.id;
-    //     const response = await service.getUsers(userId);
-    //     const userData = response.data.contents[userId];
-
-    //     const roleMap = {
-    //       1: 'Administrador',
-    //       2: 'Biomedico',
-    //       3: 'Lector',
-    //     };
-
-    //     const statusMap = {
-    //       true: { label: 'Activo', color: '#10D13A' },
-    //       false: { label: 'Inactivo', color: '#d1b410' }
-    //     };
-
-    //     this.textfields.left = [
-    //       { label: userData.userName, class: 'q-pb-md', type: 'title' },
-    //       { label: 'Correo', class: 'q-pb-sm', model: userData.email },
-    //       { label: 'Telefono', class: 'q-pb-sm', model: userData.phone },
-    //       { label: 'Rol de usuario', class: 'q-pb-sm', model: roleMap[userData.userRole] },
-    //       { label: 'Estatus', class: 'q-pb-sm', color: statusMap[userData.userStatus].color, type: 'status', model: statusMap[userData.userStatus].label }
-    //     ];
-
-    //     this.textfields.image = userData.photo;
-
-    //     const date = new Date(userData.createdAt);
-    //     this.formattedDate = date.toLocaleDateString('es-MX', {
-    //       year: 'numeric',
-    //       month: 'long',
-    //       day: 'numeric',
-    //     });
-
-    //   } catch (error) {
-    //     console.error('Error al obtener datos del usuario', error);
-    //   }
-    // },
   },
   mounted() {
     this.getUser();

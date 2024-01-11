@@ -8,7 +8,10 @@
       />
       <!-- Main container -->
       <div class="main-container-page main-container-page-medium-dark">
-        <div class="row card-color q-pa-md" style="height: 100%">
+        <div
+          class="row card-color q-pa-md"
+          style="height: 100%"
+        >
           <div class="col-xs-12 col-sm-auto">
             <q-date
               v-model="date"
@@ -17,9 +20,8 @@
               class="text-blue-blue-grey-4 border-line"
               landscape
               :events="events"
-              :event-color="
-                (date) => (blueEvents.includes(date) ? 'positive' : 'primary')
-              "
+              :event-color="(date) => (blueEvents.includes(date) ? 'positive' : 'primary')
+                "
             />
             <div class="col q-mt-md">
               <div class="container-colorama border-none q-pa-xs row">
@@ -39,7 +41,10 @@
               </div>
             </div>
           </div>
-          <div class="col q-pl-md" style="height: 99%">
+          <div
+            class="col q-pl-md"
+            style="height: 99%"
+          >
             <div class="row flex items-center justify-between q-mb-sm">
               <label class="form__item-label__title text-weight-light">
                 Resultados
@@ -71,7 +76,7 @@
                       <item-card
                         v-bind="equipo"
                         :index="index"
-                        :card-action="readMore"
+                        :card-action="goToDetails"
                       />
                     </div>
                   </div>
@@ -370,7 +375,7 @@ export default defineComponent({
     consultDate(event) {
       console.log(event);
     },
-    readMore(payload) {
+    goToDetails(payload) {
       console.log('Ver detalle', payload);
       this.$router.push({ name: 'detail-equipment', params: { id: 100 } });
     },
@@ -403,7 +408,7 @@ export default defineComponent({
         if (val.action === 'Edit') {
           this.edit(val.id);
         } else if (val.action === 'Detail') {
-          this.readMore(val.id);
+          this.goToDetails(val.id);
         }
       },
       deep: true,

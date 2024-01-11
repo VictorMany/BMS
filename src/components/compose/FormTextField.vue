@@ -122,8 +122,9 @@
                     </q-btn>
                   </template>
                 </q-input>
-                <!-- NORMAL INPUT -->
 
+
+                <!-- NORMAL INPUT -->
                 <q-input
                   v-else
                   v-model="item.model"
@@ -237,14 +238,14 @@
 
     <!-- TEXT AREA -->
     <div
-      v-if="localTextfields.textArea.model != undefined"
+      v-if="localTextfields.textarea.model != undefined"
       class="col-12 q-px-sm"
     >
       <div class="q-my-sm form__item-label text-weight-thin">
-        {{ localTextfields.textArea.label }}
+        {{ localTextfields.textarea.label }}
       </div>
       <q-editor
-        v-model="localTextfields.textArea.model"
+        v-model="localTextfields.textarea.model"
         :placeholder="'Escribe aquí...'"
         class="form__item-textarea bg-accent"
         :toolbar="[
@@ -320,6 +321,7 @@ export default defineComponent({
       ImageBase64: null,
     };
   },
+
   watch: {
     localTextfields: {
       handler(val) {
@@ -327,7 +329,18 @@ export default defineComponent({
       },
       deep: true,
     },
+
+    textfields: {
+      handler(val) {
+        if (val.image) {
+          console.log(val.image)
+          this.ImageBase64 = val.image
+        }
+      },
+      deep: true,
+    },
   },
+
   methods: {
     uploadFile(e) {
       const file = e.target.files[0];

@@ -106,7 +106,7 @@ export default defineComponent({
             model: 'NS-145424',
           },
         ],
-        textArea: {
+        textarea: {
           label: 'Actividades y observaciones del mantenimiento',
           model: '',
         },
@@ -128,4 +128,5 @@ export default defineComponent({
 
 .card-page {
   padding-top: 0 !important;
-}</style>
+}
+</style>

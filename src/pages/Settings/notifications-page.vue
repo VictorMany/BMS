@@ -4,8 +4,14 @@
       <div class="column items-end q-mb-xs">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions :titlePage="'Notificaciones'" :btn-action="btnAction" />
-      <div class="main-container-page" style="height: 85%">
+      <header-actions
+        :titlePage="'Notificaciones'"
+        :btn-action="btnAction"
+      />
+      <div
+        class="main-container-page"
+        style="height: 85%"
+      >
         <q-scroll-area
           class="full-height q-pb-sm"
           style="height: 95% !important"
@@ -18,7 +24,10 @@
           }"
         >
           <q-list>
-            <div v-for="(item, i) in listNotifications" :key="i">
+            <div
+              v-for="(item, i) in listNotifications"
+              :key="i"
+            >
               <q-item class="q-mb-sm setting-item flex items-center clickable">
                 <q-item-section avatar>
                   <q-avatar class="avatar-item">
@@ -31,12 +40,20 @@
                       <q-item-label class="setting-item__title">{{
                         item.title
                       }}</q-item-label>
-                      <q-item-label class="setting-item__subtitle" caption>{{
+                      <q-item-label
+                        class="setting-item__subtitle"
+                        caption
+                      >{{
                         item.subtitle
                       }}</q-item-label>
                     </div>
                     <div class="col-auto">
-                      <q-toggle size="lg" dense v-model="item.model" :val="i" />
+                      <q-toggle
+                        size="lg"
+                        dense
+                        v-model="item.model"
+                        :val="i"
+                      />
                     </div>
                   </div>
                 </q-item-section>
@@ -117,7 +134,7 @@ export default defineComponent({
           },
         ],
         right: [],
-        textArea: {},
+        textarea: {},
       },
       paginationProp: {
         rowsPerPage: 7,
@@ -303,15 +320,14 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-.body--light {
+<style scoped lang="scss">.body--light {
   .card-page {
     background: white;
   }
 }
+
 .avatar-item {
   border-radius: 0 !important;
   width: 40px !important;
   height: 40px !important;
-}
-</style>
+}</style>

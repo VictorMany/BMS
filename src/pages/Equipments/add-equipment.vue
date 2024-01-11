@@ -46,6 +46,7 @@ export default defineComponent({
   data() {
     return {
       Equipos: 40,
+      loading: false,
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
@@ -78,7 +79,7 @@ export default defineComponent({
             model: '',
           },
           {
-            key: 'tracking_number',
+            key: 'trackingNumber',
             label: 'Número de control',
             model: '',
           },
@@ -98,17 +99,18 @@ export default defineComponent({
             model: '',
             type: 'select',
             options: [
-              { label: 'Área de choque', index: 1, value: 'Área de choque' },
-              { label: 'Consultas externas', index: 2, value: 'Consultas externas' },
-              { label: 'Unidades de hospitalización', index: 3, value: 'Unidades de hospitalización' },
-              { label: 'Quirófanos', index: 4, value: 'Quirófanos' },
-              { label: 'Laboratorios', index: 5, value: 'Laboratorios' },
-              { label: 'Radiología', index: 6, value: 'Radiología' },
-              { label: 'Farmacia', index: 7, value: 'Farmacia' },
-              { label: 'Terapia física y rehabilitación', index: 8, value: 'Terapia física y rehabilitación' },
-              { label: 'Cuidados intensivos', index: 9, value: 'Cuidados intensivos' },
-              { label: 'Unidades de cuidados paliativos', index: 10, value: 'Unidades de cuidados paliativos' },
-              { label: 'Servicios de apoyo', index: 11, value: 'Servicios de apoyo' },
+              { label: 'Hospital C', index: 1, value: 'Hospital C' },
+              { label: 'Área de choque', index: 2, value: 'Área de choque' },
+              { label: 'Consultas externas', index: 3, value: 'Consultas externas' },
+              { label: 'Unidades de hospitalización', index: 4, value: 'Unidades de hospitalización' },
+              { label: 'Quirófanos', index: 5, value: 'Quirófanos' },
+              { label: 'Laboratorios', index: 6, value: 'Laboratorios' },
+              { label: 'Radiología', index: 7, value: 'Radiología' },
+              { label: 'Farmacia', index: 8, value: 'Farmacia' },
+              { label: 'Terapia física y rehabilitación', index: 9, value: 'Terapia física y rehabilitación' },
+              { label: 'Cuidados intensivos', index: 10, value: 'Cuidados intensivos' },
+              { label: 'Unidades de cuidados paliativos', index: 11, value: 'Unidades de cuidados paliativos' },
+              { label: 'Servicios de apoyo', index: 12, value: 'Servicios de apoyo' },
             ],
           },
           {
@@ -156,8 +158,7 @@ export default defineComponent({
             model: ref(new Date().toISOString().split('T')[0]),
           },
         ],
-        textArea: {
-          key: 'observations',
+        textarea: {
           label: 'Observaciones del equipo',
           model: '',
         },
@@ -198,6 +199,24 @@ export default defineComponent({
         this.showNotif(error.response.data.details);
       }
     },
+
+    async getEquipment() {
+      this.loading = true
+
+      const params = {
+        id: this.$route.params.id,
+        textfields: this.textfields
+      }
+
+      await this.$store.dispatch('equipments/getEquipmentAction', params)
+      this.loading = false
+    },
+  },
+
+  created() {
+    if (this.$route.params.id) {
+      this.getEquipment()
+    }
   },
 });
 </script>

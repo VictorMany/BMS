@@ -1,5 +1,6 @@
 export function getEquipmentsGetter(state) {
   let equipments = state.equipments.map(equipment => ({
+    id: equipment.IdEquipment,
     cardTitle: equipment.equipmentName,
     cardImg: equipment.photo,
     cardLabels: [

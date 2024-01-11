@@ -89,7 +89,7 @@ export default defineComponent({
           },
         ],
         right: [],
-        textArea: {},
+        textarea: {},
       },
     };
   },

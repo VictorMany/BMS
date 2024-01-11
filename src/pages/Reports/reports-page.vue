@@ -1,10 +1,22 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <header-actions :titlePage="'Reportes'" :btnAction="btnAction" :inputSearch="inputSearch" />
+      <header-actions
+        :titlePage="'Reportes'"
+        :btnAction="btnAction"
+        :inputSearch="inputSearch"
+      />
       <!-- Main container -->
-      <div class="main-container-page" style="height: 88%; overflow-y: hidden;">
-        <general-table :rows="rows" :columns="columns" :actions-table="actionsTable" v-model:row-selected="rowSelected" />
+      <div
+        class="main-container-page"
+        style="height: 88%; overflow-y: hidden;"
+      >
+        <general-table
+          :rows="rows"
+          :columns="columns"
+          :actions-table="actionsTable"
+          v-model:row-selected="rowSelected"
+        />
       </div>
       <!-- Main container -->
     </div>
@@ -21,7 +33,7 @@ export default defineComponent({
     HeaderActions,
     GeneralTable
   },
-  data () {
+  data() {
     return {
       btnAction: {
         show: true,
@@ -262,11 +274,11 @@ export default defineComponent({
     }
   },
   methods: {
-    readMore (payload) {
+    goToDetails(payload) {
       console.log('Ver detalle', payload)
       this.$router.push({ name: 'detail-report', params: { id: 100 } })
     },
-    edit (payload) {
+    edit(payload) {
       console.log('Editar', payload)
       this.$router.push({ name: 'edit-report', params: { id: 100 } })
     },
@@ -276,11 +288,11 @@ export default defineComponent({
   },
   watch: {
     rowSelected: {
-      handler (val) {
+      handler(val) {
         if (val.action === 'Edit') {
           this.edit(val.id)
         } else if (val.action === 'Detail') {
-          this.readMore(val.id)
+          this.goToDetails(val.id)
         }
       },
       deep: true

@@ -10,6 +10,10 @@ export default class EquipmentService {
         });
     }
 
+    static getEquipment(id) {
+        return api.get(this.endpoint + 'get/' + id);
+    }
+
     // Generar nuevo equipo
     static postEquipment(payload) {
         return api.post(this.endpoint + 'create', payload);

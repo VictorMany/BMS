@@ -106,7 +106,7 @@ export default defineComponent({
           },
         ],
         right: [],
-        textArea: {
+        textarea: {
           label:
             'Por favor, explícanos la situación o el problema específico en el que necesitas la ayuda del equipo de BMS para que podamos brindarte el apoyo adecuado.',
           model: '',
@@ -137,4 +137,5 @@ export default defineComponent({
 .input-message {
   background-color: rgba($primary, 0.2);
   border-radius: 0.8rem;
-}</style>
+}
+</style>

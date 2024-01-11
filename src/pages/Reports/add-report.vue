@@ -8,14 +8,24 @@
         :titlePage="'Agregar reporte'"
         :btn-action="btnAction"
       />
-      <div class="main-container-page main-container-page-medium-dark" style="height: 82%">
-        <q-scroll-area class="full-height q-pb-sm" style="height: 95% !important" :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }">
+      <div
+        class="main-container-page main-container-page-medium-dark"
+        style="height: 82%"
+      >
+        <q-scroll-area
+          class="full-height q-pb-sm"
+          style="height: 95% !important"
+          :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
+        >
           <form-text-field :textfields="textfields" />
         </q-scroll-area>
-        <div class="col-12 form__date_container" style="height: 5.25%;">
-            <div class="form__date column items-end q-pa-sm q-mt-auto">
-              <div>Fecha de creación  <strong> 12/02/2022</strong></div>
-            </div>
+        <div
+          class="col-12 form__date_container"
+          style="height: 5.25%;"
+        >
+          <div class="form__date column items-end q-pa-sm q-mt-auto">
+            <div>Fecha de creación <strong> 12/02/2022</strong></div>
+          </div>
         </div>
       </div>
     </div>
@@ -35,7 +45,7 @@ export default defineComponent({
     FormTextField,
     BtnAction
   },
-  data () {
+  data() {
     return {
       Equipos: 40,
       btnAction: {
@@ -100,7 +110,7 @@ export default defineComponent({
                     'size-7'
                   ]
                 },
-                'bold', 'italic', 'strike', 'underline'],
+                  'bold', 'italic', 'strike', 'underline'],
                 ['unordered', 'ordered']],
                 model: ''
               }
@@ -114,7 +124,7 @@ export default defineComponent({
             model: 'NS-145424'
           }
         ],
-        textArea: {}
+        textarea: {}
       }
     }
   },
@@ -126,13 +136,10 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-.main-container-page {
+<style scoped>.main-container-page {
   background-color: white;
 }
 
 .card-page {
   padding-top: 0 !important;
-}
-
-</style>
+}</style>

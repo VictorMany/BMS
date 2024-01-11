@@ -7,7 +7,10 @@
         :inputSearch="inputSearch"
       />
       <!-- Main container -->
-      <div class="main-container-page" style="height: 88%; overflow-y: hidden">
+      <div
+        class="main-container-page"
+        style="height: 88%; overflow-y: hidden"
+      >
         <q-scroll-area
           class="full-height"
           :thumb-style="{
@@ -17,7 +20,10 @@
             opacity: 1,
           }"
         >
-          <div style="max-width: 100%" class="full-height">
+          <div
+            style="max-width: 100%"
+            class="full-height"
+          >
             <general-table
               :rows="rows"
               :columns="columns"
@@ -281,7 +287,7 @@ export default defineComponent({
   },
 
   methods: {
-    readMore(payload) {
+    goToDetails(payload) {
       console.log('Ver detalle', payload);
       this.$router.push({
         name: 'detail-maintenance-plan',
@@ -302,7 +308,7 @@ export default defineComponent({
         if (val.action === 'Edit') {
           this.edit(val.id);
         } else if (val.action === 'Detail') {
-          this.readMore(val.id);
+          this.goToDetails(val.id);
         }
       },
       deep: true,
