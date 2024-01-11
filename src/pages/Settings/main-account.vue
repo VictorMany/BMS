@@ -28,7 +28,7 @@
           style="height: 95% !important"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <form-text-field :textfields="textfields" />
+          <form-text-field :fields="fields" />
         </q-scroll-area>
       </div>
     </div>
@@ -64,7 +64,7 @@ export default defineComponent({
         btnSize: 'xs',
         btnAction: this.goBack,
       },
-      textfields: {
+      fields: {
         imageInput: true,
         top: [
           {

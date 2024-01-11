@@ -111,7 +111,7 @@ export default defineComponent({
         btnSize: 'xs',
         btnAction: this.goBack,
       },
-      textfields: {
+      fields: {
         imageInput: true,
         top: [
           {
@@ -320,7 +320,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">.body--light {
+<style scoped lang="scss">
+.body--light {
   .card-page {
     background: white;
   }
@@ -330,4 +331,5 @@ export default defineComponent({
   border-radius: 0 !important;
   width: 40px !important;
   height: 40px !important;
-}</style>
+}
+</style>

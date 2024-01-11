@@ -6,7 +6,7 @@
     <!-- LEFT SECTION -->
     <div class="col-12 col-sm-6">
       <div
-        v-for="(item, i) in textfields.left"
+        v-for="(item, i) in fields.left"
         v-bind="item"
         :key="i"
       >
@@ -63,11 +63,14 @@
     <!-- RIGHT SECTION -->
     <div class="col-12 col-sm q-py-lg">
       <div
-        v-for="(item, i) in textfields.right"
+        v-for="(item, i) in fields.right"
         v-bind="item"
         :key="i"
       >
-        <div class="row justify-end items-center q-px-sm q-py-xs">
+        <div
+          v-if="item.key != 'photo'"
+          class="row justify-end items-center q-px-sm q-py-xs"
+        >
           <div class="q-pr-md form__item-label text-weight-thin">
             {{ item.label }}
           </div>
@@ -75,41 +78,48 @@
             {{ item.model }}
           </div>
         </div>
-      </div>
-      <div
-        v-if="textfields.image"
-        class="q-mx-auto row"
-        :style="type === 'user'
-          ? 'width: 254px !important; height: 254px; border-radius: 50%'
-          : 'width: 100%; min-height: 100%; max-width: 350px'
-          "
-      >
-        <q-img
-          :class="[
-            type === 'user' ? 'form__image64' : 'form__image64-equipment',
-          ]"
-          no-spinner
-          class="q-mx-auto q-my-auto"
-          :src="textfields.image"
-        />
+
+
+        <div
+          v-if="item.key === 'photo'"
+          class="q-mx-auto row q-my-lg"
+          :style="type === 'user'
+            ? 'width: 254px !important; height: 254px; border-radius: 50%'
+            : 'width: 100%; min-height: 100%; max-width: 350px'
+            "
+        >
+          <q-img
+            :class="[
+              type === 'user' ? 'form__image64' : 'form__image64-equipment',
+            ]"
+            no-spinner
+            class="q-mx-auto q-my-auto"
+            :src="item.model"
+          />
+        </div>
       </div>
     </div>
-    <!-- TEXT AREA -->
+
+    <!-- BOTTOM AREA -->
     <div
-      v-if="textfields.textarea.label"
-      class="col-12 q-pa-sm q-mb-md"
+      v-for="(item, i) in fields.bottom"
+      v-bind="item"
+      :key="i"
+      class="col-12 q-pa-sm q-my-md"
     >
-      <div class="col-12 q-pr-md form__item-label text-weight-thin q-mb-xs">
-        {{ textfields.textarea.label }}
-      </div>
-      <div
-        class="q-pa-sm w-100 h-100 border-line"
-        style="border-radius: 5px"
-      >
+      <div v-if="item.label">
+        <div class="col-12 q-pr-md form__item-label text-weight-thin q-mb-xs">
+          {{ item.label }}
+        </div>
         <div
-          class="col-12 q-pr-md form__item-model"
-          v-html="textfields.textarea.model"
-        />
+          class="q-pa-sm w-100 h-100 border-line"
+          style="border-radius: 5px"
+        >
+          <div
+            class="col-12 q-pr-md form__item-area"
+            v-html="item.model"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -146,7 +156,7 @@ export default defineComponent({
       required: false,
       default: '',
     },
-    textfields: {
+    fields: {
       type: Object,
       required: true,
       default: () => { },

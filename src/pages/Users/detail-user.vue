@@ -18,7 +18,7 @@
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <form-label
-            :textfields="textfields"
+            :fields="fields"
             type="user"
           />
         </q-scroll-area>
@@ -26,7 +26,7 @@
           class="col-12 form__date_container form__date column justify-center q-px-lg"
           style="height: 6%"
         >
-          <div>Fecha de creación: <strong>{{ textfields.createdAt }}</strong></div>
+          <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@ export default defineComponent({
   },
   data() {
     return {
-      textfields: {
+      fields: {
         createdAt: '',
         left: [
           {
@@ -90,9 +90,13 @@ export default defineComponent({
             model: '',
           },
         ],
-        right: [],
-        textarea: {},
-        image: '',
+        right: [
+          {
+            key: 'photo',
+            model: ''
+          }
+        ],
+        bottom: [],
       },
       btnAction: {
         show: true,
@@ -124,7 +128,7 @@ export default defineComponent({
 
       const params = {
         id: this.$route.params.id,
-        textfields: this.textfields
+        fields: this.fields
       }
 
       await this.$store.dispatch('users/getUserAction', params)

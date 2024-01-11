@@ -17,7 +17,7 @@
           style="height: 95% !important"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
         >
-          <form-text-field :textfields="textfields" />
+          <form-text-field :fields="fields" />
         </q-scroll-area>
         <div
           class="col-12 form__date_container"
@@ -61,7 +61,7 @@ export default defineComponent({
         btnSize: 'xs',
         btnAction: this.goBack
       },
-      textfields: {
+      fields: {
         readImage: 'https://aliadascargo.com/wp-content/uploads/2020/04/equipos-medicos.jpg',
         top: [
           {
@@ -136,10 +136,12 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>.main-container-page {
+<style scoped>
+.main-container-page {
   background-color: white;
 }
 
 .card-page {
   padding-top: 0 !important;
-}</style>
+}
+</style>

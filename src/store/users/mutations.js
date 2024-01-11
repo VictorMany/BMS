@@ -18,5 +18,5 @@ export function ADD_USER(state, payload) {
 }
 
 export function UPDATE_USER(state, payload) {
-    console.log('Tratando de actuializar el usuario', payload)
+    state.users = [...state.users, payload];
 }

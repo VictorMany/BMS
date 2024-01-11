@@ -17,7 +17,7 @@
           style="height: 95% !important"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <form-text-field :textfields="textfields" />
+          <form-text-field :fields="fields" />
         </q-scroll-area>
         <div
           class="col-12 form__date_container"
@@ -61,7 +61,7 @@ export default defineComponent({
         btnSize: 'xs',
         btnAction: this.goBack,
       },
-      textfields: {
+      fields: {
         readImage:
           'https://www.haines.com.au/media/catalog/product/cache/84b955a0ba9aeea51fac2ff2dd539f2f/d/i/dissection_kit_10_piece.jpg',
         top: [

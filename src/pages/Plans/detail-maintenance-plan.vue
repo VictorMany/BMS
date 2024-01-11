@@ -17,7 +17,7 @@
           style="height: 95% !important"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <form-label :textfields="textfields" />
+          <form-label :fields="fields" />
           <hr class="q-mx-lg q-mb-md border-line" />
           <div class="row q-px-lg">
             <div class="col-12 col-md-6 q-pr-md">
@@ -128,7 +128,7 @@ export default defineComponent({
   },
   data() {
     return {
-      textfields: {
+      fields: {
         left: [
           {
             label: 'PLAN-0001 EQUIPO DE CHOQUE',
@@ -262,4 +262,5 @@ export default defineComponent({
 
 .divider-hr {
   border-top: 0.5px solid;
-}</style>
+}
+</style>

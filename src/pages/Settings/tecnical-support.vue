@@ -94,7 +94,7 @@ export default defineComponent({
         btnSize: 'xs',
         btnAction: this.goBack,
       },
-      textfields: {
+      fields: {
         top: [
           {
             label: 'Nombre',

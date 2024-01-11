@@ -17,7 +17,7 @@
           style="height: 95% !important"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <form-text-field :textfields="textfields" />
+          <form-text-field :fields="fields" />
           <div class="row q-px-lg">
             <div class="col-12 col-md-7 q-pr-md">
               <div
@@ -295,7 +295,7 @@ export default defineComponent({
         btnSize: 'xs',
         btnAction: this.goBack,
       },
-      textfields: {
+      fields: {
         readImage: false,
         top: [
           {

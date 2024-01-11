@@ -5,7 +5,7 @@
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions
-        :titlePage="'Agregar equipo'"
+        :titlePage="getTitle()"
         :btn-action="btnAction"
       />
       <div
@@ -17,13 +17,13 @@
           style="height: 92% !important"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <form-text-field :textfields="textfields" />
+          <form-text-field :fields="fields" />
         </q-scroll-area>
         <div
           class="col-12 form__date_container form__date column justify-center q-px-lg"
           style="height: 6%"
         >
-          <div>Fecha de creación: <strong> 12/02/2022</strong></div>
+          <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormTextField from 'src/components/compose/FormTextField.vue';
@@ -50,9 +50,9 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
-        to: 'equipments',
         btnWidth: 'auto',
-        btnAction: this.createEquipment,
+        btnAction: this.createOrEdit,
+        loader: false,
       },
       btnCloseWindow: {
         iconName: 'close',
@@ -62,9 +62,9 @@ export default defineComponent({
         btnAction: this.goBack,
       },
 
-      textfields: {
-        imageInput: true,
-        photo: null,
+      fields: {
+        id: null,
+        createdAt: this.getCreatedAt(),
         top: [
           {
             key: 'equipmentName',
@@ -96,8 +96,8 @@ export default defineComponent({
           {
             key: 'location',
             label: 'Ubicación',
-            model: '',
             type: 'select',
+            model: '',
             options: [
               { label: 'Hospital C', index: 1, value: 'Hospital C' },
               { label: 'Área de choque', index: 2, value: 'Área de choque' },
@@ -155,48 +155,45 @@ export default defineComponent({
             key: 'warrantyDate',
             label: 'Fecha de garantía',
             type: 'date',
-            model: ref(new Date().toISOString().split('T')[0]),
+            model: '',
           },
         ],
-        textarea: {
-          label: 'Observaciones del equipo',
-          model: '',
-        },
+        right: [
+          {
+            key: 'photo',
+            imageInput: true,
+            model: null,
+          }
+        ],
+        bottom: [
+          {
+            key: 'observations',
+            label: 'Observaciones del equipo',
+            model: '',
+          }
+        ]
       },
     };
   },
   methods: {
-    goBack() {
-      this.$router.go(-1);
-    },
-
-
-    showNotif() {
-      this.$q.notify({
-        message: 'Ocurrió un error al crear el usuario',
-        caption: 'Intalo de nuevo más tarde',
-        color: 'secondary',
-        classes: 'border-rounded',
-      });
-    },
-
     // ######### CRUD ########## //
     async createEquipment() {
       this.btnAction.loader = true;
       try {
         const res = await this.$store.dispatch(
           'equipments/postEquipmentAction',
-          this.textfields
+          this.fields
         );
-        if (res.success) {
+
+        if (res === true) {
           this.$router.go(-1);
         } else {
-          this.showNotif('Inténtalo de nuevo más tarde y si el error persiste, repórtalo');
+          this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
         }
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        this.showNotif(error.response.data.details);
+        this.showAlert({ msg: error.response.data.details });
       }
     },
 
@@ -205,16 +202,82 @@ export default defineComponent({
 
       const params = {
         id: this.$route.params.id,
-        textfields: this.textfields
+        fields: this.fields
       }
 
       await this.$store.dispatch('equipments/getEquipmentAction', params)
       this.loading = false
     },
+
+    async editEquipment() {
+      this.btnAction.loader = true;
+      this.fields.id = this.$route.params.id
+
+      try {
+        const res = await this.$store.dispatch(
+          'equipments/updateEquipmentAction',
+          this.fields
+        );
+        if (res === true) {
+          this.showAlert({ title: 'Éxito al editar', msg: 'El equipo se ha actualizado', color: 'green-14' });
+          this.$router.go(-1);
+        } else {
+          this.showAlert();
+        }
+        this.btnAction.loader = false;
+      } catch (error) {
+        this.btnAction.loader = false;
+        this.showAlert();
+      }
+    },
+
+    getTitle() {
+
+      if (this.isEditing()) {
+        return 'Editar usuario'
+      }
+      else return 'Agregar usuario'
+    },
+
+    getCreatedAt() {
+      if (this.isEditing()) {
+        return ''
+      }
+      else return this.$store.getters['global/getDate']
+    },
+
+    goBack() {
+      this.$router.go(-1);
+    },
+
+    showAlert({ msg, color, title, classes }) {
+      this.$q.notify({
+        message: title ? title : 'Ocurrió un error al crear el equipo',
+        caption: msg ? msg : 'Inténtalo de nuevo más tarde',
+        color: color ? color : 'secondary',
+        classes: classes ? classes : 'border-rounded',
+      });
+    },
+
+    createOrEdit() {
+      if (this.isEditing()) {
+        this.editEquipment()
+      } else {
+        this.createEquipment()
+      }
+    },
+
+    getDate() {
+      return this.$store.$store.getters['global/getDate']
+    },
+
+    isEditing() {
+      return this.$route.params.id ? true : false
+    }
   },
 
   created() {
-    if (this.$route.params.id) {
+    if (this.isEditing()) {
       this.getEquipment()
     }
   },

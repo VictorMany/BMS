@@ -21,7 +21,7 @@ export default class EquipmentService {
     }
 
     // Actualizar nuevo usuario
-    static updateUser(payload) {
-        return api.post(this.endpoint + 'update', payload);
+    static updateUser(payload, id) {
+        return api.put(this.endpoint + 'update/' + id, payload);
     }
 }

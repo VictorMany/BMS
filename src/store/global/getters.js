@@ -9,3 +9,8 @@ export function getThumbStyle(state) {
 export function getThumbStyleEquipments(state) {
     return state.thumbStyle
 }
+
+
+export function getDate(state) {
+    return state.date;
+}

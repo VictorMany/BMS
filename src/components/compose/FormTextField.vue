@@ -26,10 +26,19 @@
               hide-bottom-space
               bottom-slots
               stack-label
+              :readonly="item.readonly"
               :rules="item.rules ? item.rules : []"
               v-model="item.model"
               :type="item.type ? item.type : 'text'"
-            />
+            >
+              <template v-slot:append>
+                <q-icon
+                  v-if="item.readonly"
+                  name="lock"
+                  size="xs"
+                />
+              </template>
+            </q-input>
           </div>
         </div>
 
@@ -64,12 +73,14 @@
                 </div>
               </div>
               <div
-                v-else
+                v-else-if="showItem(item)"
                 class="row w-100 q-px-sm q-pb-sm"
               >
                 <div class="col-12 col-md-12 col-lg-5 q-pr-md q-pt-sm form__item-label text-weight-thin">
                   {{ item.label }}
                 </div>
+
+                <!-- INPUT TYPE SELECT -->
                 <q-select
                   v-if="item.type === 'select'"
                   class="textfield-select form__item-input bg-accent col-12 col-sm"
@@ -81,6 +92,7 @@
                   bottom-slots
                   stack-label
                   :options="item.options"
+                  :readonly="item.readonly"
                 >
                   <template v-slot:option="scope">
                     <q-item
@@ -94,12 +106,15 @@
                   </template>
                 </q-select>
 
+
+                <!-- INPUT TYPE DATE -->
                 <q-input
                   v-else-if="item.type === 'date'"
+                  v-model="item.model"
+                  :readonly="item.readonly"
                   class="col-12 col-sm form__item-input bg-accent"
                   borderless
                   dense
-                  v-model="item.model"
                   hide-hint
                   hide-bottom-space
                   bottom-slots
@@ -107,6 +122,7 @@
                 >
                   <template v-slot:append>
                     <q-btn
+                      v-if="!item.readonly"
                       icon="event"
                       size="xs"
                       flat
@@ -120,14 +136,20 @@
                         <q-date v-model="item.model" />
                       </q-popup-proxy>
                     </q-btn>
+
+                    <q-icon
+                      v-else
+                      name="lock"
+                      size="xs"
+                    />
                   </template>
                 </q-input>
-
 
                 <!-- NORMAL INPUT -->
                 <q-input
                   v-else
                   v-model="item.model"
+                  :readonly="item.readonly"
                   class="form__item-input bg-accent col-12 col-sm"
                   hide-hint
                   hide-bottom-space
@@ -152,7 +174,11 @@
         :key="i"
         class="col-12"
       >
-        <div class="row justify-end items-center q-px-sm q-py-xs">
+
+        <div
+          v-if="!item.imageInput"
+          class="row justify-end items-center q-px-sm q-py-xs"
+        >
           <div class="q-pr-md form__item-label text-weight-thin">
             {{ item.label }}
           </div>
@@ -160,26 +186,15 @@
             {{ item.model }}
           </div>
         </div>
-      </div>
-      <div
-        class="row justify-center items-center q-pa-md"
-        :class="localTextfields.right ? 'h-90' : 'h-100'"
-      >
+
         <div
-          v-if="localTextfields.imageInput"
+          v-if="item.imageInput"
           class="q-px-sm row justify-center items-top h-100 w-100"
           style="height: 85%"
         >
-          <input
-            ref="fileUpload"
-            type="file"
-            accept="image/*,.jpg, .jpeg, .png"
-            style="display: none"
-            @change="uploadFile($event)"
-          />
           <q-btn
             unelevated
-            class="btn-background-dark q-mt-xl btn-background-color"
+            class="btn-background-dark q-mt-md btn-background-color"
             :class="{ 'btn-background': ImageBase64 && type === 'user' }"
             :style="type === 'user'
               ? 'width: 205px; height: 205px; border-radius: 50%'
@@ -217,7 +232,7 @@
         </div>
 
         <div
-          v-if="localTextfields.readImage"
+          v-if="item.readImage"
           class="row"
           :style="type === 'user'
             ? 'width: 254px !important; height: 254px; border-radius: 50%'
@@ -230,7 +245,7 @@
             ]"
             no-spinner
             class="q-mx-auto q-my-auto"
-            :src="localTextfields.readImage"
+            :src="item.readImage"
           />
         </div>
       </div>
@@ -238,35 +253,50 @@
 
     <!-- TEXT AREA -->
     <div
-      v-if="localTextfields.textarea.model != undefined"
-      class="col-12 q-px-sm"
+      v-for="(item, i) in localTextfields.bottom"
+      v-bind="item"
+      :key="i"
+      class="col-12"
     >
-      <div class="q-my-sm form__item-label text-weight-thin">
-        {{ localTextfields.textarea.label }}
+      <div
+        v-if="item.model != undefined"
+        class="col-12 q-px-sm"
+      >
+        <div class="q-my-sm form__item-label text-weight-thin">
+          {{ item.label }}
+        </div>
+        <q-editor
+          v-model="item.model"
+          :placeholder="'Escribe aquí...'"
+          class="form__item-textarea bg-accent"
+          :toolbar="[
+            [
+              {
+                label: $q.lang.editor.fontSize,
+                icon: $q.iconSet.editor.fontSize,
+                fixedLabel: true,
+                fixedIcon: true,
+                list: 'no-icons',
+                options: ['size-1', 'size-2', 'size-3', 'size-4', 'size-5'],
+              },
+              'bold',
+              'italic',
+              'strike',
+              'underline',
+            ],
+            ['unordered', 'ordered'],
+          ]"
+        />
       </div>
-      <q-editor
-        v-model="localTextfields.textarea.model"
-        :placeholder="'Escribe aquí...'"
-        class="form__item-textarea bg-accent"
-        :toolbar="[
-          [
-            {
-              label: $q.lang.editor.fontSize,
-              icon: $q.iconSet.editor.fontSize,
-              fixedLabel: true,
-              fixedIcon: true,
-              list: 'no-icons',
-              options: ['size-1', 'size-2', 'size-3', 'size-4', 'size-5'],
-            },
-            'bold',
-            'italic',
-            'strike',
-            'underline',
-          ],
-          ['unordered', 'ordered'],
-        ]"
-      />
     </div>
+
+    <input
+      ref="fileUpload"
+      type="file"
+      accept="image/*,.jpg, .jpeg, .png"
+      style="display: none"
+      @change="uploadFile($event)"
+    />
   </div>
 </template>
 
@@ -293,7 +323,7 @@ export default defineComponent({
       default: '',
     },
     // PAYLOAD
-    textfields: {
+    fields: {
       type: Object,
       required: false,
       default: () => { },
@@ -313,7 +343,7 @@ export default defineComponent({
   data() {
     return {
       previousLength: 0,
-      localTextfields: this.textfields,
+      localTextfields: this.fields,
       pdfObject: {
         name: '',
         file: {},
@@ -325,16 +355,19 @@ export default defineComponent({
   watch: {
     localTextfields: {
       handler(val) {
-        this.$emit('update:textfields', val);
+        this.$emit('update:fields', val);
       },
       deep: true,
     },
 
-    textfields: {
+    fields: {
       handler(val) {
-        if (val.image) {
-          console.log(val.image)
-          this.ImageBase64 = val.image
+        if (!this.ImageBase64) {
+          val.right.forEach(e => {
+            if (e.key === 'photo') {
+              this.ImageBase64 = e.model
+            }
+          })
         }
       },
       deep: true,
@@ -342,9 +375,25 @@ export default defineComponent({
   },
 
   methods: {
+    showItem(item) {
+      if (this.$route.params.id) {
+        // DO NOT SHOW PASSWORD ITEM WHEN EDIT USER
+        if (item.key == 'userPassword')
+          return false
+      } else {
+        // DO NOT SHOW STATUS EQUIPMENT WHEN CREATE EQUIPMENT
+        if (item.key == 'equipmentStatus')
+          return false
+      } return true
+    },
+
     uploadFile(e) {
       const file = e.target.files[0];
-      this.localTextfields.photo = file
+      this.localTextfields.right.forEach(e => {
+        if (e.key === 'photo') {
+          e.model = file
+        }
+      });
 
       try {
         const reader = new FileReader();

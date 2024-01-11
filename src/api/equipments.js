@@ -18,4 +18,9 @@ export default class EquipmentService {
     static postEquipment(payload) {
         return api.post(this.endpoint + 'create', payload);
     }
+
+    // Actualizar nuevo equipo
+    static updateEquipment(payload, id) {
+        return api.put(this.endpoint + 'update/' + id, payload);
+    }
 }

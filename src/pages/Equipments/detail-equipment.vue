@@ -17,13 +17,13 @@
           style="height: 92% !important"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
         >
-          <form-label :textfields="textfields" />
+          <form-label :fields="fields" />
         </q-scroll-area>
         <div
           class="col-12 form__date_container form__date column justify-center q-px-lg"
           style="height: 6%"
         >
-          <div>Fecha de creación: <strong>{{ textfields.createdAt }}</strong></div>
+          <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
         </div>
       </div>
     </div>
@@ -46,7 +46,7 @@ export default defineComponent({
   data() {
     return {
       loading: false,
-      textfields: {
+      fields: {
         createdAt: '',
         left: [
           {
@@ -114,13 +114,19 @@ export default defineComponent({
             key: 'serialNumber',
             label: 'No. de serie',
             model: ''
+          },
+          {
+            key: 'photo',
+            model: ''
           }
         ],
-        textarea: {
-          label: 'Observaciones del equipo biomédico',
-          model: ''
-        },
-        image: ''
+        bottom: [
+          {
+            key: 'observations',
+            label: 'Observaciones del equipo biomédico',
+            model: ''
+          }
+        ],
       },
       btnAction: {
         show: true,
@@ -148,7 +154,7 @@ export default defineComponent({
 
       const params = {
         id: this.$route.params.id,
-        textfields: this.textfields
+        fields: this.fields
       }
 
       await this.$store.dispatch('equipments/getEquipmentAction', params)

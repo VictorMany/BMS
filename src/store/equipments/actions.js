@@ -5,10 +5,10 @@ export async function getEquipmentsAction(context, params) {
         if (response.status == 200) {
             context.commit('MUTATE_EQUIPMENTS', response.data.contents.equipments)
             context.commit('MUTATE_DETAILS', response.data.contents)
-            return manageResponse('Obtener equipos', true)
+            return true
         }
         else {
-            return manageResponse('Equipos', false)
+            return response
         }
     })
 }
@@ -19,17 +19,17 @@ export async function getEquipmentAction(context, params) {
             // We call the global action to format our payload
             const payload = await context.dispatch('global/formatTextfields', {
                 keys: response.data.contents.equipment,
-                textfields: params.textfields
+                fields: params.fields
             }, { root: true });
             return payload
         } else {
-            return manageResponse('Obtener equipo', false)
+            return response
         }
     })
 }
 
 export async function postEquipmentAction(context, equipment) {
-    // Those are the keys you need in your payload and find in the textfields
+    // Those are the keys you need in your payload and find in the fields
     let keys = {
         equipmentBrand: '',
         equipmentModel: '',
@@ -46,37 +46,51 @@ export async function postEquipmentAction(context, equipment) {
         photo: ''
     }
 
-    // the textfields are the equipment
-
     // We call the global action to format our payload
     const payload = await context.dispatch('global/formatPayload', {
         keys,
-        textfields: equipment
+        fields: equipment
     }, { root: true });
 
     return await service.postEquipment(payload).then(async (response) => {
-        try {
-            if (response.status == 201) {
-                context.commit('ADD_EQUIPMENT', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
-                return manageResponse('Añadir equipo', true)
-            } else {
-                return manageResponse('Añadir equipo', false)
-            }
-        } catch (error) {
-            return manageResponse(error, false)
+        if (response.status == 201) {
+            context.commit('ADD_EQUIPMENT', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
+            return true
+        } else {
+            return response
         }
     })
 }
 
-const manageResponse = (scope, success) => {
-    if (success)
-        return {
-            message: scope + ' successfully obtained',
-            success
+export async function updateEquipmentAction(context, equipment) {
+    // Those are the keys you need in your payload and find in the fields
+    let keys = {
+        equipmentBrand: '',
+        equipmentModel: '',
+        equipmentName: '',
+        equipmentStatus: '',
+        location: '',
+        manufacturingYear: '',
+        observations: '',
+        price: '',
+        provider: '',
+        serialNumber: '',
+        trackingNumber: '',
+        warrantyDate: '',
+        photo: ''
+    }
+
+    // We call the global action to format our payload
+    const payload = await context.dispatch('global/formatPayload', {
+        keys,
+        fields: equipment
+    }, { root: true });
+
+    return await service.updateEquipment(payload, equipment.id).then(async (response) => {
+        if (response.status == 200) {
+            return true
+        } else {
+            return response
         }
-    else
-        return {
-            message: 'An error occurred obtaining ' + scope.toLowerCase(),
-            success
-        }
+    })
 }

@@ -5,9 +5,9 @@ export async function getUsersAction(context, params) {
         if (response.status == 200) {
             context.commit('MUTATE_USERS', response.data.contents.users)
             context.commit('MUTATE_DETAILS', response.data.contents)
-            return manageResponse('Obtener usuarios', true)
+            return true
         } else {
-            return manageResponse('Obtener usuarios', false)
+            return response
         }
     })
 }
@@ -18,17 +18,17 @@ export async function getUserAction(context, params) {
             // We call the global action to format our payload
             const payload = await context.dispatch('global/formatTextfields', {
                 keys: response.data.contents.user,
-                textfields: params.textfields
+                fields: params.fields
             }, { root: true });
             return payload
         } else {
-            return manageResponse('Obtener usuario', false)
+            return response
         }
     })
 }
 
 export async function postUserAction(context, user) {
-    // Those are the keys you need in your payload and find in the textfields
+    // Those are the keys you need in your payload and find in the fields
     let keys = {
         userName: '',
         email: '',
@@ -43,71 +43,40 @@ export async function postUserAction(context, user) {
     // We call the global action to format our payload
     const payload = await context.dispatch('global/formatPayload', {
         keys,
-        textfields: user
+        fields: user
     }, { root: true });
 
     return await service.postUser(payload).then(async (response) => {
-        try {
-            if (response.status == 201) {
-                context.commit('ADD_USER', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
-
-                return manageResponse('Añadir usuario', true)
-            } else {
-                console.log('error', response.data)
-
-                return manageResponse('Añadir usuario', false)
-            }
-        } catch (error) {
-            return manageResponse(error, false)
+        if (response.status == 201) {
+            context.commit('ADD_USER', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
+            return true
+        } else {
+            return response
         }
     })
 }
 
 export async function updateUserAction(context, user) {
-    // Those are the keys you need in your payload and find in the textfields
+    // Those are the keys you need in your payload and find in the fields
     let keys = {
-        userName: '',
-        email: '',
-        userPassword: '',
         phone: '',
         userRole: '',
         photo: '',
         userStatus: '',
-        birthday: '',
     }
 
     // We call the global action to format our payload
     const payload = await context.dispatch('global/formatPayload', {
         keys,
-        textfields: user
+        fields: user
     }, { root: true });
 
-    return await service.updateUser(payload).then(async (response) => {
-        try {
-            if (response.status == 201) {
-                context.commit('UPDATE_USER', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
-                return manageResponse('Editar usuario', true)
-            } else {
-                return manageResponse('Editar usuario', false)
-            }
-        } catch (error) {
-            return manageResponse(error, false)
+    return await service.updateUser(payload, user.id).then(async (response) => {
+        if (response.status == 200) {
+            return true
+        } else {
+            return response
         }
     })
 }
 
-const manageResponse = (scope, success) => {
-    if (success) {
-        return {
-            scope,
-            message: 'Operación realizada exitosamente',
-            success
-        }
-    } else {
-        return {
-            scope,
-            message: 'Ha ocurrido un error al realizar la operación ',
-            success
-        }
-    }
-}
