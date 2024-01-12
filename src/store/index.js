@@ -1,6 +1,7 @@
 import { store } from 'quasar/wrappers'
 import global from './global'
 import equipments from './equipments'
+import maintenances from './maintenances'
 import users from './users'
 import { createStore } from 'vuex'
 
@@ -10,7 +11,8 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       global,
       equipments,
-      users
+      maintenances,
+      users,
     },
 
     // eslint-disable-next-line no-undef

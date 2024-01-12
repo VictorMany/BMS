@@ -5,6 +5,7 @@
         :titlePage="'Mantenimientos'"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
+        v-model:searchModel="searchModel"
       />
       <!-- Main container -->
       <div
@@ -12,10 +13,12 @@
         style="height: 88%; overflow-y: hidden;"
       >
         <general-table
-          :rows="rows"
+          v-model:row-selected="rowSelected"
+          :rows="maintenances"
           :columns="columns"
           :actions-table="actionsTable"
-          v-model:row-selected="rowSelected"
+          :pagination-prop="pagination"
+          @change-pagination="changePagination"
         />
       </div>
       <!-- Main container -->
@@ -27,6 +30,7 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import GeneralTable from 'src/components/compose/GeneralTable.vue'
+
 export default defineComponent({
   name: 'MaintenancesPage',
   components: {
@@ -35,16 +39,58 @@ export default defineComponent({
   },
   data() {
     return {
+      delaySearch: 300,
+      searchModel: null,
+      showCards: true,
+      switchContent: 1,
+      timeoutSearch: null,
+      loading: true,
+
+      localPagination: {},
+
       btnAction: {
         show: true,
         btnTitle: 'Añadir mantenimiento',
         to: 'add-maintenance',
         btnWidth: 'auto'
       },
+
+      columns: [
+        {
+          name: 'type_maintenance',
+          required: true,
+          label: 'Tipo de mantenimiento',
+          align: 'left',
+          field: row => row.type_maintenance,
+          format: val => `${val}`,
+          sortable: true
+        },
+        { name: 'encharged_name', label: 'Nombre del encargado', field: 'encharged_name', align: 'left', sortable: true },
+        { name: 'date', label: 'Fecha de mantenimiento', field: 'date', align: 'center', sortable: true },
+        { name: 'total_cost', label: 'Gasto total', field: 'total_cost', align: 'center', sortable: true },
+        { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
+      ],
+
+      actionsTable: [
+        {
+          icnName: 'read_more',
+          icnSize: 'sm',
+          icnAction: 'Detail'
+        },
+        {
+          icnName: 'edit',
+          icnSize: 'xs',
+          icnAction: 'Edit'
+        }
+      ],
+
+      rowSelected: {},
+
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por tipo',
+        inputLabel: 'Buscar por nombre',
         setSelectedOpt: this.setSelectedOpt,
+        setSelectedStatus: this.setSelectedStatus,
         heightModal: '200px',
         items: [
           {
@@ -63,241 +109,117 @@ export default defineComponent({
             title: 'Precio',
             icon: 'payments'
           }
-        ]
+        ],
       },
-      columns: [
-        {
-          name: 'type_maintenance',
-          required: true,
-          label: 'Tipo de mantenimiento',
-          align: 'left',
-          field: row => row.type_maintenance,
-          format: val => `${val}`,
-          sortable: true
-        },
-        { name: 'encharged_name', label: 'Nombre del encargado', field: 'encharged_name', align: 'left', sortable: true },
-        { name: 'date', label: 'Fecha de mantenimiento', field: 'date', align: 'center', sortable: true },
-        { name: 'total_cost', label: 'Gasto total', field: 'total_cost', align: 'center', sortable: true },
-        { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
-      ],
-      rows: [
-        {
-          id: 1,
-          type_maintenance: 'Preventivo',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: ''
-        },
-        {
-          id: 2,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: ''
-        },
-        {
-          id: 3,
-          type_maintenance: 'Preventivo',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 4,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 5,
-          type_maintenance: 'Preventivo',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 6,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 7,
-          type_maintenance: 'Preventivo',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 8,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 9,
-          type_maintenance: 'Preventivo',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 10,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 11,
-          type_maintenance: 'Preventivo',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 12,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 13,
-          type_maintenance: 'Preventivo',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 14,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 15,
-          type_maintenance: 'Preventivo',
-          encharged_name: 'Ángel Omar Torres Padilla',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 16,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luisa Juarez',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 17,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 18,
-          type_maintenance: 'Preventivo',
-          encharged_name: 'Ángel Omar Torres Padilla',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 19,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luisa Juarez',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 20,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 21,
-          type_maintenance: 'Preventivo',
-          encharged_name: 'Ángel Omar Torres Padilla',
-          date: '12-Jun-2022',
-          total_cost: '$ 2000',
-          actions: '+  -'
-        },
-        {
-          id: 22,
-          type_maintenance: 'Correctivo',
-          encharged_name: 'Luisa Juarez',
-          date: '12-Jun-2022',
-          total_cost: '$ 258000',
-          actions: '+  -'
-        }
-      ],
-      actionsTable: [
-        {
-          icnName: 'read_more',
-          icnSize: 'sm',
-          icnAction: 'Detail'
-        },
-        {
-          icnName: 'edit',
-          icnSize: 'xs',
-          icnAction: 'Edit'
-        }
-      ],
-      rowSelected: {}
+
+      params: {
+        name: '',
+      },
     }
   },
 
-  methods: {
-    goToDetails(payload) {
-      console.log('Ver detalle', payload)
-      this.$router.push({ name: 'detail-maintenance', params: { id: 100 } })
-    },
-    edit(payload) {
-      console.log('Editar', payload)
-      this.$router.push({ name: 'edit-maintenance', params: { id: 100 } })
-    },
-    setSelectedOpt(opt) {
-      this.inputSearch.inputLabel = opt
-    }
+  created() {
+    this.getMaintenances({});
   },
+
   watch: {
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
-          this.edit(val.id)
+          this.goToEdit(val.id);
         } else if (val.action === 'Detail') {
-          this.goToDetails(val.id)
+          this.goToDetails(val.id);
         }
       },
-      deep: true
-    }
-  }
+      deep: true,
+    },
+
+    searchModel(val) {
+      let params = {};
+      if (Object.keys(this.params).length > 0) {
+        /**
+         * @this.params[0] -> Name, Status, Role
+         */
+        params = {
+          [Object.keys(this.params)[0]]: val,
+        };
+      }
+
+      clearTimeout(this.timeoutSearch);
+      this.timeoutSearch = setTimeout(() => {
+        this.getMaintenances(params);
+      }, this.delaySearch);
+    },
+  },
+
+  computed: {
+    maintenances: {
+      get() {
+        return this.$store.getters['maintenances/getMaintenancesGetter'];
+      },
+    },
+
+    pagination: {
+      get() {
+        return this.$store.getters['maintenances/getPaginationGetter'];
+      },
+    },
+  },
+
+  methods: {
+    async getMaintenances(params) {
+      this.loading = true
+      await this.$store.dispatch('maintenances/getMaintenancesAction', params);
+      this.loading = false
+    },
+
+    goToDetails(payload) {
+      console.log('Ver detalle', payload);
+      this.$router.push({ name: 'detail-maintenance', params: { id: payload } });
+    },
+
+    goToEdit(payload) {
+      console.log(payload);
+      this.$router.push({ name: 'edit-maintenance', params: { id: payload } });
+    },
+
+    setSelectedOpt(opt) {
+      this.inputSearch.inputLabel = opt;
+
+      let type = '';
+      switch (opt) {
+        case 'Nombre':
+          type = 'name';
+          break;
+        case 'Estatus':
+          type = 'status';
+          break;
+        case 'Role':
+          type = 'role';
+          break;
+      }
+
+      this.params = {
+        [type]: this.searchModel,
+      };
+
+      this.getMaintenances(this.params);
+    },
+
+
+    setSelectedStatus(opt) {
+      this.params = {
+        status: opt ? 1 : 0,
+      };
+      this.getMaintenances(this.params)
+    },
+
+    changePagination(pagination) {
+      this.getMaintenances({
+        page: pagination.page,
+        rowsPerPage: pagination.rowsPerPage,
+      });
+    },
+  },
 })
 </script>

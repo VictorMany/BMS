@@ -294,7 +294,7 @@ export default defineComponent({
         params: { id: 100 },
       });
     },
-    edit(payload) {
+    goToEdit(payload) {
       console.log('Editar', payload);
       this.$router.push({ name: 'add-maintenance-plan', params: { id: 100 } });
     },
@@ -306,7 +306,7 @@ export default defineComponent({
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
-          this.edit(val.id);
+          this.goToEdit(val.id);
         } else if (val.action === 'Detail') {
           this.goToDetails(val.id);
         }

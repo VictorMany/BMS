@@ -1,303 +1,347 @@
-<!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div
-    class="row q-px-md q-pb-sm items-stretch"
-    style="max-width: 1200px"
-  >
-    <div class="col-12 col-lg-5 col-md-6 q-pb-xs">
-      <div class="row">
-        <div
-          v-if="localTextfields.top.length > 0"
-          class="col-12 col-sm-10 col-md-12 q-pb-xs"
-        >
-          <div
-            v-for="(item, i) in localTextfields.top"
-            :key="i"
-            class="row items-center q-px-sm q-py-xs w-100"
-          >
-            <div class="col q-pr-md form__item-label text-weight-thin">
-              {{ item.label }}
-            </div>
-            <q-input
-              class="col-6 form__item-input-12 bg-accent"
-              borderless
-              dense
-              hide-hint
-              hide-bottom-space
-              bottom-slots
-              stack-label
-              :readonly="item.readonly"
-              :rules="item.rules ? item.rules : []"
-              v-model="item.model"
-              :type="item.type ? item.type : 'text'"
-            >
-              <template v-slot:append>
-                <q-icon
-                  v-if="item.readonly"
-                  name="lock"
-                  size="xs"
-                />
-              </template>
-            </q-input>
-          </div>
-        </div>
+  <q-form ref="myForm">
+    <div
+      class="row q-px-md q-pb-sm items-stretch"
+      style="max-width: 1200px"
+    >
+      <div class="col-12 col-lg-5 col-md-6 q-pb-xs">
+        <div class="row">
 
-        <!-- LEFT SECTION -->
-        <div class="col-12 q-py-xs">
+          <!-- TOP SECTION -->
           <div
-            v-for="(item, i) in localTextfields.left"
-            :key="i"
+            v-if="localTextfields.top.length > 0"
+            class="col-12 col-sm-10 col-md-12 q-pb-xs"
           >
-            <div class="full-width">
-              <div v-if="item.type === 'textarea'">
-                <div class="row w-100 justify-between">
-                  <div
-                    v-for="(textfield, i) in item.items"
-                    :key="i"
-                    class="q-px-sm"
-                    :class="textfield.cols ? textfield.cols : 'col-12 col-sm-6 '
-                      "
+            <div
+              v-for="(item, i) in localTextfields.top"
+              :key="i"
+              class="row items-center q-px-sm q-py-xs w-100"
+            >
+              <div class="col q-pr-md form__item-label text-weight-thin">
+                {{ item.label }}
+              </div>
+
+              <!-- INPUT TYPE SELECT -->
+              <q-select
+                v-if="item.type === 'select'"
+                v-model="item.model"
+                :name="item.key"
+                class="col-6 form__item-input-12 bg-accent"
+                borderless
+                dense
+                hide-hint
+                hide-bottom-space
+                bottom-slots
+                stack-label
+                use-input
+                :options="item.options"
+                :readonly="item.readonly"
+                @filter="item.itemFilter"
+              >
+                <template v-slot:option="scope">
+                  <q-item
+                    v-bind="scope.itemProps"
+                    dense
                   >
-                    <div class="q-ma-sm form__item-label text-weight-thin">
-                      {{ textfield.label }}
-                    </div>
-                    <q-editor
-                      v-model="textfield.model"
-                      :placeholder="'Escribe aquí tus ' + textfield.label"
-                      class="form__item-textarea bg-accent"
-                      dense
-                      :toolbar="textfield.toolbar ? textfield.toolbar : basicToolBar
-                        "
-                    />
+                    <q-item-section>
+                      <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+
+              <q-input
+                v-else
+                class="col-6 form__item-input-12 bg-accent"
+                borderless
+                dense
+                hide-hint
+                hide-bottom-space
+                bottom-slots
+                stack-label
+                :readonly="item.readonly"
+                :rules="item.rules ? item.rules : []"
+                v-model="item.model"
+                :name="item.key"
+                :type="item.type ? item.type : 'text'"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    v-if="item.readonly"
+                    name="lock"
+                    size="xs"
+                  />
+                </template>
+              </q-input>
+            </div>
+          </div>
+
+          <!-- LEFT SECTION -->
+          <div class="col-12 q-py-xs">
+            <div
+              v-for="(item, i) in localTextfields.left"
+              :key="i"
+              class="row"
+            >
+              <div class="full-width">
+                <div
+                  v-if="showItem(item)"
+                  class="row w-100 q-px-sm q-pb-sm"
+                >
+                  <div class="col-12 col-md-12 col-lg-5 q-pr-md q-pt-sm form__item-label text-weight-thin">
+                    {{ item.label }}
                   </div>
+
+                  <!-- INPUT TYPE SELECT -->
+                  <q-select
+                    v-if="item.type === 'select'"
+                    class="textfield-select form__item-input bg-accent col-12 col-sm"
+                    borderless
+                    v-model="item.model"
+                    :name="item.key"
+                    dense
+                    hide-hint
+                    hide-bottom-space
+                    bottom-slots
+                    stack-label
+                    use-input
+                    :options="item.options"
+                    :readonly="item.readonly"
+                    :rules="item.rules ? item.rules : []"
+                  >
+                    <template v-slot:option="scope">
+                      <q-item
+                        v-bind="scope.itemProps"
+                        dense
+                      >
+                        <q-item-section>
+                          <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </template>
+                  </q-select>
+
+
+                  <!-- INPUT TYPE DATE -->
+                  <q-input
+                    v-else-if="item.type === 'date'"
+                    v-model="item.model"
+                    :name="item.key"
+                    :readonly="item.readonly"
+                    class="col-12 col-sm form__item-input bg-accent"
+                    borderless
+                    dense
+                    hide-hint
+                    hide-bottom-space
+                    bottom-slots
+                    stack-label
+                  >
+                    <template v-slot:append>
+                      <q-btn
+                        v-if="!item.readonly"
+                        icon="event"
+                        size="xs"
+                        flat
+                        round
+                      >
+                        <q-popup-proxy
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
+                        >
+                          <q-date
+                            v-model="item.model"
+                            :name="item.key"
+                          />
+                        </q-popup-proxy>
+                      </q-btn>
+
+                      <q-icon
+                        v-else
+                        name="lock"
+                        size="xs"
+                      />
+                    </template>
+                  </q-input>
+
+                  <!-- NORMAL INPUT -->
+                  <q-input
+                    v-else
+                    v-model="item.model"
+                    :name="item.key"
+                    :readonly="item.readonly"
+                    class="form__item-input bg-accent col-12 col-sm"
+                    hide-hint
+                    hide-bottom-space
+                    bottom-slots
+                    dense
+                    :type="item.type ? item.type : 'text'"
+                    :rules="item.rules ? item.rules : []"
+                    stack-label
+                    borderless
+                  />
                 </div>
               </div>
+            </div>
+
+            <!-- TEXTAREAS SECTION -->
+            <div class="row">
               <div
-                v-else-if="showItem(item)"
-                class="row w-100 q-px-sm q-pb-sm"
+                v-for="(item, i) in localTextfields.textareas"
+                class="col-6 q-pa-sm"
+                :key="i"
               >
-                <div class="col-12 col-md-12 col-lg-5 q-pr-md q-pt-sm form__item-label text-weight-thin">
-                  {{ item.label }}
+                <div class="col-12">
+                  <div class="q-ma-sm form__item-label text-weight-thin">
+                    {{ item.label }}
+                  </div>
+                  <q-editor
+                    v-model="item.model"
+                    :name="item.key"
+                    :placeholder="'Escribe aquí tus ' + item.label"
+                    class="form__item-textarea bg-accent"
+                    :toolbar="item.toolbar ? item.toolbar : basicToolBar"
+                  />
                 </div>
-
-                <!-- INPUT TYPE SELECT -->
-                <q-select
-                  v-if="item.type === 'select'"
-                  class="textfield-select form__item-input bg-accent col-12 col-sm"
-                  borderless
-                  v-model="item.model"
-                  dense
-                  hide-hint
-                  hide-bottom-space
-                  bottom-slots
-                  stack-label
-                  :options="item.options"
-                  :readonly="item.readonly"
-                >
-                  <template v-slot:option="scope">
-                    <q-item
-                      v-bind="scope.itemProps"
-                      dense
-                    >
-                      <q-item-section>
-                        <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-
-
-                <!-- INPUT TYPE DATE -->
-                <q-input
-                  v-else-if="item.type === 'date'"
-                  v-model="item.model"
-                  :readonly="item.readonly"
-                  class="col-12 col-sm form__item-input bg-accent"
-                  borderless
-                  dense
-                  hide-hint
-                  hide-bottom-space
-                  bottom-slots
-                  stack-label
-                >
-                  <template v-slot:append>
-                    <q-btn
-                      v-if="!item.readonly"
-                      icon="event"
-                      size="xs"
-                      flat
-                      round
-                    >
-                      <q-popup-proxy
-                        cover
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
-                        <q-date v-model="item.model" />
-                      </q-popup-proxy>
-                    </q-btn>
-
-                    <q-icon
-                      v-else
-                      name="lock"
-                      size="xs"
-                    />
-                  </template>
-                </q-input>
-
-                <!-- NORMAL INPUT -->
-                <q-input
-                  v-else
-                  v-model="item.model"
-                  :readonly="item.readonly"
-                  class="form__item-input bg-accent col-12 col-sm"
-                  hide-hint
-                  hide-bottom-space
-                  bottom-slots
-                  dense
-                  :type="item.type ? item.type : 'text'"
-                  :rules="item.rules ? item.rules : []"
-                  stack-label
-                  borderless
-                />
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- RIGHT SECTION -->
-    <div class="col-12 col-md q-py-sm">
-      <div
-        v-for="(item, i) in localTextfields.right"
-        v-bind="item"
-        :key="i"
-        class="col-12"
-      >
 
+      <!-- RIGHT SECTION -->
+      <div class="col-12 col-md q-py-sm">
         <div
-          v-if="!item.imageInput"
-          class="row justify-end items-center q-px-sm q-py-xs"
+          v-for="(item, i) in localTextfields.right"
+          v-bind="item"
+          :key="i"
+          class="col-12"
         >
-          <div class="q-pr-md form__item-label text-weight-thin">
-            {{ item.label }}
+          <div
+            v-if="!item.imageInput && !item.readImage"
+            class="row justify-end items-center q-px-sm q-py-xs"
+          >
+            <div class="q-pr-md form__item-label text-weight-thin">
+              {{ item.label }}
+            </div>
+            <div class="form__item-model form__item-chip">
+              {{ item.model }}
+            </div>
           </div>
-          <div class="form__item-model form__item-chip">
-            {{ item.model }}
-          </div>
-        </div>
 
-        <div
-          v-if="item.imageInput"
-          class="q-px-sm row justify-center items-top h-100 w-100"
-          style="height: 85%"
-        >
-          <q-btn
-            unelevated
-            class="btn-background-dark q-mt-md btn-background-color"
-            :class="{ 'btn-background': ImageBase64 && type === 'user' }"
+          <div
+            v-if="item.imageInput"
+            class="q-px-sm row justify-center items-top h-100 w-100"
+            style="height: 85%"
+          >
+            <q-btn
+              unelevated
+              class="btn-background-dark q-mt-md btn-background-color"
+              :class="{ 'btn-background': ImageBase64 && type === 'user' }"
+              :style="type === 'user'
+                ? 'width: 205px; height: 205px; border-radius: 50%'
+                : 'width: 100%; min-height: 230px; max-width: 340px; border-radius: 12px'
+                "
+              @click="
+                pdfObject.name
+                  ? clearFileInput($refs.fileUpload)
+                  : $refs.fileUpload.click()
+                "
+            >
+              <q-img
+                :class="[
+                  ImageBase64 && type === 'user'
+                    ? 'form__image64'
+                    : 'form__image',
+                  ImageBase64 && type !== 'user'
+                    ? 'form__image64-equipment'
+                    : 'form__image',
+                ]"
+                no-spinner
+                :src="ImageBase64 ? ImageBase64 : getImageUrl('svg/add_img.svg')"
+              />
+            </q-btn>
+
+            <div class="form__item-label text-weight-thin text-center text-underline q-mt-sm w-100 q-mb-auto">
+              <span @click="
+                pdfObject.name
+                  ? clearFileInput($refs.fileUpload)
+                  : $refs.fileUpload.click()
+                ">
+                Carga una imagen desde tus archivos
+              </span>
+            </div>
+          </div>
+
+          <div
+            v-if="item.readImage"
+            class="row q-px-sm q-py-xs q-mx-auto q-mt-lg"
             :style="type === 'user'
-              ? 'width: 205px; height: 205px; border-radius: 50%'
-              : 'width: 100%; min-height: 230px; max-width: 340px; border-radius: 12px'
-              "
-            @click="
-              pdfObject.name
-                ? clearFileInput($refs.fileUpload)
-                : $refs.fileUpload.click()
+              ? 'width: 254px !important; height: 254px; border-radius: 50%'
+              : 'width: 100%; max-width: 350px;'
               "
           >
             <q-img
               :class="[
-                ImageBase64 && type === 'user'
-                  ? 'form__image64'
-                  : 'form__image',
-                ImageBase64 && type !== 'user'
-                  ? 'form__image64-equipment'
-                  : 'form__image',
+                type === 'user' ? 'form__image64' : 'form__image64-equipment',
               ]"
               no-spinner
-              :src="ImageBase64 ? ImageBase64 : getImageUrl('svg/add_img.svg')"
+              class="q-mx-auto q-my-auto"
+              :src="item.model"
             />
-          </q-btn>
-
-          <div class="form__item-label text-weight-thin text-center text-underline q-mt-sm w-100 q-mb-auto">
-            <span @click="
-              pdfObject.name
-                ? clearFileInput($refs.fileUpload)
-                : $refs.fileUpload.click()
-              ">
-              Carga una imagen desde tus archivos
-            </span>
           </div>
         </div>
+      </div>
 
+      <!-- BOTTOM AREA -->
+      <div
+        v-for="(item, i) in localTextfields.bottom"
+        v-bind="item"
+        :key="i"
+        class="col-12"
+      >
         <div
-          v-if="item.readImage"
-          class="row"
-          :style="type === 'user'
-            ? 'width: 254px !important; height: 254px; border-radius: 50%'
-            : 'width: 100%; max-width: 350px;'
-            "
+          v-if="item.model != undefined"
+          class="col-12 q-px-sm"
         >
-          <q-img
-            :class="[
-              type === 'user' ? 'form__image64' : 'form__image64-equipment',
+          <div class="q-my-sm form__item-label text-weight-thin">
+            {{ item.label }}
+          </div>
+          <q-editor
+            v-model="item.model"
+            :name="item.key"
+            :placeholder="'Escribe aquí...'"
+            class="form__item-textarea bg-accent"
+            :toolbar="[
+              [
+                {
+                  label: $q.lang.editor.fontSize,
+                  icon: $q.iconSet.editor.fontSize,
+                  fixedLabel: true,
+                  fixedIcon: true,
+                  list: 'no-icons',
+                  options: ['size-1', 'size-2', 'size-3', 'size-4', 'size-5'],
+                },
+                'bold',
+                'italic',
+                'strike',
+                'underline',
+              ],
+              ['unordered', 'ordered'],
             ]"
-            no-spinner
-            class="q-mx-auto q-my-auto"
-            :src="item.readImage"
           />
         </div>
       </div>
-    </div>
 
-    <!-- TEXT AREA -->
-    <div
-      v-for="(item, i) in localTextfields.bottom"
-      v-bind="item"
-      :key="i"
-      class="col-12"
-    >
-      <div
-        v-if="item.model != undefined"
-        class="col-12 q-px-sm"
-      >
-        <div class="q-my-sm form__item-label text-weight-thin">
-          {{ item.label }}
-        </div>
-        <q-editor
-          v-model="item.model"
-          :placeholder="'Escribe aquí...'"
-          class="form__item-textarea bg-accent"
-          :toolbar="[
-            [
-              {
-                label: $q.lang.editor.fontSize,
-                icon: $q.iconSet.editor.fontSize,
-                fixedLabel: true,
-                fixedIcon: true,
-                list: 'no-icons',
-                options: ['size-1', 'size-2', 'size-3', 'size-4', 'size-5'],
-              },
-              'bold',
-              'italic',
-              'strike',
-              'underline',
-            ],
-            ['unordered', 'ordered'],
-          ]"
-        />
-      </div>
+      <input
+        ref="fileUpload"
+        type="file"
+        accept="image/*,.jpg, .jpeg, .png"
+        style="display: none"
+        @change="uploadFile($event)"
+      />
     </div>
-
-    <input
-      ref="fileUpload"
-      type="file"
-      accept="image/*,.jpg, .jpeg, .png"
-      style="display: none"
-      @change="uploadFile($event)"
-    />
-  </div>
+  </q-form>
 </template>
 
 <!-- eslint-disable no-empty -->
@@ -340,6 +384,7 @@ export default defineComponent({
       basicToolBar: [['unordered', 'ordered']],
     };
   },
+
   data() {
     return {
       previousLength: 0,
@@ -356,6 +401,7 @@ export default defineComponent({
     localTextfields: {
       handler(val) {
         this.$emit('update:fields', val);
+        this.$refs.myForm.resetValidation()
       },
       deep: true,
     },
@@ -385,6 +431,16 @@ export default defineComponent({
         if (item.key == 'equipmentStatus')
           return false
       } return true
+    },
+
+    validate() {
+      return this.$refs.myForm.validate().then(success => {
+        if (success) {
+          return true
+        } else {
+          return false
+        }
+      })
     },
 
     uploadFile(e) {

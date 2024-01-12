@@ -35,6 +35,19 @@
                 />
               </div>
             </div>
+
+            <div
+              v-else-if="loading"
+              class="q-ma-xl q-pa-xl text-center no-info"
+            >
+              <q-spinner-pie
+                color="primary"
+                class="q-mt-lg"
+                size="4em"
+              />
+              <div class="text-primary q-ma-lg">Cargando usuarios</div>
+            </div>
+
             <div
               class="q-ma-xl q-pa-xl text-center no-info"
               v-else-if="loading === false"
@@ -195,7 +208,7 @@ export default defineComponent({
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
-          this.edit(val.id);
+          this.goToEdit(val.id);
         } else if (val.action === 'Detail') {
           this.goToDetails(val.id);
         }
@@ -238,6 +251,7 @@ export default defineComponent({
       deep: true,
     },
   },
+
   computed: {
     users: {
       get() {
@@ -275,7 +289,7 @@ export default defineComponent({
       this.$router.push({ name: 'detail-user', params: { id: payload } });
     },
 
-    edit(payload) {
+    goToEdit(payload) {
       console.log(payload);
       this.$router.push({ name: 'edit-user', params: { id: payload } });
     },

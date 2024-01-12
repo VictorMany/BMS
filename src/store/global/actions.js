@@ -30,6 +30,7 @@ export function formatPayload(context, { keys, fields }) {
 }
 
 export async function formatTextfields(context, { keys, fields }) {
+    console.log(keys)
     fields.createdAt = await context.dispatch('formatDate', keys.createdAt);
     for (let k in keys) {
         for (let prop in fields) {
@@ -87,7 +88,6 @@ function getModelSelected(item, valueFromServer) {
         }
         return item
     } else {
-        console.log(valueFromServer)
         item.model = valueFromServer
         return item
     }

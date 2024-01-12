@@ -18,6 +18,7 @@
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <form-text-field
+            ref="fieldsComponent"
             :fields="fields"
             type="user"
           />
@@ -35,7 +36,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormTextField from 'src/components/compose/FormTextField.vue';
@@ -49,7 +50,6 @@ export default defineComponent({
   },
   data() {
     return {
-      Equipos: 40,
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
@@ -57,6 +57,7 @@ export default defineComponent({
         btnAction: this.createOrEdit,
         loader: false,
       },
+
       btnCloseWindow: {
         iconName: 'close',
         btnBackground: '#FF9900',
@@ -64,6 +65,7 @@ export default defineComponent({
         btnSize: 'xs',
         btnAction: this.goBack,
       },
+
       fields: {
         createdAt: this.getCreatedAt(),
         id: null,
@@ -73,6 +75,11 @@ export default defineComponent({
             key: 'userName',
             label: 'Nombre del usuario',
             readonly: this.isEditing(),
+            rules: [
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+              (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/.test(val) || 'El campo solo debe contener letras'
+            ],
             model: '',
           },
           {
@@ -82,11 +89,8 @@ export default defineComponent({
             readonly: this.isEditing(),
             model: '',
             rules: [
-              (val) => /@/.test(val) || 'Debe contener "@"',
-              (val) =>
-                /\S+@\S+\.\S+/.test(val) ||
-                'Formato de correo electrónico inválido',
-              // Agrega más reglas según tus necesidades
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+              (val) => /\S+@\S+\.\S+/.test(val) || 'Formato de correo electrónico inválido'
             ],
           },
         ],
@@ -96,6 +100,9 @@ export default defineComponent({
             label: 'Contraseña',
             type: 'password',
             model: '',
+            rules: [
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+            ],
           },
           {
             key: 'phone',
@@ -103,30 +110,35 @@ export default defineComponent({
             type: 'number',
             model: '',
             rules: [
-              (val) =>
-                /^\d{10}$/.test(val) ||
-                'Debe ser un número de teléfono válido (10 dígitos)',
+              (val) => /^\d{10}$/.test(val) || 'El número de teléfono debe tener 10 dígitos',
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
             ],
           },
           {
             key: 'userRole',
             label: 'Rol de usuario',
             type: 'select',
-            model: '',
+            model: null,
             options: [
               { label: 'Administrador', index: 1, value: 1 },
               { label: 'Auxiliar', index: 2, value: 2 },
               { label: 'Funciones básicas', index: 3, value: 3 },
+            ],
+            rules: [
+              (val) => (val) || 'El campo es obligatorio',
             ],
           },
           {
             key: 'userStatus',
             label: 'Estatus',
             type: 'select',
-            model: '',
+            model: null,
             options: [
               { label: 'Activo', status: true, value: true },
               { label: 'Inactivo', status: false, value: false },
+            ],
+            rules: [
+              (val) => (val) || 'El campo es obligatorio',
             ],
           },
           {
@@ -134,7 +146,10 @@ export default defineComponent({
             readonly: this.isEditing(),
             label: 'Fecha de nacimiento',
             type: 'date',
-            model: ref(new Date().toLocaleDateString().split('T')[0]),
+            model: null,
+            rules: [
+              (val) => (val) || 'El campo es obligatorio',
+            ],
           },
         ],
         right: [
@@ -150,8 +165,7 @@ export default defineComponent({
   },
 
   created() {
-    if (this.isEditing === true) {
-      console.log('Obteniedo el usuario')
+    if (this.isEditing()) {
       this.getUser()
     }
   },
@@ -173,7 +187,8 @@ export default defineComponent({
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        this.showAlert({ msg: error.response.data.details });
+        console.log(error)
+        this.showAlert({ msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -200,20 +215,22 @@ export default defineComponent({
           this.showAlert({ title: 'Éxito al editar', msg: 'El usuario se ha actualizado', color: 'green-14' });
           this.$router.go(-1);
         } else {
-          this.showAlert();
+          this.showAlert({});
         }
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        this.showAlert();
+        this.showAlert({});
       }
     },
 
-    createOrEdit() {
-      if (this.isEditing()) {
-        this.editUser()
-      } else {
-        this.createUser()
+    async createOrEdit() {
+      if (await this.$refs.fieldsComponent.validate()) {
+        if (this.isEditing()) {
+          this.editUser()
+        } else {
+          this.createUser()
+        }
       }
     },
 
@@ -262,5 +279,12 @@ export default defineComponent({
 
 .card-page {
   padding-top: 0 !important;
+}
+</style>
+
+<style>
+.q-field__messages {
+  margin-bottom: 0.3rem !important;
+  line-height: 15px;
 }
 </style>

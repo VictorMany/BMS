@@ -188,11 +188,14 @@ export default defineComponent({
         if (res === true) {
           this.$router.go(-1);
         } else {
+          console.log(res)
+
           this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
         }
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
+        console.log(error)
         this.showAlert({ msg: error.response.data.details });
       }
     },
@@ -222,21 +225,20 @@ export default defineComponent({
           this.showAlert({ title: 'Éxito al editar', msg: 'El equipo se ha actualizado', color: 'green-14' });
           this.$router.go(-1);
         } else {
-          this.showAlert();
+          this.showAlert({});
         }
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        this.showAlert();
+        this.showAlert({});
       }
     },
 
     getTitle() {
-
       if (this.isEditing()) {
-        return 'Editar usuario'
+        return 'Editar equipo'
       }
-      else return 'Agregar usuario'
+      else return 'Agregar equipo'
     },
 
     getCreatedAt() {

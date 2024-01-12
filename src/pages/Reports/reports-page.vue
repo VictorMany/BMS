@@ -278,7 +278,7 @@ export default defineComponent({
       console.log('Ver detalle', payload)
       this.$router.push({ name: 'detail-report', params: { id: 100 } })
     },
-    edit(payload) {
+    goToEdit(payload) {
       console.log('Editar', payload)
       this.$router.push({ name: 'edit-report', params: { id: 100 } })
     },
@@ -290,7 +290,7 @@ export default defineComponent({
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
-          this.edit(val.id)
+          this.goToEdit(val.id)
         } else if (val.action === 'Detail') {
           this.goToDetails(val.id)
         }

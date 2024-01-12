@@ -8,6 +8,10 @@ export function getEquipmentsGetter(state) {
       { label: 'No. serie:', info: equipment.serialNumber },
     ],
     cardDate: new Date(equipment.createdAt).toLocaleDateString(),
+
+    label: equipment.equipmentName,
+    value: equipment.IdEquipment,
+    serialNumber: equipment.serialNumber,
   }));
   return equipments
 }

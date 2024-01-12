@@ -1,6 +1,9 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div :style="`height: ${height}`" class="general-table">
+  <div
+    :style="`height: ${height}`"
+    class="general-table"
+  >
     <q-table
       class="table-style font-style my-sticky-header-table q-mt-none bg-white"
       :rows="rows"
@@ -23,7 +26,10 @@
         </q-tr>
       </template>
       <template v-slot:pagination>
-        <div v-if="showPagination" class="row justify-center">
+        <div
+          v-if="showPagination"
+          class="row justify-center"
+        >
           <q-pagination
             v-model="pagination.page"
             dense
@@ -153,7 +159,6 @@ export default defineComponent({
     // Changing pagination rows
     'pagination.rowsPerPage': {
       handler(rowsPerPage) {
-        console.log('CHANGING THE ROWS PER PAGE');
         let pag = {
           ...this.pagination,
           rowsPerPage: rowsPerPage,
@@ -173,15 +178,6 @@ export default defineComponent({
       immediate: true,
       deep: true,
     },
-
-    rows: {
-      handler(value) {
-        console.log('SU VALOR', value);
-        console.log(this.pagination.rowsPerPage);
-      },
-      immediate: true,
-      deep: true,
-    },
   },
 });
 </script>
@@ -191,6 +187,7 @@ export default defineComponent({
   font-size: 13px;
   font-weight: 200;
 }
+
 .column-style {
   font-size: 13px;
   font-weight: 500;
@@ -228,13 +225,16 @@ export default defineComponent({
     height: 100%;
   }
 }
+
 .my-sticky-header-table thead tr th {
   position: sticky;
   z-index: 1;
 }
+
 .my-sticky-header-table thead tr:first-child th {
   top: 0;
 }
+
 .my-sticky-header-table.q-table--loading thead tr:last-child th {
   top: 48px;
 }

@@ -35,9 +35,22 @@
                 />
               </div>
             </div>
+
             <div
+              v-else-if="loading"
               class="q-ma-xl q-pa-xl text-center no-info"
+            >
+              <q-spinner-pie
+                color="primary"
+                class="q-mt-lg"
+                size="4em"
+              />
+              <div class="text-primary q-ma-lg">Cargando equipos</div>
+            </div>
+
+            <div
               v-else-if="loading === false"
+              class="q-ma-xl q-pa-xl text-center no-info"
             >
               No hay equipos para mostrar
               <strong class="text-negative">!</strong>
@@ -209,14 +222,14 @@ export default defineComponent({
   },
 
   created() {
-    this.getEquipments();
+    this.getEquipments({});
   },
 
   watch: {
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
-          this.edit(val.id);
+          this.goToEdit(val.id);
         } else if (val.action === 'Detail') {
           this.goToDetails(val.id);
         }
@@ -300,7 +313,7 @@ export default defineComponent({
       this.$router.push({ name: 'detail-equipment', params: { id: payload } });
     },
 
-    edit(payload) {
+    goToEdit(payload) {
       console.log('Editar', payload);
       this.$router.push({ name: 'edit-equipment', params: { id: payload } });
     },
