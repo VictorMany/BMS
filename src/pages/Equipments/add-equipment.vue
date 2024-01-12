@@ -4,25 +4,13 @@
       <div class="column items-end q-mt-md q-mb-xs gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions
-        :titlePage="getTitle()"
-        :btn-action="btnAction"
-      />
-      <div
-        class="main-container-page main-container-page-medium-dark"
-        style="height: 82%"
-      >
-        <q-scroll-area
-          class="full-height q-pb-sm"
-          style="height: 92% !important"
-          :thumb-style="$store.getters['global/getThumbStyle']"
-        >
+      <header-actions :titlePage="getTitle()" :btn-action="btnAction" />
+      <div class="main-container-page main-container-page-medium-dark" style="height: 82%">
+        <q-scroll-area class="full-height q-pb-sm" style="height: 92% !important"
+          :thumb-style="$store.getters['global/getThumbStyle']">
           <form-text-field :fields="fields" />
         </q-scroll-area>
-        <div
-          class="col-12 form__date_container form__date column justify-center q-px-lg"
-          style="height: 6%"
-        >
+        <div class="col-12 form__date_container form__date column justify-center q-px-lg" style="height: 6%">
           <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
         </div>
       </div>
@@ -70,16 +58,28 @@ export default defineComponent({
             key: 'equipmentName',
             label: 'Nombre del equipo',
             model: '',
+            rules: [
+              (val) => (val && val.trim().length > 0) || 'El nombre del equipo es obligatorio',
+              (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s]+$/.test(val) || 'El campo solo debe contener letras y números'
+            ],
           },
+
         ],
         left: [
           {
             key: 'serialNumber',
             label: 'No. serie',
             model: '',
+            rules: [
+              (val) => (val && val.trim().length > 0) || 'El número de serie es obligatorio',
+              (val) => (val.length <= 30) || 'El campo no debe exceder 30 caracteres',
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s]+$/.test(val) || 'El campo solo debe contener letras y números'
+            ],
           },
+
           {
-            key: 'trackingNumber',
+            key: 'trackingNumber',  //este valor lo llena back
             label: 'Número de control',
             model: '',
           },
@@ -87,17 +87,27 @@ export default defineComponent({
             key: 'equipmentBrand',
             label: 'Marca',
             model: '',
+            rules: [
+              (val) => (val && val.trim().length > 0) || 'La marca es obligatoria',
+              (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s]+$/.test(val) || 'El campo solo debe contener letras y números'
+            ],
           },
           {
             key: 'equipmentModel',
             label: 'Modelo del equipo',
             model: '',
+            rules: [
+              (val) => (val && val.trim().length > 0) || 'El modelo es obligatorio',
+              (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s]+$/.test(val) || 'El campo solo debe contener letras y números'
+            ],
           },
           {
             key: 'location',
             label: 'Ubicación',
             type: 'select',
-            model: '',
+            model: null,
             options: [
               { label: 'Hospital C', index: 1, value: 'Hospital C' },
               { label: 'Área de choque', index: 2, value: 'Área de choque' },
@@ -111,6 +121,9 @@ export default defineComponent({
               { label: 'Cuidados intensivos', index: 10, value: 'Cuidados intensivos' },
               { label: 'Unidades de cuidados paliativos', index: 11, value: 'Unidades de cuidados paliativos' },
               { label: 'Servicios de apoyo', index: 12, value: 'Servicios de apoyo' },
+            ],
+            rules: [
+              (val) => (val) || 'El campo es obligatorio',
             ],
           },
           {
@@ -135,11 +148,16 @@ export default defineComponent({
             key: 'provider',
             label: 'Provedor',
             model: '',
+            rules: [
+              (val) => (val && val.trim().length > 0) || 'El proveedor es obligatorio',
+              (val) => (val.length <= 60) || 'El campo no debe exceder 50 caracteres',
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s]+$/.test(val) || 'El campo solo debe contener letras y números'
+            ],
           },
           {
-            key: 'equipmentStatus',
+            key: 'equipmentStatus',   //este valor lo llena back
             label: 'Estatus',
-            model: '',
+            model: null,
             type: 'select',
             options: [
               { label: 'Activo', index: 1, value: 1 },
@@ -150,12 +168,26 @@ export default defineComponent({
             key: 'price',
             label: 'Costo',
             model: '',
+            rules: [
+              (val) => (val !== undefined && val !== null) || 'El campo es obligatorio',
+              (val) => !isNaN(val) || 'Ingresa un valor numérico',
+              (val) => parseFloat(val) >= 0 || 'El costo debe ser mayor o igual a 0',
+              (val) => (val.toString().indexOf('.') === -1 || val.toString().split('.')[1].length <= 2) || 'El campo no debe tener más de dos decimales'
+            ],
           },
           {
             key: 'warrantyDate',
             label: 'Fecha de garantía',
             type: 'date',
             model: '',
+            rules: [
+              (val) => {
+                const selectedDate = new Date(val);
+                const currentDate = new Date();
+
+                return selectedDate >= currentDate || 'La fecha de garantía no puede ser anterior a la fecha actual';
+              }
+            ],
           },
         ],
         right: [

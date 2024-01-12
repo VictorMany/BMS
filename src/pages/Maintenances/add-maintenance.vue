@@ -90,8 +90,8 @@ export default defineComponent({
             model: '',
             type: 'select',
             options: [
-              { label: 'Preventivo', index: 1, value: 'Preventivo' },
-              { label: 'Correctivo', index: 2, value: 'Correctivo' },
+              { label: 'Preventivo', index: 1, value: 'preventivo' },
+              { label: 'Correctivo', index: 2, value: 'correctivo' },
             ],
           },
           {
