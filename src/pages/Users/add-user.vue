@@ -77,7 +77,7 @@ export default defineComponent({
             readonly: this.isEditing(),
             rules: [
               (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-              (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
+              (val) => (val.length <= 50) || 'El campo no debe exceder 50 caracteres',
               (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/.test(val) || 'El campo solo debe contener letras'
             ],
             model: '',
@@ -90,6 +90,7 @@ export default defineComponent({
             model: '',
             rules: [
               (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+              (val) => (val.length <= 50) || 'El campo no debe exceder 50 caracteres',
               (val) => /\S+@\S+\.\S+/.test(val) || 'Formato de correo electrónico inválido'
             ],
           },
