@@ -5,7 +5,6 @@ export function changeMenu(context) {
 
 export function formatPayload(context, { keys, fields }) {
     const fd = new FormData();
-
     for (let k in keys) {
         for (let prop in fields) {
             if (Array.isArray(fields[prop])) {
@@ -45,10 +44,11 @@ export async function formatTextfields(context, { keys, fields }) {
             }
         }
     }
-
     return fields;
 }
 
+
+// actions aux
 export function formatDate(context, date) {
     const initialDate = new Date(date);
     const optFormat = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };

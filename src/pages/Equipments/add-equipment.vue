@@ -53,6 +53,7 @@ export default defineComponent({
       fields: {
         id: null,
         createdAt: this.getCreatedAt(),
+
         top: [
           {
             key: 'equipmentName',
