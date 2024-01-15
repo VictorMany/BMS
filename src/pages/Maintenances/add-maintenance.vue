@@ -5,7 +5,7 @@
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions
-        :titlePage="getTitle()"
+        titlePage="Agregar mantenimiento"
         :btn-action="btnAction"
       />
       <div
@@ -50,7 +50,7 @@ export default defineComponent({
         show: true,
         btnTitle: 'Guardar',
         btnWidth: 'auto',
-        btnAction: this.createOrEdit,
+        btnAction: this.createMaintenance,
         loader: false,
       },
       btnCloseWindow: {
@@ -121,7 +121,7 @@ export default defineComponent({
         ],
         right: [
           {
-            key: 'maintenanceType',
+            key: 'serialNumber',
             label: 'No. serie',
             readonly: true,
             model: '',
@@ -151,6 +151,7 @@ export default defineComponent({
           this.fields
         );
         if (res === true) {
+          this.showAlert({ title: 'Éxito al crear', msg: 'El mantenimiento se ha agregado', color: 'green-14' });
           this.$router.go(-1);
         } else {
           this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
@@ -158,7 +159,7 @@ export default defineComponent({
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        this.showAlert({ msg: error.response.data.details });
+        this.showAlert({ msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -172,36 +173,6 @@ export default defineComponent({
       this.loading = false
     },
 
-    async editMaintenance() {
-      this.btnAction.loader = true;
-      this.fields.id = this.$route.params.id
-
-      try {
-        const res = await this.$store.dispatch(
-          'maintenances/updateMaintenanceAction',
-          this.fields
-        );
-        if (res === true) {
-          this.showAlert({ title: 'Éxito al editar', msg: 'El usuario se ha actualizado', color: 'green-14' });
-          this.$router.go(-1);
-        } else {
-          this.showAlert({});
-        }
-        this.btnAction.loader = false;
-      } catch (error) {
-        this.btnAction.loader = false;
-        this.showAlert({});
-      }
-    },
-
-    createOrEdit() {
-      if (this.isEditing()) {
-        this.editMaintenance()
-      } else {
-        this.createMaintenance()
-      }
-    },
-
     getDate() {
       return this.$store.$store.getters['global/getDate']
     },
@@ -210,18 +181,8 @@ export default defineComponent({
       this.$router.go(-1);
     },
 
-    getTitle() {
-      if (this.isEditing()) {
-        return 'Editar mantenimiento'
-      }
-      else return 'Agregar mantenimiento'
-    },
-
     getCreatedAt() {
-      if (this.isEditing()) {
-        return ''
-      }
-      else return this.$store.getters['global/getDate']
+      return this.$store.getters['global/getDate']
     },
 
     showAlert({ msg, color, title, classes }) {
@@ -231,10 +192,6 @@ export default defineComponent({
         color: color ? color : 'secondary',
         classes: classes ? classes : 'border-rounded',
       });
-    },
-
-    isEditing() {
-      return this.$route.params.id ? true : false
     },
 
     async getUsers(params) {
@@ -289,11 +246,6 @@ export default defineComponent({
   created() {
     this.getUsers({})
     this.getEquipments({})
-
-
-    if (this.isEditing()) {
-      this.getMaintenance()
-    }
   },
 
   computed: {

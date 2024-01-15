@@ -2,7 +2,7 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions
-        :titlePage="'Mantenimientos'"
+        titlePage="Mantenimientos"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
         v-model:searchModel="searchModel"
@@ -15,6 +15,7 @@
         <general-table
           v-model:row-selected="rowSelected"
           :rows="maintenances"
+          :loading="loading"
           :columns="columns"
           :actions-table="actionsTable"
           :pagination-prop="pagination"
@@ -41,8 +42,6 @@ export default defineComponent({
     return {
       delaySearch: 300,
       searchModel: null,
-      showCards: true,
-      switchContent: 1,
       timeoutSearch: null,
       loading: true,
 
@@ -76,38 +75,50 @@ export default defineComponent({
           icnName: 'read_more',
           icnSize: 'sm',
           icnAction: 'Detail'
-        },
-        {
-          icnName: 'edit',
-          icnSize: 'xs',
-          icnAction: 'Edit'
         }
       ],
 
       rowSelected: {},
 
+      selectedFilterText: '',
+
       inputSearch: {
         show: true,
         inputLabel: 'Buscar por nombre',
-        setSelectedOpt: this.setSelectedOpt,
-        setSelectedStatus: this.setSelectedStatus,
-        heightModal: '200px',
+        setSelectedFilter: this.setSelectedFilter,
+        setSelectedOptionFilter: this.setSelectedOptionFilter,
+        heightModal: 200,
         items: [
           {
             title: 'Tipo',
-            icon: 'engineering'
+            icon: 'engineering',
+            options: [
+              {
+                title: 'Correctivo',
+                filter: 'maintenanceType',
+                value: 'correctivo',
+              },
+              {
+                title: 'Preventivo',
+                filter: 'maintenanceType',
+                value: 'preventivo',
+              }
+            ]
           },
           {
             title: 'Encargado',
+            filter: 'userId',
             icon: 'supervisor_account'
           },
           {
-            title: 'Fecha',
-            icon: 'calendar_month'
+            title: 'Precio',
+            filter: 'price',
+            icon: 'payments'
           },
           {
-            title: 'Precio',
-            icon: 'payments'
+            title: 'Motivo',
+            filter: 'reason',
+            icon: 'report'
           }
         ],
       },
@@ -125,9 +136,7 @@ export default defineComponent({
   watch: {
     rowSelected: {
       handler(val) {
-        if (val.action === 'Edit') {
-          this.goToEdit(val.id);
-        } else if (val.action === 'Detail') {
+        if (val.action === 'Detail') {
           this.goToDetails(val.id);
         }
       },
@@ -135,19 +144,12 @@ export default defineComponent({
     },
 
     searchModel(val) {
-      let params = {};
-      if (Object.keys(this.params).length > 0) {
-        /**
-         * @this.params[0] -> Name, Status, Role
-         */
-        params = {
-          [Object.keys(this.params)[0]]: val,
-        };
-      }
+      this.params[this.selectedFilterText] = val
 
       clearTimeout(this.timeoutSearch);
+
       this.timeoutSearch = setTimeout(() => {
-        this.getMaintenances(params);
+        this.getMaintenances(this.params);
       }, this.delaySearch);
     },
   },
@@ -178,48 +180,46 @@ export default defineComponent({
       this.$router.push({ name: 'detail-maintenance', params: { id: payload } });
     },
 
-    goToEdit(payload) {
-      console.log(payload);
-      this.$router.push({ name: 'edit-maintenance', params: { id: payload } });
-    },
-
-    setSelectedOpt(opt) {
-      this.inputSearch.inputLabel = opt;
-
-      let type = '';
-      switch (opt) {
-        case 'Nombre':
-          type = 'name';
-          break;
-        case 'Estatus':
-          type = 'status';
-          break;
-        case 'Role':
-          type = 'role';
-          break;
+    setSelectedFilter(opt) {
+      // IF CHANGE THE MODEL SELECTED
+      if (this.selectedFilterText) {
+        delete this.params[this.selectedFilterText]
+        if (this.searchModel) {
+          this.getMaintenances(this.params);
+        }
       }
 
-      this.params = {
-        [type]: this.searchModel,
-      };
+      this.selectedFilterText = opt.filter
+      this.inputSearch.inputLabel = opt.label;
 
+      if (opt.value && opt.filter) {
+        this.params[opt.filter] = this.searchModel
+        this.getMaintenances(this.params);
+      }
+    },
+
+    setSelectedOptionFilter(activeFilters, removedFilter = null) {
+      if (activeFilters.length) {
+        activeFilters.forEach(item => {
+          this.params[item.filter] = item.value
+        })
+      }
+      if (removedFilter) {
+        delete this.params[removedFilter]
+      }
       this.getMaintenances(this.params);
     },
 
-
-    setSelectedStatus(opt) {
-      this.params = {
-        status: opt ? 1 : 0,
-      };
-      this.getMaintenances(this.params)
-    },
-
     changePagination(pagination) {
-      this.getMaintenances({
-        page: pagination.page,
-        rowsPerPage: pagination.rowsPerPage,
-      });
-    },
+      this.params = {
+        ...this.params, ...{
+          page: pagination.page,
+          rowsPerPage: pagination.rowsPerPage,
+        }
+      }
+
+      this.getMaintenances(this.params);
+    }
   },
 })
 </script>

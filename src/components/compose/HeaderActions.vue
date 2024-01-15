@@ -32,6 +32,7 @@
       <input-search
         class="w-100"
         v-bind="inputSearch"
+        v-model:v-bind="inputSearch.heightModal"
         v-model:search-model="searchModelLocal"
       />
     </div>

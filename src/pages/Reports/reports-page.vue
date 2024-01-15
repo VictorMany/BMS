@@ -2,9 +2,10 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions
-        :titlePage="'Reportes'"
+        titlePage="Reportes"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
+        v-model:searchModel="searchModel"
       />
       <!-- Main container -->
       <div
@@ -12,10 +13,13 @@
         style="height: 88%; overflow-y: hidden;"
       >
         <general-table
-          :rows="rows"
-          :columns="columns"
-          :actions-table="actionsTable"
           v-model:row-selected="rowSelected"
+          :rows="reports"
+          :columns="columns"
+          :loading="loading"
+          :actions-table="actionsTable"
+          :pagination-prop="pagination"
+          @change-pagination="changePagination"
         />
       </div>
       <!-- Main container -->
@@ -28,42 +32,84 @@ import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import GeneralTable from 'src/components/compose/GeneralTable.vue'
 export default defineComponent({
-  name: 'MaintenancesPage',
+  name: 'ReportsPage',
   components: {
     HeaderActions,
     GeneralTable
   },
   data() {
     return {
+      delaySearch: 300,
+      searchModel: null,
+      timeoutSearch: null,
+      loading: true,
+
+      localPagination: {},
+
       btnAction: {
         show: true,
         btnTitle: 'Añadir reporte',
-        to: 'add-report'
+        to: 'add-report',
+        btnWidth: 'auto'
       },
+
+      actionsTable: [
+        {
+          icnName: 'read_more',
+          icnSize: 'sm',
+          icnAction: 'Detail',
+        },
+        {
+          icnName: 'edit',
+          icnSize: 'xs',
+          icnAction: 'Edit',
+        },
+      ],
+
+      rowSelected: {},
+
+      selectedFilterText: '',
+
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por tipo',
-        setSelectedOpt: this.setSelectedOpt,
-        heightModal: '200px',
+        inputLabel: 'Buscar por nombre',
+        setSelectedFilter: this.setSelectedFilter,
+        setSelectedOptionFilter: this.setSelectedOptionFilter,
+        heightModal: 160,
         items: [
           {
             title: 'Reporte',
-            icon: 'bug_report'
+            icon: 'bug_report',
+            filter: 'reason'
           },
           {
             title: 'Encargado',
-            icon: 'supervisor_account'
-          },
-          {
-            title: 'Fecha',
-            icon: 'calendar_month'
+            icon: 'supervisor_account',
+            filter: 'UserId'
           },
           {
             title: 'Estatus',
-            icon: 'list'
+            icon: 'engineering',
+            options: [
+              {
+                title: 'Correctivo',
+                filter: 'maintenanceType',
+                value: 'correctivo',
+              },
+              {
+                title: 'Preventivo',
+                filter: 'maintenanceType',
+                value: 'preventivo',
+              }
+            ]
           }
         ]
       },
+
+      params: {
+        name: '',
+      },
+
       columns: [
         {
           name: 'title_report',
@@ -78,225 +124,106 @@ export default defineComponent({
         { name: 'date', label: 'Fecha del reporte', field: 'date', align: 'center', sortable: true },
         { name: 'status', label: 'Estatus', field: 'status', align: 'center', sortable: true },
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
-      ],
-      rows: [
-        {
-          id: 1,
-          title_report: 'Este es un reporte',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 2,
-          title_report: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          status: 'Pendiente',
-          actions: ''
-        },
-        {
-          id: 3,
-          title_report: 'Este es un reporte',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 4,
-          title_report: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          status: 'Pendiente',
-          actions: ''
-        },
-        {
-          id: 5,
-          title_report: 'Este es un reporte',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 6,
-          title_report: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 7,
-          title_report: 'Este es un reporte',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          status: 'Pendiente',
-          actions: ''
-        },
-        {
-          id: 8,
-          title_report: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          status: 'Pendiente',
-          actions: ''
-        },
-        {
-          id: 9,
-          title_report: 'Este es un reporte',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 10,
-          title_report: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 11,
-          title_report: 'Este es un reporte',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 12,
-          title_report: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 13,
-          title_report: 'Este es un reporte',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 14,
-          title_report: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 15,
-          title_report: 'Este es un reporte',
-          encharged_name: 'Ángel Omar Torres Padilla',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 16,
-          title_report: 'Correctivo',
-          encharged_name: 'Luisa Juarez',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 17,
-          title_report: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 18,
-          title_report: 'Este es un reporte',
-          encharged_name: 'Ángel Omar Torres Padilla',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 19,
-          title_report: 'Correctivo',
-          encharged_name: 'Luisa Juarez',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 20,
-          title_report: 'Correctivo',
-          encharged_name: 'Luis Andrés Pérez',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 21,
-          title_report: 'Este es un reporte',
-          encharged_name: 'Ángel Omar Torres Padilla',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: ''
-        },
-        {
-          id: 22,
-          title_report: 'Correctivo',
-          encharged_name: 'Luisa Juarez',
-          date: '12-Jun-2022',
-          total_cost: '$ 258000',
-          status: 'Atendido',
-          actions: ''
-        }
-      ],
-      actionsTable: [
-        {
-          icnName: 'read_more',
-          icnSize: 'sm',
-          icnAction: 'Detail'
-        },
-        {
-          icnName: 'edit',
-          icnSize: 'xs',
-          icnAction: 'Edit'
-        }
-      ],
-      rowSelected: {},
+      ]
     }
   },
-  methods: {
-    goToDetails(payload) {
-      console.log('Ver detalle', payload)
-      this.$router.push({ name: 'detail-report', params: { id: 100 } })
-    },
-    goToEdit(payload) {
-      console.log('Editar', payload)
-      this.$router.push({ name: 'edit-report', params: { id: 100 } })
-    },
-    setSelectedOpt(opt) {
-      this.inputSearch.inputLabel = opt
-    }
+
+  created() {
+    this.getReports({});
   },
+
   watch: {
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
-          this.goToEdit(val.id)
+          this.goToEdit(val.id);
         } else if (val.action === 'Detail') {
-          this.goToDetails(val.id)
+          this.goToDetails(val.id);
         }
       },
-      deep: true
+      deep: true,
+    },
+
+    searchModel(val) {
+      this.params[this.selectedFilterText] = val
+
+      clearTimeout(this.timeoutSearch);
+
+      this.timeoutSearch = setTimeout(() => {
+        this.getReports(this.params);
+      }, this.delaySearch);
+    },
+  },
+
+  computed: {
+    reports: {
+      get() {
+        return this.$store.getters['reports/getReportsGetter'];
+      },
+    },
+
+    pagination: {
+      get() {
+        return this.$store.getters['reports/getPaginationGetter'];
+      },
+    },
+  },
+
+  methods: {
+    async getReports(params) {
+      this.loading = true
+      await this.$store.dispatch('reports/getReportsAction', params);
+      this.loading = false
+    },
+
+    goToDetails(payload) {
+      this.$router.push({ name: 'detail-report', params: { id: payload } });
+    },
+
+    goToEdit(payload) {
+      this.$router.push({ name: 'edit-report', params: { id: payload } });
+    },
+
+    setSelectedFilter(opt) {
+      // IF CHANGE THE MODEL SELECTED
+      if (this.selectedFilterText) {
+        delete this.params[this.selectedFilterText]
+        if (this.searchModel) {
+          this.getReports(this.params);
+        }
+      }
+
+      this.selectedFilterText = opt.filter
+      this.inputSearch.inputLabel = opt.label;
+
+      if (opt.value && opt.filter) {
+        this.params[opt.filter] = this.searchModel
+        this.getReports(this.params);
+      }
+    },
+
+    setSelectedOptionFilter(activeFilters, removedFilter = null) {
+      if (activeFilters.length) {
+        activeFilters.forEach(item => {
+          this.params[item.filter] = item.value
+        })
+      }
+      if (removedFilter) {
+        delete this.params[removedFilter]
+      }
+      this.getReports(this.params);
+    },
+
+    changePagination(pagination) {
+      this.params = {
+        ...this.params, ...{
+          page: pagination.page,
+          rowsPerPage: pagination.rowsPerPage,
+        }
+      }
+
+      this.getReports(this.params);
     }
-  }
+  },
 })
 </script>

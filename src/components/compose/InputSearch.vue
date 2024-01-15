@@ -1,38 +1,132 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <q-input v-model="modelLocal" class="input-style q-px-sm" borderless dense :label="inputLabel" :dark="false">
+  <q-input
+    v-model="modelLocal"
+    class="input-style q-px-sm"
+    borderless
+    dense
+    :label="inputLabel"
+    :dark="false"
+  >
     <template v-slot:prepend>
-      <q-icon color="primary" name="search" />
+      <q-icon
+        color="primary"
+        name="search"
+      />
     </template>
     <template v-slot:append>
-      <q-btn class="btn-style border-shadow q-pa-none q-pl-md q-pr-xs" :label="btnFilter.title" :size="'sm'" no-caps>
+      <q-btn
+        class="btn-style border-shadow q-pa-none q-pl-md q-pr-xs"
+        :label="btnFilter.title"
+        :size="'sm'"
+        no-caps
+      >
         <div class="no-wrap q-pa-none q-ml-auto">
-          <q-icon right :name="btnFilter.icon" class="q-ml-md q-ma-xs" />
+          <q-icon
+            right
+            :name="btnFilter.icon"
+            class="q-ml-md q-ma-xs"
+          />
         </div>
         <q-popup-proxy class="border-radius">
-          <q-banner class="border-shadow q-px-sm" style="width: 300px; height: auto">
-            <q-scroll-area :style="`height: ${heightModal} !important`" class="fit" :thumb-style="{
-              borderRadius: '5px',
-              background: 'rgba(29, 100, 231, 0.2)',
-              width: '0px',
-              opacity: 1,
-            }">
-              <q-list class="q-px-none">
-                <div v-for="(item, i) in items" class="item-filter" @click="setSelectedOpt(item.title)" :key="i">
+          <q-banner
+            class="border-shadow q-px-sm"
+            style="width: 300px; height: auto"
+          >
+            <q-scroll-area
+              :style="`height: ${heightModalLocal}px !important`"
+              class="fit"
+              :thumb-style="{
+                borderRadius: '5px',
+                background: 'rgba(29, 100, 231, 0.2)',
+                width: '0px',
+                opacity: 1,
+              }"
+            >
 
-                  <q-item class="flex items-center border-radius" clickable>
+              <q-list class="q-px-none">
+                <div
+                  v-for="(item, i) in items"
+                  class="item-filter"
+                  :key="i"
+                >
+                  <q-expansion-item
+                    v-if="item.options"
+                    v-model="item.isExpanded"
+                    :class="{ 'bg-accent q-mb-sm': item.isExpanded }"
+                    class="border-radius setting-item__title"
+                    @update:model-value="updateHeight(item)"
+                  >
+                    <!-- @before-hide="resetSelected()" -->
+                    <template v-slot:header>
+                      <q-item-section avatar>
+                        <q-avatar
+                          size="md"
+                          class="avatar-item"
+                          color="primary"
+                        >
+                          <q-icon
+                            color="white"
+                            :name="item.icon"
+                          />
+                        </q-avatar>
+                      </q-item-section>
+
+                      <q-item-section>
+                        <q-item-label class="setting-item__title">
+                          {{ item.title }}
+                        </q-item-label>
+                      </q-item-section>
+                    </template>
+
+                    <q-card-section class="q-pt-none q-pb-sm">
+                      <div
+                        v-for="(opt, j) in item.options"
+                        :key="j"
+                        class="item-filter"
+                      >
+                        <q-item
+                          class="flex items-center border-radius q-mt-sm"
+                          :class="{ 'bg-accent': item.isExpanded }"
+                          clickable
+                          dense
+                          active-class="my-menu-link"
+                          :active="findActiveFilters(opt)"
+                          @click="addFilter(opt)"
+                        >
+                          <!-- :active="findActiveFilters(opt, j)" -->
+                          <q-item-section>
+                            <q-item-label>
+                              {{ opt.title }}
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </div>
+                    </q-card-section>
+                  </q-expansion-item>
+
+                  <q-item
+                    v-else
+                    class="flex items-center border-radius"
+                    clickable
+                    @click="setSelectedFilter(item)"
+                  >
                     <q-item-section avatar>
-                      <q-avatar size="md" class="avatar-item" color="primary">
-                        <q-icon color="white" :name="item.icon" />
+                      <q-avatar
+                        size="md"
+                        class="avatar-item"
+                        color="primary"
+                      >
+                        <q-icon
+                          color="white"
+                          :name="item.icon"
+                        />
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>
                       <q-item-label class="setting-item__title">
                         {{ item.title }}
                       </q-item-label>
-                    </q-item-section>
-                    <q-item-section side v-if="item.toggle">
-                      <q-toggle @update:model-value="setSelectedStatus" color="blue" v-model="status" />
                     </q-item-section>
                   </q-item>
                 </div>
@@ -71,12 +165,12 @@ export default defineComponent({
       required: false,
       default: '',
     },
-    setSelectedOpt: {
+    setSelectedFilter: {
       type: Function,
       required: false,
       default: () => { },
     },
-    setSelectedStatus: {
+    setSelectedOptionFilter: {
       type: Function,
       required: false,
       default: () => { },
@@ -86,9 +180,9 @@ export default defineComponent({
       required: false,
     },
     heightModal: {
-      type: String,
+      type: Number,
       required: false,
-      default: '390px',
+      default: 390,
     },
     searchModel: {
       type: String,
@@ -107,11 +201,49 @@ export default defineComponent({
     return {
       getImageUrl,
       status: ref(true),
-      basicToolBar: [['unordered', 'ordered']],
+      basicToolBar: [['unordered', 'ordered']]
     };
   },
+  methods: {
+    // Calc height of the modal
+    updateHeight(item) {
+      if (item.isExpanded)
+        this.heightModalLocal = this.heightModalLocal + (item.options.length * 45)
+      else
+        this.heightModalLocal = this.heightModalLocal - (item.options.length * 45)
+      this.$emit('update:heightModal', this.heightModalLocal);
+    },
+
+    addFilter(opt) {
+      // Check if the filter already exists
+      let filterIndex = this.activeFilters.findIndex(obj => obj['filter'] === opt['filter']);
+      if (filterIndex !== -1) {
+        if (this.activeFilters[filterIndex].value == opt.value) {
+          // Remove from the selected 
+          this.activeFilters.splice(filterIndex, 1)
+          this.setSelectedOptionFilter(this.activeFilters, opt.filter)
+        } else {
+          // Update the existing filter
+          this.activeFilters[filterIndex] = opt;
+          this.setSelectedOptionFilter(this.activeFilters)
+        }
+      } else {
+        // Add the new filter
+        this.activeFilters.push(opt);
+        this.setSelectedOptionFilter(this.activeFilters)
+      }
+    },
+
+    findActiveFilters(opt) {
+      // Assuming that 'filter' is a property on the item
+      return this.activeFilters.some(filter => filter.filter === opt.filter && filter.value === opt.value);
+    },
+  },
   data() {
+
     return {
+      newFilter: null,
+      activeFilters: [],
       btnFilter: {
         title: 'Filtro',
         color: '#FFFFFF',
@@ -122,6 +254,7 @@ export default defineComponent({
       },
       options: ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'],
       modelLocal: this.model,
+      heightModalLocal: this.heightModal
     };
   },
   watch: {
@@ -156,4 +289,11 @@ export default defineComponent({
   background-color: rgb(($primary), 0.07);
   border-radius: 0.5rem;
 }
+
+
+.my-menu-link {
+  color: black !important;
+  background: #ffdd77 !important
+}
 </style>
+

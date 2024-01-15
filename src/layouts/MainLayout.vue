@@ -8,12 +8,23 @@
       class="cursor-pointer non-selectable main-menu row items-center"
     >
       <!-- drawer content -->
-      <div style="height: 97vh" class="q-pl-md w-100">
+      <div
+        style="height: 97vh"
+        class="q-pl-md w-100"
+      >
         <div class="side-menu">
           <div class="row">
             <div class="title text-center q-pt-lg w-100">BMS</div>
-            <q-page-sticky position="top-right" :offset="[18, 40]">
-              <q-btn fab padding="xs" outline color="orange">
+            <q-page-sticky
+              position="top-right"
+              :offset="[18, 40]"
+            >
+              <q-btn
+                fab
+                padding="xs"
+                outline
+                color="orange"
+              >
                 <q-avatar size="25px">
                   <img
                     @mouseover="changeImage(0)"
@@ -22,9 +33,7 @@
                   />
                 </q-avatar>
                 <q-popup-proxy class="border-radius">
-                  <q-banner
-                    style="width: 400px; height: auto"
-                  >
+                  <q-banner style="width: 400px; height: auto">
                     <div class="q-pa-sm form__item-label__title">
                       Notificaciones
                     </div>
@@ -45,9 +54,7 @@
                           @click="navigateTo(item.route)"
                           :key="i"
                         >
-                          <q-item
-                            class="q-mb-sm setting-item flex items-center clickable"
-                          >
+                          <q-item class="q-mb-sm setting-item flex items-center clickable">
                             <q-item-section>
                               <q-item-label class="setting-item__title">{{
                                 item.title
@@ -55,8 +62,7 @@
                               <q-item-label
                                 class="setting-item__subtitle"
                                 caption
-                                >{{ item.subtitle }}</q-item-label
-                              >
+                              >{{ item.subtitle }}</q-item-label>
                             </q-item-section>
                           </q-item>
                         </div>
@@ -80,7 +86,10 @@
           >
             <q-list>
               <div class="q-pt-none">
-                <div v-for="(btn, index) in btnLinks" :key="index">
+                <div
+                  v-for="(btn, index) in btnLinks"
+                  :key="index"
+                >
                   <div v-if="btn.title">
                     <btn-menu
                       v-bind="btn"
@@ -88,8 +97,14 @@
                       :selected="selected"
                     />
                   </div>
-                  <q-separator v-if="btn == 'divider'" class="q-my-md" />
-                  <div class="container q-pa-none" v-if="btn == 'qrcode'">
+                  <q-separator
+                    v-if="btn == 'divider'"
+                    class="q-my-md"
+                  />
+                  <div
+                    class="container q-pa-none"
+                    v-if="btn == 'qrcode'"
+                  >
                     <qrcode-vue
                       class="border-radius"
                       :value="value"
@@ -97,18 +112,19 @@
                       foreground="#062841"
                       background="#F3F3F3"
                       :margin="3"
-                      level="H"
+                      level="L"
                     />
-                    <div
-                      class="text column wrap justify-center items-center content-center q-pa-none"
-                    >
+                    <div class="text column wrap justify-center items-center content-center q-pa-none">
                       <btn-action v-bind="btnExport" />
                     </div>
                   </div>
                 </div>
               </div>
               <div v-if="btnCloseSesion.show">
-                <btn-action class="q-mt-xl" v-bind="btnCloseSesion" />
+                <btn-action
+                  class="q-mt-xl"
+                  v-bind="btnCloseSesion"
+                />
               </div>
             </q-list>
           </q-scroll-area>
@@ -119,11 +135,31 @@
       <router-view />
     </q-page-container>
     <q-tabs class="tabs-style">
-      <q-route-tab icon="dashboard" to="/" exact />
-      <q-route-tab icon="computer" to="/equipments" exact />
-      <q-route-tab icon="person" to="/users" exact />
-      <q-route-tab icon="home_repair_service" to="/maintenances" exact />
-      <q-route-tab icon="settings" to="/settings" exact />
+      <q-route-tab
+        icon="dashboard"
+        to="/"
+        exact
+      />
+      <q-route-tab
+        icon="computer"
+        to="/equipments"
+        exact
+      />
+      <q-route-tab
+        icon="person"
+        to="/users"
+        exact
+      />
+      <q-route-tab
+        icon="home_repair_service"
+        to="/maintenances"
+        exact
+      />
+      <q-route-tab
+        icon="settings"
+        to="/settings"
+        exact
+      />
     </q-tabs>
   </q-layout>
 </template>
@@ -149,7 +185,7 @@ export default defineComponent({
       try {
         return new URL(`../assets/${url}`, import.meta.url).href;
         // eslint-disable-next-line no-empty
-      } catch (error) {}
+      } catch (error) { }
     };
     const routerWatch = (route) => {
       return route;
@@ -488,7 +524,7 @@ export default defineComponent({
 
 .title {
   font-size: 30px;
-  font-weight:600;
+  font-weight: 600;
   color: $primary;
 }
 

@@ -181,14 +181,14 @@ export default defineComponent({
           this.fields
         );
         if (res === true) {
+          this.showAlert({ title: 'Éxito al crear', msg: 'El usuario se ha agregado', color: 'green-14' });
           this.$router.go(-1);
         } else {
-          this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+          this.showAlert({});
         }
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        console.log(error)
         this.showAlert({ msg: error.response ? error.response.data.details : error });
       }
     },
@@ -280,12 +280,5 @@ export default defineComponent({
 
 .card-page {
   padding-top: 0 !important;
-}
-</style>
-
-<style>
-.q-field__messages {
-  margin-bottom: 0.3rem !important;
-  line-height: 15px;
 }
 </style>

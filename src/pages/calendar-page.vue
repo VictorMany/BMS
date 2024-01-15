@@ -285,7 +285,7 @@ export default defineComponent({
       inputSearch: {
         show: true,
         inputLabel: 'Buscar por nombre',
-        setSelectedOpt: this.setSelectedOpt,
+        setSelectedFilter: this.setSelectedFilter,
         heightModal: '390px',
         items: [
           {
@@ -383,7 +383,7 @@ export default defineComponent({
       console.log('Editar', payload);
       this.$router.push({ name: 'edit-equipment', params: { id: 100 } });
     },
-    setSelectedOpt(opt) {
+    setSelectedFilter(opt) {
       this.inputSearch.inputLabel = opt;
     },
   },

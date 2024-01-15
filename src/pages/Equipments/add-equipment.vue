@@ -4,13 +4,28 @@
       <div class="column items-end q-mt-md q-mb-xs gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions :titlePage="getTitle()" :btn-action="btnAction" />
-      <div class="main-container-page main-container-page-medium-dark" style="height: 82%">
-        <q-scroll-area class="full-height q-pb-sm" style="height: 92% !important"
-          :thumb-style="$store.getters['global/getThumbStyle']">
-          <form-text-field :fields="fields" />
+      <header-actions
+        :titlePage="getTitle()"
+        :btn-action="btnAction"
+      />
+      <div
+        class="main-container-page main-container-page-medium-dark"
+        style="height: 82%"
+      >
+        <q-scroll-area
+          class="full-height q-pb-sm"
+          style="height: 92% !important"
+          :thumb-style="$store.getters['global/getThumbStyle']"
+        >
+          <form-text-field
+            ref="fieldsComponent"
+            :fields="fields"
+          />
         </q-scroll-area>
-        <div class="col-12 form__date_container form__date column justify-center q-px-lg" style="height: 6%">
+        <div
+          class="col-12 form__date_container form__date column justify-center q-px-lg"
+          style="height: 6%"
+        >
           <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
         </div>
       </div>
@@ -60,9 +75,9 @@ export default defineComponent({
             label: 'Nombre del equipo',
             model: '',
             rules: [
-              (val) => (val && val.trim().length > 0) || 'El nombre del equipo es obligatorio',
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
               (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s]+$/.test(val) || 'El campo solo debe contener letras y números'
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
             ],
           },
 
@@ -73,9 +88,9 @@ export default defineComponent({
             label: 'No. serie',
             model: '',
             rules: [
-              (val) => (val && val.trim().length > 0) || 'El número de serie es obligatorio',
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
               (val) => (val.length <= 30) || 'El campo no debe exceder 30 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s]+$/.test(val) || 'El campo solo debe contener letras y números'
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
             ],
           },
 
@@ -89,9 +104,9 @@ export default defineComponent({
             label: 'Marca',
             model: '',
             rules: [
-              (val) => (val && val.trim().length > 0) || 'La marca es obligatoria',
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
               (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s]+$/.test(val) || 'El campo solo debe contener letras y números'
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
             ],
           },
           {
@@ -99,9 +114,9 @@ export default defineComponent({
             label: 'Modelo del equipo',
             model: '',
             rules: [
-              (val) => (val && val.trim().length > 0) || 'El modelo es obligatorio',
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
               (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s]+$/.test(val) || 'El campo solo debe contener letras y números'
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
             ],
           },
           {
@@ -124,7 +139,7 @@ export default defineComponent({
               { label: 'Servicios de apoyo', index: 12, value: 'Servicios de apoyo' },
             ],
             rules: [
-              (val) => (val) || 'El campo es obligatorio',
+              (val) => (val) || 'El campo es obligatorio'
             ],
           },
           {
@@ -150,16 +165,16 @@ export default defineComponent({
             label: 'Provedor',
             model: '',
             rules: [
-              (val) => (val && val.trim().length > 0) || 'El proveedor es obligatorio',
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
               (val) => (val.length <= 60) || 'El campo no debe exceder 50 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s]+$/.test(val) || 'El campo solo debe contener letras y números'
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
             ],
           },
           {
             key: 'equipmentStatus',   //este valor lo llena back
             label: 'Estatus',
-            model: null,
             type: 'select',
+            model: null,
             options: [
               { label: 'Activo', index: 1, value: 1 },
               { label: 'Inactivo', index: 2, value: 0 },
@@ -219,17 +234,17 @@ export default defineComponent({
         );
 
         if (res === true) {
+          this.showAlert({ title: 'Éxito al crear', msg: 'El equipo se ha agregado', color: 'green-14' });
           this.$router.go(-1);
         } else {
           console.log(res)
-
           this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
         }
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
         console.log(error)
-        this.showAlert({ msg: error.response.data.details });
+        this.showAlert({ msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -294,11 +309,13 @@ export default defineComponent({
       });
     },
 
-    createOrEdit() {
-      if (this.isEditing()) {
-        this.editEquipment()
-      } else {
-        this.createEquipment()
+    async createOrEdit() {
+      if (await this.$refs.fieldsComponent.validate()) {
+        if (this.isEditing()) {
+          this.editEquipment()
+        } else {
+          this.createEquipment()
+        }
       }
     },
 

@@ -1,9 +1,9 @@
-import service from 'src/api/users'
+import service from 'src/api/reports'
 
-export async function getUsersAction(context, params) {
-    return service.getUsers(params).then(async (response) => {
+export async function getReportsAction(context, params) {
+    return service.getReports(params).then(async (response) => {
         if (response.status == 200) {
-            context.commit('MUTATE_USERS', response.data.contents.users)
+            context.commit('MUTATE_REPORTS', response.data.contents.reports)
             context.commit('MUTATE_DETAILS', response.data.contents)
             return true
         } else {
@@ -12,12 +12,12 @@ export async function getUsersAction(context, params) {
     })
 }
 
-export async function getUserAction(context, params) {
-    return service.getUser(params.id).then(async (response) => {
+export async function getReportAction(context, params) {
+    return service.getReport(params.id).then(async (response) => {
         if (response.status == 200) {
             // We call the global action to format our payload
             const payload = await context.dispatch('global/formatDetails', {
-                keys: response.data.contents.user,
+                keys: response.data.contents.report,
                 fields: params.fields
             }, { root: true });
             return payload
@@ -27,28 +27,26 @@ export async function getUserAction(context, params) {
     })
 }
 
-export async function postUserAction(context, user) {
+export async function postReportAction(context, report) {
     // Those are the keys you need in your payload and find in the fields
     let keys = {
-        userName: '',
-        email: '',
-        userPassword: '',
-        phone: '',
-        userRole: '',
-        photo: '',
-        userStatus: '',
-        birthday: '',
+        // ReportId: '',
+        reason: '',
+        report: '',
+        reportUrgency: '',
+        idEquipment: '',
+        userId: '',
     }
 
     // We call the global action to format our payload
     const payload = await context.dispatch('global/formatPayload', {
         keys,
-        fields: user
+        fields: report
     }, { root: true });
 
-    return await service.postUser(payload).then(async (response) => {
+    return await service.postReport(payload).then(async (response) => {
         if (response.status == 201) {
-            context.commit('ADD_USER', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
+            context.commit('ADD_REPORT', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
             return true
         } else {
             return response
@@ -56,22 +54,24 @@ export async function postUserAction(context, user) {
     })
 }
 
-export async function updateUserAction(context, user) {
+export async function updateReportAction(context, report) {
     // Those are the keys you need in your payload and find in the fields
     let keys = {
-        phone: '',
-        userRole: '',
-        photo: '',
-        userStatus: '',
+        // ReportId: '',
+        reason: '',
+        report: '',
+        reportUrgency: '',
+        idEquipment: '',
+        userId: '',
     }
 
     // We call the global action to format our payload
     const payload = await context.dispatch('global/formatPayload', {
         keys,
-        fields: user
+        fields: report
     }, { root: true });
 
-    return await service.updateUser(payload, user.id).then(async (response) => {
+    return await service.updateReport(payload, report.id).then(async (response) => {
         if (response.status == 200) {
             return true
         } else {

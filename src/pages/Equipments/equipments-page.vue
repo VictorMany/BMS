@@ -115,6 +115,8 @@ export default defineComponent({
 
       rowSelected: {},
 
+      selectedFilterText: '',
+
       paginationCards: {
         descending: false,
         rowsPerPage: 12,
@@ -134,36 +136,51 @@ export default defineComponent({
       inputSearch: {
         show: true,
         inputLabel: 'Buscar por nombre',
-        setSelectedOpt: this.setSelectedOpt,
-        setSelectedStatus: this.setSelectedStatus,
-        heightModal: '290px',
+        setSelectedFilter: this.setSelectedFilter,
+        setSelectedOptionFilter: this.setSelectedOptionFilter,
+        heightModal: 290,
         items: [
           {
             title: 'Nombre',
+            filter: 'name',
             icon: 'badge',
           },
           {
             title: 'Ubicación',
+            filter: 'location',
             icon: 'explore',
           },
           {
             title: 'Modelo',
+            filter: 'model',
             icon: 'alt_route',
           },
           {
             title: 'Marca',
+            filter: 'brand',
             icon: 'sell',
           },
           {
             title: 'Número de serie',
+            filter: 'serialNumber',
             icon: 'fingerprint',
           },
           {
             title: 'Estatus',
             icon: 'supervisor_account',
-            toggle: true
+            options: [
+              {
+                title: 'Activo',
+                filter: 'status',
+                value: 1,
+              },
+              {
+                title: 'Inactivo',
+                filter: 'status',
+                value: 0,
+              },
+            ]
           },
-          // Resto de opciones...
         ],
       },
 
@@ -238,16 +255,12 @@ export default defineComponent({
     },
 
     searchModel(val) {
-      let params = {};
-      if (Object.keys(this.params).length > 0) {
-        params = {
-          [Object.keys(this.params)[0]]: val,
-        };
-      }
+      this.params[this.selectedFilterText] = val
 
       clearTimeout(this.timeoutSearch);
+
       this.timeoutSearch = setTimeout(() => {
-        this.getEquipments(params);
+        this.getEquipments(this.params);
       }, this.delaySearch);
     },
 
@@ -308,63 +321,66 @@ export default defineComponent({
       this.getEquipments(this.params)
     },
 
+    setSelectedOptionFilter(activeFilters, removedFilter = null) {
+      if (activeFilters.length) {
+        activeFilters.forEach(item => {
+          this.params[item.filter] = item.value
+        })
+      }
+      if (removedFilter) {
+        delete this.params[removedFilter]
+      }
+      this.getEquipments(this.params);
+    },
+
+    setSelectedFilter(opt) {
+      // IF CHANGE THE MODEL SELECTED
+      if (this.selectedFilterText) {
+        delete this.params[this.selectedFilterText]
+        if (this.searchModel) {
+          this.getEquipments(this.params);
+        }
+      }
+
+      this.selectedFilterText = opt.filter
+      this.inputSearch.inputLabel = opt.label;
+
+      if (opt.value && opt.filter) {
+        this.params[opt.filter] = this.searchModel
+        this.getEquipments(this.params);
+      }
+    },
+
     goToDetails(payload) {
-      console.log('Ver detalle', payload);
       this.$router.push({ name: 'detail-equipment', params: { id: payload } });
     },
 
     goToEdit(payload) {
-      console.log('Editar', payload);
       this.$router.push({ name: 'edit-equipment', params: { id: payload } });
     },
 
-    setSelectedOpt(opt) {
-      this.inputSearch.inputLabel = opt;
-
-      let type = '';
-      switch (opt) {
-        case 'Nombre':
-          type = 'name';
-          break;
-        case 'Ubicación':
-          type = 'location';
-          break;
-        case 'Modelo':
-          type = 'model';
-          break;
-        case 'Marca':
-          type = 'brand';
-          break;
-        case 'Número de serie':
-          type = 'serialNumber';
-          break;
-        case 'Estatus':
-          type = 'status';
-          break;
-      }
-
+    changePagination(pagination) {
       this.params = {
-        [type]: this.searchModel,
-      };
+        ...this.params, ...{
+          page: pagination.page,
+          rowsPerPage: pagination.rowsPerPage,
+        }
+      }
 
       this.getEquipments(this.params);
     },
 
-    changePagination(pagination) {
-      console.log('Cambia la paginacion', pagination);
-      this.getEquipments({
-        page: pagination.page,
-        rowsPerPage: pagination.rowsPerPage,
-      });
-    },
-
-    // Changing pagination obj
     changePaginationCards(page) {
-      this.getEquipments({
-        page,
-        rowsPerPage: 12,
-      });
-    },
+
+      this.params = {
+        ...this.params, ...{
+          page,
+          rowsPerPage: 12,
+        }
+      }
+
+      this.getEquipments(this.params);
+    }
   },
 });
 </script>

@@ -17,7 +17,7 @@ export async function getEquipmentAction(context, params) {
     return service.getEquipment(params.id).then(async (response) => {
         if (response.status == 200) {
             // We call the global action to format our payload
-            const payload = await context.dispatch('global/formatTextfields', {
+            const payload = await context.dispatch('global/formatDetails', {
                 keys: response.data.contents.equipment,
                 fields: params.fields
             }, { root: true });
@@ -34,7 +34,6 @@ export async function postEquipmentAction(context, equipment) {
         equipmentBrand: '',
         equipmentModel: '',
         equipmentName: '',
-        equipmentStatus: '',
         location: '',
         manufacturingYear: '',
         observations: '',

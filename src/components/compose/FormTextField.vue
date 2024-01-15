@@ -188,7 +188,7 @@
             <div class="row">
               <div
                 v-for="(item, i) in localTextfields.textareas"
-                class="col-6 q-pa-sm"
+                class="col q-pa-sm"
                 :key="i"
               >
                 <div class="col-12">
@@ -445,11 +445,11 @@ export default defineComponent({
 
     uploadFile(e) {
       const file = e.target.files[0];
-      this.localTextfields.right.forEach(e => {
-        if (e.key === 'photo') {
-          e.model = file
-        }
-      });
+      const photoField = this.localTextfields.right.find(field => field.key === 'photo');
+
+      if (photoField) {
+        photoField.model = file;
+      }
 
       try {
         const reader = new FileReader();

@@ -4,28 +4,23 @@
       <div class="column items-end q-mt-md q-mb-xs">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions
-        :title-page="'Detalles del mantenimiento'"
-        :btn-action="btnAction"
-      />
+      <header-actions :title-page="'Detalles del mantenimiento'" />
       <div
         class="main-container-page main-container-page-dark"
         style="height: 82%"
       >
         <q-scroll-area
           class="full-height"
-          style="height: 95% !important"
+          style="height: 92% !important"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
         >
           <form-label :fields="fields" />
         </q-scroll-area>
         <div
-          class="col-12 form__date_container"
-          style="height: 5.25%;"
+          class="col-12 form__date_container form__date column justify-center q-px-lg"
+          style="height: 6%"
         >
-          <div class="form__date column items-end q-pa-sm q-mt-auto">
-            <div>Fecha de creación <strong> 12/02/2022</strong></div>
-          </div>
+          <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
         </div>
       </div>
     </div>
@@ -50,77 +45,103 @@ export default defineComponent({
       fields: {
         left: [
           {
-            label: 'Monitor de signos vitales',
-            type: 'title'
+            key: 'idEquipment',
+            type: 'title',
+            model: '',
           },
           {
+            key: 'userName',
             label: 'Encargado',
-            model: 'Victor Manuel Velázquez Fuentes'
+            model: ''
           },
           {
+            key: 'reason',
             label: 'Motivo',
-            model: 'Display defectuoso'
+            model: ''
           },
           {
+            key: 'maintenanceType',
             label: 'Tipo',
             type: 'status',
-            model: 'Correctivo',
-            color: '#FFAA05'
+            model: '',
+            color: ''
           },
-          {
-            type: 'textarea',
-            items: [
-              {
-                label: 'Herramientas',
-                model: '<div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__value"><div class="q-badge flex inline items-center no-wrap q-badge--single-line bg-orange-8 api-row__pill cursor-pointer" role="status" aria-label="fullscreen">fullscreen</div>&nbsp;: Boolean</div></div><div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Description</div><div class="api-row__value">Fullscreen mode</div></div><div class="api-row__item col-xs-12 col-sm-3" style="width: 168.875px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Note</div><div class="api-row__value">Required to be used with v-model!</div></div>'
-              },
-              {
-                label: 'Materiales',
-                model: '<div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__value"><div class="q-badge flex inline items-center no-wrap q-badge--single-line bg-orange-8 api-row__pill cursor-pointer" role="status" aria-label="fullscreen">fullscreen</div>&nbsp;: Boolean</div></div><div class="api-row__item col-xs-12 col-sm-12" style="width: 675.516px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Description</div><div class="api-row__value">Fullscreen mode</div></div><div class="api-row__item col-xs-12 col-sm-3" style="width: 168.875px; min-width: 0px; max-width: 100%; height: auto; color: rgb(158, 158, 158);"><div class="api-row__type">Note</div><div class="api-row__value">Required to be used with v-model!</div></div>'
-              }
-            ]
-          }
         ],
         right: [
           {
-            label: 'No. de serie',
-            model: 'A7GTHYFRG'
+            key: 'serialNumber',
+            label: 'No. serie',
+            readonly: true,
+            model: '',
+          },
+          {
+            key: 'photo',
+            model: ''
           }
         ],
-        textarea: {
-          label: 'Observaciones del mantenimiento',
-          model: '<div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
-        },
-        image: 'https://aliadascargo.com/wp-content/uploads/2020/04/equipos-medicos.jpg'
+
+        textareas: [
+          {
+            key: 'tools',
+            type: 'textarea',
+            label: 'Herramientas',
+            model: ''
+          },
+          {
+            key: 'materials',
+            type: 'textarea',
+            label: 'Materiales',
+            model: ''
+          }
+        ],
+
+        bottom: [
+          {
+            key: 'observations',
+            label: 'Observaciones del mantenimiento',
+            model: ''
+          }
+        ],
       },
-      btnAction: {
-        show: true,
-        btnTitle: 'Editar',
-        to: 'edit-1-maintenance',
-        iconName: 'edit',
-        btnWidth: 'auto'
-      },
+
       btnCloseWindow: {
         iconName: 'close',
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        btnAction: this.goBack
-      }
+        btnAction: this.goBack,
+      },
     }
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
-    }
-  }
+      this.$router.go(-1);
+    },
+
+    async getMaintenance() {
+      this.loading = true
+
+      const params = {
+        id: this.$route.params.id,
+        fields: this.fields
+      }
+
+      await this.$store.dispatch('maintenances/getMaintenanceAction', params)
+      this.loading = false
+    },
+  },
+  mounted() {
+    this.getMaintenance();
+  },
 })
 </script>
 
-<style scoped>.main-container-page {
+<style scoped>
+.main-container-page {
   background-color: white;
 }
 
 .card-page {
   padding-top: 0 !important;
-}</style>
+}
+</style>

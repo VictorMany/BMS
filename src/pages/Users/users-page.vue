@@ -166,22 +166,51 @@ export default defineComponent({
       inputSearch: {
         show: true,
         inputLabel: 'Buscar por nombre',
-        setSelectedOpt: this.setSelectedOpt,
-        setSelectedStatus: this.setSelectedStatus,
-        heightModal: '160px',
+        setSelectedFilter: this.setSelectedFilter,
+        setSelectedOptionFilter: this.setSelectedOptionFilter,
+        heightModal: 160,
         items: [
           {
             title: 'Nombre',
             icon: 'account_circle',
+            filter: 'name',
           },
           {
             title: 'Role',
             icon: 'low_priority',
+            options: [
+              {
+                title: 'Administrador',
+                filter: 'role',
+                value: 1,
+              },
+              {
+                title: 'Auxiliar',
+                filter: 'role',
+                value: 2,
+              },
+              {
+                title: 'Funciones básicas',
+                filter: 'role',
+                value: 3,
+              },
+            ]
           },
           {
             title: 'Estatus',
             icon: 'supervisor_account',
-            toggle: true
+            options: [
+              {
+                title: 'Activo',
+                filter: 'status',
+                value: 1,
+              },
+              {
+                title: 'Inactivo',
+                filter: 'status',
+                value: 0,
+              },
+            ]
           },
         ],
       },
@@ -191,6 +220,8 @@ export default defineComponent({
       },
 
       rowSelected: {},
+
+      selectedFilterText: '',
 
       paginationCards: {
         descending: false,
@@ -217,19 +248,12 @@ export default defineComponent({
     },
 
     searchModel(val) {
-      let params = {};
-      if (Object.keys(this.params).length > 0) {
-        /**
-         * @this.params[0] -> Name, Status, Role
-         */
-        params = {
-          [Object.keys(this.params)[0]]: val,
-        };
-      }
+      this.params[this.selectedFilterText] = val
 
       clearTimeout(this.timeoutSearch);
+
       this.timeoutSearch = setTimeout(() => {
-        this.getUsers(params);
+        this.getUsers(this.params);
       }, this.delaySearch);
     },
 
@@ -285,60 +309,66 @@ export default defineComponent({
     },
 
     goToDetails(payload) {
-      console.log('Ver detalle', payload);
       this.$router.push({ name: 'detail-user', params: { id: payload } });
     },
 
     goToEdit(payload) {
-      console.log(payload);
       this.$router.push({ name: 'edit-user', params: { id: payload } });
     },
 
-    setSelectedOpt(opt) {
-      this.inputSearch.inputLabel = opt;
-
-      let type = '';
-      switch (opt) {
-        case 'Nombre':
-          type = 'name';
-          break;
-        case 'Estatus':
-          type = 'status';
-          break;
-        case 'Role':
-          type = 'role';
-          break;
+    setSelectedFilter(opt) {
+      // IF CHANGE THE MODEL SELECTED
+      if (this.selectedFilterText) {
+        delete this.params[this.selectedFilterText]
+        if (this.searchModel) {
+          this.getUsers(this.params);
+        }
       }
 
+      this.selectedFilterText = opt.filter
+      this.inputSearch.inputLabel = opt.label;
+
+      if (opt.value && opt.filter) {
+        this.params[opt.filter] = this.searchModel
+        this.getUsers(this.params);
+      }
+    },
+
+    setSelectedOptionFilter(activeFilters, removedFilter = null) {
+      if (activeFilters.length) {
+        activeFilters.forEach(item => {
+          this.params[item.filter] = item.value
+        })
+      }
+      if (removedFilter) {
+        delete this.params[removedFilter]
+      }
+      this.getUsers(this.params);
+    },
+
+    changePagination(pagination) {
       this.params = {
-        [type]: this.searchModel,
-      };
+        ...this.params, ...{
+          page: pagination.page,
+          rowsPerPage: pagination.rowsPerPage,
+        }
+      }
 
       this.getUsers(this.params);
     },
 
-
-    setSelectedStatus(opt) {
-      this.params = {
-        status: opt ? 1 : 0,
-      };
-      this.getUsers(this.params)
-    },
-
-    changePagination(pagination) {
-      this.getUsers({
-        page: pagination.page,
-        rowsPerPage: pagination.rowsPerPage,
-      });
-    },
-
     // Changing pagination obj
     changePaginationCards(page) {
-      this.getUsers({
-        page,
-        rowsPerPage: 12,
-      });
-    },
+
+      this.params = {
+        ...this.params, ...{
+          page,
+          rowsPerPage: 12,
+        }
+      }
+
+      this.getUsers(this.params);
+    }
   },
 });
 </script>

@@ -28,9 +28,23 @@ export function formatPayload(context, { keys, fields }) {
     return fd;
 }
 
-export async function formatTextfields(context, { keys, fields }) {
-    console.log(keys)
+export async function formatDetails(context, { keys, fields }) {
     fields.createdAt = await context.dispatch('formatDate', keys.createdAt);
+
+    if (keys.User) {
+        // add equipment name
+        fields.left[1].model = keys.User.IdEquipment;
+
+        // add incharged name
+        fields.left[1].model = keys.User.userName;
+
+        // add photo
+        fields.right[1].model = keys.User.photo;
+
+        // add serialNumber
+        fields.right[0].model = '0001';
+    }
+
     for (let k in keys) {
         for (let prop in fields) {
             if (Array.isArray(fields[prop])) {
@@ -63,7 +77,6 @@ function getModelSelected(item, valueFromServer) {
                 item.model = opt
             }
         });
-
         return item
     } else if (item.label == 'Estatus') {
         if (valueFromServer) {
@@ -71,6 +84,16 @@ function getModelSelected(item, valueFromServer) {
             item.color = '#10D13A'
         } else {
             item.model = 'Inactivo'
+            item.color = '#d1b410'
+        }
+        return item
+    }
+    else if (item.key == 'maintenanceType') {
+        if (valueFromServer === 'preventivo') {
+            item.model = 'Preventivo'
+            item.color = '#10D13A'
+        } else {
+            item.model = 'Correctivo'
             item.color = '#d1b410'
         }
         return item

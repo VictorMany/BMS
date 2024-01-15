@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="fullscreen q-pa-md flex flex-center bg-white main-container-page-dark"
-  >
+  <div class="fullscreen q-pa-md flex flex-center bg-white main-container-page-dark">
     <div class="card-page login-page">
       <div class="flex flex-center align-center h-100 w-100">
         <div class="login__main-container">
@@ -34,9 +32,7 @@
                   <q-icon name="lock" />
                 </template>
               </q-input>
-              <label for="pass" class="login__legend text-weight-thin q-ma-sm"
-                >Olvidaste la contraseña</label
-              >
+              <label class="login__legend text-weight-thin q-ma-sm">Olvidaste la contraseña</label>
               <div class="col login__submit flex flex-center">
                 <btn-action v-bind="btnAction" />
               </div>
@@ -90,12 +86,14 @@ export default defineComponent({
     max-width: 474px;
     height: 527px;
   }
+
   &__top-container {
     border-radius: 40px;
     width: 100%;
     max-width: 474px;
     height: 251.83px;
   }
+
   &__title {
     font-style: normal;
     font-weight: 200;
@@ -103,6 +101,7 @@ export default defineComponent({
     color: #ffffff;
     margin-bottom: 8rem;
   }
+
   &__bottom-container {
     position: absolute;
     top: 19.06%;
@@ -113,13 +112,16 @@ export default defineComponent({
     box-shadow: none;
     border-radius: 40px;
   }
+
   &__legend {
     font-size: 12px;
   }
+
   &__submit {
     margin-top: 5rem;
   }
 }
+
 .form {
   &__item-input-login {
     border-radius: 50px !important;

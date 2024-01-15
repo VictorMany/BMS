@@ -59,7 +59,7 @@ export default defineComponent({
       inputSearch: {
         show: true,
         inputLabel: 'Buscar por tipo',
-        setSelectedOpt: this.setSelectedOpt,
+        setSelectedFilter: this.setSelectedFilter,
         heightModal: '150px',
         items: [
           {
@@ -298,7 +298,7 @@ export default defineComponent({
       console.log('Editar', payload);
       this.$router.push({ name: 'add-maintenance-plan', params: { id: 100 } });
     },
-    setSelectedOpt(opt) {
+    setSelectedFilter(opt) {
       this.inputSearch.inputLabel = opt;
     },
   },

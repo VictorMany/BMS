@@ -23,6 +23,7 @@
           >
             {{ item.model }}
           </div>
+
           <div
             v-if="item.model && item.type === 'status'"
             class="col-12 col-sm form__item-model"
@@ -35,7 +36,8 @@
               {{ item.model }}
             </q-chip>
           </div>
-          <div
+
+          <!-- <div
             v-if="item.type === 'textarea'"
             class="col-12"
           >
@@ -56,10 +58,38 @@
                 </div>
               </div>
             </div>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- TEXTAREAS SECTION -->
+      <div class="row w-100 q-pa-none">
+        <div
+          v-for="(item, i) in fields.textareas"
+          class="col q-pa-sm"
+          :key="i"
+        >
+          <div
+            class="col-12"
+            style="height: 100%;"
+          >
+            <div class="q-mb-sm form__item-label text-weight-thin">
+              {{ item.label }}
+            </div>
+            <div
+              style="border-radius: 5px; height: 100%;"
+              class="q-pa-sm border-line"
+            >
+              <div
+                class="col-12 q-pr-md form__item-area"
+                v-html="item.model"
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <!-- RIGHT SECTION -->
     <div class="col-12 col-sm q-py-lg">
       <div
@@ -78,7 +108,6 @@
             {{ item.model }}
           </div>
         </div>
-
 
         <div
           v-if="item.key === 'photo'"

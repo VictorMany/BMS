@@ -4,28 +4,28 @@
       <div class="column items-end q-mt-md q-mb-xs">
         <btn-action v-bind="btnCloseWindow" />
       </div>
+
       <header-actions
-        :title-page="'Detalles de reporte'"
+        :titlePage="'Detalle de reporte'"
         :btn-action="btnAction"
       />
+
       <div
         class="main-container-page main-container-page-dark"
         style="height: 82%"
       >
         <q-scroll-area
           class="full-height"
-          style="height: 95% !important"
-          :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
+          style="height: 92% !important"
+          :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <form-label :fields="fields" />
         </q-scroll-area>
         <div
-          class="col-12 form__date_container"
-          style="height: 5.25%;"
+          class="col-12 form__date_container form__date column justify-center q-px-lg"
+          style="height: 6%"
         >
-          <div class="form__date column items-end q-pa-sm q-mt-auto">
-            <div>Fecha de creación <strong> 12/02/2022</strong></div>
-          </div>
+          <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
         </div>
       </div>
     </div>
@@ -33,87 +33,118 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue'
-import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import FormLabel from 'src/components/compose/FormLabel.vue'
+import { defineComponent } from 'vue';
+import BtnAction from 'src/components/atomic/BtnAction.vue';
+import HeaderActions from 'src/components/compose/HeaderActions.vue';
+import FormLabel from 'src/components/compose/FormLabel.vue';
 
 export default defineComponent({
   name: 'EquipmentsPage',
   components: {
     HeaderActions,
     FormLabel,
-    BtnAction
+    BtnAction,
   },
   data() {
     return {
       fields: {
+        createdAt: '',
+
         left: [
           {
+            key: 'idEquipment',
             label: 'Monitor de signos vitales',
             type: 'title'
           },
           {
+            key: 'userName',
             label: 'Encargado',
-            model: 'Victor Manuel Velázquez Fuentes'
+            model: ''
           },
           {
+            key: 'reason',
             label: 'Motivo',
-            model: 'Display defectuoso'
+            model: ''
           },
           {
+            key: 'reportStatus',
             label: 'Estatus',
             type: 'status',
-            model: 'Activo',
-            color: '#10D13A'
+            model: '',
+            color: ''
           },
+        ],
+        textareas: [
           {
             type: 'textarea',
-            items: [
-              {
-                label: 'Observaciones del reporte',
-                model: '<font size="4" style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; ">Título de observaciones</font><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>'
-              }
-            ]
+            key: 'report',
+            label: 'Observaciones del reporte',
+            model: ''
           }
         ],
         right: [
           {
-            label: 'No. de serie',
-            model: 'A7GTHYFRG'
+            key: 'serialNumber',
+            label: 'No. Serie',
+            model: ''
+          },
+          {
+            key: 'photo',
+            model: ''
           }
         ],
-        image: 'https://aliadascargo.com/wp-content/uploads/2020/04/equipos-medicos.jpg',
-        textarea: {}
       },
+
       btnAction: {
         show: true,
         btnTitle: 'Editar',
         iconName: 'edit',
-        to: 'edit-1-report',
-        btnWidth: 'auto'
+        to: this.getIdToEdit(),
+        btnWidth: 'auto',
       },
+
       btnCloseWindow: {
         iconName: 'close',
         btnBackground: '#FF9900',
         btnColor: '#FFFFFF',
         btnSize: 'xs',
-        btnAction: this.goBack
-      }
-    }
+        btnAction: this.goBack,
+      },
+    };
   },
   methods: {
+    getIdToEdit() {
+      return `edit-${this.$route.params.id}-report`
+    },
+
     goBack() {
-      this.$router.go(-1)
-    }
-  }
-})
+      this.$router.go(-1);
+    },
+
+    async getReport() {
+      this.loading = true
+
+      const params = {
+        id: this.$route.params.id,
+        fields: this.fields
+      }
+
+      await this.$store.dispatch('reports/getReportAction', params)
+      this.loading = false
+    },
+  },
+  mounted() {
+    this.getReport();
+  },
+});
 </script>
 
-<style scoped>.main-container-page {
+<style scoped>
+.main-container-page {
   background-color: white;
 }
 
 .card-page {
   padding-top: 0 !important;
-}</style>
+}
+</style>

@@ -11,8 +11,22 @@
       row-key="id"
       :rows-per-page-options="[-1]"
       :hide-pagination="!showPagination"
+      :loading="loading"
       v-model:pagination="pagination"
     >
+      <template v-slot:loading>
+        <q-inner-loading
+          showing
+          color="primary"
+        >
+          <q-spinner-pie
+            color="primary"
+            class="q-mt-lg"
+            size="4em"
+          />
+        </q-inner-loading>
+      </template>
+
       <template v-slot:header="props">
         <q-tr :props="props">
           <q-th
@@ -25,6 +39,7 @@
           </q-th>
         </q-tr>
       </template>
+
       <template v-slot:pagination>
         <div
           v-if="showPagination"
@@ -41,6 +56,7 @@
           />
         </div>
       </template>
+
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
           <icon-action
@@ -51,6 +67,7 @@
           />
         </q-td>
       </template>
+
       <template v-slot:body-cell-status="props">
         <q-td :props="props">
           <q-badge
@@ -98,6 +115,11 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: () => true,
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: () => false,
     },
     height: {
       type: [String],
