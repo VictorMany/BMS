@@ -37,6 +37,8 @@
                 :options="item.options"
                 :readonly="item.readonly"
                 @filter="item.itemFilter"
+                :rules="item.rules ? item.rules : []"
+                :prefix="item.prefix ? item.prefix : ''"
               >
                 <template v-slot:option="scope">
                   <q-item
@@ -61,6 +63,7 @@
                 stack-label
                 :readonly="item.readonly"
                 :rules="item.rules ? item.rules : []"
+                :prefix="item.prefix ? item.prefix : ''"
                 v-model="item.model"
                 :name="item.key"
                 :type="item.type ? item.type : 'text'"
@@ -108,6 +111,7 @@
                     :options="item.options"
                     :readonly="item.readonly"
                     :rules="item.rules ? item.rules : []"
+                    :prefix="item.prefix ? item.prefix : ''"
                   >
                     <template v-slot:option="scope">
                       <q-item
@@ -177,6 +181,7 @@
                     dense
                     :type="item.type ? item.type : 'text'"
                     :rules="item.rules ? item.rules : []"
+                    :prefix="item.prefix ? item.prefix : ''"
                     stack-label
                     borderless
                   />
@@ -429,6 +434,10 @@ export default defineComponent({
       } else {
         // DO NOT SHOW STATUS EQUIPMENT WHEN CREATE EQUIPMENT
         if (item.key == 'equipmentStatus')
+          return false
+        if (item.key == 'reportStatus')
+          return false
+        if (item.key == 'userStatus')
           return false
       } return true
     },

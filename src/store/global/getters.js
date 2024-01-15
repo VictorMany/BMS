@@ -14,3 +14,7 @@ export function getThumbStyleEquipments(state) {
 export function getDate(state) {
     return state.date;
 }
+
+export function getlocalStorageGetter(state) {
+    return state.localStorage;
+}

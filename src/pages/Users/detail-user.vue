@@ -54,7 +54,7 @@ export default defineComponent({
           {
             key: 'userName',
             class: 'q-pb-md',
-            type: 'title',
+            label: 'Nombre',
             model: '',
           },
           {
@@ -78,6 +78,7 @@ export default defineComponent({
           {
             key: 'birthday',
             label: 'Fecha de nacimiento',
+            type: 'date',
             class: 'q-pb-sm',
             model: '',
           },

@@ -81,6 +81,7 @@
           :columns="columns"
           :actions-table="actionsTable"
           :pagination-prop="pagination"
+          :loading="loading"
           @change-pagination="changePagination"
         />
       </div>

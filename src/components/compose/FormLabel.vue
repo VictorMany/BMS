@@ -3,87 +3,98 @@
     class="row q-px-md q-pt-none q-pb-lg"
     style="max-width: 1200px"
   >
-    <!-- LEFT SECTION -->
-    <div class="col-12 col-sm-6">
-      <div
-        v-for="(item, i) in fields.left"
-        v-bind="item"
-        :key="i"
-      >
-        <div class="row items-center q-px-sm q-py-xs">
-          <div
-            v-if="item.type != 'title'"
-            class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-thin"
-          >
-            {{ item.label }}
-          </div>
-          <div
-            v-if="item.model && item.type !== 'status'"
-            class="col-12 col-sm form__item-model"
-          >
-            {{ item.model }}
-          </div>
 
-          <div
-            v-if="item.model && item.type === 'status'"
-            class="col-12 col-sm form__item-model"
-          >
-            <q-chip
-              class="q-ma-none"
-              dark
-              :style="`color: ${item.color}; background-color: ${item.color}26; font-size: 12px`"
-            >
-              {{ item.model }}
-            </q-chip>
-          </div>
-
-          <!-- <div
-            v-if="item.type === 'textarea'"
-            class="col-12"
-          >
-            <div class="row w-100 q-pa-none">
-              <div
-                v-for="(textfield, i) in item.items"
-                :key="i"
-                class="col-12 q-py-xs"
-              >
-                <div class="q-mb-sm form__item-label text-weight-thin">
-                  {{ textfield.label }}
-                </div>
-                <div
-                  style="border-radius: 5px"
-                  class="q-pa-sm border-line"
-                >
-                  <div v-html="textfield.model"></div>
-                </div>
-              </div>
-            </div>
-          </div> -->
-        </div>
-      </div>
-
-      <!-- TEXTAREAS SECTION -->
-      <div class="row w-100 q-pa-none">
+    <div class="col-12 col-lg-5 col-md-6 q-pb-xs">
+      <div class="row">
+        <!-- TOP SECTION -->
         <div
-          v-for="(item, i) in fields.textareas"
-          class="col q-pa-sm"
-          :key="i"
+          v-if="fields.top?.length > 0"
+          class="col-12 col-sm-10 col-md-12 q-pb-xs"
         >
           <div
-            class="col-12"
-            style="height: 100%;"
+            v-for="(item, i) in fields.top"
+            v-bind="item"
+            :key="i"
           >
-            <div class="q-mb-sm form__item-label text-weight-thin">
-              {{ item.label }}
+            <div class="row items-center q-px-sm q-py-xs">
+              <div
+                v-if="item.type != 'title'"
+                class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-thin"
+              >
+                {{ item.label }}
+              </div>
+
+              <div
+                v-if="item.model && item.type !== 'status'"
+                class="col-12 col-sm form__item-model"
+              >
+                {{ item.model }}
+              </div>
             </div>
+          </div>
+        </div>
+
+        <!-- LEFT SECTION -->
+        <div class="col-12 q-py-xs">
+          <div
+            v-for="(item, i) in fields.left"
+            v-bind="item"
+            :key="i"
+          >
+            <div class="row items-center q-px-sm q-py-xs">
+              <div
+                v-if="item.type != 'title'"
+                class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-thin"
+              >
+                {{ item.label }}
+              </div>
+              <div
+                v-if="item.model && item.type !== 'status'"
+                class="col-12 col-sm form__item-model"
+              >
+
+                {{ item.prefix ? item.prefix + item.model : item.model }}
+              </div>
+
+              <div
+                v-if="item.model && item.type === 'status'"
+                class="col-12 col-sm form__item-model"
+              >
+                <q-chip
+                  class="q-ma-none"
+                  dark
+                  :style="`color: ${item.color}; background-color: ${item.color}26; font-size: 12px`"
+                >
+                  {{ item.model }}
+                </q-chip>
+              </div>
+            </div>
+          </div>
+
+          <!-- TEXTAREAS SECTION -->
+          <div class="row w-100 q-pa-none">
             <div
-              style="border-radius: 5px; height: 100%;"
-              class="q-pa-sm border-line"
+              v-for="(item, i) in fields.textareas"
+              class="col q-pa-sm"
+              :key="i"
             >
               <div
-                class="col-12 q-pr-md form__item-area"
-                v-html="item.model"
-              />
+                class="col-12"
+                style="height: 100%;"
+              >
+                <div class="q-mb-sm form__item-label text-weight-thin">
+                  {{ item.label }}
+                </div>
+                <div
+                  style="border-radius: 5px; height: 80%;"
+                  class="q-pa-sm border-line"
+                >
+                  <div
+                    class="col-12 q-pr-md form__item-area"
+                    v-html="item.model"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -91,7 +102,7 @@
     </div>
 
     <!-- RIGHT SECTION -->
-    <div class="col-12 col-sm q-py-lg">
+    <div class="col-12 col-md q-py-sm">
       <div
         v-for="(item, i) in fields.right"
         v-bind="item"

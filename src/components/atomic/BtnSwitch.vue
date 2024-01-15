@@ -8,14 +8,20 @@
       class="btn-left q-pa-sm"
       @click="modelChange(1)"
     >
-      <q-img no-spinner src="~assets/svg/card_svg.svg" />
+      <q-img
+        no-spinner
+        src="~assets/svg/card_svg.svg"
+      />
     </q-btn>
     <q-btn
       style="width: 45px; height: auto"
       class="btn-right q-pa-sm"
       @click="modelChange(2)"
     >
-      <q-img no-spinner src="~assets/svg/table_svg.svg" />
+      <q-img
+        no-spinner
+        src="~assets/svg/table_svg.svg"
+      />
     </q-btn>
   </q-btn-group>
 </template>
@@ -46,10 +52,11 @@ export default defineComponent({
 
     switchContent: {
       type: Number,
-      default: () => {},
+      default: () => { },
       required: false,
     },
   },
+
   data() {
     return {
       color1: this.btnBackground,
@@ -58,6 +65,7 @@ export default defineComponent({
       noSelectedColor: '#181b1e',
     };
   },
+
   created() {
     if (this.$q.dark.isActive) {
       this.color = 'dark';
@@ -65,10 +73,16 @@ export default defineComponent({
     } else {
       this.noSelectedColor = 'white';
     }
-    this.modelChange(this.switchContent);
+
+    if (this.switchContentLS) {
+      this.modelChange(this.switchContentLS);
+    } else {
+      this.modelChange(this.switchContent);
+    }
   },
+
   methods: {
-    modelChange(model) {
+    async modelChange(model) {
       if (model === 1) {
         this.color1 = this.color;
         this.color2 = this.noSelectedColor;
@@ -78,8 +92,21 @@ export default defineComponent({
         this.color1 = this.noSelectedColor;
         this.$emit('update:switchContent', 2);
       }
+
+      await this.$store.dispatch('global/addSttingsToLocalStorage', {
+        switchContent: model
+      });
     },
   },
+
+
+  computed: {
+    switchContentLS: {
+      get() {
+        return this.$store.getters['global/getlocalStorageGetter']?.switchContent;
+      },
+    },
+  }
 });
 </script>
 
@@ -97,9 +124,11 @@ export default defineComponent({
 .btn-right {
   background-color: v-bind(color2);
 }
+
 .btn-right:hover {
   transform: scale(1.05);
 }
+
 .btn-left:hover {
   transform: scale(1.05);
 }

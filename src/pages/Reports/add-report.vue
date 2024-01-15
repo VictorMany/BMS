@@ -17,7 +17,10 @@
           style="height: 92% !important"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <form-text-field :fields="fields" />
+          <form-text-field
+            ref="fieldsComponent"
+            :fields="fields"
+          />
         </q-scroll-area>
         <div
           class="col-12 form__date_container form__date column justify-center q-px-lg"
@@ -37,7 +40,7 @@ import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import FormTextField from 'src/components/compose/FormTextField.vue'
 
 export default defineComponent({
-  name: 'EquipmentsPage',
+  name: 'Add-Report',
   components: {
     HeaderActions,
     FormTextField,
@@ -46,7 +49,6 @@ export default defineComponent({
 
   data() {
     return {
-      Equipos: 40,
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
@@ -68,20 +70,26 @@ export default defineComponent({
 
         top: [
           {
-            key: 'userId',
-            label: 'Encargado',
-            model: '',
-            type: 'select',
-            itemFilter: this.filterUsers,
-            options: [],
-          },
-          {
             key: 'idEquipment',
             label: 'Equipo',
-            model: '',
-            type: 'select',
+            type: this.isEditing() ? 'text' : 'select',
             itemFilter: this.filterEquipments,
             options: [],
+            model: null,
+            rules: this.isEditing() ? [] : [
+              (val) => (val) || 'El campo es obligatorio',
+            ],
+          },
+          {
+            key: 'userName',
+            label: 'Encargado',
+            type: this.isEditing() ? 'text' : 'select',
+            itemFilter: this.filterUsers,
+            options: [],
+            model: null,
+            rules: this.isEditing() ? [] : [
+              (val) => (val) || 'El campo es obligatorio',
+            ],
           },
         ],
         left: [
@@ -91,14 +99,30 @@ export default defineComponent({
             model: '',
           },
           {
+            key: 'reportStatus',
+            label: 'Estatus',
+            type: 'select',
+            model: null,
+            options: [
+              { label: 'Pendiente', status: true, value: true },
+              { label: 'Atendido', status: false, value: false },
+            ],
+            rules: [
+              (val) => (val) || 'El campo es obligatorio',
+            ],
+          },
+          {
             key: 'reportUrgency',
             label: 'Prioridad',
-            model: '',
             type: 'select',
+            model: null,
             options: [
               { label: 'Alta', index: 1, value: 'alto' },
               { label: 'Media', index: 2, value: 'medio' },
               { label: 'Baja', index: 3, value: 'bajo' },
+            ],
+            rules: [
+              (val) => (val) || 'El campo es obligatorio',
             ],
           },
         ],
@@ -127,7 +151,7 @@ export default defineComponent({
         ],
         right: [
           {
-            key: 'maintenanceType',
+            key: 'serialNumber',
             label: 'No. serie',
             readonly: true,
             model: '',
@@ -144,22 +168,24 @@ export default defineComponent({
 
   methods: {
     async createReport() {
-      this.btnAction.loader = true;
-      try {
-        const res = await this.$store.dispatch(
-          'reports/postReportAction',
-          this.fields
-        );
-        if (res === true) {
-          this.showAlert({ title: 'Éxito al crear', msg: 'El reporte se ha agregado', color: 'green-14' });
-          this.$router.go(-1);
-        } else {
-          this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+      if (await this.$refs.fieldsComponent.validate()) {
+        this.btnAction.loader = true;
+        try {
+          const res = await this.$store.dispatch(
+            'reports/postReportAction',
+            this.fields
+          );
+          if (res === true) {
+            this.showAlert({ title: 'Éxito al crear', msg: 'El reporte se ha agregado', color: 'green-14' });
+            this.$router.go(-1);
+          } else {
+            this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+          }
+          this.btnAction.loader = false;
+        } catch (error) {
+          this.btnAction.loader = false;
+          this.showAlert({ msg: error.response ? error.response.data.details : error });
         }
-        this.btnAction.loader = false;
-      } catch (error) {
-        this.btnAction.loader = false;
-        this.showAlert({ msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -314,7 +340,7 @@ export default defineComponent({
     fields: {
       // Get the image, and no-serie every change of the equipment selected
       handler(val) {
-        if (val.top[1].model && val.right[1].model != val.top[1].model.cardImg) {
+        if ((val.top[1].model && val.right[1].model != val.top[1].model.cardImg) && !this.isEditing()) {
           val.right[1].model = val.top[1].model.cardImg
           val.right[0].model = val.top[1].model.serialNumber
         }

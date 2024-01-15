@@ -14,7 +14,9 @@ export default function () {
       width: '5px',
       opacity: 1,
     },
-    date: calcDate()
+    date: calcDate(),
+
+    localStorage: JSON.parse(localStorage.getItem('configuration')) || null,
   }
 }
 

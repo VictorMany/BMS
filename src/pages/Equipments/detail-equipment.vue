@@ -51,8 +51,8 @@ export default defineComponent({
         left: [
           {
             key: 'equipmentName',
+            label: 'Nombre del equipo',
             model: '',
-            type: 'title'
           },
           {
             key: 'trackingNumber',

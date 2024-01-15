@@ -17,7 +17,10 @@
           style="height: 92% !important"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <form-text-field :fields="fields" />
+          <form-text-field
+            ref="fieldsComponent"
+            :fields="fields"
+          />
         </q-scroll-area>
         <div
           class="col-12 form__date_container form__date column justify-center q-px-lg"
@@ -69,18 +72,24 @@ export default defineComponent({
           {
             key: 'userId',
             label: 'Encargado',
-            model: '',
             type: 'select',
             itemFilter: this.filterUsers,
             options: [],
+            model: null,
+            rules: [
+              (val) => (val) || 'El campo es obligatorio',
+            ],
           },
           {
             key: 'idEquipment',
             label: 'Equipo',
-            model: '',
             type: 'select',
             itemFilter: this.filterEquipments,
             options: [],
+            model: null,
+            rules: [
+              (val) => (val) || 'El campo es obligatorio',
+            ],
           },
         ],
         left: [
@@ -93,6 +102,9 @@ export default defineComponent({
               { label: 'Preventivo', index: 1, value: 'preventivo' },
               { label: 'Correctivo', index: 2, value: 'correctivo' },
             ],
+            rules: [
+              (val) => (val) || 'El campo es obligatorio',
+            ],
           },
           {
             key: 'reason',
@@ -102,7 +114,12 @@ export default defineComponent({
           {
             key: 'cost',
             label: 'Costo',
+            type: 'number',
+            prefix: '$',
             model: '',
+            rules: [
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+            ],
           },
         ],
         textareas: [
@@ -144,22 +161,24 @@ export default defineComponent({
   },
   methods: {
     async createMaintenance() {
-      this.btnAction.loader = true;
-      try {
-        const res = await this.$store.dispatch(
-          'maintenances/postMaintenanceAction',
-          this.fields
-        );
-        if (res === true) {
-          this.showAlert({ title: 'Éxito al crear', msg: 'El mantenimiento se ha agregado', color: 'green-14' });
-          this.$router.go(-1);
-        } else {
-          this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+      if (await this.$refs.fieldsComponent.validate()) {
+        this.btnAction.loader = true;
+        try {
+          const res = await this.$store.dispatch(
+            'maintenances/postMaintenanceAction',
+            this.fields
+          );
+          if (res === true) {
+            this.showAlert({ title: 'Éxito al crear', msg: 'El mantenimiento se ha agregado', color: 'green-14' });
+            this.$router.go(-1);
+          } else {
+            this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+          }
+          this.btnAction.loader = false;
+        } catch (error) {
+          this.btnAction.loader = false;
+          this.showAlert({ msg: error.response ? error.response.data.details : error });
         }
-        this.btnAction.loader = false;
-      } catch (error) {
-        this.btnAction.loader = false;
-        this.showAlert({ msg: error.response ? error.response.data.details : error });
       }
     },
 

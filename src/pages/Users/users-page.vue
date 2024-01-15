@@ -69,8 +69,8 @@
             class="q-mt-none pagination-style"
             :max="paginationCards.pagesNumber"
             size="md"
-            @update:model-value="changePaginationCards"
             direction-links
+            @update:model-value="changePaginationCards"
           />
         </div>
 
@@ -81,6 +81,7 @@
           :columns="columns"
           :actions-table="actionsTable"
           :pagination-prop="pagination"
+          :loading="loading"
           @change-pagination="changePagination"
         />
       </div>

@@ -1,5 +1,10 @@
 <template>
-  <q-item clickable tag="a" class="item" @click="navigateTo">
+  <q-item
+    clickable
+    tag="a"
+    class="item"
+    @click="navigateTo"
+  >
     <q-item-section>
       <q-item-label class="q-item-label">{{ title }}</q-item-label>
     </q-item-section>

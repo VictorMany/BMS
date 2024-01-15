@@ -49,18 +49,20 @@ export default defineComponent({
     return {
       fields: {
         createdAt: '',
-
-        left: [
+        top: [
           {
             key: 'idEquipment',
-            label: 'Monitor de signos vitales',
-            type: 'title'
+            label: 'Nombre del equipo',
+            model: ''
           },
           {
             key: 'userName',
             label: 'Encargado',
             model: ''
           },
+        ],
+
+        left: [
           {
             key: 'reason',
             label: 'Motivo',

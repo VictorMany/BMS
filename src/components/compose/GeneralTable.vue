@@ -6,6 +6,7 @@
   >
     <q-table
       class="table-style font-style my-sticky-header-table q-mt-none bg-white"
+      :class="{ 'sticky': !loading }"
       :rows="rows"
       :columns="columns"
       row-key="id"
@@ -28,6 +29,7 @@
       </template>
 
       <template v-slot:header="props">
+
         <q-tr :props="props">
           <q-th
             v-for="col in props.cols"
@@ -249,8 +251,11 @@ export default defineComponent({
 }
 
 .my-sticky-header-table thead tr th {
-  position: sticky;
   z-index: 1;
+}
+
+.sticky thead tr th {
+  position: sticky !important;
 }
 
 .my-sticky-header-table thead tr:first-child th {

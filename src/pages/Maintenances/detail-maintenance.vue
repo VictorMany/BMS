@@ -43,7 +43,7 @@ export default defineComponent({
   data() {
     return {
       fields: {
-        left: [
+        top: [
           {
             key: 'idEquipment',
             type: 'title',
@@ -54,10 +54,19 @@ export default defineComponent({
             label: 'Encargado',
             model: ''
           },
+        ],
+        left: [
           {
             key: 'reason',
             label: 'Motivo',
             model: ''
+          },
+          {
+            key: 'cost',
+            label: 'Costo',
+            prefix: '$',
+            model: '',
+            color: ''
           },
           {
             key: 'maintenanceType',
@@ -92,7 +101,7 @@ export default defineComponent({
             type: 'textarea',
             label: 'Materiales',
             model: ''
-          }
+          },
         ],
 
         bottom: [

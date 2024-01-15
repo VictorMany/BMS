@@ -93,7 +93,6 @@ export default defineComponent({
               (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
             ],
           },
-
           {
             key: 'trackingNumber',  //este valor lo llena back
             label: 'Número de control',

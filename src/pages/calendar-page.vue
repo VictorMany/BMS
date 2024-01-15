@@ -88,6 +88,7 @@
                 :columns="columns"
                 :actions-table="actionsTable"
                 height="100%"
+                class="w-100"
                 v-model:row-selected="rowSelected"
               />
             </div>
@@ -339,13 +340,13 @@ export default defineComponent({
           align: 'center',
           sortable: true,
         },
-        {
-          name: 'date',
-          label: 'Últ. mantenimiento',
-          field: 'date',
-          align: 'center',
-          sortable: true,
-        },
+        // {
+        //   name: 'date',
+        //   label: 'Últ. mantenimiento',
+        //   field: 'date',
+        //   align: 'center',
+        //   sortable: true,
+        // },
         {
           name: 'actions',
           label: 'Acciones',

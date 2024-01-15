@@ -14,7 +14,7 @@ export function formatPayload(context, { keys, fields }) {
                             // Verificar si la clave ya existe en FormData
                             if (!fd.has(k)) {
                                 if (fields[prop][i].type === 'select') {
-                                    fd.append(k, fields[prop][i].model.value);
+                                    fd.append(k, fields[prop][i].model?.value);
                                 } else {
                                     fd.append(k, fields[prop][i].model);
                                 }
@@ -29,21 +29,7 @@ export function formatPayload(context, { keys, fields }) {
 }
 
 export async function formatDetails(context, { keys, fields }) {
-    fields.createdAt = await context.dispatch('formatDate', keys.createdAt);
-
-    if (keys.User) {
-        // add equipment name
-        fields.left[1].model = keys.User.IdEquipment;
-
-        // add incharged name
-        fields.left[1].model = keys.User.userName;
-
-        // add photo
-        fields.right[1].model = keys.User.photo;
-
-        // add serialNumber
-        fields.right[0].model = '0001';
-    }
+    fields.createdAt = formatDate(keys.createdAt);
 
     for (let k in keys) {
         for (let prop in fields) {
@@ -58,15 +44,32 @@ export async function formatDetails(context, { keys, fields }) {
             }
         }
     }
+
+    if (keys.User) {
+        // add equipment name
+        fields.top[0].model = keys.User.IdEquipment;
+        // add incharged name
+        fields.top[1].model = keys.User.userName;
+        // add serialNumber
+        fields.right[0].model = '0001';
+        // add photo
+        fields.right[1].model = keys.User.photo;
+    }
+
     return fields;
 }
 
+export function addSttingsToLocalStorage(context, newData) {
+    context.commit('UPDATE_LOCAL_STORAGE', newData)
+}
 
-// actions aux
-export function formatDate(context, date) {
+
+export function formatDate(date) {
     const initialDate = new Date(date);
-    const optFormat = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-    const fechaFormateada = initialDate.toLocaleDateString('es-ES', optFormat);
+    // Ajustar la zona horaria a la de España (GMT+1)
+    const fechaLocal = new Date(initialDate.getTime() + initialDate.getTimezoneOffset() * 60000);
+    const optFormat = { day: 'numeric', month: 'long', year: 'numeric' };
+    const fechaFormateada = fechaLocal.toLocaleDateString('es-ES', optFormat);
     return fechaFormateada;
 }
 
@@ -111,7 +114,10 @@ function getModelSelected(item, valueFromServer) {
         }
         return item
     } else {
-        item.model = valueFromServer
+        if (item.type === 'date') {
+            item.model = formatDate(valueFromServer);
+        }
+        else item.model = valueFromServer
         return item
     }
 }

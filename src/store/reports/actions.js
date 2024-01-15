@@ -58,11 +58,7 @@ export async function updateReportAction(context, report) {
     // Those are the keys you need in your payload and find in the fields
     let keys = {
         // ReportId: '',
-        reason: '',
-        report: '',
-        reportUrgency: '',
-        idEquipment: '',
-        userId: '',
+        reportStatus: ''
     }
 
     // We call the global action to format our payload
