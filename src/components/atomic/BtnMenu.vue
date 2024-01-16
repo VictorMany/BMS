@@ -48,13 +48,30 @@ export default defineComponent({
 
   methods: {
     navigateTo() {
-      if (this.link.id) {
+      if (this.link?.id) {
         this.$router.push({
-          name: this.link.link,
-          params: { id: this.link.id },
+          name: this.link?.link,
+          params: { id: this.link?.id },
         });
       } else {
-        this.$router.push({ path: this.link });
+        if (this.link?.searchByIdEquipment) {
+          this.$router.push({
+            name: this.link?.link,
+            query: {
+              equipment: this.$route.params?.id
+            },
+          });
+
+        } else if (this.link?.searchByIdUser) {
+          this.$router.push({
+            name: this.link?.link,
+            query: {
+              user: this.$route.params?.id
+            },
+          });
+        } else this.$router.push({
+          path: this.link
+        });
       }
     },
   },

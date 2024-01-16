@@ -1,6 +1,13 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
+      <div
+        v-if="this.$route.query.equipment"
+        class="column items-end q-mb-xs"
+      >
+        <btn-action v-bind="btnCloseWindow" />
+      </div>
+
       <header-actions
         titlePage="Reportes"
         :btnAction="btnAction"
@@ -31,11 +38,14 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import GeneralTable from 'src/components/compose/GeneralTable.vue'
+import BtnAction from 'src/components/atomic/BtnAction.vue';
+
 export default defineComponent({
   name: 'ReportsPage',
   components: {
     HeaderActions,
-    GeneralTable
+    GeneralTable,
+    BtnAction
   },
   data() {
     return {
@@ -45,6 +55,14 @@ export default defineComponent({
       loading: true,
 
       localPagination: {},
+
+      btnCloseWindow: {
+        iconName: 'close',
+        btnBackground: '#FF9900',
+        btnColor: '#FFFFFF',
+        btnSize: 'xs',
+        btnAction: this.goBack,
+      },
 
       btnAction: {
         show: true,
@@ -68,7 +86,7 @@ export default defineComponent({
 
       rowSelected: {},
 
-      selectedFilterText: '',
+      selectedFilterText: 'reason',
 
       inputSearch: {
         show: true,
@@ -92,14 +110,14 @@ export default defineComponent({
             icon: 'engineering',
             options: [
               {
-                title: 'Correctivo',
-                filter: 'maintenanceType',
-                value: 'correctivo',
+                title: 'Atendido',
+                filter: 'statusReport',
+                value: 1
               },
               {
-                title: 'Preventivo',
-                filter: 'maintenanceType',
-                value: 'preventivo',
+                title: 'Pendiente',
+                filter: 'statusReport',
+                value: 0
               }
             ]
           }
@@ -107,7 +125,7 @@ export default defineComponent({
       },
 
       params: {
-        name: '',
+        reason: '',
       },
 
       columns: [
@@ -129,7 +147,7 @@ export default defineComponent({
   },
 
   created() {
-    this.getReports({});
+    this.chooseGetReports()
   },
 
   watch: {
@@ -150,7 +168,7 @@ export default defineComponent({
       clearTimeout(this.timeoutSearch);
 
       this.timeoutSearch = setTimeout(() => {
-        this.getReports(this.params);
+        this.chooseGetReports();
       }, this.delaySearch);
     },
   },
@@ -170,10 +188,32 @@ export default defineComponent({
   },
 
   methods: {
+    chooseGetReports() {
+      if (this.$route.query.equipment) {
+        this.params.id = this.$route.query.equipment
+        this.getReportsByEquipment(this.params);
+      } else if (this.$route.query.user) {
+        this.params.id = this.$route.query.user
+        this.getReportsByUser(this.params);
+      } else {
+        this.getReports(this.params);
+      }
+    },
+
+    async getReportsByEquipment(params) {
+      this.loading = true
+      await this.$store.dispatch('reports/getReportsByEquipmentAction', params);
+      this.loading = false
+    },
+
     async getReports(params) {
       this.loading = true
       await this.$store.dispatch('reports/getReportsAction', params);
       this.loading = false
+    },
+
+    goBack() {
+      this.$router.go(-1);
     },
 
     goToDetails(payload) {
@@ -189,16 +229,16 @@ export default defineComponent({
       if (this.selectedFilterText) {
         delete this.params[this.selectedFilterText]
         if (this.searchModel) {
-          this.getReports(this.params);
+          this.chooseGetReports();
         }
       }
 
       this.selectedFilterText = opt.filter
-      this.inputSearch.inputLabel = opt.label;
+      this.inputSearch.inputLabel = opt.title;
 
       if (opt.value && opt.filter) {
         this.params[opt.filter] = this.searchModel
-        this.getReports(this.params);
+        this.chooseGetReports();
       }
     },
 
@@ -211,7 +251,7 @@ export default defineComponent({
       if (removedFilter) {
         delete this.params[removedFilter]
       }
-      this.getReports(this.params);
+      this.chooseGetReports();
     },
 
     changePagination(pagination) {
@@ -222,7 +262,7 @@ export default defineComponent({
         }
       }
 
-      this.getReports(this.params);
+      this.chooseGetReports();
     }
   },
 })

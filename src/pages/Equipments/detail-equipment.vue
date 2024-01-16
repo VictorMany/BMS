@@ -165,6 +165,7 @@ export default defineComponent({
       return `edit-${this.$route.params.id}-equipment`
     },
   },
+
   mounted() {
     this.getEquipment();
   },

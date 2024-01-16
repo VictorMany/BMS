@@ -16,6 +16,8 @@ export async function getUserAction(context, params) {
     return service.getUser(params.id).then(async (response) => {
         if (response.status == 200) {
             // We call the global action to format our payload
+            context.commit('MUTATE_USER', response.data.contents.user)
+
             const payload = await context.dispatch('global/formatDetails', {
                 keys: response.data.contents.user,
                 fields: params.fields
@@ -48,7 +50,6 @@ export async function postUserAction(context, user) {
 
     return await service.postUser(payload).then(async (response) => {
         if (response.status == 201) {
-            context.commit('ADD_USER', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
             return true
         } else {
             return response
@@ -78,5 +79,10 @@ export async function updateUserAction(context, user) {
             return response
         }
     })
+}
+
+
+export function getUserGetter(state) {
+    return state.user
 }
 

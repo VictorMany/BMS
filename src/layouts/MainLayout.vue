@@ -84,7 +84,149 @@
               opacity: 1,
             }"
           >
-            <q-list>
+
+            <div v-if="showEquipmentDetails()">
+              <q-separator class="q-my-md" />
+
+              <div class="col-12 text-weight-medium text-primary">
+                Información del equipo
+              </div>
+              <div
+                class="q-mx-auto row q-my-lg"
+                :style="'width: 100%;'"
+              >
+                <q-img
+                  class="form__image64-equipment q-mx-auto q-my-auto"
+                  no-spinner
+                  :src="equipment?.photo"
+                />
+              </div>
+              <div class="row">
+                <div class="col-12 q-my-sm">
+                  <div class="row">
+                    <div class="col form__item-label text-weight-thin">
+                      Estatus del equipo
+                    </div>
+                    <q-chip
+                      class="q-ma-none col-auto q-mr-xs"
+                      :color="getStatus.color(equipment?.equipmentStatus)"
+                      :text-color="getStatus.textColor(equipment?.equipmentStatus)"
+                      dark
+                      :style="`color: primary; background-color: accent; font-size: 12px`"
+                    >
+                      {{ getStatus.model(equipment?.equipmentStatus) }}
+                    </q-chip>
+                  </div>
+                </div>
+                <div class="col-8">
+                  <div class="col-12 form__item-label text-weight-thin">
+                    {{ 'Nombre del equipo' }}
+                  </div>
+                  <div class="col-12  form__item-model q-mb-md">
+                    {{ equipment?.equipmentName }}
+                  </div>
+                  <div class="col-12 form__item-label text-weight-thin">
+                    {{ 'Numero de control' }}
+                  </div>
+                  <div class="col-12  form__item-model q-mb-md">
+                    {{ equipment?.trackingNumber }}
+                  </div>
+                  <div class="col-12 form__item-label text-weight-thin">
+                    {{ 'Numero de serie' }}
+                  </div>
+                  <div class="col-12  form__item-model q-mb-md">
+                    {{ equipment?.serialNumber }}
+                  </div>
+                </div>
+
+                <div class="col-4 flex items-end">
+                  <qrcode-vue
+                    class="border-radius"
+                    :value="value"
+                    :size="100"
+                    foreground="#062841"
+                    background="#F3F3F3"
+                    :margin="3"
+                    level="L"
+                  />
+                </div>
+              </div>
+
+            </div>
+
+            <div v-else-if="showUserDetails()">
+              <q-separator class="q-my-md" />
+              <div class="col-12 text-weight-medium text-primary">
+                Información del usuario
+              </div>
+
+              <div
+                class="q-mx-auto row q-my-lg"
+                :style="'width: 100%;'"
+              >
+                <q-img
+                  class="form__image64 q-mx-auto q-my-auto"
+                  no-spinner
+                  :src="user?.photo"
+                />
+              </div>
+
+              <div class="row">
+                <div class="col-12 q-my-sm">
+                  <div class="row">
+                    <div class="col form__item-label text-weight-thin">
+                      Estatus del usuario
+                    </div>
+                    <q-chip
+                      class="q-ma-none col-auto q-mr-xs"
+                      :color="getStatus.color(user?.userStatus)"
+                      :text-color="getStatus.textColor(user?.userStatus)"
+                      dark
+                      :style="`color: primary; background-color: accent; font-size: 12px`"
+                    >
+                      {{ getStatus.model(user?.userStatus) }}
+                    </q-chip>
+                  </div>
+                </div>
+                <div class="col-8">
+                  <div
+                    v-if="user?.email"
+                    class="col-12 form__item-label text-weight-thin"
+                  >
+                    {{ 'Correo electrónico' }}
+                  </div>
+                  <div class="col-12  form__item-model q-mb-md">
+                    {{ user?.email }}
+                  </div>
+                  <div class="col-12 form__item-label text-weight-thin">
+                    {{ 'Nombre del usuario' }}
+                  </div>
+                  <div class="col-12  form__item-model q-mb-md">
+                    {{ user?.userName }}
+                  </div>
+                  <div class="col-12 form__item-label text-weight-thin">
+                    {{ 'Rol' }}
+                  </div>
+                  <div class="col-12  form__item-model q-mb-md">
+                    {{ getRole.model(user?.userRole) }}
+                  </div>
+                </div>
+
+                <div class="col-4 flex items-end">
+                  <qrcode-vue
+                    class="border-radius"
+                    :value="value"
+                    :size="100"
+                    foreground="#062841"
+                    background="#F3F3F3"
+                    :margin="3"
+                    level="L"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <q-list v-else>
               <div class="q-pt-none">
                 <div
                   v-for="(btn, index) in btnLinks"
@@ -211,156 +353,165 @@ export default defineComponent({
       imageNotification: 'svg/notifications_.svg',
       btnLinks: [],
       selected: null,
+      getStatus: {
+        color(item) {
+          return item ? 'green-1' : 'orange-1'
+        },
+        textColor(item) {
+          return item ? 'positive' : 'orange'
+        },
+        model(item) {
+          return item ? 'Activo' : 'Inactivo'
+        }
+      },
+
+      getRole: {
+        model(item) {
+          switch (item) {
+            case 1: return 'Administrador'
+            case 2: return 'Auxiliar'
+            case 3: return 'Funciones básicas'
+          }
+        }
+      },
+
       btnGeneral: [
         {
           title: 'Dashboard',
-          link: '/',
-
-          color: 'rgba(122, 122, 122, 1)',
+          link: '/', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Equipos',
-          link: 'equipments',
-
-          color: 'rgba(122, 122, 122, 1)',
+          link: 'equipments', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Usuarios',
-          link: 'users',
-
-          color: 'rgba(122, 122, 122, 1)',
+          link: 'users', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Mantenimientos',
-          link: 'maintenances',
-
-          color: 'rgba(122, 122, 122, 1)',
+          link: 'maintenances', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Planes de mantenimientos',
-          link: 'maintenances-plan',
-
-          color: 'rgba(122, 122, 122, 1)',
+          link: 'maintenances-plan', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Calendario',
-          link: 'calendar',
-
-          color: 'rgba(122, 122, 122, 1)',
+          link: 'calendar', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Reportes',
-          link: 'reports',
-
-          color: 'rgba(122, 122, 122, 1)',
+          link: 'reports', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Configuración',
-          link: 'settings',
-
-          color: 'rgba(122, 122, 122, 1)',
+          link: 'settings', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
       ],
+
       btnDetailEquipment: [
         {
           title: 'Mantenimientos',
-          link: 'maintenances',
-
+          link: {
+            link: 'maintenances',
+            searchByIdEquipment: true
+          },
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Reportes',
-          link: 'reports',
-
+          link: {
+            link: 'reports',
+            searchByIdEquipment: true
+          },
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         'divider',
         {
-          title: 'Editar',
-          link: { link: 'edit-equipment', id: 1 },
-
-          color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
-        },
-        {
           title: 'Registrar mantenimiento',
           link: { link: 'add-maintenance', id: 1 },
-
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Reportar',
           link: { link: 'add-report', id: 1 },
-
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         'divider',
         'qrcode',
       ],
+
       btnDetailUser: [
         {
           title: 'Mantenimientos',
-          link: 'maintenances',
-
+          link: {
+            link: 'maintenances',
+            searchByIdUser: true
+          },
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Reportes',
-          link: 'reports',
-
+          link: {
+            link: 'maintenances',
+            searchByIdUser: true
+          },
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
-        },
-        'divider',
-        {
-          title: 'Editar',
-          link: { link: 'edit-user', id: 1 },
-
-          color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
-        },
+        }
       ],
+
       btnEditGeneral: [
         {
-          title: 'Mantenimientos',
-          link: 'maintenances',
-
+          title: 'Todos los usuarios',
+          link: 'users',
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
-          title: 'Reportes',
-          link: 'reports',
-
+          title: 'Todos los equipos',
+          link: 'equipments',
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
       ],
+
       btnGeneralEquipment: [
+        {
+          title: 'Usuarios',
+          link: 'users',
+          color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8',
+        },
+        {
+          title: 'Equipos',
+          link: 'equipments',
+          color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8',
+        },
         {
           title: 'Mantenimientos',
           link: 'maintenances',
-
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Reportes',
           link: 'reports',
-
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
@@ -410,8 +561,23 @@ export default defineComponent({
     this.setMenu(this.$route);
   },
 
-  beforeRouteUpdate(to, from, next) {
+  computed: {
+    equipment: {
+      get() {
+        return this.$store.getters['equipments/getEquipmentGetter'];
+      },
+    },
+
+    user: {
+      get() {
+        return this.$store.getters['users/getUserGetter'];
+      },
+    },
+  },
+
+  async beforeRouteUpdate(to, from, next) {
     try {
+      console.log('CARGANDO NUEVA RUTA')
       this.setMenu(to);
     } catch (error) {
       console.log(error);
@@ -420,32 +586,50 @@ export default defineComponent({
   },
 
   methods: {
-    setMenu(route) {
+    async changeMenu(items) {
+      this.btnLinks = [...items];
+    },
+
+    async setMenu(route) {
       try {
         this.btnCloseSesion.show = false;
         this.value = 'https://bms-omega.vercel.app' + route.fullPath;
 
         switch (route.name) {
+          case 'reports':
+            if (!this.showEquipmentDetails() || !this.showUserDetails()) {
+              this.btnCloseSesion.show = true;
+              this.selected = this.btnLinks.findIndex(
+                (e) => e.link === route.name
+              );
+            }
+            break;
+          case 'maintenances':
+            if (!this.showEquipmentDetails() || !this.showUserDetails()) {
+              this.btnCloseSesion.show = true;
+              this.selected = this.btnLinks.findIndex(
+                (e) => e.link === route.name
+              );
+            }
+            break;
           case 'detail-equipment':
             this.btnLinks = [...this.btnDetailEquipment];
             this.selected = null;
             break;
           case 'edit-equipment':
           case 'edit-user':
-            this.btnLinks = [...this.btnEditGeneral];
-            this.selected = null;
-            break;
           case 'add-maintenance':
           case 'edit-maintenance':
           case 'detail-maintenance':
           case 'add-report':
           case 'detail-report':
           case 'edit-report':
-            this.btnLinks = [...this.btnGeneralEquipment];
+            await this.changeMenu(this.btnGeneral)
             this.selected = null;
+            this.btnCloseSesion.show = true
             break;
           case 'detail-user':
-            this.btnLinks = [...this.btnDetailUser];
+            await this.changeMenu(this.btnDetailUser)
             this.selected = null;
             break;
           default:
@@ -464,13 +648,19 @@ export default defineComponent({
         this.btnLinks = this.btnGeneral;
       }
     },
+
     logout() {
       console.log('Login');
       this.$router.replace('/login');
     },
+
     navigateTo({ link, id }) {
-      this.$router.push({ name: link, params: { id } });
+      this.$router.push({
+        name: link,
+        params: { id },
+      });
     },
+
     changeImage(flag) {
       if (flag === 0) {
         this.imageNotification = 'gif/notification.gif';
@@ -478,6 +668,25 @@ export default defineComponent({
         this.imageNotification = 'svg/notifications_.svg';
       }
     },
+
+    getParams() {
+      return this.$route.params.id
+    },
+
+    showEquipmentDetails() {
+      if (this.$route.query.equipment) {
+        this.btnCloseSesion.show = false
+      }
+      console.log('NO SE DEBE MOSTRAR EL MENU')
+      return this.$route.query.equipment
+    },
+
+    showUserDetails() {
+      if (this.$route.query.user) {
+        this.btnCloseSesion.show = false
+      }
+      return this.$route.query.user
+    }
   },
 });
 </script>
@@ -486,9 +695,7 @@ export default defineComponent({
 .side-menu {
   width: 100%;
   height: 100%;
-  // box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 10%) !important;
   box-shadow: none;
-
   border-radius: 8px !important;
   overflow: hidden;
 }
@@ -526,21 +733,6 @@ export default defineComponent({
   font-size: 30px;
   font-weight: 600;
   color: $primary;
-}
-
-@media only screen and (min-device-width: 1000px) {
-  .hamburguer-menu {
-    display: none;
-  }
-}
-
-.hamburguer-menu {
-  position: absolute;
-  color: white;
-  z-index: 100;
-  margin-top: 2.9rem;
-  background: linear-gradient(269.25deg, $primary -4.79%, #689afd 94.27%);
-  margin-left: 1.7rem;
 }
 
 /**scrollbar in different browsers */

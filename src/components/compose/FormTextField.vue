@@ -36,9 +36,9 @@
                 use-input
                 :options="item.options"
                 :readonly="item.readonly"
-                @filter="item.itemFilter"
                 :rules="item.rules ? item.rules : []"
                 :prefix="item.prefix ? item.prefix : ''"
+                @filter="item.itemFilter"
               >
                 <template v-slot:option="scope">
                   <q-item
@@ -49,6 +49,13 @@
                       <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
                     </q-item-section>
                   </q-item>
+                </template>
+                <template v-slot:append>
+                  <q-icon
+                    v-if="item.readonly"
+                    name="lock"
+                    size="xs"
+                  />
                 </template>
               </q-select>
 
@@ -64,9 +71,9 @@
                 :readonly="item.readonly"
                 :rules="item.rules ? item.rules : []"
                 :prefix="item.prefix ? item.prefix : ''"
-                v-model="item.model"
                 :name="item.key"
                 :type="item.type ? item.type : 'text'"
+                v-model="item.model"
               >
                 <template v-slot:append>
                   <q-icon
@@ -123,8 +130,14 @@
                         </q-item-section>
                       </q-item>
                     </template>
+                    <template v-slot:append>
+                      <q-icon
+                        v-if="item.readonly"
+                        name="lock"
+                        size="xs"
+                      />
+                    </template>
                   </q-select>
-
 
                   <!-- INPUT TYPE DATE -->
                   <q-input
@@ -173,18 +186,26 @@
                     v-else
                     v-model="item.model"
                     :name="item.key"
-                    :readonly="item.readonly"
-                    class="form__item-input bg-accent col-12 col-sm"
-                    hide-hint
-                    hide-bottom-space
-                    bottom-slots
                     dense
+                    hide-hint
+                    bottom-slots
+                    hide-bottom-space
+                    class="form__item-input bg-accent col-12 col-sm"
+                    :readonly="item.readonly"
                     :type="item.type ? item.type : 'text'"
                     :rules="item.rules ? item.rules : []"
                     :prefix="item.prefix ? item.prefix : ''"
                     stack-label
                     borderless
-                  />
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        v-if="item.readonly"
+                        name="lock"
+                        size="xs"
+                      />
+                    </template>
+                  </q-input>
                 </div>
               </div>
             </div>
@@ -203,6 +224,7 @@
                   <q-editor
                     v-model="item.model"
                     :name="item.key"
+                    :readonly="item.readonly"
                     :placeholder="'Escribe aquí tus ' + item.label"
                     class="form__item-textarea bg-accent"
                     :toolbar="item.toolbar ? item.toolbar : basicToolBar"

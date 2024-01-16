@@ -24,4 +24,23 @@ export default class EquipmentService {
 
         return api.post(this.endpoint + 'create', object);
     }
+
+    // Obtiene todos los reportes
+    static getMaintenancesByEquipment(params) {
+        let id = params.id;
+        delete params.id
+
+        return api.get(this.endpoint + 'getBy/' + id, {
+            params
+        });
+    }
+    // Obtiene todos los reportes
+    static getMaintenancesByUser(params) {
+        let id = params.id;
+        delete params.id
+
+        return api.get(this.endpoint + 'getByUsrId/' + id, {
+            params
+        });
+    }
 }

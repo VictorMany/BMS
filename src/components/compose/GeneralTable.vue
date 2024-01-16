@@ -5,11 +5,11 @@
     class="general-table"
   >
     <q-table
+      row-key="id"
       class="table-style font-style my-sticky-header-table q-mt-none bg-white"
       :class="{ 'sticky': !loading }"
       :rows="rows"
       :columns="columns"
-      row-key="id"
       :rows-per-page-options="[-1]"
       :hide-pagination="!showPagination"
       :loading="loading"

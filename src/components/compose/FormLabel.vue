@@ -52,8 +52,7 @@
                 v-if="item.model && item.type !== 'status'"
                 class="col-12 col-sm form__item-model"
               >
-
-                {{ item.prefix ? item.prefix + item.model : item.model }}
+                {{ item.pref ? item.pref + item.model : item.model }}
               </div>
 
               <div

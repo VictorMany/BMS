@@ -9,6 +9,7 @@ export function getEquipmentsGetter(state) {
     ],
     cardDate: new Date(equipment.createdAt).toLocaleDateString(),
 
+    // FOR THE DETAILS MAINTENANCE AND REPORT
     label: equipment.equipmentName,
     value: equipment.IdEquipment,
     serialNumber: equipment.serialNumber,
@@ -19,3 +20,8 @@ export function getEquipmentsGetter(state) {
 export function getPaginationGetter(state) {
   return state.pagination
 }
+
+export function getEquipmentGetter(state) {
+  return state.equipment
+}
+

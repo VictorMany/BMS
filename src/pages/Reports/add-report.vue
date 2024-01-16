@@ -72,21 +72,23 @@ export default defineComponent({
           {
             key: 'idEquipment',
             label: 'Equipo',
-            type: this.isEditing() ? 'text' : 'select',
-            itemFilter: this.filterEquipments,
+            type: 'select',
             options: [],
             model: null,
+            itemFilter: this.filterEquipments,
+            readonly: this.isEditing(),
             rules: this.isEditing() ? [] : [
               (val) => (val) || 'El campo es obligatorio',
             ],
           },
           {
-            key: 'userName',
+            key: 'userId',
             label: 'Encargado',
-            type: this.isEditing() ? 'text' : 'select',
-            itemFilter: this.filterUsers,
+            type: 'select',
             options: [],
             model: null,
+            itemFilter: this.filterUsers,
+            readonly: this.isEditing(),
             rules: this.isEditing() ? [] : [
               (val) => (val) || 'El campo es obligatorio',
             ],
@@ -97,6 +99,7 @@ export default defineComponent({
             key: 'reason',
             label: 'Reporte',
             model: '',
+            readonly: this.isEditing(),
           },
           {
             key: 'reportStatus',
@@ -115,6 +118,7 @@ export default defineComponent({
             key: 'reportUrgency',
             label: 'Prioridad',
             type: 'select',
+            readonly: this.isEditing(),
             model: null,
             options: [
               { label: 'Alta', index: 1, value: 'alto' },
@@ -126,11 +130,26 @@ export default defineComponent({
             ],
           },
         ],
+        right: [
+          {
+            key: 'serialNumber',
+            label: 'No. serie',
+            readonly: true,
+            model: '',
+          },
+          {
+            key: 'photo',
+            readImage: true,
+            model: null,
+            readonly: this.isEditing(),
+          }
+        ],
         textareas: [
           {
             key: 'report',
             type: 'textarea',
             label: 'Observaciones del reporte',
+            readonly: this.isEditing(),
             model: '',
             toolbar: [[{
               label: this.$q.lang.editor.fontSize,
@@ -148,19 +167,6 @@ export default defineComponent({
               'bold', 'italic', 'strike', 'underline'],
             ['unordered', 'ordered']],
           },
-        ],
-        right: [
-          {
-            key: 'serialNumber',
-            label: 'No. serie',
-            readonly: true,
-            model: '',
-          },
-          {
-            key: 'photo',
-            readImage: true,
-            model: null,
-          }
         ],
       }
     };
@@ -276,47 +282,50 @@ export default defineComponent({
       this.loading = false
     },
 
-    filterUsers(val, update) {
+    async filterUsers(val, update) {
       if (val === '') {
         update(() => {
-          this.fields.top[0].options = this.users
+          this.fields.top[1].options = this.users
         })
         return
       } else {
-        this.getUsers({
+        await this.getUsers({
           name: val
         })
       }
 
       update(() => {
         const needle = val.toLowerCase()
-        this.fields.top[0].options = this.users.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+        this.fields.top[1].options = this.users.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
       })
+
+      this.$forceUpdate()
     },
 
-    filterEquipments(val, update) {
+    async filterEquipments(val, update) {
       if (val === '') {
         update(() => {
-          this.fields.top[1].options = this.equipments
+          this.fields.top[0].options = this.equipments
         })
         return
       } else {
-        this.getEquipments({
+        await this.getEquipments({
           name: val
         })
       }
 
       update(() => {
         const needle = val.toLowerCase()
-        this.fields.top[1].options = this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+        this.fields.top[0].options = this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
       })
+
+      this.$forceUpdate()
     }
   },
 
   created() {
     this.getUsers({})
     this.getEquipments({})
-
 
     if (this.isEditing()) {
       this.getReport()
@@ -334,20 +343,45 @@ export default defineComponent({
         return this.$store.getters['equipments/getEquipmentsGetter'];
       },
     },
+
+    equipment: {
+      get() {
+        return this.$store.getters['equipments/getEquipmentGetter'];
+      },
+    },
   },
 
   watch: {
     fields: {
       // Get the image, and no-serie every change of the equipment selected
       handler(val) {
-        if ((val.top[1].model && val.right[1].model != val.top[1].model.cardImg) && !this.isEditing()) {
-          val.right[1].model = val.top[1].model.cardImg
-          val.right[0].model = val.top[1].model.serialNumber
+        if ((val.top[0].model && val.right[1].model != val.top[0].model.cardImg) && !this.isEditing()) {
+          val.right[1].model = val.top[0].model.cardImg
+          val.right[0].model = val.top[0].model.serialNumber
         }
       },
       deep: true,
       immediate: true
-    }
+    },
+
+    equipment: {
+      handler(val) {
+        if (val.equipmentName && !this.fields.top[0].model) {
+          this.fields.top[0].model = {
+            value: val.IdEquipment,
+            label: val.equipmentName
+          }
+        }
+        // if (val.photo && this.fields.right[1].model === null) {
+        //   this.fields.right[1].model = val.photo
+        // }
+        if (val.serialNumber && !this.fields.right[0].model) {
+          this.fields.right[0].model = val.serialNumber
+        }
+      },
+      immediate: true,
+      deep: true
+    },
   }
 })
 </script>

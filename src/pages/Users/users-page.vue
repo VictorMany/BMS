@@ -222,7 +222,7 @@ export default defineComponent({
 
       rowSelected: {},
 
-      selectedFilterText: '',
+      selectedFilterText: 'name',
 
       paginationCards: {
         descending: false,
@@ -327,7 +327,7 @@ export default defineComponent({
       }
 
       this.selectedFilterText = opt.filter
-      this.inputSearch.inputLabel = opt.label;
+      this.inputSearch.inputLabel = opt.title;
 
       if (opt.value && opt.filter) {
         this.params[opt.filter] = this.searchModel

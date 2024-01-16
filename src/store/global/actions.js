@@ -47,13 +47,13 @@ export async function formatDetails(context, { keys, fields }) {
 
     if (keys.User) {
         // add equipment name
-        fields.top[0].model = keys.User.IdEquipment;
+        fields.top[0].model = keys.Equipment.equipmentName;
         // add incharged name
         fields.top[1].model = keys.User.userName;
         // add serialNumber
-        fields.right[0].model = '0001';
+        fields.right[0].model = keys.Equipment.serialNumber;
         // add photo
-        fields.right[1].model = keys.User.photo;
+        fields.right[1].model = keys.Equipment.photo;
     }
 
     return fields;

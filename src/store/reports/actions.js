@@ -12,6 +12,18 @@ export async function getReportsAction(context, params) {
     })
 }
 
+export async function getReportsByEquipmentAction(context, params) {
+    return service.getReportsByEquipment(params).then(async (response) => {
+        if (response.status == 200) {
+            context.commit('MUTATE_REPORTS', response.data.contents.reports)
+            context.commit('MUTATE_DETAILS', response.data.contents)
+            return true
+        } else {
+            return response
+        }
+    })
+}
+
 export async function getReportAction(context, params) {
     return service.getReport(params.id).then(async (response) => {
         if (response.status == 200) {

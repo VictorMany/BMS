@@ -1,6 +1,13 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
+      <div
+        v-if="this.$route.query?.equipment || this.$route.query?.user"
+        class="column items-end q-mb-xs"
+      >
+        <btn-action v-bind="btnCloseWindow" />
+      </div>
+
       <header-actions
         titlePage="Mantenimientos"
         :btnAction="btnAction"
@@ -31,12 +38,14 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import GeneralTable from 'src/components/compose/GeneralTable.vue'
+import BtnAction from 'src/components/atomic/BtnAction.vue';
 
 export default defineComponent({
   name: 'MaintenancesPage',
   components: {
     HeaderActions,
-    GeneralTable
+    GeneralTable,
+    BtnAction
   },
   data() {
     return {
@@ -53,6 +62,15 @@ export default defineComponent({
         to: 'add-maintenance',
         btnWidth: 'auto'
       },
+
+      btnCloseWindow: {
+        iconName: 'close',
+        btnBackground: '#FF9900',
+        btnColor: '#FFFFFF',
+        btnSize: 'xs',
+        btnAction: this.goBack,
+      },
+
 
       columns: [
         {
@@ -80,11 +98,11 @@ export default defineComponent({
 
       rowSelected: {},
 
-      selectedFilterText: '',
+      selectedFilterText: 'reason',
 
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por nombre',
+        inputLabel: 'Buscar por motivo',
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
         heightModal: 200,
@@ -124,13 +142,13 @@ export default defineComponent({
       },
 
       params: {
-        name: '',
+        reason: '',
       },
     }
   },
 
-  created() {
-    this.getMaintenances({});
+  mounted() {
+    this.chooseGetMaintenances()
   },
 
   watch: {
@@ -147,9 +165,8 @@ export default defineComponent({
       this.params[this.selectedFilterText] = val
 
       clearTimeout(this.timeoutSearch);
-
       this.timeoutSearch = setTimeout(() => {
-        this.getMaintenances(this.params);
+        this.chooseGetMaintenances();
       }, this.delaySearch);
     },
   },
@@ -169,6 +186,30 @@ export default defineComponent({
   },
 
   methods: {
+    chooseGetMaintenances() {
+      if (this.$route.query.equipment) {
+        this.params.id = this.$route.query.equipment
+        this.getMaintenancesByEquipment(this.params);
+      } else if (this.$route.query.user) {
+        this.params.id = this.$route.query.user
+        this.getMaintenancesByUser(this.params);
+      } else {
+        this.getMaintenances(this.params);
+      }
+    },
+
+    async getMaintenancesByEquipment(params) {
+      this.loading = true
+      await this.$store.dispatch('maintenances/getMaintenancesByEquipmentAction', params);
+      this.loading = false
+    },
+
+    async getMaintenancesByUser(params) {
+      this.loading = true
+      await this.$store.dispatch('maintenances/getMaintenancesByUserAction', params);
+      this.loading = false
+    },
+
     async getMaintenances(params) {
       this.loading = true
       await this.$store.dispatch('maintenances/getMaintenancesAction', params);
@@ -181,20 +222,19 @@ export default defineComponent({
     },
 
     setSelectedFilter(opt) {
-      // IF CHANGE THE MODEL SELECTED
       if (this.selectedFilterText) {
         delete this.params[this.selectedFilterText]
         if (this.searchModel) {
-          this.getMaintenances(this.params);
+          this.chooseGetMaintenances();
         }
       }
 
       this.selectedFilterText = opt.filter
-      this.inputSearch.inputLabel = opt.label;
+      this.inputSearch.inputLabel = opt.title;
 
       if (opt.value && opt.filter) {
         this.params[opt.filter] = this.searchModel
-        this.getMaintenances(this.params);
+        this.chooseGetMaintenances();
       }
     },
 
@@ -207,7 +247,7 @@ export default defineComponent({
       if (removedFilter) {
         delete this.params[removedFilter]
       }
-      this.getMaintenances(this.params);
+      this.chooseGetMaintenances();
     },
 
     changePagination(pagination) {
@@ -218,8 +258,12 @@ export default defineComponent({
         }
       }
 
-      this.getMaintenances(this.params);
-    }
+      this.chooseGetMaintenances();
+    },
+
+    goBack() {
+      this.$router.go(-1);
+    },
   },
 })
 </script>

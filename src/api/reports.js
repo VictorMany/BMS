@@ -11,6 +11,27 @@ export default class EquipmentService {
     }
 
     // Obtiene todos los reportes
+    static getReportsByEquipment(params) {
+        let id = params.id;
+        delete params.id
+
+        return api.get(this.endpoint + 'getBy/' + id, {
+            params
+        });
+    }
+
+
+    // Obtiene todos los reportes
+    static getReportsByUser(params) {
+        let id = params.id;
+        delete params.id
+
+        return api.get(this.endpoint + 'getByUsr/' + id, {
+            params
+        });
+    }
+
+    // Obtiene todos los reportes
     static getReport(id) {
         return api.get(this.endpoint + 'getById/' + id);
     }

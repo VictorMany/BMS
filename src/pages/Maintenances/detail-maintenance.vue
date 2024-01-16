@@ -46,7 +46,7 @@ export default defineComponent({
         top: [
           {
             key: 'idEquipment',
-            type: 'title',
+            label: 'Nombre del equipo',
             model: '',
           },
           {
@@ -64,7 +64,7 @@ export default defineComponent({
           {
             key: 'cost',
             label: 'Costo',
-            prefix: '$',
+            pref: '$',
             model: '',
             color: ''
           },

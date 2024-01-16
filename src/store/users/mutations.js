@@ -13,9 +13,11 @@ export function MUTATE_DETAILS(state, payload) {
     state.message = payload.details
 }
 
-export function ADD_USER(state, payload) {
-    state.users = [...state.users, payload];
+export function MUTATE_USER(state, payload) {
+    state.user = payload
+    localStorage.setItem('user', JSON.stringify(payload))
 }
+
 
 export function UPDATE_USER(state, payload) {
     state.users = [...state.users, payload];

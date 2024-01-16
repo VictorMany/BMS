@@ -1,6 +1,7 @@
 export default function () {
   return {
     equipments: [],
+    equipment: JSON.parse(localStorage.getItem('equipment')) || null,
     message: '',
     pagination: {
       page: 1,

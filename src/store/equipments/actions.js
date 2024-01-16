@@ -17,10 +17,12 @@ export async function getEquipmentAction(context, params) {
     return service.getEquipment(params.id).then(async (response) => {
         if (response.status == 200) {
             // We call the global action to format our payload
+            context.commit('MUTATE_EQUIPMENT', response.data.contents.equipment)
             const payload = await context.dispatch('global/formatDetails', {
                 keys: response.data.contents.equipment,
                 fields: params.fields
             }, { root: true });
+
             return payload
         } else {
             return response
@@ -53,7 +55,7 @@ export async function postEquipmentAction(context, equipment) {
 
     return await service.postEquipment(payload).then(async (response) => {
         if (response.status == 201) {
-            context.commit('ADD_EQUIPMENT', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
+            // context.commit('ADD_EQUIPMENT', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
             return true
         } else {
             return response

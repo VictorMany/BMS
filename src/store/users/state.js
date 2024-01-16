@@ -1,5 +1,6 @@
 export default function () {
     return {
+        user: JSON.parse(localStorage.getItem('user')) || null,
         users: [],
         message: '',
         pagination: {
