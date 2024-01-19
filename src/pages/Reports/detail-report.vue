@@ -51,7 +51,7 @@ export default defineComponent({
         createdAt: '',
         top: [
           {
-            key: 'IdEquipment',
+            key: 'equipmentName',
             label: 'Nombre del equipo',
             model: ''
           },

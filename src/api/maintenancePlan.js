@@ -3,7 +3,6 @@ import { api } from 'boot/axios'; // Asegúrate de que la ruta sea la correcta s
 export default class EquipmentService {
     static endpoint = 'http://3.20.181.72:3000/bms/equipment/';
 
-
     // Obtiene todos los equipos
     static getEquipmentsByDate(params) {
         return api.get('http://3.20.181.72:3000/bms/maintenancePlan/listByDate', {

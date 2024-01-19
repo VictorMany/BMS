@@ -1,37 +1,33 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
+      <div
+        v-if="this.$route.query?.equipment || this.$route.query?.user"
+        class="column items-end q-mb-xs"
+      >
+        <btn-action v-bind="btnCloseWindow" />
+      </div>
+
       <header-actions
         :titlePage="'Planes de mantenimientos'"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
+        v-model:searchModel="searchModel"
       />
       <!-- Main container -->
       <div
         class="main-container-page"
-        style="height: 88%; overflow-y: hidden"
+        style="height: 88%; overflow-y: hidden;"
       >
-        <q-scroll-area
-          class="full-height"
-          :thumb-style="{
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 1,
-          }"
-        >
-          <div
-            style="max-width: 100%"
-            class="full-height"
-          >
-            <general-table
-              :rows="rows"
-              :columns="columns"
-              :actions-table="actionsTable"
-              v-model:row-selected="rowSelected"
-            />
-          </div>
-        </q-scroll-area>
+        <general-table
+          v-model:row-selected="rowSelected"
+          :rows="maintenances"
+          :loading="loading"
+          :columns="columns"
+          :actions-table="actionsTable"
+          :pagination-prop="pagination"
+          @change-pagination="changePagination"
+        />
       </div>
       <!-- Main container -->
     </div>
@@ -39,280 +35,181 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import HeaderActions from 'src/components/compose/HeaderActions.vue';
-import GeneralTable from 'src/components/compose/GeneralTable.vue';
+import { defineComponent } from 'vue'
+import HeaderActions from 'src/components/compose/HeaderActions.vue'
+import GeneralTable from 'src/components/compose/GeneralTable.vue'
+import BtnAction from 'src/components/atomic/BtnAction.vue';
+
 export default defineComponent({
   name: 'MaintenancesPage',
   components: {
     HeaderActions,
     GeneralTable,
+    BtnAction
   },
   data() {
     return {
+      delaySearch: 300,
+      searchModel: null,
+      timeoutSearch: null,
+      loading: true,
+
+      localPagination: {},
+
       btnAction: {
         show: true,
-        btnTitle: 'Crear plan',
-        to: 'add-maintenance-plan',
-        btnWidth: 'auto',
+        btnTitle: 'Añadir plan de mantenimiento',
+        to: 'add-maintenance',
+        btnWidth: 'auto'
       },
-      inputSearch: {
-        show: true,
-        inputLabel: 'Buscar por tipo',
-        setSelectedFilter: this.setSelectedFilter,
-        heightModal: '150px',
-        items: [
-          {
-            title: 'Nombre del plan',
-            icon: 'view_agenda',
-          },
-          {
-            title: 'Encargado',
-            icon: 'supervisor_account',
-          },
-          {
-            title: 'Fecha',
-            icon: 'calendar_month',
-          },
-        ],
+
+      btnCloseWindow: {
+        iconName: 'close',
+        btnBackground: '#FF9900',
+        btnColor: '#FFFFFF',
+        btnSize: 'xs',
+        btnAction: this.goBack,
       },
+
       columns: [
         {
-          name: 'plan_name',
+          name: 'planName',
           required: true,
           label: 'Nombre del plan',
           align: 'left',
-          field: (row) => row.plan_name,
-          format: (val) => `${val}`,
-          sortable: true,
+          field: row => row.planName,
+          format: val => `${val}`,
+          sortable: true
         },
-        {
-          name: 'incharged',
-          label: 'Encargado',
-          field: 'incharged',
-          align: 'center',
-          sortable: true,
-        },
-        {
-          name: 'initial_date',
-          label: 'Fecha',
-          field: 'initial_date',
-          align: 'left',
-          sortable: true,
-        },
-        {
-          name: 'actions',
-          label: 'Acciones',
-          field: 'actions',
-          align: 'center',
-        },
+        { name: 'encharged_name', label: 'Nombre del encargado', field: 'encharged_name', align: 'left', sortable: true },
+        { name: 'date', label: 'Fecha de creación', field: 'date', align: 'center', sortable: true },
+        { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
       ],
-      rows: [
-        {
-          id: 1,
-          plan_name: 'PM-01 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 2,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 3,
-          plan_name: 'PM-01 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 4,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 5,
-          plan_name: 'PM-01 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 6,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 7,
-          plan_name: 'PM-01 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 8,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 9,
-          plan_name: 'PM-01 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 10,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 11,
-          plan_name: 'PM-01 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 12,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 13,
-          plan_name: 'PM-01 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 14,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 15,
-          plan_name: 'PM-01 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '23-Feb-2023',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 16,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '24-Feb-2023',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 17,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 18,
-          plan_name: 'PM-01 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '23-Feb-2023',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 19,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '24-Feb-2023',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 20,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 21,
-          plan_name: 'PM-01 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '23-Feb-2023',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 20,
-          plan_name: 'PM-02 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '21-Feb-2022',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-        {
-          id: 21,
-          plan_name: 'PM-01 EQUIPOS PRIMERA NECESIDAD',
-          initial_date: '23-Feb-2023',
-          incharged: 'Victor Manuel Velázquez Fuentes',
-          actions: '',
-        },
-      ],
-      rowSelected: {},
+
       actionsTable: [
         {
           icnName: 'read_more',
           icnSize: 'sm',
-          icnAction: 'Detail',
-        },
-        {
-          icnName: 'edit',
-          icnSize: 'xs',
-          icnAction: 'Edit',
-        },
+          icnAction: 'Detail'
+        }
       ],
-    };
+
+      rowSelected: {},
+
+      selectedFilterText: 'planName',
+
+      inputSearch: {
+        show: true,
+        inputLabel: 'Buscar por nombre',
+        setSelectedFilter: this.setSelectedFilter,
+        setSelectedOptionFilter: this.setSelectedOptionFilter,
+        heightModal: 200,
+        items: [
+          {
+            title: 'Nombre del plan',
+            filter: 'planName',
+            icon: 'supervisor_account'
+          }
+        ],
+      },
+
+      params: {
+        planName: '',
+      },
+    }
   },
 
-  methods: {
-    goToDetails(payload) {
-      console.log('Ver detalle', payload);
-      this.$router.push({
-        name: 'detail-maintenance-plan',
-        params: { id: 100 },
-      });
-    },
-    goToEdit(payload) {
-      console.log('Editar', payload);
-      this.$router.push({ name: 'add-maintenance-plan', params: { id: 100 } });
-    },
-    setSelectedFilter(opt) {
-      this.inputSearch.inputLabel = opt;
-    },
+  mounted() {
+    this.getMaintenancesPlan()
   },
+
   watch: {
     rowSelected: {
       handler(val) {
-        if (val.action === 'Edit') {
-          this.goToEdit(val.id);
-        } else if (val.action === 'Detail') {
+        if (val.action === 'Detail') {
           this.goToDetails(val.id);
         }
       },
       deep: true,
     },
+
+    searchModel(val) {
+      this.params[this.selectedFilterText] = val
+      clearTimeout(this.timeoutSearch);
+      this.timeoutSearch = setTimeout(() => {
+        this.getMaintenancesPlan();
+      }, this.delaySearch);
+    },
   },
-});
+
+  computed: {
+    maintenancesPlan: {
+      get() {
+        return this.$store.getters['maintenances/getMaintenancesPlanGetter'];
+      },
+    },
+
+    pagination: {
+      get() {
+        return this.$store.getters['maintenances/getPaginationPlanGetter'];
+      },
+    },
+  },
+
+  methods: {
+    async getMaintenancesPlan() {
+      this.loading = true
+      await this.$store.dispatch('maintenances/getMaintenancesPlanAction', this.params);
+      this.loading = false
+    },
+
+    goToDetails(payload) {
+      this.$router.push({ name: 'detail-maintenance-plan', params: { id: payload } });
+    },
+
+    setSelectedFilter(opt) {
+      if (this.selectedFilterText) {
+        delete this.params[this.selectedFilterText]
+        if (this.searchModel) {
+          this.getMaintenancesPlan();
+        }
+      }
+
+      this.selectedFilterText = opt.filter
+      this.inputSearch.inputLabel = opt.title;
+
+      if (opt.value && opt.filter) {
+        this.params[opt.filter] = this.searchModel
+        this.getMaintenancesPlan();
+      }
+    },
+
+    setSelectedOptionFilter(activeFilters, removedFilter = null) {
+      if (activeFilters.length) {
+        activeFilters.forEach(item => {
+          this.params[item.filter] = item.value
+        })
+      }
+      if (removedFilter) {
+        delete this.params[removedFilter]
+      }
+      this.getMaintenancesPlan();
+    },
+
+    changePagination(pagination) {
+      this.params = {
+        ...this.params, ...{
+          page: pagination.page,
+          rowsPerPage: pagination.rowsPerPage,
+        }
+      }
+
+      this.getMaintenancesPlan();
+    },
+
+    goBack() {
+      this.$router.go(-1);
+    },
+  },
+})
 </script>

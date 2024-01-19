@@ -11,6 +11,12 @@ export default class EquipmentService {
         });
     }
 
+    static getMaintenancesPlan(params) {
+        return api.get(this.endpointPlan + 'list', {
+            params
+        });
+    }
+
     static getMaintenance(id) {
         return api.get(this.endpoint + 'getById/' + id);
     }

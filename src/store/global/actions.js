@@ -47,7 +47,7 @@ export async function formatDetails(context, { keys, fields }) {
 
     if (keys.User) {
         // add equipment name
-        fields.top[0].model = keys.Equipment.IdEquipment;
+        fields.top[0].model = keys.Equipment.equipmentName;
         // add incharged name
         fields.top[1].model = keys.User.userName;
         // add serialNumber
