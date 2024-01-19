@@ -10,6 +10,31 @@ export default class EquipmentService {
         });
     }
 
+    static getCategories() {
+        return api.get(this.endpoint + 'listCatGetEq');
+    }
+
+
+    static getEquipmentsByCategory(params) {
+        return api.get(this.endpoint + 'listCatGetEq', { params });
+    }
+
+    // Obtiene todos los equipos
+    static getEquipmentsByDate(params) {
+        let date = params.date;
+        delete params.date
+
+        return api.get('http://3.20.181.72:3000/bms/maintenancePlan/listByDate/' + date, {
+            params
+        })
+    }
+
+    // Obtiene todos los equipos
+    static getDatesPerMonth(params) {
+        return api.get('http://3.20.181.72:3000/bms/maintenancePlan/listByMonth/' + params)
+    }
+
+
     static getEquipment(id) {
         return api.get(this.endpoint + 'get/' + id);
     }

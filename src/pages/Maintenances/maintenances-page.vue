@@ -148,7 +148,13 @@ export default defineComponent({
   },
 
   mounted() {
-    this.chooseGetMaintenances()
+    if (this.$route.query.equipment) {
+      this.params.IdEquipment = this.$route.query.equipment
+    } else if (this.$route.query.user) {
+      this.params.userId = this.$route.query.user
+    }
+
+    this.getMaintenances()
   },
 
   watch: {
@@ -163,10 +169,9 @@ export default defineComponent({
 
     searchModel(val) {
       this.params[this.selectedFilterText] = val
-
       clearTimeout(this.timeoutSearch);
       this.timeoutSearch = setTimeout(() => {
-        this.chooseGetMaintenances();
+        this.getMaintenances();
       }, this.delaySearch);
     },
   },
@@ -186,38 +191,13 @@ export default defineComponent({
   },
 
   methods: {
-    chooseGetMaintenances() {
-      if (this.$route.query.equipment) {
-        this.params.id = this.$route.query.equipment
-        this.getMaintenancesByEquipment(this.params);
-      } else if (this.$route.query.user) {
-        this.params.id = this.$route.query.user
-        this.getMaintenancesByUser(this.params);
-      } else {
-        this.getMaintenances(this.params);
-      }
-    },
-
-    async getMaintenancesByEquipment(params) {
+    async getMaintenances() {
       this.loading = true
-      await this.$store.dispatch('maintenances/getMaintenancesByEquipmentAction', params);
-      this.loading = false
-    },
-
-    async getMaintenancesByUser(params) {
-      this.loading = true
-      await this.$store.dispatch('maintenances/getMaintenancesByUserAction', params);
-      this.loading = false
-    },
-
-    async getMaintenances(params) {
-      this.loading = true
-      await this.$store.dispatch('maintenances/getMaintenancesAction', params);
+      await this.$store.dispatch('maintenances/getMaintenancesAction', this.params);
       this.loading = false
     },
 
     goToDetails(payload) {
-      console.log('Ver detalle', payload);
       this.$router.push({ name: 'detail-maintenance', params: { id: payload } });
     },
 
@@ -225,7 +205,7 @@ export default defineComponent({
       if (this.selectedFilterText) {
         delete this.params[this.selectedFilterText]
         if (this.searchModel) {
-          this.chooseGetMaintenances();
+          this.getMaintenances();
         }
       }
 
@@ -234,7 +214,7 @@ export default defineComponent({
 
       if (opt.value && opt.filter) {
         this.params[opt.filter] = this.searchModel
-        this.chooseGetMaintenances();
+        this.getMaintenances();
       }
     },
 
@@ -247,7 +227,7 @@ export default defineComponent({
       if (removedFilter) {
         delete this.params[removedFilter]
       }
-      this.chooseGetMaintenances();
+      this.getMaintenances();
     },
 
     changePagination(pagination) {
@@ -258,7 +238,7 @@ export default defineComponent({
         }
       }
 
-      this.chooseGetMaintenances();
+      this.getMaintenances();
     },
 
     goBack() {

@@ -1,6 +1,10 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
+      <div class="column items-end q-mb-xs">
+        <btn-action v-bind="btnCloseWindow" />
+      </div>
+
       <header-actions
         :titlePage="'Usuarios'"
         :btnAction="btnAction"
@@ -94,6 +98,8 @@ import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import ItemCard from 'src/components/atomic/ItemCard.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
+import BtnAction from 'src/components/atomic/BtnAction.vue';
+
 
 export default defineComponent({
   name: 'UsersPage',
@@ -101,6 +107,7 @@ export default defineComponent({
     GeneralTable,
     HeaderActions,
     ItemCard,
+    BtnAction
   },
   data() {
     return {
@@ -110,6 +117,14 @@ export default defineComponent({
       switchContent: 1,
       timeoutSearch: null,
       loading: true,
+
+      btnCloseWindow: {
+        iconName: 'close',
+        btnBackground: '#FF9900',
+        btnColor: '#FFFFFF',
+        btnSize: 'xs',
+        btnAction: this.goBack,
+      },
 
       localPagination: {},
 
@@ -307,6 +322,10 @@ export default defineComponent({
       this.loading = true
       await this.$store.dispatch('users/getUsersAction', params);
       this.loading = false
+    },
+
+    goBack() {
+      this.$router.go(-1);
     },
 
     goToDetails(payload) {

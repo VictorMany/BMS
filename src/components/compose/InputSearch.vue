@@ -16,6 +16,7 @@
     </template>
     <template v-slot:append>
       <q-btn
+        v-if="items?.length"
         class="btn-style border-shadow q-pa-none q-pl-md q-pr-xs"
         :label="btnFilter.title"
         :size="'sm'"

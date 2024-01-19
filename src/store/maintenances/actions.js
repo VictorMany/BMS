@@ -73,7 +73,7 @@ export async function postMaintenanceAction(context, maintenance) {
     }, { root: true });
 
     return await service.postMaintenance(payload).then(async (response) => {
-        if (response.status == 201) {
+        if (response.status == 200) {
             context.commit('ADD_MAINTENANCE', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
             return true
         } else {
@@ -82,3 +82,23 @@ export async function postMaintenanceAction(context, maintenance) {
     })
 }
 
+
+export async function postMaintenancePlanAction(context, plan) {
+    // We call the global action to format our payload
+    const payload = {
+        planName: plan.planName,
+        observations: plan.observations,
+        userId: 1,
+        equipmentIds: plan.equipmentIds,
+        maintenanceDates: plan.maintenanceDates
+    }
+
+    return await service.postMaintenancePlan(payload).then(async (response) => {
+        if (response.status == 200) {
+            // context.commit('ADD_MAINTENANCE', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
+            return true
+        } else {
+            return response
+        }
+    })
+}

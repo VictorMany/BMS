@@ -171,10 +171,8 @@ export default defineComponent({
     }
   },
 
-
   methods: {
     async createUser() {
-      console.log('quierp crear')
       this.btnAction.loader = true;
       try {
         const res = await this.$store.dispatch(
@@ -190,7 +188,6 @@ export default defineComponent({
         this.btnAction.loader = false;
       } catch (error) {
         console.log('quierp crear', error)
-
         this.btnAction.loader = false;
         this.showAlert({ msg: error.response ? error.response.data.details : error });
       }

@@ -139,7 +139,7 @@ export default defineComponent({
         right: [
           {
             key: 'serialNumber',
-            label: 'No. serie',
+            label: 'Número de serie',
             readonly: true,
             model: '',
           },
@@ -267,6 +267,21 @@ export default defineComponent({
     this.getEquipments({})
   },
 
+  mounted() {
+    if (this.equipment.equipmentName && !this.fields.top[1].model) {
+      this.fields.top[1].model = {
+        value: this.equipment.IdEquipment,
+        label: this.equipment.equipmentName
+      }
+    }
+    if (this.equipment.photo && this.fields.right[1].model === null) {
+      this.fields.right[1].model = this.equipment.photo
+    }
+    if (this.equipment.serialNumber && !this.fields.right[0].model) {
+      this.fields.right[0].model = this.equipment.serialNumber
+    }
+  },
+
   computed: {
     users: {
       get() {
@@ -278,13 +293,19 @@ export default defineComponent({
         return this.$store.getters['equipments/getEquipmentsGetter'];
       },
     },
+
+    equipment: {
+      get() {
+        return this.$store.getters['equipments/getEquipmentGetter'];
+      },
+    },
   },
 
   watch: {
     fields: {
       // Get the image, and no-serie every change of the equipment selected
       handler(val) {
-        if (val.top[1].model && val.right[1].model != val.top[1].model.cardImg) {
+        if (val.top[1].model && val.right[1].model != val.top[1].model.cardImg && val.top[1].model.cardImg) {
           val.right[1].model = val.top[1].model.cardImg
           val.right[0].model = val.top[1].model.serialNumber
         }

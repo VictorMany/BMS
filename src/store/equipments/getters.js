@@ -17,6 +17,11 @@ export function getEquipmentsGetter(state) {
   return equipments
 }
 
+export function getCategoriesGetter(state) {
+  return state.categories
+}
+
+
 export function getPaginationGetter(state) {
   return state.pagination
 }

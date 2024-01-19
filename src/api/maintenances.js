@@ -2,6 +2,8 @@ import { api } from 'boot/axios'; // Asegúrate de que la ruta sea la correcta s
 
 export default class EquipmentService {
     static endpoint = 'http://3.20.181.72:3000/bms/maintenance/'; //http://3.20.181.72:3000/bms/Maintenance/list
+    static endpointPlan = 'http://3.20.181.72:3000/bms/maintenancePlan/'; //http://3.20.181.72:3000/bms/Maintenance/list
+
 
     static getMaintenances(params) {
         return api.get(this.endpoint + 'list', {
@@ -14,15 +16,11 @@ export default class EquipmentService {
     }
 
     static postMaintenance(payload) {
+        return api.post(this.endpoint + 'create', payload);
+    }
 
-        const object = {};
-
-        payload.forEach((value, key) => {
-            object[key] = value;
-        });
-
-
-        return api.post(this.endpoint + 'create', object);
+    static postMaintenancePlan(payload) {
+        return api.post(this.endpointPlan + 'create', payload);
     }
 
     // Obtiene todos los reportes

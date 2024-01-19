@@ -48,7 +48,6 @@ export default defineComponent({
   },
   data() {
     return {
-      Equipos: 40,
       loading: false,
       btnAction: {
         show: true,
@@ -70,14 +69,25 @@ export default defineComponent({
         createdAt: this.getCreatedAt(),
 
         top: [
+          // {
+          //   key: 'equipmentName',
+          //   label: 'Categoría del equipo',
+          //   model: '',
+          //   rules: [
+          //     (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+          //     (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
+          //     (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
+          //   ],
+          // },
           {
-            key: 'equipmentName',
-            label: 'Nombre del equipo',
-            model: '',
+            key: 'idEquipment',
+            label: 'Categoría del equipo',
+            type: 'select',
+            itemFilter: this.filterEquipments,
+            options: [],
+            model: null,
             rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-              (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
+              (val) => (val) || 'El campo es obligatorio',
             ],
           },
 
@@ -85,7 +95,7 @@ export default defineComponent({
         left: [
           {
             key: 'serialNumber',
-            label: 'No. serie',
+            label: 'Número de serie',
             model: '',
             rules: [
               (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
@@ -318,6 +328,30 @@ export default defineComponent({
       }
     },
 
+    async getEquipments(params) {
+      this.loading = true
+      await this.$store.dispatch('equipments/getEquipmentsAction', params);
+      this.loading = false
+    },
+
+    filterEquipments(val, update) {
+      if (val === '') {
+        update(() => {
+          this.fields.top[0].options = this.equipments
+        })
+        return
+      } else {
+        this.getEquipments({
+          name: val
+        })
+      }
+
+      update(() => {
+        const needle = val.toLowerCase()
+        this.fields.top[0].options = this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+      })
+    },
+
     getDate() {
       return this.$store.$store.getters['global/getDate']
     },
@@ -325,6 +359,14 @@ export default defineComponent({
     isEditing() {
       return this.$route.params.id ? true : false
     }
+  },
+
+  computed: {
+    equipments: {
+      get() {
+        return this.$store.getters['equipments/getEquipmentsGetter'];
+      },
+    },
   },
 
   created() {

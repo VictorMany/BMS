@@ -26,5 +26,5 @@ function calcDate() {
   // Definir las opciones de formato deseado
   const optFormat = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
   // Obtener la fecha formateada
-  return initialDate.toLocaleDateString('es-ES', optFormat);
+  return initialDate.toLocaleDateString('es-MX', optFormat);
 }

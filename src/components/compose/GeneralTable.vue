@@ -216,6 +216,7 @@ export default defineComponent({
   font-size: 13px;
   font-weight: 500;
   color: $primary;
+  background-color: #181b1e;
 }
 
 .badge-attended {

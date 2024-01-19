@@ -204,7 +204,7 @@ export default defineComponent({
         },
         {
           name: 'no_serie',
-          label: 'Numero de serie',
+          label: 'No. serie',
           field: 'no_serie',
           align: 'center',
           sortable: true,
@@ -283,6 +283,8 @@ export default defineComponent({
       deep: true,
     },
   },
+
+
   computed: {
     equipments() {
       return this.$store.getters['equipments/getEquipmentsGetter'];

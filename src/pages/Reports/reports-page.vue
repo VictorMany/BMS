@@ -90,7 +90,7 @@ export default defineComponent({
 
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por nombre',
+        inputLabel: 'Buscar por reporte',
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
         heightModal: 160,
@@ -103,7 +103,7 @@ export default defineComponent({
           {
             title: 'Encargado',
             icon: 'supervisor_account',
-            filter: 'UserId'
+            filter: 'userName'
           },
           {
             title: 'Estatus',
@@ -111,13 +111,13 @@ export default defineComponent({
             options: [
               {
                 title: 'Atendido',
-                filter: 'statusReport',
-                value: 1
+                filter: 'reportStatus',
+                value: 0
               },
               {
                 title: 'Pendiente',
-                filter: 'statusReport',
-                value: 0
+                filter: 'reportStatus',
+                value: 1
               }
             ]
           }
@@ -146,8 +146,13 @@ export default defineComponent({
     }
   },
 
-  created() {
-    this.chooseGetReports()
+  mounted() {
+    if (this.$route.query.equipment) {
+      this.params.IdEquipment = this.$route.query.equipment
+    } else if (this.$route.query.user) {
+      this.params.userId = this.$route.query.user
+    }
+    this.getReports()
   },
 
   watch: {
@@ -168,7 +173,7 @@ export default defineComponent({
       clearTimeout(this.timeoutSearch);
 
       this.timeoutSearch = setTimeout(() => {
-        this.chooseGetReports();
+        this.getReports();
       }, this.delaySearch);
     },
   },
@@ -188,27 +193,9 @@ export default defineComponent({
   },
 
   methods: {
-    chooseGetReports() {
-      if (this.$route.query.equipment) {
-        this.params.id = this.$route.query.equipment
-        this.getReportsByEquipment(this.params);
-      } else if (this.$route.query.user) {
-        this.params.id = this.$route.query.user
-        this.getReportsByUser(this.params);
-      } else {
-        this.getReports(this.params);
-      }
-    },
-
-    async getReportsByEquipment(params) {
+    async getReports() {
       this.loading = true
-      await this.$store.dispatch('reports/getReportsByEquipmentAction', params);
-      this.loading = false
-    },
-
-    async getReports(params) {
-      this.loading = true
-      await this.$store.dispatch('reports/getReportsAction', params);
+      await this.$store.dispatch('reports/getReportsAction', this.params);
       this.loading = false
     },
 
@@ -229,7 +216,7 @@ export default defineComponent({
       if (this.selectedFilterText) {
         delete this.params[this.selectedFilterText]
         if (this.searchModel) {
-          this.chooseGetReports();
+          this.getReports();
         }
       }
 
@@ -238,7 +225,7 @@ export default defineComponent({
 
       if (opt.value && opt.filter) {
         this.params[opt.filter] = this.searchModel
-        this.chooseGetReports();
+        this.getReports();
       }
     },
 
@@ -251,7 +238,7 @@ export default defineComponent({
       if (removedFilter) {
         delete this.params[removedFilter]
       }
-      this.chooseGetReports();
+      this.getReports();
     },
 
     changePagination(pagination) {
@@ -262,7 +249,7 @@ export default defineComponent({
         }
       }
 
-      this.chooseGetReports();
+      this.getReports();
     }
   },
 })

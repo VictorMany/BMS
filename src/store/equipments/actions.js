@@ -30,6 +30,57 @@ export async function getEquipmentAction(context, params) {
     })
 }
 
+export async function getCategoriesAction(context) {
+    return service.getCategories().then(async (response) => {
+        if (response.status == 200) {
+            context.commit('MUTATE_CATEGORIES', response.data.contents.categories);
+            return true
+        } else {
+            return response
+        }
+    })
+}
+
+
+export async function updateCategories(context, val) {
+    context.commit('MUTATE_CATEGORIES', val);
+}
+
+export async function getEquipmentsByCategoryAction(context, params) {
+    return service.getEquipmentsByCategory(params).then(async (response) => {
+        if (response.status == 200) {
+            return response.data.contents.equipments;
+        } else {
+            return response
+        }
+    })
+}
+
+
+export async function getEquipmentsByDateAction(context, params) {
+    return service.getEquipmentsByDate(params).then(async (response) => {
+        if (response.status == 200) {
+            context.commit('MUTATE_EQUIPMENTS', response.data.contents.equipment)
+            context.commit('MUTATE_DETAILS', response.data.contents)
+            return true
+        }
+        else {
+            return response
+        }
+    })
+}
+
+export async function getDatesPerMonthAction(context, params) {
+    return service.getDatesPerMonth(params).then(async (response) => {
+        if (response.status == 200) {
+            return response.data.contents.dates
+        }
+        else {
+            return response
+        }
+    })
+}
+
 export async function postEquipmentAction(context, equipment) {
     // Those are the keys you need in your payload and find in the fields
     let keys = {

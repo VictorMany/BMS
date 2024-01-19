@@ -2,6 +2,10 @@ export function MUTATE_EQUIPMENTS(state, payload) {
   state.equipments = payload;
 }
 
+export function MUTATE_CATEGORIES(state, payload) {
+  state.categories = payload;
+}
+
 export function MUTATE_EQUIPMENT(state, payload) {
   state.equipment = payload
   localStorage.setItem('equipment', JSON.stringify(payload))

@@ -133,7 +133,7 @@ export default defineComponent({
         right: [
           {
             key: 'serialNumber',
-            label: 'No. serie',
+            label: 'Número de serie',
             readonly: true,
             model: '',
           },
@@ -326,9 +326,23 @@ export default defineComponent({
   created() {
     this.getUsers({})
     this.getEquipments({})
-
     if (this.isEditing()) {
       this.getReport()
+    }
+  },
+
+  mounted() {
+    if (this.equipment.equipmentName && !this.fields.top[0].model) {
+      this.fields.top[0].model = {
+        value: this.equipment.IdEquipment,
+        label: this.equipment.equipmentName
+      }
+    }
+    if (this.equipment.photo && this.fields.right[1].model === null) {
+      this.fields.right[1].model = this.equipment.photo
+    }
+    if (this.equipment.serialNumber && !this.fields.right[0].model) {
+      this.fields.right[0].model = this.equipment.serialNumber
     }
   },
 
@@ -355,32 +369,14 @@ export default defineComponent({
     fields: {
       // Get the image, and no-serie every change of the equipment selected
       handler(val) {
-        if ((val.top[0].model && val.right[1].model != val.top[0].model.cardImg) && !this.isEditing()) {
+        if ((val.top[0].model && val.right[1].model != val.top[0].model.cardImg && val.top[0].model.cardImg) &&
+          !this.isEditing()) {
           val.right[1].model = val.top[0].model.cardImg
           val.right[0].model = val.top[0].model.serialNumber
         }
       },
       deep: true,
       immediate: true
-    },
-
-    equipment: {
-      handler(val) {
-        if (val.equipmentName && !this.fields.top[0].model) {
-          this.fields.top[0].model = {
-            value: val.IdEquipment,
-            label: val.equipmentName
-          }
-        }
-        // if (val.photo && this.fields.right[1].model === null) {
-        //   this.fields.right[1].model = val.photo
-        // }
-        if (val.serialNumber && !this.fields.right[0].model) {
-          this.fields.right[0].model = val.serialNumber
-        }
-      },
-      immediate: true,
-      deep: true
     },
   }
 })

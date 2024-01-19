@@ -85,9 +85,10 @@
             }"
           >
 
-            <div v-if="showEquipmentDetails()">
-              <q-separator class="q-my-md" />
-
+            <div
+              class="q-pa-md bg-accent border-rounded q-mt-lg"
+              v-if="showEquipmentDetails()"
+            >
               <div class="col-12 text-weight-medium text-primary">
                 Información del equipo
               </div>
@@ -109,12 +110,10 @@
                     </div>
                     <q-chip
                       class="q-ma-none col-auto q-mr-xs"
-                      :color="getStatus.color(equipment?.equipmentStatus)"
-                      :text-color="getStatus.textColor(equipment?.equipmentStatus)"
                       dark
-                      :style="`color: primary; background-color: accent; font-size: 12px`"
+                      :style="`color: ${getStatus.color(equipment.equipmentStatus)}; background-color: ${getStatus.color(equipment.equipmentStatus)}26; font-size: 12px`"
                     >
-                      {{ getStatus.model(equipment?.equipmentStatus) }}
+                      {{ getStatus.model(equipment.equipmentStatus) }}
                     </q-chip>
                   </div>
                 </div>
@@ -132,7 +131,7 @@
                     {{ equipment?.trackingNumber }}
                   </div>
                   <div class="col-12 form__item-label text-weight-thin">
-                    {{ 'Numero de serie' }}
+                    {{ 'Número de serie' }}
                   </div>
                   <div class="col-12  form__item-model q-mb-md">
                     {{ equipment?.serialNumber }}
@@ -151,11 +150,12 @@
                   />
                 </div>
               </div>
-
             </div>
 
-            <div v-else-if="showUserDetails()">
-              <q-separator class="q-my-md" />
+            <div
+              class="q-pa-md bg-accent border-rounded q-mt-lg"
+              v-if="showUserDetails()"
+            >
               <div class="col-12 text-weight-medium text-primary">
                 Información del usuario
               </div>
@@ -179,10 +179,8 @@
                     </div>
                     <q-chip
                       class="q-ma-none col-auto q-mr-xs"
-                      :color="getStatus.color(user?.userStatus)"
-                      :text-color="getStatus.textColor(user?.userStatus)"
                       dark
-                      :style="`color: primary; background-color: accent; font-size: 12px`"
+                      :style="`color: ${getStatus.color(user?.userStatus)}; background-color: ${getStatus.color(user?.userStatus)}26; font-size: 12px`"
                     >
                       {{ getStatus.model(user?.userStatus) }}
                     </q-chip>
@@ -226,7 +224,7 @@
               </div>
             </div>
 
-            <q-list v-else>
+            <q-list v-else-if="!showEquipmentDetails()">
               <div class="q-pt-none">
                 <div
                   v-for="(btn, index) in btnLinks"
@@ -287,11 +285,11 @@
         to="/equipments"
         exact
       />
-      <q-route-tab
+      <!-- <q-route-tab
         icon="person"
         to="/users"
         exact
-      />
+      /> -->
       <q-route-tab
         icon="home_repair_service"
         to="/maintenances"
@@ -355,10 +353,7 @@ export default defineComponent({
       selected: null,
       getStatus: {
         color(item) {
-          return item ? 'green-1' : 'orange-1'
-        },
-        textColor(item) {
-          return item ? 'positive' : 'orange'
+          return item ? '#10D13A' : '#d1b410'
         },
         model(item) {
           return item ? 'Activo' : 'Inactivo'
@@ -384,11 +379,6 @@ export default defineComponent({
         {
           title: 'Equipos',
           link: 'equipments', color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
-        },
-        {
-          title: 'Usuarios',
-          link: 'users', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
@@ -477,12 +467,6 @@ export default defineComponent({
 
       btnEditGeneral: [
         {
-          title: 'Todos los usuarios',
-          link: 'users',
-          color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
-        },
-        {
           title: 'Todos los equipos',
           link: 'equipments',
           color: 'rgba(122, 122, 122, 1)',
@@ -491,12 +475,6 @@ export default defineComponent({
       ],
 
       btnGeneralEquipment: [
-        {
-          title: 'Usuarios',
-          link: 'users',
-          color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
-        },
         {
           title: 'Equipos',
           link: 'equipments',
@@ -577,7 +555,6 @@ export default defineComponent({
 
   async beforeRouteUpdate(to, from, next) {
     try {
-      console.log('CARGANDO NUEVA RUTA')
       this.setMenu(to);
     } catch (error) {
       console.log(error);
@@ -677,7 +654,6 @@ export default defineComponent({
       if (this.$route.query.equipment) {
         this.btnCloseSesion.show = false
       }
-      console.log('NO SE DEBE MOSTRAR EL MENU')
       return this.$route.query.equipment
     },
 

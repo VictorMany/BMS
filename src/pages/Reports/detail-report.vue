@@ -51,7 +51,7 @@ export default defineComponent({
         createdAt: '',
         top: [
           {
-            key: 'idEquipment',
+            key: 'IdEquipment',
             label: 'Nombre del equipo',
             model: ''
           },
@@ -87,7 +87,7 @@ export default defineComponent({
         right: [
           {
             key: 'serialNumber',
-            label: 'No. Serie',
+            label: 'Número de serie',
             model: ''
           },
           {
