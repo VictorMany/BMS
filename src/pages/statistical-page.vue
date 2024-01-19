@@ -116,11 +116,12 @@
             </div>
             <general-table
               height="auto"
-              :rows="rows"
+              :rows="reports"
               :columns="columns"
               :actions-table="actionsTable"
               v-model:row-selected="rowSelected"
               :show-pagination="false"
+              :loading="loadingReportsTable"
             />
           </div>
         </q-scroll-area>
@@ -148,6 +149,8 @@ export default defineComponent({
   },
   data() {
     return {
+      loadingReportsTable: true,
+
       chartConfigReports: {
         data: {
           labels: ['w 1', 'w 2', 'w 3', 'w 4'],
@@ -431,31 +434,40 @@ export default defineComponent({
           icnSize: 'sm',
           icnAction: 'Detail',
         },
-        {
-          icnName: 'edit',
-          icnSize: 'xs',
-          icnAction: 'Edit',
-        },
       ],
       rowSelected: {},
     };
   },
+
+  mounted() {
+    this.getReports();
+  },
+
+  computed: {
+    reports: {
+      get() {
+        return this.$store.getters['reports/getReportsGetter'];
+      },
+    },
+  },
+
   methods: {
+    async getReports() {
+      this.loadingReportsTable = true
+      const params = { rowsPerPage: 3 };
+      await this.$store.dispatch('reports/getReportsAction', params);
+      this.loadingReportsTable = false
+    },
+
     goToDetails(payload) {
       console.log('Ver detalle', payload);
-      this.$router.push({ name: 'detail-report', params: { id: 100 } });
-    },
-    goToEdit(payload) {
-      console.log('Editar', payload);
-      this.$router.push({ name: 'edit-report', params: { id: 100 } });
+      this.$router.push({ name: 'detail-report', params: { id: payload } });
     },
   },
   watch: {
     rowSelected: {
       handler(val) {
-        if (val.action === 'Edit') {
-          this.goToEdit(val.id);
-        } else if (val.action === 'Detail') {
+        if (val.action === 'Detail') {
           this.goToDetails(val.id);
         }
       },

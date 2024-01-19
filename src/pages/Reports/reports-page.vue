@@ -25,7 +25,7 @@
           :columns="columns"
           :loading="loading"
           :actions-table="actionsTable"
-          :pagination-prop="pagination"
+          :pagination-prop="localPagination"
           @change-pagination="changePagination"
         />
       </div>
@@ -156,6 +156,18 @@ export default defineComponent({
   },
 
   watch: {
+    pagination: {
+      // TODO: Arreglalo Vic Porfa
+      handler(val) {
+        this.localPagination = JSON.parse(JSON.stringify(val));
+        if (val.rowsPerPage !== 12) {
+          this.localPagination.rowsPerPage = 12
+        }
+      },
+      deep: true,
+      immediate: true
+    },
+
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
