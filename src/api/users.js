@@ -22,7 +22,6 @@ export default class EquipmentService {
 
     // Actualizar nuevo usuario
     static updateUser(payload, id) {
-        // report/deactivate/reportId/userId 
-        return api.put(this.endpoint + 'deactivate/' + id + '/1');
+        return api.put(this.endpoint + 'update/' + id, payload);
     }
 }

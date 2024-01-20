@@ -14,7 +14,7 @@
       >
         <q-scroll-area
           class="full-height q-pb-md"
-          style="height: 95% !important"
+          style="height: 92% !important"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <form-label :fields="fields" />
@@ -100,13 +100,12 @@
             </div>
           </div>
         </q-scroll-area>
+
         <div
-          class="col-12 form__date_container"
-          style="height: 5.25%"
+          class="col-12 form__date_container form__date column justify-center q-px-lg"
+          style="height: 6%"
         >
-          <div class="form__date column items-end q-pa-sm q-mt-auto">
-            <div>Fecha de creación <strong> 12/02/2022</strong></div>
-          </div>
+          <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
         </div>
       </div>
     </div>

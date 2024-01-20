@@ -2,6 +2,7 @@ import { store } from 'quasar/wrappers'
 import global from './global'
 import equipments from './equipments'
 import maintenances from './maintenances'
+import maintenancePlans from './maintenances-plan'
 import users from './users'
 import reports from './reports'
 import { createStore } from 'vuex'
@@ -13,6 +14,7 @@ export default store(function (/* { ssrContext } */) {
       global,
       equipments,
       maintenances,
+      maintenancePlans,
       users,
       reports
     },

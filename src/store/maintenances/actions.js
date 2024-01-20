@@ -12,18 +12,6 @@ export async function getMaintenancesAction(context, params) {
     })
 }
 
-export async function getMaintenancesPlanAction(context, params) {
-    return service.getMaintenancesPlan(params).then(async (response) => {
-        if (response.status == 200) {
-            context.commit('MUTATE_MAINTENANCES_PLAN', response.data.contents.maintenances)
-            context.commit('MUTATE_DETAILS_PLAN', response.data.contents)
-            return true
-        } else {
-            return response
-        }
-    })
-}
-
 export async function getMaintenanceAction(context, params) {
     return service.getMaintenance(params.id).then(async (response) => {
         if (response.status == 200) {
@@ -94,23 +82,3 @@ export async function postMaintenanceAction(context, maintenance) {
     })
 }
 
-
-export async function postMaintenancePlanAction(context, plan) {
-    // We call the global action to format our payload
-    const payload = {
-        planName: plan.planName,
-        observations: plan.observations,
-        userId: 1,
-        equipmentIds: plan.equipmentIds,
-        maintenanceDates: plan.maintenanceDates
-    }
-
-    return await service.postMaintenancePlan(payload).then(async (response) => {
-        if (response.status == 200) {
-            // context.commit('ADD_MAINTENANCE', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
-            return true
-        } else {
-            return response
-        }
-    })
-}

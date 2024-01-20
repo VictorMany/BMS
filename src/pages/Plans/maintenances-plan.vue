@@ -21,11 +21,11 @@
       >
         <general-table
           v-model:row-selected="rowSelected"
-          :rows="maintenances"
+          :rows="maintenancePlans"
           :loading="loading"
           :columns="columns"
           :actions-table="actionsTable"
-          :pagination-prop="pagination"
+          :pagination-prop="localPagination"
           @change-pagination="changePagination"
         />
       </div>
@@ -59,7 +59,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Añadir plan de mantenimiento',
-        to: 'add-maintenance',
+        to: 'add-maintenance-plan',
         btnWidth: 'auto'
       },
 
@@ -77,11 +77,11 @@ export default defineComponent({
           required: true,
           label: 'Nombre del plan',
           align: 'left',
-          field: row => row.planName,
+          field: 'planName',
           format: val => `${val}`,
           sortable: true
         },
-        { name: 'encharged_name', label: 'Nombre del encargado', field: 'encharged_name', align: 'left', sortable: true },
+        { name: 'user', label: 'Nombre del encargado', field: 'user', align: 'left', sortable: true },
         { name: 'date', label: 'Fecha de creación', field: 'date', align: 'center', sortable: true },
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
       ],
@@ -90,8 +90,13 @@ export default defineComponent({
         {
           icnName: 'read_more',
           icnSize: 'sm',
-          icnAction: 'Detail'
-        }
+          icnAction: 'Detail',
+        },
+        {
+          icnName: 'edit',
+          icnSize: 'xs',
+          icnAction: 'Edit',
+        },
       ],
 
       rowSelected: {},
@@ -120,13 +125,16 @@ export default defineComponent({
   },
 
   mounted() {
-    this.getMaintenancesPlan()
+    this.getMaintenancePlans()
   },
 
   watch: {
     rowSelected: {
       handler(val) {
-        if (val.action === 'Detail') {
+        if (val.action === 'Edit') {
+          console.log(val)
+          this.goToEdit(val.id);
+        } else if (val.action === 'Detail') {
           this.goToDetails(val.id);
         }
       },
@@ -137,29 +145,28 @@ export default defineComponent({
       this.params[this.selectedFilterText] = val
       clearTimeout(this.timeoutSearch);
       this.timeoutSearch = setTimeout(() => {
-        this.getMaintenancesPlan();
+        this.getMaintenancePlans();
       }, this.delaySearch);
     },
   },
 
   computed: {
-    maintenancesPlan: {
+    maintenancePlans: {
       get() {
-        return this.$store.getters['maintenances/getMaintenancesPlanGetter'];
-      },
-    },
-
-    pagination: {
-      get() {
-        return this.$store.getters['maintenances/getPaginationPlanGetter'];
+        return this.$store.getters['maintenancePlans/getMaintenancePlansGetter'];
       },
     },
   },
 
   methods: {
-    async getMaintenancesPlan() {
+    async getMaintenancePlans() {
       this.loading = true
-      await this.$store.dispatch('maintenances/getMaintenancesPlanAction', this.params);
+
+      this.localPagination = {
+        ...this.localPagination,
+        ...await this.$store.dispatch('maintenancePlans/getMaintenancePlansAction', this.params)
+      }
+
       this.loading = false
     },
 
@@ -167,11 +174,15 @@ export default defineComponent({
       this.$router.push({ name: 'detail-maintenance-plan', params: { id: payload } });
     },
 
+    goToEdit(payload) {
+      this.$router.push({ name: 'edit-maintenance-plan', params: { id: payload } });
+    },
+
     setSelectedFilter(opt) {
       if (this.selectedFilterText) {
         delete this.params[this.selectedFilterText]
         if (this.searchModel) {
-          this.getMaintenancesPlan();
+          this.getMaintenancePlans();
         }
       }
 
@@ -180,7 +191,7 @@ export default defineComponent({
 
       if (opt.value && opt.filter) {
         this.params[opt.filter] = this.searchModel
-        this.getMaintenancesPlan();
+        this.getMaintenancePlans();
       }
     },
 
@@ -193,7 +204,7 @@ export default defineComponent({
       if (removedFilter) {
         delete this.params[removedFilter]
       }
-      this.getMaintenancesPlan();
+      this.getMaintenancePlans();
     },
 
     changePagination(pagination) {
@@ -204,7 +215,7 @@ export default defineComponent({
         }
       }
 
-      this.getMaintenancesPlan();
+      this.getMaintenancePlans();
     },
 
     goBack() {

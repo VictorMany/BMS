@@ -6,136 +6,119 @@
         :btnAction="btnAction"
       />
       <!-- Main container -->
-      <div class="main-container-page main-container-page-medium-dark">
-        <div class="row card-color q-pa-md h-100">
-          <div class="col-xs-12 col-sm-auto">
-            <q-date
-              v-model="date"
-              today-btn
-              color="primary"
-              mask="YYYY-MM-DD"
-              class="text-blue-blue-grey-4 border-line"
-              landscape
-              :events="events"
-              @update:model-value="getEquipmentsByDate"
-              @navigation="getDatesPerMonth"
-            />
-            <div class="col q-mt-md">
-              <div class="container-colorama border-none q-pa-xs row">
-                <q-radio
-                  v-for="(badge, i) in optionsFilter"
-                  :key="i"
-                  v-model="selectedFilter"
-                  checked-icon="task_alt"
-                  unchecked-icon="panorama_fish_eye"
-                  class="col-12 q-pa-xs"
-                  :val="badge.color"
-                  :dense="true"
-                  :label="badge.label"
-                  :color="badge.color"
-                  :class="`text-${badge.color}`"
-                />
-              </div>
+      <div class="main-container-page main-container-page-medium-dark q-mt-lg bg-grey-3 row">
+        <div class="col-xs-12 col-md-auto q-px-sm q-pl-md">
+          <q-date
+            v-model="calendarModel"
+            today-btn
+            color="primary"
+            mask="YYYY-MM-DD"
+            class="text-blue-blue-grey-4 border-line"
+            landscape
+            :events="events"
+            @update:model-value="getEquipmentsByDate"
+            @navigation="getDatesPerMonth"
+          />
+          <div class="col q-my-md">
+            <div class="container-colorama border-none q-pa-xs row">
+              <q-radio
+                v-for="(badge, i) in optionsFilter"
+                :key="i"
+                v-model="selectedFilter"
+                checked-icon="task_alt"
+                unchecked-icon="panorama_fish_eye"
+                class="col-12 q-pa-xs"
+                :val="badge.color"
+                :dense="true"
+                :label="badge.label"
+                :color="badge.color"
+                :class="`text-${badge.color}`"
+              />
             </div>
           </div>
-          <div
-            class="col q-pl-md"
-            style="height: 99%"
-          >
-            <div class="row flex items-center justify-between q-mb-sm">
-              <div class="form__item-label text-weight-thin q-pr-lg col">
-                Selecciona una fecha resaltada en el calendario y carga los equipos con mantenimiento programado </div>
-              <btn-switch
-                class="col-auto"
-                v-model:switch-content="switchContent"
-              />
+        </div>
+
+        <div
+          class="col-md col-12 q-px-sm"
+          style="height: 90%"
+        >
+          <div class="row flex items-center justify-between q-mb-sm">
+            <div class="form__item-label text-weight-thin q-px-xs col">
+              Selecciona una fecha resaltada en el calendario y podrás ver los equipos con mantenimientos programados
             </div>
+            <btn-switch
+              class="col-auto"
+              v-model:switch-content="switchContent"
+            />
+          </div>
 
-            <div
-              style="overflow: scroll; height: 90%"
-              class="row w-100 q-pa-none q-ma-none"
+          <div
+            style="overflow: scroll; height: 90%"
+            class="row w-100 q-pa-none q-ma-none"
+          >
+            <q-scroll-area
+              v-if="switchContent === 1"
+              class="fit"
+              style="height: 100% !important"
+              :thumb-style="{
+                right: '6px',
+                borderRadius: '5px',
+                background: 'rgba(29, 100, 231, 0.2)',
+                width: '5px',
+                opacity: 1,
+              }"
             >
-              <q-scroll-area
-                v-if="switchContent === 1"
-                class="fit"
-                style="height: 88% !important"
-                :thumb-style="{
-                  right: '6px',
-                  borderRadius: '5px',
-                  background: 'rgba(29, 100, 231, 0.2)',
-                  width: '5px',
-                  opacity: 1,
-                }"
-              >
-                <div style="max-width: 100%">
+              <div style="max-width: 100%">
+                <div
+                  v-if="equipments && equipments.length > 0"
+                  class="row q-pa-none q-ma-none "
+                >
                   <div
-                    v-if="equipments && equipments.length > 0"
-                    class="row q-pa-none q-ma-none"
+                    class="col-sm-auto q-pa-xs col-xs-12"
+                    v-for="(equipo, index) in equipments"
+                    :key="index"
                   >
-                    <div
-                      class="col-sm-auto q-pa-xs col-xs-12"
-                      v-for="(equipo, index) in equipments"
-                      :key="index"
-                    >
-                      <item-card
-                        v-bind="equipo"
-                        :index="index"
-                        :card-action="goToDetails"
-                      />
-                    </div>
-                  </div>
-
-                  <div
-                    v-else-if="loading"
-                    class="q-ma-xl q-pa-xl text-center no-info"
-                  >
-                    <q-spinner-pie
-                      color="primary"
-                      class="q-mt-lg"
-                      size="4em"
+                    <item-card
+                      v-bind="equipo"
+                      :index="index"
+                      :card-action="goToDetails"
                     />
-                    <div class="text-primary q-ma-lg">Cargando equipos</div>
-                  </div>
-
-                  <div
-                    v-else-if="loading === false"
-                    class="q-ma-xl q-pa-xl text-center no-info"
-                  >
-                    No hay equipos para mostrar
-                    <strong class="text-negative">!</strong>
                   </div>
                 </div>
-              </q-scroll-area>
 
-              <div
-                v-if="switchContent === 1 && equipments.length > 0"
-                style="height: 6.55%"
-                class="row justify-center q-pt-sm"
-              >
-                <q-pagination
-                  v-model="paginationCards.page"
-                  dense
-                  class="q-mt-none pagination-style"
-                  :max="paginationCards.pagesNumber"
-                  size="md"
-                  @update:model-value="changePaginationCards"
-                  direction-links
-                />
+                <div
+                  v-else-if="loading"
+                  class="q-ma-xl q-pa-xl text-center no-info border-rounded"
+                >
+                  <q-spinner-pie
+                    color="primary"
+                    class="q-mt-lg"
+                    size="4em"
+                  />
+                  <div class="text-primary q-ma-lg">Cargando equipos</div>
+                </div>
+
+                <div
+                  v-else-if="loading === false"
+                  class="q-ma-xl q-pa-xl text-center no-info border-rounded"
+                >
+                  No hay equipos para mostrar
+                  <strong class="text-negative">!</strong>
+                </div>
               </div>
+            </q-scroll-area>
 
-              <general-table
-                v-else-if="switchContent === 2"
-                class="w-100"
-                height="65vh"
-                v-model:row-selected="rowSelected"
-                :rows="rows"
-                :columns="columns"
-                :actions-table="actionsTable"
-                :pagination-prop="pagination"
-                :loading="loading"
-                @change-pagination="changePagination"
-              />
-            </div>
+            <general-table
+              v-else-if="switchContent === 2"
+              class="w-100"
+              height="65vh"
+              v-model:row-selected="rowSelected"
+              :rows="rows"
+              :columns="columns"
+              :actions-table="actionsTable"
+              :showPagination="false"
+              :loading="loading"
+            />
           </div>
         </div>
       </div>
@@ -145,7 +128,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import ItemCard from 'src/components/atomic/ItemCard.vue';
 import BtnSwitch from 'src/components/atomic/BtnSwitch.vue';
@@ -161,12 +144,14 @@ export default defineComponent({
   },
   data() {
     return {
-      date: ref('2019/02/01'),
+      calendarModel: null,
 
       loading: true,
 
-      selectedFilter: '#10D13A',
+      selectedFilter: 'secondary',
+
       events: [],
+
       optionsFilter: [
         { color: 'primary', label: 'Mantenimientos hechos', value: 'opt1' },
         {
@@ -174,7 +159,6 @@ export default defineComponent({
           label: 'Mantenimientos programados',
           value: 'opt2',
         },
-        // { color: 'secondary', label: 'Recordatorios', value: 'opt3' },
       ],
 
       btnAction: {
@@ -194,12 +178,6 @@ export default defineComponent({
       rowSelected: {},
 
       selectedFilterText: 'name',
-
-      paginationCards: {
-        descending: false,
-        rowsPerPage: 12,
-        page: 1,
-      },
 
       params: {
         date: '2024-03-01'
@@ -229,13 +207,6 @@ export default defineComponent({
           align: 'center',
           sortable: true,
         },
-        // {
-        //   name: 'date',
-        //   label: 'fecha de creacion',
-        //   field: 'date',
-        //   align: 'center',
-        //   sortable: true,
-        // },
         {
           name: 'actions',
           label: 'Acciones',
@@ -260,6 +231,8 @@ export default defineComponent({
   },
 
   created() {
+    this.calendarModel = this.formatDate();
+
     this.getEquipmentsByDate();
 
     const currentDate = new Date();
@@ -271,48 +244,55 @@ export default defineComponent({
   },
 
   methods: {
-
     async getDatesPerMonth(date) {
       if (date) {
         let formattedPayload = date.year + '-' + date.month.toString().padStart(2, '0')
-
         const events = await this.$store.dispatch('equipments/getDatesPerMonthAction', formattedPayload);
-        console.log(events)
         this.events = events
       }
     },
 
-    goToDetails(payload) {
-      console.log('Ver detalle', payload);
-      this.$router.push({ name: 'detail-equipment', params: { id: 100 } });
-    },
-    goToEdit(payload) {
-      console.log('Editar', payload);
-      this.$router.push({ name: 'edit-equipment', params: { id: 100 } });
-    },
-
     async getEquipmentsByDate(date = null) {
       try {
+        let auxDate = date ? date.replace(/-/g, '/') : null;
         this.loading = true;
-        // Obtener los componentes de la fecha
 
-        date = new Date(date)
-
-        const year = date.getUTCFullYear();
-        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Los meses van de 0 a 11
-        const day = date.getUTCDate().toString().padStart(2, '0');
-
-        // Formatear la fecha como YYYY-MM-DD
-        const fechaFormateada = `${year}-${month}-${day}`;
-        this.params.date = fechaFormateada;
-
-        await this.$store.dispatch('equipments/getEquipmentsByDateAction', this.params);
+        if (this.events.includes(auxDate)) {
+          this.params.date = this.formatDate(date)
+          await this.$store.dispatch('equipments/getEquipmentsByDateAction', this.params);
+        } else {
+          this.$store.commit('equipments/MUTATE_EQUIPMENTS', []);
+        }
         this.loading = false;
       } catch (error) {
         console.log(error);
         this.$store.commit('equipments/MUTATE_EQUIPMENTS', []);
-        console.log(error.response);
       }
+    },
+
+    formatDate(date) {
+      if (!date) {
+        date = new Date();
+        date.setDate(date.getDate() - 1)
+      } else {
+        date = new Date(date)
+      }
+      // Obtener los componentes de la fecha
+      const year = date.getUTCFullYear();
+      const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Los meses van de 0 a 11
+      const day = date.getUTCDate().toString().padStart(2, '0');
+      // Formatear la fecha como YYYY-MM-DD
+      const fechaFormateada = `${year}-${month}-${day}`;
+
+      return fechaFormateada;
+    },
+
+    goToDetails(payload) {
+      this.$router.push({ name: 'detail-equipment', params: { id: payload } });
+    },
+
+    goToEdit(payload) {
+      this.$router.push({ name: 'edit-equipment', params: { id: payload } });
     },
 
     changePagination(pagination) {
@@ -347,34 +327,6 @@ export default defineComponent({
         } else if (val.action === 'Detail') {
           this.goToDetails(val.id);
         }
-      },
-      deep: true,
-    },
-
-    // searchModel(val) {
-    //   this.params[this.selectedFilterText] = val
-
-    //   clearTimeout(this.timeoutSearch);
-
-    //   this.timeoutSearch = setTimeout(() => {
-    //     this.getEquipmentsByDate(this.params);
-    //   }, this.delaySearch);
-    // },
-
-    pagination: {
-      handler(value) {
-        this.paginationCards.rowsPerPage = value.rowsPerPage;
-        this.paginationCards.pagesNumber = value.totalPages;
-        this.paginationCards.rowsNumber = value.rowsNumber;
-      },
-      immediate: true,
-      deep: true,
-    },
-
-    switchContent: {
-      handler(val) {
-        if (val === 1) this.paginationCards.page = this.pagination.page;
-        else this.pagination.page = this.paginationCards.page;
       },
       deep: true,
     },

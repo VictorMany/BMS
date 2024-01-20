@@ -1,13 +1,18 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
+    <q-form
+      ref="myForm"
+      class="card-page"
+    >
       <div class="column items-end q-mt-md q-mb-xs">
         <btn-action v-bind="btnCloseWindow" />
       </div>
+
       <header-actions
-        :titlePage="'Crear nuevo plan de mantenimientos'"
+        :titlePage="getTitle()"
         :btn-action="btnAction"
       />
+
       <div
         class="main-container-page main-container-page-medium-dark"
         style="height: 82%"
@@ -21,16 +26,23 @@
             v-model="form.planName"
             borderless
             dense
-            class="form__item-input q-mb-md q-mx-lg bg-accent"
+            hide-hint
+            hide-bottom-space
+            :rules="[
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+              (val) => (val.length <= 50) || 'El campo no debe exceder 50 caracteres'
+            ]"
+            class="form__item-input q-my-sm q-mx-lg bg-accent"
             label="Nombre del plan"
           />
+
           <div class="row q-px-lg d-flex justify-between">
             <div class="col-12 q-mb-sm">
               <div class="q-py-sm q-my-sm form__item-label text-weight-thin">
                 1-. Elige los equipos que quieras incluir en el plan
               </div>
               <div
-                class="select__form border-line border-rounded q-pa-md"
+                class="border-rounded border-line border-rounded q-pa-md"
                 style="height: 50vh"
               >
                 <div style="height: 100%">
@@ -43,10 +55,7 @@
                       opacity: 1,
                     }"
                   >
-
                     <div class="row">
-
-
                       <div
                         class="q-pr-md col-auto"
                         style="border-right: 1px solid #91c8ff84; "
@@ -75,10 +84,11 @@
                           :nodes="localCategories"
                           tick-strategy="leaf"
                           node-key="id"
+                          no-nodes-label="No hay equipos para mostrar"
                           label-key="label"
                           :filter="filter"
-                          :filter-method="myFilterMethod"
-                          @lazy-load="onLazyLoad"
+                          :filter-method="filterEquipments"
+                          @lazy-load="getEquipmentsByCategory"
                         />
                       </div>
 
@@ -126,6 +136,7 @@
                         :options="options"
                         dense
                         hide-hint
+                        :disable="!form.hasFrequency"
                         hide-bottom-space
                         bottom-slots
                         stack-label
@@ -158,8 +169,8 @@
 
                   <q-date
                     ref="myDatePicker"
-                    mask="YYYY-MM-DD"
                     v-model="form.maintenanceDates"
+                    mask="YYYY-MM-DD"
                     class="text-blue-blue-grey-4 border-line border-rounded"
                     :multiple="!form.hasFrequency"
                     landscape
@@ -180,7 +191,7 @@
                     >
                       {{ calcDate(day) }}
                       <q-avatar
-                        @click="deleteDate(index)"
+                        @click="deleteDate(day)"
                         size="xs"
                         class="avatar-item"
                       >
@@ -236,15 +247,13 @@
           </div>
         </q-scroll-area>
         <div
-          class="col-12 form__date_container"
+          class="col-12 form__date_container form__date column justify-center q-px-lg"
           style="height: 6%"
         >
-          <div class="form__date column items-end q-pa-sm q-mt-auto">
-            <div>Fecha de creación <strong> 12/02/2022</strong></div>
-          </div>
+          <div>Fecha de creación: <strong>{{ form.createdAt }}</strong></div>
         </div>
       </div>
-    </div>
+    </q-form>
   </q-page>
 </template>
 
@@ -266,18 +275,15 @@ export default defineComponent({
   },
   data() {
     return {
-      fixed: ref(false),
-
       delaySearch: 300,
       timeoutSearch: null,
-
 
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
         btnWidth: 'auto',
         loader: false,
-        btnAction: this.createMaintenancePlan
+        btnAction: this.createOrEdit,
       },
 
       btnCloseWindow: {
@@ -288,22 +294,11 @@ export default defineComponent({
         btnAction: this.goBack,
       },
 
-      fields: {
-        readImage: false,
-        top: [
-          {
-            label: 'Nombre del plan',
-            model: '',
-          },
-        ],
-        left: [],
-        right: [],
-        textarea: {},
-      },
-
       form: {
+        id: null,
         planName: '',
         observations: '',
+        createdAt: this.getCreatedAt(),
         userId: '',
         equipmentIds: [],
         hasFrequency: false,
@@ -329,10 +324,6 @@ export default defineComponent({
       filter: ref(''),
       filterRef: ref(null),
 
-      model: ref(null),
-
-      days: ref(['Sábado 04, Feb 2023']),
-
       options: [
         'Mensual',
         'Bimestral',
@@ -340,26 +331,6 @@ export default defineComponent({
         'Semestral'
       ],
 
-      date: ref('2019/02/01'),
-
-      tickStrategy: ref('strict'),
-
-
-      // simple: [
-      //   { label: 'Electrocardiógrafo', children: [{ label: 'Electrocardiógrafo 001' }, { label: 'Electrocardiógrafo 002' }] },
-      //   { label: 'Monitor de signos vitales', children: [{ label: 'Monitor de signos vitales 001' }, { label: 'Monitor de signos vitales 002' }] },
-      //   { label: 'Equipo de rayos X', children: [{ label: 'Equipo de rayos X 001' }, { label: 'Equipo de rayos X 002' }] },
-      //   { label: 'Tomógrafo', children: [{ label: 'Tomógrafo 001' }, { label: 'Tomógrafo 002' }] },
-      //   { label: 'Ecógrafo', children: [{ label: 'Ecógrafo 001' }, { label: 'Ecógrafo 002' }] },
-      //   { label: 'Endoscopio', children: [{ label: 'Endoscopio 001' }, { label: 'Endoscopio 002' }] },
-      //   { label: 'Espectrómetro de masa', children: [{ label: 'Espectrómetro de masa 001' }, { label: 'Espectrómetro de masa 002' }] },
-      //   { label: 'Analizador de gases en sangre', children: [{ label: 'Analizador de gases en sangre 001' }, { label: 'Analizador de gases en sangre 002' }] },
-      //   { label: 'Analizador de hematología', children: [{ label: 'Analizador de hematología 001' }, { label: 'Analizador de hematología 002' }] },
-      //   { label: 'Analizador de química clínica', children: [{ label: 'Analizador de química clínica 001' }, { label: 'Analizador de química clínica 002' }] },
-      // ],
-
-
-      // Table
       columns: [
         {
           name: 'categoryName',
@@ -398,17 +369,15 @@ export default defineComponent({
 
   created() {
     this.getCategories();
+
+    if (this.isEditing()) {
+      this.getMaintenancePlan()
+    }
   },
 
   computed: {
     categories() {
       return this.$store.getters['equipments/getCategoriesGetter'];
-    },
-
-    sortedDates() {
-      const unsortedDates = [...this.form.maintenanceDates];
-      const sortedDates = unsortedDates.sort((a, b) => new Date(a) - new Date(b));
-      return sortedDates
     },
 
     rows() {
@@ -422,6 +391,22 @@ export default defineComponent({
 
       return children
     },
+
+    dateItems() {
+      if (this.form.maintenanceDates?.length >= 1 && this.form.maintenanceFrequency) {
+        return this.calculateRemainingDates(this.form.maintenanceDates[0], this.form.maintenanceFrequency);
+      } else return this.form.maintenanceDates
+    },
+
+    sortedDates() {
+      if (this.form?.maintenanceDates?.length >= 1) {
+        const unsortedDates = [...this.form.maintenanceDates];
+        const sortedDates = unsortedDates.sort((a, b) => new Date(a) - new Date(b));
+        return sortedDates
+      } else if (this.form.maintenanceDates?.lenght == 0) return []
+      else return this.form.maintenanceDates
+    },
+
   },
 
   watch: {
@@ -437,20 +422,18 @@ export default defineComponent({
       handler(val, oldVal) {
         if (val && val != oldVal) {
           this.form.maintenanceDates = Array.isArray(val) ? val : [val];
-          if (this.form.maintenanceDates.length == 1 && this.form.maintenanceFrequency) {
-            this.form.maintenanceDates = this.calculateRemainingDates(this.sortedDates[0], this.form.maintenanceFrequency);
-          }
-        } else {
-          this.maintenanceDates = null
         }
       },
       immediate: true, // Para manejar el caso cuando el componente se carga inicialmente
     },
 
-    'form.maintenanceFrequency'(val, oldVal) {
-      if (val && this.form.maintenanceDates.length > 0 && val != oldVal) {
-        this.form.maintenanceDates = this.calculateRemainingDates(this.sortedDates[0], val);
-      }
+    dateItems: {
+      handler(val) {
+        if (val?.length != 1 && val?.toString() != this.form?.maintenanceDates?.toString()) {
+          this.form.maintenanceDates = val
+        }
+      },
+      deep: true
     },
 
     'form.hasFrequency'(val) {
@@ -465,7 +448,7 @@ export default defineComponent({
       this.btnAction.loader = true;
       try {
         const res = await this.$store.dispatch(
-          'maintenances/postMaintenancePlanAction',
+          'maintenancePlans/postMaintenancePlanAction',
           this.form
         );
         if (res === true) {
@@ -481,6 +464,89 @@ export default defineComponent({
       }
     },
 
+    async getMaintenancePlan() {
+      this.loading = true
+      const params = {
+        id: this.$route.params.id
+      }
+
+      this.form = { ...this.form, ...await this.$store.dispatch('maintenancePlans/getMaintenancePlanAction', params) }
+      // FORMAT RESULT
+
+      this.loading = false
+    },
+
+    async editMaintenancePlan() {
+      this.btnAction.loader = true;
+      this.formPlan.id = this.$route.params.id
+
+      try {
+        const res = await this.$store.dispatch(
+          'maintenancePlans/updateMaintenancePlansAction',
+          this.formPlan
+        );
+        if (res === true) {
+          this.showAlert({ title: 'Éxito al editar', msg: 'El plan de mantenimientos se ha actualizado', color: 'green-14' });
+          this.$router.go(-1);
+        } else {
+          this.showAlert({});
+        }
+        this.btnAction.loader = false;
+      } catch (error) {
+        console.log(error)
+        this.btnAction.loader = false;
+        this.showAlert({});
+      }
+    },
+
+    async createOrEdit() {
+      this.$refs.myForm.validate().then(success => {
+        if (success) {
+          if (this.isEditing()) {
+            this.editMaintenancePlan()
+          } else {
+            this.createMaintenancePlan()
+          }
+        } else {
+          return false
+        }
+      })
+    },
+
+    async getCategories() {
+      this.loading = true
+      await this.$store.dispatch('equipments/getCategoriesAction')
+      this.loading = false
+    },
+
+    async getEquipmentsByCategory({ key, done }) {
+      const equipments = await this.$store.dispatch('equipments/getEquipmentsByCategoryAction', {
+        categoryId: key
+      })
+
+      if (equipments.length > 0)
+        done(equipments)
+      else done([])
+    },
+
+    getTitle() {
+      if (this.isEditing()) {
+        return 'Editar plan de mantenimientos'
+      }
+      else return 'Agregar nuevo plan de mantenimientos'
+    },
+
+    getCreatedAt() {
+      if (this.isEditing()) {
+        return ''
+      }
+      else return this.$store.getters['global/getDate']
+    },
+
+    isEditing() {
+      return this.$route.params.id ? true : false
+    },
+
     showAlert({ msg, color, title, classes }) {
       this.$q.notify({
         message: title ? title : 'Ocurrió un error al crear el plan de mantenimientos',
@@ -490,26 +556,17 @@ export default defineComponent({
       });
     },
 
-    async getCategories() {
-      this.loading = true
-      await this.$store.dispatch('equipments/getCategoriesAction')
-      this.loading = false
-    },
-
     calcDate(date) {
-      // Crear una nueva fecha a partir de la fecha proporcionada
       const initialDate = new Date(date);
-      // Sumar un día a la fecha
       initialDate.setDate(initialDate.getDate() + 1);
-      // Definir las opciones de formato deseado
       const optFormat = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-      // Obtener la fecha formateada con la configuración regional de México
       return initialDate.toLocaleDateString('es-MX', optFormat);
     },
 
     calculateRemainingDates(initialDate, frequency) {
       const dates = [new Date(initialDate)];
       dates[0].setDate(dates[0].getDate() + 1);
+
 
       const currentYear = new Date().getFullYear();
 
@@ -557,20 +614,11 @@ export default defineComponent({
       }
       // Formatea las fechas en un formato más sencillo
       const formattedDates = dates.map(date => format(date, 'yyyy-MM-dd'));
+
       return formattedDates;
     },
 
-    async onLazyLoad({ key, done }) {
-      const equipments = await this.$store.dispatch('equipments/getEquipmentsByCategoryAction', {
-        categoryId: key
-      })
-
-      if (equipments.length > 0)
-        done(equipments)
-      else done([])
-    },
-
-    myFilterMethod(node, filter) {
+    filterEquipments(node, filter) {
       const filt = filter.toLowerCase();
       if (filt === '') {
         return true; // Muestra todos los nodos cuando no hay filtro
@@ -589,8 +637,12 @@ export default defineComponent({
       this.$router.go(-1);
     },
 
-    deleteDate(index) {
-      this.sortedDates.splice(index, 1);
+    deleteDate(day) {
+      const index = this.form.maintenanceDates.indexOf(day);
+      if (index !== -1) {
+        // Elimina la fecha del array
+        this.form.maintenanceDates.splice(index, 1);
+      }
     },
 
     setCalendarTo(date) {
@@ -611,16 +663,6 @@ export default defineComponent({
   padding-top: 0 !important;
 }
 
-.select {
-  &__form {
-    border-radius: 8px;
-  }
-}
-
-.checkbox-label {
-  color: #e8f3fb;
-  font-size: 13px;
-}
 
 .q-tree__node-header-content {
   font-size: 13px;
@@ -634,7 +676,7 @@ export default defineComponent({
 .chip-date {
   background-color: rgba($primary, 0.1);
   max-width: 300px;
-  color: rgb(64, 60, 60);
+  color: rgb(147, 150, 156);
   border-radius: 8px;
 }
 

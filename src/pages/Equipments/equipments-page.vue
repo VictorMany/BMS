@@ -38,7 +38,7 @@
 
             <div
               v-else-if="loading"
-              class="q-ma-xl q-pa-xl text-center no-info"
+              class="q-ma-xl q-pa-xl text-center no-info border-rounded"
             >
               <q-spinner-pie
                 color="primary"
@@ -50,7 +50,7 @@
 
             <div
               v-else-if="loading === false"
-              class="q-ma-xl q-pa-xl text-center no-info"
+              class="q-ma-xl q-pa-xl text-center no-info border-rounded"
             >
               No hay equipos para mostrar
               <strong class="text-negative">!</strong>

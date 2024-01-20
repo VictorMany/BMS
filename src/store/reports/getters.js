@@ -10,7 +10,3 @@ export function getReportsGetter(state) {
     }));
     return reports
 }
-
-export function getPaginationGetter(state) {
-    return state.pagination
-}

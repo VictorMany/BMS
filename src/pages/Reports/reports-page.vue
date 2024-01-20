@@ -156,18 +156,6 @@ export default defineComponent({
   },
 
   watch: {
-    pagination: {
-      // TODO: Arreglalo Vic Porfa
-      handler(val) {
-        this.localPagination = JSON.parse(JSON.stringify(val));
-        if (val.rowsPerPage !== 12) {
-          this.localPagination.rowsPerPage = 12
-        }
-      },
-      deep: true,
-      immediate: true
-    },
-
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
@@ -196,18 +184,15 @@ export default defineComponent({
         return this.$store.getters['reports/getReportsGetter'];
       },
     },
-
-    pagination: {
-      get() {
-        return this.$store.getters['reports/getPaginationGetter'];
-      },
-    },
   },
 
   methods: {
     async getReports() {
       this.loading = true
-      await this.$store.dispatch('reports/getReportsAction', this.params);
+      this.localPagination = {
+        ...this.localPagination,
+        ...await this.$store.dispatch('reports/getReportsAction', this.params)
+      }
       this.loading = false
     },
 

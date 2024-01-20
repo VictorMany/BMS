@@ -6,14 +6,14 @@
   >
     <q-table
       row-key="id"
-      class="table-style font-style my-sticky-header-table q-mt-none bg-white"
-      :class="{ 'sticky': !loading }"
+      v-model:pagination="pagination"
       :rows="rows"
       :columns="columns"
       :rows-per-page-options="[-1]"
       :hide-pagination="!showPagination"
       :loading="loading"
-      v-model:pagination="pagination"
+      :class="{ 'sticky': !loading }"
+      class="table-style font-style my-sticky-header-table q-mt-none bg-white"
     >
       <template v-slot:loading>
         <q-inner-loading
@@ -131,15 +131,14 @@ export default defineComponent({
     paginationProp: {
       type: Object,
       required: false,
-      default: () => ({
-        rowsPerPage: 12,
-      }),
+      default: null
     },
   },
   setup() {
     const pagination = ref({
       descending: false,
       rowsPerPage: 12,
+      pagesNumber: 1,
       page: 1,
     });
 
@@ -148,6 +147,7 @@ export default defineComponent({
       pagesNumber: 1,
     };
   },
+
   methods: {
     rowClicked(props, action) {
       this.$emit('update:rowSelected', {
@@ -178,28 +178,16 @@ export default defineComponent({
       };
       this.$emit('change-pagination', pag);
     },
+
   },
   watch: {
-    // Changing pagination rows
-    'pagination.rowsPerPage': {
-      handler(rowsPerPage) {
-        let pag = {
-          ...this.pagination,
-          rowsPerPage: rowsPerPage,
-        };
-        this.$emit('change-pagination', pag);
-      },
-    },
-
     paginationProp: {
       handler(value) {
-        this.pagination.rowsPerPage = value.rowsPerPage;
         this.pagination.pagesNumber = value.totalPages;
         this.pagination.rowsNumber = value.rowsNumber;
 
         if (value.page) this.pagination.page = value.page;
       },
-      immediate: true,
       deep: true,
     },
   },

@@ -4,8 +4,12 @@ export async function getReportsAction(context, params) {
     return service.getReports(params).then(async (response) => {
         if (response.status == 200) {
             context.commit('MUTATE_REPORTS', response.data.contents.reports)
-            context.commit('MUTATE_DETAILS', response.data.contents)
-            return true
+
+            let obj = response.data.contents;
+            obj.rowsNumber = obj.reports.length
+            delete obj.reports
+
+            return obj
         } else {
             return response
         }
@@ -16,7 +20,7 @@ export async function getReportsByEquipmentAction(context, params) {
     return service.getReportsByEquipment(params).then(async (response) => {
         if (response.status == 200) {
             context.commit('MUTATE_REPORTS', response.data.contents.reports)
-            context.commit('MUTATE_DETAILS', response.data.contents)
+            // context.commit('MUTATE_DETAILS', response.data.contents)
             return true
         } else {
             return response
