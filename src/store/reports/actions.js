@@ -32,10 +32,17 @@ export async function getReportAction(context, params) {
     return service.getReport(params.id).then(async (response) => {
         if (response.status == 200) {
             // We call the global action to format our payload
-            const payload = await context.dispatch('global/formatDetails', {
-                keys: response.data.contents.report,
-                fields: params.fields
-            }, { root: true });
+            context.commit('MUTATE_REPORT', response.data.contents.report)
+            // We call the global action to format our payload
+            let payload
+
+            if (params.fields) {
+                payload = await context.dispatch('global/formatDetails', {
+                    keys: response.data.contents.report,
+                    fields: params.fields
+                }, { root: true });
+            }
+
             return payload
         } else {
             return response
@@ -62,7 +69,7 @@ export async function postReportAction(context, report) {
 
     return await service.postReport(payload).then(async (response) => {
         if (response.status == 201) {
-            context.commit('ADD_REPORT', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
+            // context.commit('ADD_REPORT', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
             return true
         } else {
             return response
@@ -71,19 +78,7 @@ export async function postReportAction(context, report) {
 }
 
 export async function updateReportAction(context, report) {
-    // Those are the keys you need in your payload and find in the fields
-    let keys = {
-        // ReportId: '',
-        reportStatus: ''
-    }
-
-    // We call the global action to format our payload
-    const payload = await context.dispatch('global/formatPayload', {
-        keys,
-        fields: report
-    }, { root: true });
-
-    return await service.updateReport(payload, report.id).then(async (response) => {
+    return await service.updateReport(report).then(async (response) => {
         if (response.status == 200) {
             return true
         } else {

@@ -59,7 +59,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Añadir mantenimiento',
-        to: 'add-maintenance',
+        btnAction: this.goToAddMaintenance,
         btnWidth: 'auto'
       },
 
@@ -195,6 +195,15 @@ export default defineComponent({
       this.loading = true
       await this.$store.dispatch('maintenances/getMaintenancesAction', this.params);
       this.loading = false
+    },
+
+    goToAddMaintenance() {
+      // Delete from the LOCAL STORAGE IF EXIST
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+      this.$store.commit('reports/MUTATE_REPORT', null)
+      this.$router.push({
+        name: 'add-maintenance'
+      })
     },
 
     goToDetails(payload) {

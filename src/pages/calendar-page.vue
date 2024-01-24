@@ -71,7 +71,7 @@
               <div style="max-width: 100%">
                 <div
                   v-if="equipments && equipments.length > 0"
-                  class="row q-pa-none q-ma-none "
+                  class="row q-pa-none q-ma-none"
                 >
                   <div
                     class="col-sm-auto q-pa-xs col-xs-12"
@@ -111,7 +111,7 @@
             <general-table
               v-else-if="switchContent === 2"
               class="w-100"
-              height="65vh"
+              height="60vh"
               v-model:row-selected="rowSelected"
               :rows="rows"
               :columns="columns"

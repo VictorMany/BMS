@@ -1,209 +1,137 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
+    <q-form
+      ref="myForm"
+      class="card-page"
+    >
       <div class="column items-end q-mt-md q-mb-xs">
         <btn-action v-bind="btnCloseWindow" />
       </div>
+
       <header-actions
-        :title-page="'Detalles del plan de mantenimiento'"
+        titlePage="Detalles del plan de mantenimientos"
         :btn-action="btnAction"
       />
+
       <div
-        class="main-container-page main-container-page-dark"
+        class="main-container-page main-container-page-medium-dark"
         style="height: 82%"
       >
         <q-scroll-area
-          class="full-height q-pb-md"
+          class="full-height q-px-lg q-pb-lg"
           style="height: 92% !important"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <form-label :fields="fields" />
-          <hr class="q-mx-lg q-mb-md border-line" />
-          <div class="row q-px-lg">
-            <div class="col-12 col-md-6 q-pr-md">
-              <div
-                class="select__form border-line q-pa-md"
-                style="height: 60vh"
-              >
-                <div class="q-pb-sm form__item-label__title">Equipo biomédico</div>
-                <div style="height: 90%">
-                  <q-scroll-area
-                    class="fit"
-                    :thumb-style="{
-                      right: '6px',
-                      borderRadius: '5px',
-                      background: 'rgba(29, 100, 231, 0.2)',
-                      width: '5px',
-                      opacity: 1,
-                    }"
-                  >
-                    <q-tree
-                      node-key="label"
-                      class="checkbox-label"
-                      color="grey-8"
-                      text-color="blue-grey-4"
-                      :nodes="simple"
-                      v-model:ticked="ticked"
-                      :tick-strategy="tickStrategy"
-                      default-expand-all
-                    />
-                  </q-scroll-area>
-                </div>
-              </div>
+          <div
+            v-if="form.planName"
+            class="row items-center q-mb-sm"
+          >
+            <div class="q-pt-sm form__item-label text-weight-thin">
+              Nombre del plan
             </div>
-            <div class="col-12 col-md-6 q-pr-md">
-              <div
-                class="select__form border-line q-pa-md"
-                style="height: 60vh"
-              >
-                <div class="q-pb-sm form__item-label__title">Fechas establecidas</div>
-                <div style="height: 90%">
-                  <q-scroll-area
-                    class="fit"
-                    :thumb-style="{
-                      right: '6px',
-                      borderRadius: '5px',
-                      background: 'rgba(29, 100, 231, 0.2)',
-                      width: '5px',
-                      opacity: 1,
-                    }"
-                  >
-                    <div class="col-12">
+            <div class="col-12 form__item-model text-weight-medium">
+              {{ form.planName }}
+            </div>
+          </div>
+
+          <div class="row d-flex justify-between">
+            <div class="col-12 q-mb-sm">
+              <div class="q-py-sm form__item-label text-weight-thin">
+                Listado de equipos y fechas programadas de los mantenimientos
+              </div>
+              <div class="border-rounded border-line border-rounded q-pa-md">
+                <div style="height: 100%">
+                  <div class="row">
+                    <div class="col-auto q-pa-xs">
+                      <general-table
+                        style="height: 43vh; overflow-y: scroll;"
+                        class="w-100"
+                        :rows="rows"
+                        :columns="columns"
+                        :paginationProp="{
+                          rowsPerPage: null
+                        }"
+                        :show-pagination="false"
+                      />
+                    </div>
+
+                    <div class="col q-px-sm">
                       <div
-                        v-for="(day, index) in days"
+                        v-for="( day, index ) in sortedDates"
                         :key="index"
-                        class="text-left chip-date q-mt-sm q-pa-xs q-px-sm"
                       >
-                        {{ day }}
+                        <div
+                          class="text-left chip-date q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
+                        >
+                          {{ calcDate(day) }}
+                        </div>
+                        <div
+                          style="font-size: 10px;"
+                          class="text-primary q-px-sm"
+                        >
+                          {{ index == 0 ? 'Primer día de mantenimientos' : '' }}
+                        </div>
                       </div>
                     </div>
-                  </q-scroll-area>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div
-              v-if="payload.label != ''"
-              class="col-12 q-pr-md q-my-md"
-            >
-              <div class="col-12 q-pr-md form__item-label text-weight-thin">
-                <strong> Notas </strong>
-              </div>
-              <div
-                class="q-pa-sm w-100 h-100 border-line"
-                style="border-radius: 5px"
-              >
-                <div
-                  class="col-12 form__item-model q-pr-md"
-                  v-html="payload.label"
-                />
               </div>
             </div>
           </div>
-        </q-scroll-area>
 
+          <div
+            class="col-12"
+            v-if="form.observations"
+          >
+            <div class="q-py-sm form__item-label text-weight-thin">
+              Observaciones
+            </div>
+            <div
+              style="border-radius: 5px; height: 80%;"
+              class="q-pa-sm border-line"
+            >
+              <div
+                class="col-12 q-pr-md form__item-area"
+                v-html="form.observations"
+              />
+            </div>
+          </div>
+        </q-scroll-area>
         <div
           class="col-12 form__date_container form__date column justify-center q-px-lg"
           style="height: 6%"
         >
-          <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
+          <div>Fecha de creación: <strong>{{ form.createdAt }}</strong></div>
         </div>
       </div>
-    </div>
+    </q-form>
   </q-page>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+
+import { defineComponent } from 'vue';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
-import FormLabel from 'src/components/compose/FormLabel.vue';
+import GeneralTable from 'src/components/compose/GeneralTable.vue';
 
 export default defineComponent({
   name: 'EquipmentsPage',
   components: {
     HeaderActions,
-    FormLabel,
     BtnAction,
+    GeneralTable
   },
   data() {
     return {
-      fields: {
-        left: [
-          {
-            label: 'PLAN-0001 EQUIPO DE CHOQUE',
-            type: 'title',
-          },
-          {
-            label: 'Encargado',
-            model: 'Victor Manuel Velázquez Fuentes',
-          },
-        ],
-        right: [],
-        textarea: {},
-      },
-      ticked: ref(['Equipo de choque']),
-      tickStrategy: ref('none'),
-      days: [
-        'Sábado 04, Feb 2023',
-        'Sábado 18, Feb 2023',
-        'Sábado 04, Mar 2023',
-        'Sábado 18, Mar 2023',
-        'Sábado 01, Abr 2023',
-      ],
-      days2: [],
-      payload: {
-        label:
-          '<font size="6" style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; ">Título de observaciones</font><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><font size="3"><b>Observaciones hechas por el ingeniero</b></font></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul><b><font size="3">Observaciones hechas por el auxiliar</font></b></div><div style="color: rgb(122, 122, 122); font-family: Poppins, sans-serif; font-size: 12px; "><ul><li><font size="2">No existe algún error recurrente en el equipo</font></li><li><font size="2">Se ha reemplazado la pieza que causaba el error</font></li></ul></div>',
-      },
-      simple: [
-        {
-          label: 'Equipo de choque',
-          children: [
-            { label: 'Good food' },
-            { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' },
-          ],
-        },
-        {
-          label: 'Equipo de choque2',
-          children: [
-            { label: 'Good food' },
-            { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' },
-          ],
-        },
-        {
-          label: 'Equipo de choque3',
-          children: [
-            { label: 'Good food' },
-            { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' },
-          ],
-        },
-        {
-          label: 'Equipo de choque2',
-          children: [
-            { label: 'Good food' },
-            { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' },
-          ],
-        },
-        {
-          label: 'Equipo de choque3',
-          children: [
-            { label: 'Good food' },
-            { label: 'Good service (disabled node)' },
-            { label: 'Pleasant surroundings' },
-          ],
-        },
-      ],
       btnAction: {
         show: true,
-        btnTitle: 'Editar',
-        iconName: 'edit',
-        to: 'edit-1-maintenance-plan',
+        btnTitle: 'Guardar',
         btnWidth: 'auto',
+        loader: false,
+        btnAction: this.createOrEdit,
       },
+
       btnCloseWindow: {
         iconName: 'close',
         btnBackground: '#FF9900',
@@ -211,28 +139,111 @@ export default defineComponent({
         btnSize: 'xs',
         btnAction: this.goBack,
       },
+
+      rows: [],
+
+      form: {
+        id: null,
+        planName: '',
+        observations: '',
+        createdAt: '',
+        maintenanceDates: [],
+      },
+
+      columns: [
+        {
+          name: 'categoryName',
+          required: true,
+          label: 'Equipo',
+          align: 'left',
+          field: 'categoryName',
+          sortable: true,
+        },
+        {
+          name: 'equipmentModel',
+          label: 'Modelo',
+          field: 'equipmentModel',
+          align: 'left',
+          sortable: true,
+        },
+        {
+          name: 'location',
+          label: 'Ubicación',
+          field: 'location',
+          align: 'left',
+          sortable: true,
+        },
+        {
+          name: 'serialNumber',
+          label: 'No. serie',
+          field: 'serialNumber',
+          align: 'center',
+          sortable: true,
+        }
+      ],
     };
   },
+
   created() {
-    this.days2 = this.days;
+    this.getMaintenancePlan()
   },
-  watch: {
-    days: {
-      handler() {
-        this.days = this.days2;
-      },
-      deep: true,
+
+  computed: {
+    categories() {
+      return this.$store.getters['equipments/getCategoriesGetter'];
+    },
+
+    sortedDates() {
+      if (this.form?.maintenanceDates?.length >= 1) {
+        const unsortedDates = [...this.form.maintenanceDates];
+        const sortedDates = unsortedDates.sort((a, b) => new Date(a) - new Date(b));
+        return sortedDates
+      } else if (this.form.maintenanceDates?.lenght == 0) return []
+      else return this.form.maintenanceDates
     },
   },
+
+  watch: {
+    'form.maintenanceDates': {
+      handler(val, oldVal) {
+        if (val && val != oldVal) {
+          this.form.maintenanceDates = Array.isArray(val) ? val : [val];
+        }
+      },
+      immediate: true, // Para manejar el caso cuando el componente se carga inicialmente
+    },
+  },
+
   methods: {
+    async getMaintenancePlan() {
+      const params = {
+        id: this.$route.params.id
+      }
+
+      this.form = { ...this.form, ...await this.$store.dispatch('maintenancePlans/getMaintenancePlanAction', params) }
+
+      this.rows = []
+
+      this.form.equipments.forEach((e => {
+        this.rows = [...this.rows, ...e.children]
+      }))
+    },
+
+    calcDate(date) {
+      const initialDate = new Date(date);
+      initialDate.setDate(initialDate.getDate() + 1);
+      const optFormat = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+      return initialDate.toLocaleDateString('es-MX', optFormat);
+    },
+
     goBack() {
       this.$router.go(-1);
-    },
+    }
   },
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .main-container-page {
   background-color: white;
 }
@@ -242,24 +253,9 @@ export default defineComponent({
 }
 
 .chip-date {
-  max-width: 420px;
-  background-color: rgba($primary, 0.2);
-  ;
+  background-color: rgba($primary, 0.1);
+  max-width: 300px;
+  color: rgb(147, 150, 156);
   border-radius: 8px;
-}
-
-.select {
-  &__form {
-    border-radius: 8px;
-  }
-}
-
-.checkbox-label {
-  color: #e8f3fb;
-  font-size: 13px;
-}
-
-.divider-hr {
-  border-top: 0.5px solid;
 }
 </style>

@@ -41,7 +41,6 @@ export async function getCategoriesAction(context) {
     })
 }
 
-
 export async function updateCategories(context, val) {
     context.commit('MUTATE_CATEGORIES', val);
 }
@@ -55,7 +54,6 @@ export async function getEquipmentsByCategoryAction(context, params) {
         }
     })
 }
-
 
 export async function getEquipmentsByDateAction(context, params) {
     return service.getEquipmentsByDate(params).then(async (response) => {

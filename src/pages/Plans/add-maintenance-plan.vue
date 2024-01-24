@@ -114,7 +114,7 @@
               <div class="row">
                 <div class="col-sm-auto col-12">
                   <div class="q-py-sm q-my-sm form__item-label text-weight-thin">
-                    2-. Selecciona la(s) fecha(s) del mantenimiento
+                    2-. Selecciona las fechas de los mantenimientos
                   </div>
                   <div
                     class="row q-mb-md"
@@ -191,6 +191,7 @@
                     >
                       {{ calcDate(day) }}
                       <q-avatar
+                        v-if="!form.maintenanceFrequency"
                         @click="deleteDate(day)"
                         size="xs"
                         class="avatar-item"
@@ -268,6 +269,9 @@ import { addMonths, format } from 'date-fns';
 
 export default defineComponent({
   name: 'EquipmentsPage',
+  props: {
+
+  },
   components: {
     HeaderActions,
     BtnAction,
@@ -369,10 +373,6 @@ export default defineComponent({
 
   created() {
     this.getCategories();
-
-    if (this.isEditing()) {
-      this.getMaintenancePlan()
-    }
   },
 
   computed: {
@@ -410,13 +410,12 @@ export default defineComponent({
   },
 
   watch: {
-    categories: {
-      handler(val) {
-        this.localCategories = JSON.parse(JSON.stringify(val));
-      },
-      deep: true,
-      immediate: true
-    },
+    // categories: {
+    //   handler(val) {
+    //   },
+    //   deep: true,
+    //   immediate: true
+    // },
 
     'form.maintenanceDates': {
       handler(val, oldVal) {
@@ -465,25 +464,24 @@ export default defineComponent({
     },
 
     async getMaintenancePlan() {
-      this.loading = true
       const params = {
         id: this.$route.params.id
       }
 
       this.form = { ...this.form, ...await this.$store.dispatch('maintenancePlans/getMaintenancePlanAction', params) }
-      // FORMAT RESULT
-
-      this.loading = false
     },
 
     async editMaintenancePlan() {
       this.btnAction.loader = true;
-      this.formPlan.id = this.$route.params.id
+
+      console.log(this.$route.params.id)
+
+      this.form.id = this.$route.params.id
 
       try {
         const res = await this.$store.dispatch(
-          'maintenancePlans/updateMaintenancePlansAction',
-          this.formPlan
+          'maintenancePlans/updateMaintenancePlanAction',
+          this.form
         );
         if (res === true) {
           this.showAlert({ title: 'Éxito al editar', msg: 'El plan de mantenimientos se ha actualizado', color: 'green-14' });
@@ -516,13 +514,38 @@ export default defineComponent({
     async getCategories() {
       this.loading = true
       await this.$store.dispatch('equipments/getCategoriesAction')
+
+      this.localCategories = JSON.parse(JSON.stringify(this.categories));
+
+      if (this.isEditing()) {
+        await this.getMaintenancePlan()
+        // console.log(this.form)
+
+
+        if (this.form && this.form?.equipments) {
+
+          this.form.equipments.forEach((cat) => {
+            let existingCategory = this.localCategories.find((cat2) => cat.id === cat2.id);
+            if (existingCategory) {
+              existingCategory.children = cat.children;
+            } else {
+              this.localCategories.unshift(cat);
+            }
+          });
+        }
+      }
+
       this.loading = false
     },
 
-    async getEquipmentsByCategory({ key, done }) {
-      const equipments = await this.$store.dispatch('equipments/getEquipmentsByCategoryAction', {
-        categoryId: key
-      })
+    async getEquipmentsByCategory({ key, node, done }) {
+
+      const equipments = [
+        ...node.children,
+        ...await this.$store.dispatch('equipments/getEquipmentsByCategoryAction', {
+          categoryId: key
+        })]
+
 
       if (equipments.length > 0)
         done(equipments)
@@ -640,7 +663,6 @@ export default defineComponent({
     deleteDate(day) {
       const index = this.form.maintenanceDates.indexOf(day);
       if (index !== -1) {
-        // Elimina la fecha del array
         this.form.maintenanceDates.splice(index, 1);
       }
     },

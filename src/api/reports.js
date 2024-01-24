@@ -42,7 +42,7 @@ export default class EquipmentService {
     }
 
     // Actualizar nuevo reporte
-    static updateReport(payload, id) {
-        return api.put(this.endpoint + 'update/' + id, payload);
+    static updateReport(report) {
+        return api.put(this.endpoint + 'deactivate/' + report.idReport + '/' + report.idUser);
     }
 }

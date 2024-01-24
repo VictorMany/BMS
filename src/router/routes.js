@@ -70,6 +70,7 @@ const routes = [
       {
         path: 'add-maintenance',
         name: 'add-maintenance',
+        props: true,
         component: () => import('src/pages/Maintenances/add-maintenance.vue')
       },
       {

@@ -17,13 +17,18 @@ export default class EquipmentService {
         return api.get(this.endpoint + 'getById/' + id);
     }
 
-    // // Generar nuevo equipo
-    // static postEquipment(payload) {
-    //     return api.post(this.endpoint + 'create', payload);
-    // }
-
-    // // Actualizar nuevo equipo
-    // static updateEquipment(payload, id) {
-    //     return api.put(this.endpoint + 'update/' + id, payload);
-    // }
+    // Actualizar nuevo maintenance plan
+    static updateMaintenancePlan(payload, id) {
+        return api.put(this.endpoint + 'update/' + id, payload);
+    }
 }
+
+// // Generar nuevo equipo
+// static postEquipment(payload) {
+//     return api.post(this.endpoint + 'create', payload);
+// }
+
+// // Actualizar nuevo equipo
+// static updateEquipment(payload, id) {
+//     return api.put(this.endpoint + 'update/' + id, payload);
+// }

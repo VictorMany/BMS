@@ -53,6 +53,8 @@ export async function getMaintenancesByUserAction(context, params) {
 
 export async function postMaintenanceAction(context, maintenance) {
     // Those are the keys you need in your payload and find in the fields
+
+
     let keys = {
         // MaintenanceId: '',
         maintenanceType: '',
@@ -67,10 +69,15 @@ export async function postMaintenanceAction(context, maintenance) {
     }
 
     // We call the global action to format our payload
-    const payload = await context.dispatch('global/formatPayload', {
+    let payload = await context.dispatch('global/formatPayload', {
         keys,
         fields: maintenance
     }, { root: true });
+
+
+    if (maintenance.reportRelated) {
+        payload.append('reportRelated', maintenance.reportRelated)
+    }
 
     return await service.postMaintenance(payload).then(async (response) => {
         if (response.status == 200) {

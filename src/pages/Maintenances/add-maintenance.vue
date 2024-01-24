@@ -48,7 +48,6 @@ export default defineComponent({
   },
   data() {
     return {
-      Equipos: 40,
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
@@ -63,10 +62,10 @@ export default defineComponent({
         btnSize: 'xs',
         btnAction: this.goBack,
       },
-
       fields: {
         createdAt: this.getCreatedAt(),
         id: null,
+        reportRelated: null,
 
         top: [
           {
@@ -157,10 +156,16 @@ export default defineComponent({
           }
         ],
       },
+
+      defaultEquipment: null
     };
   },
   methods: {
     async createMaintenance() {
+      if (this.report) {
+        this.fields.reportRelated = this.report.ReportId
+
+      }
       if (await this.$refs.fieldsComponent.validate()) {
         this.btnAction.loader = true;
         try {
@@ -192,6 +197,18 @@ export default defineComponent({
       this.loading = false
     },
 
+    async getUsers(params) {
+      this.loading = true
+      await this.$store.dispatch('users/getUsersAction', params);
+      this.loading = false
+    },
+
+    async getEquipments(params) {
+      this.loading = true
+      await this.$store.dispatch('equipments/getEquipmentsAction', params);
+      this.loading = false
+    },
+
     getDate() {
       return this.$store.$store.getters['global/getDate']
     },
@@ -211,18 +228,6 @@ export default defineComponent({
         color: color ? color : 'secondary',
         classes: classes ? classes : 'border-rounded',
       });
-    },
-
-    async getUsers(params) {
-      this.loading = true
-      await this.$store.dispatch('users/getUsersAction', params);
-      this.loading = false
-    },
-
-    async getEquipments(params) {
-      this.loading = true
-      await this.$store.dispatch('equipments/getEquipmentsAction', params);
-      this.loading = false
     },
 
     filterUsers(val, update) {
@@ -259,6 +264,51 @@ export default defineComponent({
         const needle = val.toLowerCase()
         this.fields.top[1].options = this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
       })
+    },
+
+    getEquipmentDefault() {
+      this.setModelValueByKey('idEquipment', {
+        value: this.equipment.IdEquipment,
+        label: this.equipment.equipmentName
+      })
+      this.setModelValueByKey('photo', this.equipment.photo)
+      this.setModelValueByKey('serialNumber', this.equipment.serialNumber)
+    },
+
+    getEquipmentFromReport() {
+      this.setModelValueByKey('idEquipment', {
+        value: this.report.idEquipment,
+        label: this.report.Equipment.equipmentName
+      })
+      this.setModelValueByKey('maintenanceType', {
+        value: 'correctivo',
+        label: 'Correctivo'
+      })
+      this.setModelValueByKey('photo', this.report.Equipment.photo)
+      this.setModelValueByKey('serialNumber', this.report.Equipment.serialNumber)
+      this.setModelValueByKey('observations', 'Mantenimiento a causa de un report por: ' + this.report.reason)
+    },
+
+    setModelValueByKey(key, value) {
+      // Busca la clave en todas las secciones del objeto fields
+      for (const sectionKey in this.fields) {
+        if (Object.prototype.hasOwnProperty.call(this.fields, sectionKey)) {
+          const elements = this.fields[sectionKey];
+
+          // Verifica si elements es iterable (un objeto iterable debería tener la propiedad Symbol.iterator)
+          if (elements && typeof elements[Symbol.iterator] === 'function') {
+            // Busca la clave en cada elemento de la sección
+            for (const element of elements) {
+              if (element.key === key) {
+                element.model = value;
+                return;
+              }
+            }
+          }
+        }
+      }
+
+      // Si la clave no se encuentra, puedes manejarlo según tus necesidades
     }
   },
 
@@ -268,17 +318,11 @@ export default defineComponent({
   },
 
   mounted() {
-    if (this.equipment.equipmentName && !this.fields.top[1].model) {
-      this.fields.top[1].model = {
-        value: this.equipment.IdEquipment,
-        label: this.equipment.equipmentName
-      }
+    if (this.equipment) {
+      this.getEquipmentDefault()
     }
-    if (this.equipment.photo && this.fields.right[1].model === null) {
-      this.fields.right[1].model = this.equipment.photo
-    }
-    if (this.equipment.serialNumber && !this.fields.right[0].model) {
-      this.fields.right[0].model = this.equipment.serialNumber
+    else if (this.report) {
+      this.getEquipmentFromReport()
     }
   },
 
@@ -288,6 +332,13 @@ export default defineComponent({
         return this.$store.getters['users/getUsersGetter'];
       },
     },
+
+    report: {
+      get() {
+        return this.$store.getters['reports/getReportGetter'];
+      },
+    },
+
     equipments: {
       get() {
         return this.$store.getters['equipments/getEquipmentsGetter'];

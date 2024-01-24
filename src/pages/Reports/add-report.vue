@@ -207,21 +207,25 @@ export default defineComponent({
 
     async editReport() {
       this.btnAction.loader = true;
-      this.fields.id = this.$route.params.id
 
       try {
         const res = await this.$store.dispatch(
           'reports/updateReportAction',
-          this.fields
+          {
+            idReport: this.$route.params.id,
+            idUser: 11
+          }
         );
         if (res === true) {
           this.showAlert({ title: 'Éxito al editar', msg: 'El reporte se ha actualizado', color: 'green-14' });
           this.$router.go(-1);
         } else {
+          console.log(res)
           this.showAlert({});
         }
         this.btnAction.loader = false;
       } catch (error) {
+        console.log(error)
         this.btnAction.loader = false;
         this.showAlert({});
       }
@@ -232,6 +236,21 @@ export default defineComponent({
         this.editReport()
       } else {
         this.createReport()
+      }
+    },
+
+    getEquipmentDefault() {
+      if (this.equipment.equipmentName && !this.fields.top[0].model) {
+        this.fields.top[0].model = {
+          value: this.equipment.IdEquipment,
+          label: this.equipment.equipmentName
+        }
+      }
+      if (this.equipment.photo && this.fields.right[1].model === null) {
+        this.fields.right[1].model = this.equipment.photo
+      }
+      if (this.equipment.serialNumber && !this.fields.right[0].model) {
+        this.fields.right[0].model = this.equipment.serialNumber
       }
     },
 
@@ -259,7 +278,7 @@ export default defineComponent({
 
     showAlert({ msg, color, title, classes }) {
       this.$q.notify({
-        message: title ? title : 'Ocurrió un error al crear el usuario',
+        message: title ? title : 'Ocurrió un error al crear el reporte',
         caption: msg ? msg : 'Inténtalo de nuevo más tarde',
         color: color ? color : 'secondary',
         classes: classes ? classes : 'border-rounded',
@@ -331,18 +350,13 @@ export default defineComponent({
     }
   },
 
+  // beforeUnmount() {
+  //   this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+  // },
+
   mounted() {
-    if (this.equipment.equipmentName && !this.fields.top[0].model) {
-      this.fields.top[0].model = {
-        value: this.equipment.IdEquipment,
-        label: this.equipment.equipmentName
-      }
-    }
-    if (this.equipment.photo && this.fields.right[1].model === null) {
-      this.fields.right[1].model = this.equipment.photo
-    }
-    if (this.equipment.serialNumber && !this.fields.right[0].model) {
-      this.fields.right[0].model = this.equipment.serialNumber
+    if (this.equipment) {
+      this.getEquipmentDefault()
     }
   },
 

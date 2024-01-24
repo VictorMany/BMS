@@ -67,7 +67,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Añadir reporte',
-        to: 'add-report',
+        btnAction: this.goToAddReport,
         btnWidth: 'auto'
       },
 
@@ -81,6 +81,11 @@ export default defineComponent({
           icnName: 'edit',
           icnSize: 'xs',
           icnAction: 'Edit',
+        },
+        {
+          icnName: 'engineering',
+          icnSize: 'xs',
+          icnAction: 'Maintenance',
         },
       ],
 
@@ -162,6 +167,8 @@ export default defineComponent({
           this.goToEdit(val.id);
         } else if (val.action === 'Detail') {
           this.goToDetails(val.id);
+        } else if (val.action === 'Maintenance') {
+          this.goToMaintenance(val.id);
         }
       },
       deep: true,
@@ -196,12 +203,38 @@ export default defineComponent({
       this.loading = false
     },
 
+    goToAddReport() {
+      // Delete from the LOCAL STORAGE IF EXIST
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+      this.$router.push({
+        name: 'add-report'
+      })
+    },
+
     goBack() {
       this.$router.go(-1);
     },
 
     goToDetails(payload) {
       this.$router.push({ name: 'detail-report', params: { id: payload } });
+    },
+
+    async goToMaintenance(payload) {
+      // Delete from the LOCAL STORAGE IF EXIST
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+
+      await this.getReport(payload)
+
+      this.$router.push({
+        name: 'add-maintenance'
+      });
+    },
+
+    async getReport(id) {
+      const params = {
+        id: id,
+      }
+      await this.$store.dispatch('reports/getReportAction', params)
     },
 
     goToEdit(payload) {

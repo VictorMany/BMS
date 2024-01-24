@@ -44,7 +44,6 @@ export async function formatDetails(context, { keys, fields }) {
             }
         }
     }
-
     if (keys.User) {
         // add equipment name
         fields.top[0].model = keys.Equipment.equipmentName;
@@ -63,7 +62,6 @@ export function addSttingsToLocalStorage(context, newData) {
     context.commit('UPDATE_LOCAL_STORAGE', newData)
 }
 
-
 export function formatDate(date) {
     const initialDate = new Date(date);
     // Ajustar la zona horaria a la de España (GMT+1)
@@ -81,13 +79,22 @@ function getModelSelected(item, valueFromServer) {
             }
         });
         return item
-    } else if (item.label == 'Estatus') {
+    } else if (item.label == 'Estatus' && item.key != 'reportStatus') {
         if (valueFromServer) {
             item.model = 'Activo'
             item.color = '#10D13A'
         } else {
             item.model = 'Inactivo'
             item.color = '#d1b410'
+        }
+        return item
+    } else if (item.key == 'reportStatus') {
+        if (valueFromServer) {
+            item.model = 'Pendiente'
+            item.color = '#FF9900'
+        } else {
+            item.model = 'Atendido'
+            item.color = '#1e65e8'
         }
         return item
     }

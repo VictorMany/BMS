@@ -86,7 +86,8 @@
           >
 
             <div
-              class="q-pa-md bg-accent border-rounded q-mt-lg"
+              class="q-pa-md border-rounded q-mt-lg"
+              style="background-color: rgba(125, 125, 125, 0.085);"
               v-if="showEquipmentDetails()"
             >
               <div class="col-12 text-weight-medium text-primary">
@@ -576,30 +577,27 @@ export default defineComponent({
           case 'reports':
             if (!this.showEquipmentDetails() || !this.showUserDetails()) {
               this.btnCloseSesion.show = true;
-              this.selected = this.btnLinks.findIndex(
-                (e) => e.link === route.name
-              );
+              this.selected = this.btnLinks.findIndex((e) => e.link === route.name);
             }
             break;
           case 'maintenances':
             if (!this.showEquipmentDetails() || !this.showUserDetails()) {
               this.btnCloseSesion.show = true;
-              this.selected = this.btnLinks.findIndex(
-                (e) => e.link === route.name
-              );
+              this.selected = this.btnLinks.findIndex((e) => e.link === route.name);
             }
             break;
           case 'detail-equipment':
             this.btnLinks = [...this.btnDetailEquipment];
             this.selected = null;
             break;
+
+          case 'detail-report':
           case 'edit-equipment':
           case 'edit-user':
           case 'add-maintenance':
           case 'edit-maintenance':
           case 'detail-maintenance':
           case 'add-report':
-          case 'detail-report':
           case 'edit-report':
             await this.changeMenu(this.btnGeneral)
             this.selected = null;

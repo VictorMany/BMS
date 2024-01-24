@@ -25,7 +25,7 @@
             v-if="label.label"
             class="q-pb-xs"
             :class="label.info === undefined
-              ? 'card-typography-info col-12'
+              ? 'card-text col-12'
               : 'card-typography col-6'
               "
           >
@@ -33,7 +33,7 @@
           </div>
           <div
             v-if="label.info"
-            class="col-6 card-typography-info q-pb-xs"
+            class="col-6 card-text  q-pb-xs"
             :class="label.label === null ? 'col-12' : ''"
           >
             {{ label.info }}
@@ -41,7 +41,7 @@
         </div>
         <q-space />
         <div
-          class="card-typography-info full-width row justify-end"
+          class="card-text full-width row justify-end"
           :class="cardLabels.length == 1 ? 'q-mt-lg' : 'q-mt-xs'"
         >
           {{ cardDate }}
@@ -113,12 +113,24 @@ export default defineComponent({
 .card-typography {
   font-weight: 400;
   font-size: 12px;
+  white-space: nowrap;
+  /* Evita el salto de línea */
+  overflow: hidden;
+  /* Oculta el contenido que desborda */
+  text-overflow: ellipsis;
+  /* Muestra puntos suspensivos (...) cuando hay desbordamiento */
 }
 
-.card-typography-info {
+.card-text {
   font-weight: 300;
   font-size: 12px;
   color: #798d9cda;
+  white-space: nowrap;
+  /* Evita el salto de línea */
+  overflow: hidden;
+  /* Oculta el contenido que desborda */
+  text-overflow: ellipsis;
+  /* Muestra puntos suspensivos (...) cuando hay desbordamiento */
 }
 
 @media only screen and (max-device-width: 599px) {

@@ -1,3 +1,5 @@
+import { formatDate } from '../global/actions';
+
 export function getEquipmentsGetter(state) {
   let equipments = state.equipments.map(equipment => ({
     id: equipment.IdEquipment,
@@ -7,8 +9,7 @@ export function getEquipmentsGetter(state) {
       { label: 'Marca:', info: equipment.equipmentBrand },
       { label: 'No. serie:', info: equipment.serialNumber },
     ],
-    cardDate: new Date(equipment.createdAt).toLocaleDateString(),
-
+    cardDate: formatDate(equipment.createdAt),
     // FOR THE DETAILS MAINTENANCE AND REPORT
     label: equipment.equipmentName,
     value: equipment.IdEquipment,
