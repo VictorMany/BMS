@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <div class="column items-end q-mt-md q-mb-xs">
+      <div class="column items-end q-mt-md q-mb-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions
@@ -14,7 +14,7 @@
       >
         <q-scroll-area
           class="full-height"
-          style="height: 92% !important"
+          style="height: 90% !important"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <form-label

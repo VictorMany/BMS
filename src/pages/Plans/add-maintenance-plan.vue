@@ -4,7 +4,7 @@
       ref="myForm"
       class="card-page"
     >
-      <div class="column items-end q-mt-md q-mb-xs">
+      <div class="column items-end q-mt-md q-mb-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
 
@@ -19,7 +19,7 @@
       >
         <q-scroll-area
           class="full-height q-pb-sm"
-          style="height: 92% !important"
+          style="height: 90% !important"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <q-input

@@ -275,7 +275,7 @@
     <q-page-container class="container-style">
       <router-view />
     </q-page-container>
-    <q-tabs class="tabs-style">
+    <!-- <q-tabs class="tabs-style">
       <q-route-tab
         icon="dashboard"
         to="/"
@@ -286,11 +286,6 @@
         to="/equipments"
         exact
       />
-      <!-- <q-route-tab
-        icon="person"
-        to="/users"
-        exact
-      /> -->
       <q-route-tab
         icon="home_repair_service"
         to="/maintenances"
@@ -301,7 +296,7 @@
         to="/settings"
         exact
       />
-    </q-tabs>
+    </q-tabs> -->
   </q-layout>
 </template>
 
