@@ -164,7 +164,6 @@ export default defineComponent({
     async createMaintenance() {
       if (this.report) {
         this.fields.reportRelated = this.report.ReportId
-
       }
       if (await this.$refs.fieldsComponent.validate()) {
         this.btnAction.loader = true;

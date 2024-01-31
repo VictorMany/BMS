@@ -79,8 +79,9 @@
                         </q-input>
 
                         <q-tree
-                          style="height: 36vh; overflow-y: scroll;"
                           v-model:ticked="form.equipmentIds"
+                          style="height: 36vh; overflow-y: scroll;"
+                          no-transition
                           :nodes="localCategories"
                           tick-strategy="leaf"
                           node-key="id"
@@ -130,7 +131,10 @@
                       />
                     </div>
 
-                    <div class="col">
+                    <div
+                      class="col"
+                      v-if="form.hasFrequency"
+                    >
                       <q-select
                         v-model="form.maintenanceFrequency"
                         :options="options"
@@ -178,7 +182,10 @@
                 </div>
 
                 <div class="col-sm col-12 q-px-xl">
-                  <div class="form__item-label text-weight-thin q-py-sm q-my-sm">
+                  <div
+                    v-if="sortedDates.length > 0"
+                    class="form__item-label text-weight-thin q-py-sm q-my-sm"
+                  >
                     Lista de fechas programadas
                   </div>
                   <div
@@ -212,7 +219,7 @@
             </div>
           </div>
 
-          <div class="col-12 col-sm-6 q-px-lg">
+          <div class="col-12 col-sm-6 q-px-lg q-mb-md">
             <div class="q-py-sm q-my-sm form__item-label text-weight-thin">
               3-. Agrega algunas observaciones (opcional)
             </div>
@@ -410,13 +417,6 @@ export default defineComponent({
   },
 
   watch: {
-    // categories: {
-    //   handler(val) {
-    //   },
-    //   deep: true,
-    //   immediate: true
-    // },
-
     'form.maintenanceDates': {
       handler(val, oldVal) {
         if (val && val != oldVal) {
@@ -474,8 +474,6 @@ export default defineComponent({
     async editMaintenancePlan() {
       this.btnAction.loader = true;
 
-      console.log(this.$route.params.id)
-
       this.form.id = this.$route.params.id
 
       try {
@@ -499,7 +497,7 @@ export default defineComponent({
 
     async createOrEdit() {
       this.$refs.myForm.validate().then(success => {
-        if (success) {
+        if (success && this.validatePayload()) {
           if (this.isEditing()) {
             this.editMaintenancePlan()
           } else {
@@ -519,9 +517,6 @@ export default defineComponent({
 
       if (this.isEditing()) {
         await this.getMaintenancePlan()
-        // console.log(this.form)
-
-
         if (this.form && this.form?.equipments) {
 
           this.form.equipments.forEach((cat) => {
@@ -671,7 +666,33 @@ export default defineComponent({
       const initialDate = new Date(date);
       initialDate.setDate(initialDate.getDate() + 1);
       this.$refs.myDatePicker.setCalendarTo(initialDate.getFullYear(), initialDate.getMonth() + 1);
-    }
+    },
+
+    validatePayload() {
+      return (this.validateEquipments() && this.validateDates())
+    },
+
+    validateDates() {
+      let dates = this.form.maintenanceDates.length > 0
+      if (!dates) {
+        this.showAlert({
+          title: 'Mínimo debe contener una fecha',
+          msg: 'El plan de mantenimientos al menos debe de contener una fecha'
+        })
+      }
+      return dates
+    },
+
+    validateEquipments() {
+      let equipments = this.form.equipmentIds.length > 0
+      if (!equipments) {
+        this.showAlert({
+          title: 'Mínimo debe de incluir un equipo',
+          msg: 'El plan de mantenimientos al menos debe de incluir un equipo'
+        })
+      }
+      return equipments
+    },
   },
 });
 </script>

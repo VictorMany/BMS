@@ -85,6 +85,7 @@ export async function postEquipmentAction(context, equipment) {
         equipmentBrand: '',
         equipmentModel: '',
         equipmentName: '',
+        CategoryId: '',
         location: '',
         manufacturingYear: '',
         observations: '',

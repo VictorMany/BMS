@@ -105,17 +105,7 @@ export default defineComponent({
 
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por nombre',
-        setSelectedFilter: this.setSelectedFilter,
-        setSelectedOptionFilter: this.setSelectedOptionFilter,
-        heightModal: 200,
-        items: [
-          {
-            title: 'Nombre del plan',
-            filter: 'planName',
-            icon: 'supervisor_account'
-          }
-        ],
+        inputLabel: 'Nombre del plan',
       },
 
       params: {
@@ -176,35 +166,6 @@ export default defineComponent({
 
     goToEdit(payload) {
       this.$router.push({ name: 'edit-maintenance-plan', params: { id: payload } });
-    },
-
-    setSelectedFilter(opt) {
-      if (this.selectedFilterText) {
-        delete this.params[this.selectedFilterText]
-        if (this.searchModel) {
-          this.getMaintenancePlans();
-        }
-      }
-
-      this.selectedFilterText = opt.filter
-      this.inputSearch.inputLabel = opt.title;
-
-      if (opt.value && opt.filter) {
-        this.params[opt.filter] = this.searchModel
-        this.getMaintenancePlans();
-      }
-    },
-
-    setSelectedOptionFilter(activeFilters, removedFilter = null) {
-      if (activeFilters.length) {
-        activeFilters.forEach(item => {
-          this.params[item.filter] = item.value
-        })
-      }
-      if (removedFilter) {
-        delete this.params[removedFilter]
-      }
-      this.getMaintenancePlans();
     },
 
     changePagination(pagination) {

@@ -54,7 +54,6 @@ export async function getMaintenancesByUserAction(context, params) {
 export async function postMaintenanceAction(context, maintenance) {
     // Those are the keys you need in your payload and find in the fields
 
-
     let keys = {
         // MaintenanceId: '',
         maintenanceType: '',
@@ -74,13 +73,12 @@ export async function postMaintenanceAction(context, maintenance) {
         fields: maintenance
     }, { root: true });
 
-
     if (maintenance.reportRelated) {
         payload.append('reportRelated', maintenance.reportRelated)
     }
 
     return await service.postMaintenance(payload).then(async (response) => {
-        if (response.status == 200) {
+        if (response.status == 201) {
             context.commit('ADD_MAINTENANCE', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
             return true
         } else {

@@ -49,6 +49,9 @@ export default defineComponent({
   data() {
     return {
       loading: false,
+
+      localCategories: [],
+
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
@@ -69,28 +72,27 @@ export default defineComponent({
         createdAt: this.getCreatedAt(),
 
         top: [
-          // {
-          //   key: 'equipmentName',
-          //   label: 'Categoría del equipo',
-          //   model: '',
-          //   rules: [
-          //     (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-          //     (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
-          //     (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
-          //   ],
-          // },
           {
-            key: 'idEquipment',
+            key: 'CategoryId',
             label: 'Categoría del equipo',
             type: 'select',
-            itemFilter: this.filterEquipments,
+            itemFilter: this.filterCategories,
             options: [],
             model: null,
             rules: [
               (val) => (val) || 'El campo es obligatorio',
             ],
           },
-
+          {
+            key: 'equipmentName',
+            label: 'Nombre del equipo',
+            model: '',
+            rules: [
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+              (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
+              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
+            ],
+          },
         ],
         left: [
           {
@@ -185,8 +187,8 @@ export default defineComponent({
             type: 'select',
             model: null,
             options: [
-              { label: 'Activo', index: 1, value: 1 },
-              { label: 'Inactivo', index: 2, value: 0 },
+              { label: 'Activo', index: 1, value: true },
+              { label: 'Inactivo', index: 2, value: false },
             ],
           },
           {
@@ -291,6 +293,27 @@ export default defineComponent({
       }
     },
 
+    async createOrEdit() {
+      if (await this.$refs.fieldsComponent.validate()) {
+        if (this.isEditing()) {
+          this.editEquipment()
+        } else {
+          this.createEquipment()
+        }
+      }
+    },
+
+    async getEquipments(params) {
+      this.loading = true
+      await this.$store.dispatch('equipments/getEquipmentsAction', params);
+      this.loading = false
+    },
+
+    async getCategories() {
+      await this.$store.dispatch('equipments/getCategoriesAction')
+      this.localCategories = JSON.parse(JSON.stringify(this.categories));
+    },
+
     getTitle() {
       if (this.isEditing()) {
         return 'Editar equipo'
@@ -318,37 +341,16 @@ export default defineComponent({
       });
     },
 
-    async createOrEdit() {
-      if (await this.$refs.fieldsComponent.validate()) {
-        if (this.isEditing()) {
-          this.editEquipment()
-        } else {
-          this.createEquipment()
-        }
-      }
-    },
-
-    async getEquipments(params) {
-      this.loading = true
-      await this.$store.dispatch('equipments/getEquipmentsAction', params);
-      this.loading = false
-    },
-
-    filterEquipments(val, update) {
+    filterCategories(val, update) {
       if (val === '') {
         update(() => {
-          this.fields.top[0].options = this.equipments
+          this.fields.top[0].options = this.categories
         })
         return
-      } else {
-        this.getEquipments({
-          name: val
-        })
       }
-
       update(() => {
         const needle = val.toLowerCase()
-        this.fields.top[0].options = this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+        this.fields.top[0].options = this.categories.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
       })
     },
 
@@ -358,7 +360,8 @@ export default defineComponent({
 
     isEditing() {
       return this.$route.params.id ? true : false
-    }
+    },
+
   },
 
   computed: {
@@ -367,9 +370,15 @@ export default defineComponent({
         return this.$store.getters['equipments/getEquipmentsGetter'];
       },
     },
+
+    categories() {
+      return this.$store.getters['equipments/getCategoriesGetter'];
+    },
   },
 
   created() {
+    this.getCategories()
+
     if (this.isEditing()) {
       this.getEquipment()
     }

@@ -181,13 +181,13 @@ export default defineComponent({
 
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por nombre',
+        inputLabel: 'Nombre de usuario',
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
         heightModal: 160,
         items: [
           {
-            title: 'Nombre',
+            title: 'Nombre de usuario',
             icon: 'account_circle',
             filter: 'name',
           },

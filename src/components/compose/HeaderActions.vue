@@ -1,33 +1,37 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div class="row items-center q-ma-none q-pa-none q-mb-sm">
-    <div class="col-xs-auto col-sm title-page q-py-sm">
+  <div class="container-header row items-center q-ma-none q-pa-none q-mb-sm">
+    <div class="col-xs-auto col-sm title-page">
       {{ titlePage }}
     </div>
     <div
       v-if="btnAction.show"
-      class="col-xs col-sm-auto column content-end q-px-sm gt-sm"
+      class="col-xs-auto column content-end gt-sm"
     >
       <btn-action v-bind="btnAction" />
     </div>
+
     <div
       v-if="switchContent"
-      class="col-xs col-sm-auto column content-end q-px-sm"
+      class="col-xs-auto q-ml-auto column content-end"
     >
       <btn-switch v-model:switch-content="switchContentLocal" />
     </div>
+
     <div
       v-if="btnAction.show"
-      class="col-xs col-sm-auto column content-end q-px-sm lt-md"
+      class="col-xs-auto column content-end lt-md"
+      :class="{ 'q-ml-auto': !switchContent }"
     >
       <btn-action
         v-bind="btnAction"
         :btn-title="''"
       />
     </div>
+
     <div
       v-if="inputSearch"
-      class="col-md-4 col-xs-12 column q-pl-sm content-end"
+      class="col-md-4 col-xs-12 column content-end"
     >
       <input-search
         class="w-100"
@@ -106,10 +110,5 @@ export default defineComponent({
   .title-page {
     color: #91c8ff84;
   }
-}
-
-.title-page {
-  font-weight: 400;
-  font-size: 20px;
 }
 </style>

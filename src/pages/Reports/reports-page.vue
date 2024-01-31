@@ -101,7 +101,7 @@ export default defineComponent({
         heightModal: 160,
         items: [
           {
-            title: 'Reporte',
+            title: 'Buscar por reporte',
             icon: 'bug_report',
             filter: 'reason'
           },

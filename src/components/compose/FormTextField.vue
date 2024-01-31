@@ -383,11 +383,6 @@ export default defineComponent({
       default: '',
       required: false,
     },
-    inputLabel: {
-      type: String,
-      default: 'Buscar por nombre',
-      required: false,
-    },
     model: {
       type: String,
       required: false,

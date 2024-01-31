@@ -21,10 +21,10 @@
           <div style="max-width: 100%">
             <div
               v-if="equipments && equipments.length > 0"
-              class="row q-pa-none q-ma-none q-px-sm"
+              class="row container-cards"
             >
               <div
-                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto q-px-sm q-pb-md"
+                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
                 v-for="(equipment, index) in equipments"
                 :key="index"
               >
@@ -75,6 +75,7 @@
         </div>
 
         <general-table
+          :height="'100%'"
           v-else-if="switchContent === 2"
           v-model:row-selected="rowSelected"
           :rows="rows"
@@ -136,13 +137,13 @@ export default defineComponent({
 
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por nombre',
+        inputLabel: 'Nombre del equipo',
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
         heightModal: 290,
         items: [
           {
-            title: 'Nombre',
+            title: 'Nombre del equipo',
             filter: 'name',
             icon: 'badge',
           },

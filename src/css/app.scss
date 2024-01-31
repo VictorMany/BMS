@@ -388,11 +388,10 @@
 }
 
 .main-container-page {
-  height: 90%;
+  height: 88%;
   width: 100%;
   overflow-y: scroll !important;
   border-radius: 6px;
-  padding-top: 1rem;
 }
 
 .h-90 {
@@ -462,16 +461,6 @@
 
   &__checkbox {
     border-radius: 5px;
-  }
-
-  &__item-select {
-    min-width: 230px !important;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    border-radius: 0.3rem !important;
-    padding-left: 0.6rem !important;
-    padding-right: 0.6rem !important;
   }
 
   &__date {
@@ -558,28 +547,65 @@
   display: none;
 }
 
+
+.q-chip,
+.q-badge {
+  border-radius: 6px !important;
+}
+
+.border-rounded {
+  border-radius: 0.6rem;
+}
+
+.title-page {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.container-cards {
+  padding: 10px;
+  gap: 10px;
+}
+
+.container-header {
+  gap: 10px;
+  padding-bottom: 10px;
+}
+
+
 // RESPONSIVITY
 @media only screen and (max-device-width : 1000px) {
-  .main-container-page {
-    height: 90%;
-    padding: 0.5;
-    width: 100%;
-  }
-
-  .card-page {
-    height: 90%;
-    margin-top: -4rem;
-    padding: 0 !important;
+  .q-page {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-top: 7px;
   }
 
   .title-page {
-    padding-left: 1rem;
+    font-size: 15px;
   }
 
-  .general-table {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+  .main-container-page {
+    flex: 1;
+    height: 82%;
   }
+
+  .card-page {
+    height: 91vh;
+    align-items: stretch;
+    padding: 10px;
+  }
+
+  .container-cards {
+    padding: 5px;
+    gap: 5px;
+  }
+
+  // .general-table {
+  //   padding-left: 0.5rem;
+  //   padding-right: 0.5rem;
+  // }
 
   .container-style {
     height: 93vh !important;
@@ -591,11 +617,51 @@
   }
 }
 
-.q-chip,
-.q-badge {
-  border-radius: 6px !important;
-}
+/* Styles for phones */
+@media only screen and (max-width: 767px) {
 
-.border-rounded {
-  border-radius: 0.6rem;
+  .info {
+    &__title {
+      font-size: 20px;
+      line-height: 16px;
+    }
+
+    &__detail,
+    &__email {
+      font-size: 10px;
+    }
+  }
+
+  .setting-item {
+    &__title {
+      font-size: 10px;
+    }
+
+    &__subtitle {
+      font-size: 8px;
+    }
+  }
+
+  .form {
+    &__item-model {
+      font-size: 11px !important;
+    }
+
+    &__item-input-12,
+    &__item-textarea,
+    &__item-select,
+    &__item-input,
+    &__item-label,
+    &__date {
+      font-size: 10px;
+    }
+  }
+
+  .card-graphics {
+    &__title {
+      font-size: 11px;
+    }
+  }
+
+
 }

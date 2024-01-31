@@ -229,7 +229,7 @@ export default defineComponent({
 
 @media only screen and (max-device-height: 819px) {
   .my-sticky-header-table {
-    height: 85%;
+    height: 92%;
   }
 }
 

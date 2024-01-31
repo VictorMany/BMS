@@ -19,9 +19,12 @@ export function getEquipmentsGetter(state) {
 }
 
 export function getCategoriesGetter(state) {
-  return state.categories
+  let categories = state.categories.map(category => ({
+    ...category,
+    value: category.id.split(' ')[0],
+  }));
+  return categories
 }
-
 
 export function getPaginationGetter(state) {
   return state.pagination

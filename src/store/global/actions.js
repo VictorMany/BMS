@@ -45,10 +45,13 @@ export async function formatDetails(context, { keys, fields }) {
         }
     }
     if (keys.User) {
-        // add equipment name
-        fields.top[0].model = keys.Equipment.equipmentName;
         // add incharged name
         fields.top[1].model = keys.User.userName;
+    }
+
+    if (keys.Equipment) {
+        // add equipment name
+        fields.top[0].model = keys.Equipment.equipmentName;
         // add serialNumber
         fields.right[0].model = keys.Equipment.serialNumber;
         // add photo
@@ -97,8 +100,7 @@ function getModelSelected(item, valueFromServer) {
             item.color = '#1e65e8'
         }
         return item
-    }
-    else if (item.key == 'maintenanceType') {
+    } else if (item.key == 'maintenanceType') {
         if (valueFromServer === 'preventivo') {
             item.model = 'Preventivo'
             item.color = '#10D13A'

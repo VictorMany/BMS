@@ -15,11 +15,9 @@
         v-model:searchModel="searchModel"
       />
       <!-- Main container -->
-      <div
-        class="main-container-page"
-        style="height: 88%; overflow-y: hidden;"
-      >
+      <div class="main-container-page">
         <general-table
+          :height="'100%'"
           v-model:row-selected="rowSelected"
           :rows="maintenances"
           :loading="loading"
@@ -102,11 +100,16 @@ export default defineComponent({
 
       inputSearch: {
         show: true,
-        inputLabel: 'Buscar por motivo',
+        inputLabel: 'Motivo',
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
-        heightModal: 200,
+        heightModal: 250,
         items: [
+          {
+            title: 'Motivo',
+            filter: 'reason',
+            icon: 'report'
+          },
           {
             title: 'Tipo',
             icon: 'engineering',
@@ -125,18 +128,18 @@ export default defineComponent({
           },
           {
             title: 'Encargado',
-            filter: 'userId',
+            filter: 'userName',
             icon: 'supervisor_account'
           },
           {
-            title: 'Precio',
-            filter: 'price',
+            title: 'Costo mínimo',
+            filter: 'minCost',
             icon: 'payments'
           },
           {
-            title: 'Motivo',
-            filter: 'reason',
-            icon: 'report'
+            title: 'Costo máximo',
+            filter: 'maxCost',
+            icon: 'payments'
           }
         ],
       },

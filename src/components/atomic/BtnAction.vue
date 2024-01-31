@@ -74,7 +74,7 @@ export default defineComponent({
 
     btnAction: {
       type: Function,
-      default: () => {},
+      default: () => { },
       required: false,
     },
 
@@ -131,6 +131,7 @@ export default defineComponent({
   font-weight: v-bind(btnWeight) !important;
   border-radius: 0.5rem !important;
 }
+
 .btn-style:hover {
   transform: scale(1.02);
 }

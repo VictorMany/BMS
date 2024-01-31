@@ -175,26 +175,6 @@ export default defineComponent({
       default: '',
       required: false,
     },
-    inputLabel: {
-      type: String,
-      default: 'Buscar por nombre',
-      required: false,
-    },
-    inputColor: {
-      type: String,
-      required: false,
-      default: 'rgba(122, 122, 122, 1)',
-    },
-    inputBackground: {
-      type: String,
-      required: false,
-      default: '#E7F0F7',
-    },
-    model: {
-      type: String,
-      required: false,
-      default: '',
-    },
     fields: {
       type: Object,
       required: true,
