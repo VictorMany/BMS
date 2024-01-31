@@ -556,7 +556,7 @@
 
 .title-page {
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .container-cards {
@@ -589,7 +589,6 @@
   }
 
   .card-page {
-    height: 91vh;
     padding: 15px;
   }
 
@@ -600,20 +599,6 @@
 
   .container-form {
     height: 90%;
-  }
-
-  // .general-table {
-  //   padding-left: 0.5rem;
-  //   padding-right: 0.5rem;
-  // }
-
-  .container-style {
-    height: 93vh !important;
-  }
-
-  .tabs-style {
-    height: 7vh !important;
-    display: block;
   }
 }
 
