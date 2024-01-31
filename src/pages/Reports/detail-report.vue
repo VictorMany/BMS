@@ -1,6 +1,9 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
+    <div
+      class="card-page"
+      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
+    >
       <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
@@ -10,10 +13,7 @@
         :btn-action="btnAction"
       />
 
-      <div
-        class="main-container-page main-container-page-dark"
-        style="height: 82%"
-      >
+      <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
           class="h-90"
           :thumb-style="$store.getters['global/getThumbStyle']"
