@@ -81,34 +81,19 @@
       }
     }
 
-    &__item-input {
-      color: #51565d;
-    }
-
-    &__item-input-12 {
-      color: #51565d;
-    }
-
-    &__item-textarea {
-      color: #51565d;
-    }
-
+    &__item-input,
+    &__item-input-12,
+    &__item-textarea,
     &__date {
       color: #51565d;
     }
 
+    &__item-area,
     &__item-model {
       color: #959494;
     }
 
-    &__item-area {
-      color: #959494;
-    }
-
-    &__image64 {
-      background-color: white;
-    }
-
+    &__image64,
     &__image64-equipment {
       background-color: white;
     }
@@ -127,20 +112,14 @@
   }
 
   .login {
-    &__main-container {
-      background: #FFFFFF;
-    }
-
     &__top-container {
       background: linear-gradient(249.89deg, $primary 6.95%, #89D5FF 111.53%);
     }
 
-    &__title {
+    &__title,
+    &__bottom-container,
+    &__main-container {
       color: #FFFFFF;
-    }
-
-    &__bottom-container {
-      background-color: #FFFFFF;
     }
   }
 
@@ -167,10 +146,7 @@
       color: #91c8ff84;
     }
 
-    &__email {
-      color: #858c9384;
-    }
-
+    &__email,
     &__detail {
       color: #858c9384;
     }
@@ -248,26 +224,17 @@
       background-color: #334c646e !important;
     }
 
-    &__item-model {
-      color: #959494;
-    }
-
+    &__item-model,
     &__item-area {
       color: #959494;
     }
 
-    &__image64 {
-      background-color: $accent !important;
-    }
-
+    &__image64,
     &__image64-equipment {
       background-color: $accent !important;
     }
 
-    &__item-input {
-      color: #51565d;
-    }
-
+    &__item-input,
     &__item-input-12 {
       color: #51565d;
     }
@@ -590,6 +557,15 @@
 
   .card-page {
     padding: 15px;
+    height: 90% !important;
+  }
+
+  .q-page-container {
+    height: 90% !important;
+  }
+
+  .q-page {
+    height: 90% !important;
   }
 
   .container-cards {
