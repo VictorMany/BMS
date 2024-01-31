@@ -378,17 +378,14 @@
   position: absolute;
   height: 97vh;
   width: 97.5%;
-  // box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 10%) !important;
   box-shadow: none;
   border-radius: 8px !important;
   padding: 1rem;
   overflow: hidden;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
 }
 
 .main-container-page {
-  height: 88%;
+  height: 86%;
   width: 100%;
   overflow-y: scroll !important;
   border-radius: 6px;
@@ -593,13 +590,16 @@
 
   .card-page {
     height: 91vh;
-    align-items: stretch;
-    padding: 10px;
+    padding: 15px;
   }
 
   .container-cards {
     padding: 5px;
     gap: 5px;
+  }
+
+  .container-form {
+    height: 90%;
   }
 
   // .general-table {
