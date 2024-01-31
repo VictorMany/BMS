@@ -1,7 +1,7 @@
 <template>
   <q-form ref="myForm">
     <div
-      class="row q-px-md q-pb-sm items-stretch"
+      class="row q-pa-sm"
       style="max-width: 1200px"
     >
       <div class="col-12 col-lg-5 col-md-6 q-pb-xs">

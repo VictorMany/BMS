@@ -1,6 +1,6 @@
 <template>
   <div
-    class="row q-px-md q-pt-none q-pb-lg"
+    class="row q-pa-sm"
     style="max-width: 1200px"
   >
 

@@ -1,20 +1,20 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
-      <div class="column items-end q-mt-md q-mb-xs gt-sm">
+    <div
+      class="card-page"
+      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
+    >
+      <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions
         :titlePage="'Características de un equipo'"
         :btn-action="btnAction"
       />
-      <div
-        class="main-container-page main-container-page-dark"
-        style="height: 82%"
-      >
+      <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
           class="full-height"
-          style="height: 92% !important"
+          style="height: 90% !important"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
         >
           <form-label :fields="fields" />
@@ -175,9 +175,5 @@ export default defineComponent({
 <style scoped>
 .main-container-page {
   background-color: white;
-}
-
-.card-page {
-  padding-top: 0 !important;
 }
 </style>
