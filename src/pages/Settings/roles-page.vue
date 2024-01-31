@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <div class="column items-end q-mt-md q-mb-sm">
+      <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions :titlePage="'Roles de usuarios y asignación de permisos'" />
@@ -10,8 +10,7 @@
         style="height: 85%"
       >
         <q-scroll-area
-          class="full-height q-pb-sm"
-          style="height: 100% !important"
+          class="full-height q-pb-sm h-100"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <div class="row q-pa-lg justify-between">
@@ -89,7 +88,7 @@
                 <div class="q-pb-sm form__item-label__title">
                   Listado de permisos
                 </div>
-                <div style="height: 90%">
+                <div class="h-90">
                   <q-scroll-area
                     class="fit"
                     :thumb-style="{
@@ -244,9 +243,7 @@ export default defineComponent({
   background-color: white;
 }
 
-.card-page {
-  padding-top: 0 !important;
-}
+
 
 .select {
   &__form {

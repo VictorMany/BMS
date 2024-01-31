@@ -3,30 +3,27 @@
     <q-form
       ref="myForm"
       class="card-page"
+      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
     >
-      <div class="column items-end q-mt-md q-mb-sm">
+      <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
 
       <header-actions
-        titlePage="Detalles del plan de mantenimientos"
+        titlePage="Detalles del plan"
         :btn-action="btnAction"
       />
 
-      <div
-        class="main-container-page main-container-page-medium-dark"
-        style="height: 82%"
-      >
+      <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
-          class="full-height q-px-lg q-pb-lg"
-          style="height: 90% !important"
+          class="q-pa-sm h-90"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <div
             v-if="form.planName"
-            class="row items-center q-mb-sm"
+            class="row items-center"
           >
-            <div class="q-pt-sm form__item-label text-weight-thin">
+            <div class="form__item-label text-weight-thin">
               Nombre del plan
             </div>
             <div class="col-12 form__item-model text-weight-medium">
@@ -35,43 +32,41 @@
           </div>
 
           <div class="row d-flex justify-between">
-            <div class="col-12 q-mb-sm">
-              <div class="q-py-sm form__item-label text-weight-thin">
+            <div class="col-12">
+              <div class="q-py-sm form__item-label text-weight-medium q-py-md">
                 Listado de equipos y fechas programadas de los mantenimientos
               </div>
-              <div class="border-rounded border-line border-rounded q-pa-md">
-                <div style="height: 100%">
-                  <div class="row">
-                    <div class="col-auto q-pa-xs">
-                      <general-table
-                        style="height: 43vh; overflow-y: scroll;"
-                        class="w-100"
-                        :rows="rows"
-                        :columns="columns"
-                        :paginationProp="{
-                          rowsPerPage: null
-                        }"
-                        :show-pagination="false"
-                      />
-                    </div>
+              <div
+                class="row"
+                style="gap: 20px;"
+              >
+                <div class="col-12 col-sm container-table-plans q-mt-sm">
+                  <general-table
+                    style="overflow: scroll;"
+                    class="h-100 w-100"
+                    :rows="rows"
+                    :columns="columns"
+                    :paginationProp="{
+                      rowsPerPage: null
+                    }"
+                    :show-pagination="false"
+                  />
+                </div>
 
-                    <div class="col q-px-sm">
-                      <div
-                        v-for="( day, index ) in sortedDates"
-                        :key="index"
-                      >
-                        <div
-                          class="text-left chip-date q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
-                        >
-                          {{ calcDate(day) }}
-                        </div>
-                        <div
-                          style="font-size: 10px;"
-                          class="text-primary q-px-sm"
-                        >
-                          {{ index == 0 ? 'Primer día de mantenimientos' : '' }}
-                        </div>
-                      </div>
+                <div class="col-12 col-sm">
+                  <div
+                    v-for="( day, index ) in sortedDates"
+                    :key="index"
+                  >
+                    <div
+                      class="text-left chip-date q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between">
+                      {{ calcDate(day) }}
+                    </div>
+                    <div
+                      style="font-size: 10px;"
+                      class="text-primary q-px-sm"
+                    >
+                      {{ index == 0 ? 'Primer día de mantenimientos' : '' }}
                     </div>
                   </div>
                 </div>
@@ -83,12 +78,12 @@
             class="col-12"
             v-if="form.observations"
           >
-            <div class="q-py-sm form__item-label text-weight-thin">
+            <div class="form__item-label text-weight-medium q-py-md">
               Observaciones
             </div>
             <div
-              style="border-radius: 5px; height: 80%;"
-              class="q-pa-sm border-line"
+              style="height: 80%;"
+              class="q-pa-sm border-line border-rounded"
             >
               <div
                 class="col-12 q-pr-md form__item-area"
@@ -248,9 +243,7 @@ export default defineComponent({
   background-color: white;
 }
 
-.card-page {
-  padding-top: 0 !important;
-}
+
 
 .chip-date {
   background-color: rgba($primary, 0.1);

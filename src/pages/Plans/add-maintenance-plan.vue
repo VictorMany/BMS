@@ -3,8 +3,9 @@
     <q-form
       ref="myForm"
       class="card-page"
+      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
     >
-      <div class="column items-end q-mt-md q-mb-sm">
+      <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
 
@@ -13,13 +14,9 @@
         :btn-action="btnAction"
       />
 
-      <div
-        class="main-container-page main-container-page-medium-dark"
-        style="height: 82%"
-      >
+      <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
-          class="full-height q-pb-sm"
-          style="height: 90% !important"
+          class="q-pa-sm q-pa-lg-lg h-90"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <q-input
@@ -32,228 +29,232 @@
               (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
               (val) => (val.length <= 50) || 'El campo no debe exceder 50 caracteres'
             ]"
-            class="form__item-input q-my-sm q-mx-lg bg-accent"
+            class="form__item-input bg-accent"
             label="Nombre del plan"
           />
 
-          <div class="row q-px-lg d-flex justify-between">
-            <div class="col-12 q-mb-sm">
-              <div class="q-py-sm q-my-sm form__item-label text-weight-thin">
-                1-. Elige los equipos que quieras incluir en el plan
-              </div>
+          <div class="form__item-label text-weight-medium q-py-lg">
+            1-. Elige los equipos que quieras incluir en el plan
+          </div>
+
+          <div style="height: 50vh">
+            <q-scroll-area
+              class="fit"
+              :thumb-style="{
+                borderRadius: '5px',
+                background: 'rgba(29, 100, 231, 0.2)',
+                width: '5px',
+                opacity: 1,
+              }"
+            >
               <div
-                class="border-rounded border-line border-rounded q-pa-md"
-                style="height: 50vh"
+                class="row"
+                style="gap: 20px"
               >
-                <div style="height: 100%">
-                  <q-scroll-area
-                    class="fit"
-                    :thumb-style="{
-                      borderRadius: '5px',
-                      background: 'rgba(29, 100, 231, 0.2)',
-                      width: '5px',
-                      opacity: 1,
-                    }"
+                <div class="col-12 col-sm-auto col-md-4 border-line q-pa-sm border-rounded">
+                  <q-input
+                    ref="filterRef"
+                    v-model="filter"
+                    borderless
+                    dense
+                    class="form__item-input q-input-equipments"
+                    label="Buscar - Filtrar equipos"
                   >
-                    <div class="row">
-                      <div
-                        class="q-pr-md col-auto"
-                        style="border-right: 1px solid #91c8ff84; "
-                      >
-                        <q-input
-                          ref="filterRef"
-                          v-model="filter"
-                          borderless
-                          dense
-                          class="form__item-input q-mb-md q-input-equipments"
-                          label="Buscar - Filtrar equipos"
-                        >
-                          <template v-slot:append>
-                            <q-icon
-                              v-if="filter !== ''"
-                              name="clear"
-                              class="cursor-pointer"
-                              @click="resetFilter"
-                            />
-                          </template>
-                        </q-input>
-
-                        <q-tree
-                          v-model:ticked="form.equipmentIds"
-                          style="height: 36vh; overflow-y: scroll;"
-                          no-transition
-                          :nodes="localCategories"
-                          tick-strategy="leaf"
-                          node-key="id"
-                          no-nodes-label="No hay equipos para mostrar"
-                          label-key="label"
-                          :filter="filter"
-                          :filter-method="filterEquipments"
-                          @lazy-load="getEquipmentsByCategory"
-                        />
-                      </div>
-
-                      <div class="col q-pl-md">
-                        <general-table
-                          style="height: 43vh; overflow-y: scroll;"
-                          class="w-100"
-                          :rows="rows"
-                          :columns="columns"
-                          :paginationProp="{
-                            rowsPerPage: null
-                          }"
-                          :show-pagination="false"
-                        />
-                      </div>
-                    </div>
-                  </q-scroll-area>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12 q-py-lg">
-              <div class="row">
-                <div class="col-sm-auto col-12">
-                  <div class="q-py-sm q-my-sm form__item-label text-weight-thin">
-                    2-. Selecciona las fechas de los mantenimientos
-                  </div>
-                  <div
-                    class="row q-mb-md"
-                    style="max-width: 418px"
-                  >
-                    <div class="col-auto ">
-                      <q-checkbox
-                        size="sm"
-                        v-model="form.hasFrequency"
-                        label="Frecuencia"
-                        class="form__checkbox q-mr-md q-pa-sm"
-                        dense
+                    <template v-slot:append>
+                      <q-icon
+                        v-if="filter !== ''"
+                        name="clear"
+                        class="cursor-pointer"
+                        @click="resetFilter"
                       />
-                    </div>
+                    </template>
+                  </q-input>
 
-                    <div
-                      class="col"
-                      v-if="form.hasFrequency"
-                    >
-                      <q-select
-                        v-model="form.maintenanceFrequency"
-                        :options="options"
-                        dense
-                        hide-hint
-                        :disable="!form.hasFrequency"
-                        hide-bottom-space
-                        bottom-slots
-                        stack-label
-                        class="textfield-other form__item-input bg-accent"
-                        borderless
-                      >
-                        <template v-slot:option="scope">
-                          <q-item
-                            v-bind="scope.itemProps"
-                            dense
-                          >
-                            <q-item-section>
-                              <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label
-                              }}</q-item-label>
-                            </q-item-section>
-                          </q-item>
-                        </template>
-                      </q-select>
-                    </div>
-
-                    <div
-                      style="font-size: 12px;"
-                      class="text-primary q-pa-sm"
-                    >
-                      <span style="font-size: 16px; line-height: 1.2; vertical-align: middle;">ⓘ</span>
-                      <span style="margin-left: 5px;">Usa la frecuencia para calcular automáticamente las fechas de
-                        mantenimiento a partir de una fecha inicial.</span>
-                    </div>
-                  </div>
-
-                  <q-date
-                    ref="myDatePicker"
-                    v-model="form.maintenanceDates"
-                    mask="YYYY-MM-DD"
-                    class="text-blue-blue-grey-4 border-line border-rounded"
-                    :multiple="!form.hasFrequency"
-                    landscape
+                  <q-tree
+                    v-model:ticked="form.equipmentIds"
+                    style="overflow-y: scroll;"
+                    class="font-tree"
+                    no-transition
+                    :nodes="localCategories"
+                    tick-strategy="leaf"
+                    node-key="id"
+                    no-nodes-label="No hay equipos para mostrar"
+                    label-key="label"
+                    :filter="filter"
+                    :filter-method="filterEquipments"
+                    @lazy-load="getEquipmentsByCategory"
                   />
                 </div>
 
-                <div class="col-sm col-12 q-px-xl">
-                  <div
-                    v-if="sortedDates.length > 0"
-                    class="form__item-label text-weight-thin q-py-sm q-my-sm"
-                  >
-                    Lista de fechas programadas
-                  </div>
-                  <div
-                    v-for="( day, index ) in sortedDates"
-                    :key="index"
-                  >
-                    <div
-                      class="text-left chip-date q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
-                      @click="setCalendarTo(day)"
-                    >
-                      {{ calcDate(day) }}
-                      <q-avatar
-                        v-if="!form.maintenanceFrequency"
-                        @click="deleteDate(day)"
-                        size="xs"
-                        class="avatar-item"
-                      >
-                        <q-icon name="close" />
-                      </q-avatar>
-                    </div>
+                <div class="col-12 col-sm container-table-plans">
+                  <general-table
+                    style="overflow: scroll;"
+                    class="h-100 w-100"
+                    :rows="rows"
+                    :columns="columns"
+                    :paginationProp="{
+                      rowsPerPage: null
+                    }"
+                    :show-pagination="false"
+                  />
+                </div>
+              </div>
+            </q-scroll-area>
+          </div>
 
-                    <div
-                      style="font-size: 10px;"
-                      class="text-primary q-px-sm"
-                    >
-                      {{ index == 0 ? 'Primer día de mantenimientos' : '' }}
-                    </div>
-                  </div>
+          <div
+            class="row"
+            style="gap: 20px"
+          >
+            <div class="col-sm-auto col-12">
+              <div class="form__item-label text-weight-medium q-py-lg">
+                2-. Selecciona las fechas de los mantenimientos
+              </div>
+              <div
+                class="row q-mb-md"
+                style="max-width: 418px"
+              >
+                <div class="col-auto ">
+                  <q-checkbox
+                    size="sm"
+                    v-model="form.hasFrequency"
+                    label="Frecuencia"
+                    class="form__checkbox q-mr-md q-pa-sm"
+                    dense
+                  />
+                </div>
+
+                <div
+                  class="col"
+                  v-if="form.hasFrequency"
+                >
+                  <q-select
+                    v-model="form.maintenanceFrequency"
+                    :options="options"
+                    dense
+                    hide-hint
+                    :disable="!form.hasFrequency"
+                    hide-bottom-space
+                    bottom-slots
+                    stack-label
+                    class="form__item-select bg-accent"
+                    borderless
+                  >
+                    <template v-slot:option="scope">
+                      <q-item
+                        v-bind="scope.itemProps"
+                        dense
+                      >
+                        <q-item-section>
+                          <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label
+                          }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </template>
+                  </q-select>
+                </div>
+
+                <div
+                  style="font-size: 12px;"
+                  class="text-primary q-pa-sm"
+                >
+                  <span style="font-size: 16px; line-height: 1.2; vertical-align: middle;">ⓘ</span>
+                  <span style="margin-left: 5px;">Usa la frecuencia para calcular automáticamente las fechas de
+                    mantenimiento a partir de una fecha inicial.</span>
+                </div>
+              </div>
+
+              <q-date
+                ref="myDatePicker"
+                v-model="form.maintenanceDates"
+                mask="YYYY-MM-DD"
+                class="text-blue-blue-grey-4 border-line border-rounded w-100 lt-md"
+                :multiple="!form.hasFrequency"
+              />
+
+              <q-date
+                ref="myDatePicker"
+                v-model="form.maintenanceDates"
+                mask="YYYY-MM-DD"
+                class="text-blue-blue-grey-4 border-line border-rounded gt-sm"
+                :multiple="!form.hasFrequency"
+                landscape
+              />
+            </div>
+
+            <div class="col-sm col-12 q-pt-md-md">
+              <div
+                v-if="sortedDates.length > 0"
+                class="form__item-label text-weight-thin"
+              >
+                Lista de fechas programadas
+              </div>
+
+              <div
+                v-for="( day, index ) in sortedDates"
+                :key="index"
+              >
+                <div
+                  class="text-left chip-date q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
+                  @click="setCalendarTo(day)"
+                >
+                  {{ calcDate(day) }}
+                  <q-avatar
+                    v-if="!form.maintenanceFrequency"
+                    @click="deleteDate(day)"
+                    size="xs"
+                    class="avatar-item"
+                  >
+                    <q-icon name="close" />
+                  </q-avatar>
+                </div>
+
+                <div
+                  style="font-size: 10px;"
+                  class="text-primary q-px-sm"
+                >
+                  {{ index == 0 ? 'Primer día de mantenimientos' : '' }}
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="col-12 col-sm-6 q-px-lg q-mb-md">
-            <div class="q-py-sm q-my-sm form__item-label text-weight-thin">
+          <div>
+            <div class="form__item-label text-weight-medium q-py-lg">
               3-. Agrega algunas observaciones (opcional)
             </div>
-            <q-editor
-              v-model="form.observations"
-              :placeholder="'Escribe aquí las notas del plan de mantenimientos'"
-              class="form__item-textarea bg-accent"
-              dense
-              :toolbar="[
-                [
-                  {
-                    label: $q.lang.editor.fontSize,
-                    icon: $q.iconSet.editor.fontSize,
-                    fixedLabel: true,
-                    fixedIcon: true,
-                    list: 'no-icons',
-                    options: [
-                      'size-1',
-                      'size-2',
-                      'size-3',
-                      'size-4',
-                    ],
-                  },
-                  'bold',
-                  'italic',
-                  'strike',
-                  'underline',
-                ],
-                ['unordered', 'ordered'],
-              ]
-                "
-            />
+            <div class="w-100">
+              <q-editor
+                v-model="form.observations"
+                :placeholder="'Escribe aquí las notas del plan de mantenimientos'"
+                class="form__item-textarea bg-accent"
+                :toolbar="[
+                  [
+                    {
+                      label: $q.lang.editor.fontSize,
+                      icon: $q.iconSet.editor.fontSize,
+                      fixedLabel: true,
+                      fixedIcon: true,
+                      list: 'no-icons',
+                      options: [
+                        'size-1',
+                        'size-2',
+                        'size-3',
+                        'size-4',
+                      ],
+                    },
+                    'bold',
+                    'italic',
+                    'strike',
+                    'underline',
+                  ],
+                  ['unordered', 'ordered'],
+                ]"
+              />
+            </div>
           </div>
         </q-scroll-area>
+
         <div
           class="col-12 form__date_container form__date column justify-center q-px-lg"
           style="height: 6%"
@@ -549,9 +550,9 @@ export default defineComponent({
 
     getTitle() {
       if (this.isEditing()) {
-        return 'Editar plan de mantenimientos'
+        return 'Editar plan'
       }
-      else return 'Agregar nuevo plan de mantenimientos'
+      else return 'Nuevo plan'
     },
 
     getCreatedAt() {
@@ -702,9 +703,7 @@ export default defineComponent({
   background-color: white;
 }
 
-.card-page {
-  padding-top: 0 !important;
-}
+
 
 
 .q-tree__node-header-content {

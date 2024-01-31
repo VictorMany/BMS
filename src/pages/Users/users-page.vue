@@ -1,7 +1,10 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
-      <div class="column items-end q-mb-xs">
+    <div
+      class="card-page"
+      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
+    >
+      <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
 

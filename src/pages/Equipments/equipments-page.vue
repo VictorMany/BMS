@@ -14,7 +14,7 @@
       >
         <q-scroll-area
           v-if="switchContent === 1"
-          style="height: 85% !important"
+          style="height: 90.5% !important"
           class="fit"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >

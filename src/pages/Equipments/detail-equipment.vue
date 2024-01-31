@@ -7,14 +7,15 @@
       <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
+
       <header-actions
-        :titlePage="'Características de un equipo'"
+        :titlePage="'Detalles del equipo'"
         :btn-action="btnAction"
       />
+
       <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
-          class="full-height"
-          style="height: 90% !important"
+          class="h-90"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
         >
           <form-label :fields="fields" />

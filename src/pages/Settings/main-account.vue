@@ -1,31 +1,20 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
-      <div class="column items-end q-mb-xs">
+    <div
+      class="card-page"
+      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
+    >
+      <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <div class="row">
-        <img
-          class="q-mb-md container-img"
-          src="https://www.thinkchamplin.com/uploads/case-studies/main_MercyHealth_WestHospital_04.jpg"
-        />
-        <div class="info q-ml-md">
-          <div class="info__title">Hospital Mercy West</div>
-          <div class="info__email">admingp@mercywest.com</div>
-        </div>
-      </div>
-      <div class="divider w-100 q-pb-xs" />
+
       <header-actions
         :titlePage="'Información de la cuenta'"
         :btn-action="btnAction"
       />
-      <div
-        class="main-container-page main-container-page-medium-dark"
-        style="height: 68%"
-      >
+      <div class="main-container-page h-90">
         <q-scroll-area
-          class="full-height q-pb-sm"
-          style="height: 95% !important"
+          class="full-height h-100"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <form-text-field :fields="fields" />

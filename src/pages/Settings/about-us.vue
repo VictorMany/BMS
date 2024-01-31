@@ -1,11 +1,14 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page q-px-none">
-      <div class="column items-end q-mb-xs">
+    <div
+      class="card-page"
+      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
+    >
+      <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions :titlePage="'Acerca de nosotros y soporte técnico'" />
-      <div class="main-container-page" style="height: 90%">
+      <header-actions :titlePage="'Acerca de nosotros'" />
+      <div class="main-container-page h-90">
         <q-scroll-area
           class="full-height h-100"
           :thumb-style="{
@@ -16,7 +19,7 @@
             opacity: 1,
           }"
         >
-          <div class="q-px-lg h-100">
+          <div class="q-px-md-lg q-px-none-lg  h-100">
             <q-parallax>
               <template v-slot:media>
                 <img
@@ -136,8 +139,7 @@
                 @click="navigateTo('terms-and-conditions')"
                 target="_blank"
                 class="text-primary"
-                >Términos y condiciones</a
-              >
+              >Términos y condiciones</a>
             </div>
           </div>
         </q-scroll-area>
@@ -266,6 +268,7 @@ p {
 .button:hover {
   background-color: #333333;
 }
+
 span {
   color: orange;
 }

@@ -1,17 +1,16 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
-      <div class="column items-end q-mt-md q-mb-sm">
+    <div
+      class="card-page"
+      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
+    >
+      <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions :titlePage="'Soporte técnico'" />
-      <div
-        class="main-container-page main-container-page-medium-dark"
-        style="height: 85%"
-      >
+      <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
-          class="full-height q-pb-sm"
-          style="height: 87% !important"
+          class="h-90 q-pa-xs-none q-pa-lg-sm"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <div class="q-pa-md row justify-center">
@@ -130,9 +129,7 @@ export default defineComponent({
   background-color: white;
 }
 
-.card-page {
-  padding-top: 0 !important;
-}
+
 
 .input-message {
   background-color: rgba($primary, 0.2);

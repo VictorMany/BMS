@@ -2,7 +2,7 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Configuración'" />
-      <div class="row q-pb-lg">
+      <div class="row q-pb-sm">
         <img
           class="container-img q-mr-lg"
           src="https://www.thinkchamplin.com/uploads/case-studies/main_MercyHealth_WestHospital_04.jpg"

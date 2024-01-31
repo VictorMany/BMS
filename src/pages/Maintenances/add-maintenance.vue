@@ -1,20 +1,19 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
-      <div class="column items-end q-mt-md q-mb-sm">
+    <div
+      class="card-page"
+      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
+    >
+      <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
       <header-actions
         titlePage="Agregar mantenimiento"
         :btn-action="btnAction"
       />
-      <div
-        class="main-container-page main-container-page-medium-dark"
-        style="height: 82%"
-      >
+      <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
-          class="full-height q-pb-sm"
-          style="height: 90% !important"
+          class="h-90 q-pa-xs-none q-pa-lg-sm"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <form-text-field
@@ -370,9 +369,5 @@ export default defineComponent({
 <style scoped>
 .main-container-page {
   background-color: white;
-}
-
-.card-page {
-  padding-top: 0 !important;
 }
 </style>

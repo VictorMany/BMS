@@ -6,19 +6,31 @@
         :btnAction="btnAction"
       />
       <!-- Main container -->
-      <div class="main-container-page main-container-page-medium-dark q-mt-lg bg-grey-3 row">
-        <div class="col-xs-12 col-md-auto q-px-sm q-pl-md">
+      <div class="main-container-page main-container-page-medium-dark bg-grey-3 row h-90 q-pa-md-md">
+        <div class="col-xs-12 col-md-auto">
           <q-date
             v-model="calendarModel"
             today-btn
             color="primary"
             mask="YYYY-MM-DD"
-            class="text-blue-blue-grey-4 border-line"
+            class="text-blue-blue-grey-4 border-line gt-xs"
             landscape
             :events="events"
             @update:model-value="getEquipmentsByDate"
             @navigation="getDatesPerMonth"
           />
+
+          <q-date
+            v-model="calendarModel"
+            today-btn
+            color="primary"
+            mask="YYYY-MM-DD"
+            class="text-blue-blue-grey-4 border-line lt-sm w-100"
+            :events="events"
+            @update:model-value="getEquipmentsByDate"
+            @navigation="getDatesPerMonth"
+          />
+
           <div class="col q-my-md">
             <div class="container-colorama border-none q-pa-xs row">
               <q-radio
@@ -38,10 +50,7 @@
           </div>
         </div>
 
-        <div
-          class="col-md col-12 q-px-sm"
-          style="height: 90%"
-        >
+        <div class="col-md col-12 q-px-sm h-90">
           <div class="row flex items-center justify-between q-mb-sm">
             <div class="form__item-label text-weight-thin q-px-xs col">
               Selecciona una fecha resaltada en el calendario y podrás ver los equipos con mantenimientos programados
@@ -53,13 +62,12 @@
           </div>
 
           <div
-            style="overflow: scroll; height: 90%"
-            class="row w-100 q-pa-none q-ma-none"
+            style="overflow: scroll"
+            class="row q-pa-none q-ma-none h-90 w-100"
           >
             <q-scroll-area
               v-if="switchContent === 1"
-              class="fit"
-              style="height: 100% !important"
+              class="fit h-100"
               :thumb-style="{
                 right: '6px',
                 borderRadius: '5px',

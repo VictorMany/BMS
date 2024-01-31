@@ -2,7 +2,7 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Estadísticas'" />
-      <div class="main-container-page card-color q-px-sm main-container-page-medium-dark">
+      <div class="main-container-page card-color main-container-page-medium-dark h-90">
         <q-scroll-area
           class="fit"
           :thumb-style="{
@@ -14,7 +14,7 @@
           }"
         >
           <div class="row container-stats">
-            <div class="col-12 col-md q-px-sm q-pb-sm q-pt-none">
+            <div class="col-12 col-md">
               <div class="card-graphics">
                 <div class="card-graphics__title text-center q-pa-sm ellipsis">
                   Atención a reportes por falla
@@ -25,7 +25,7 @@
                 />
               </div>
             </div>
-            <div class="col-12 col-md q-px-sm q-pb-sm q-pt-none">
+            <div class="col-12 col-md">
               <div class="card-graphics">
                 <div class="card-graphics__title text-center q-pa-sm ellipsis">
                   Equipos médicos reemplazados por obsolencia o daño
@@ -39,7 +39,7 @@
           </div>
 
           <div class="row container-stats">
-            <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
+            <div class="col-12 col-md-6 col-lg-3">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Mantenimientos vigentes
@@ -52,7 +52,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
+            <div class="col-12 col-md-6 col-lg-3">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Falla repentina
@@ -65,7 +65,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
+            <div class="col-12 col-md-6 col-lg-3">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Reemplazo por daño
@@ -78,7 +78,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-3 q-pa-sm q-mt-sm ">
+            <div class="col-12 col-md-6 col-lg-3">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Mantenimientos preventivos
@@ -488,10 +488,21 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.container-stats {
+  padding: 10px;
+  gap: 10px;
+}
+
+
 @media only screen and (max-device-width: 1000px) {
   .container-stats {
     max-width: 93.5vw;
-    overflow: scroll;
+  }
+}
+
+@media only screen and (max-device-width: 350px) {
+  .container-stats {
+    max-width: 88vw;
   }
 }
 </style>
