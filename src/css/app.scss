@@ -314,7 +314,6 @@
   &__detail {
     font-weight: 600;
     font-size: 13px;
-    padding-right: 1.5rem;
   }
 }
 
@@ -356,6 +355,7 @@
   width: 100%;
   overflow-y: scroll !important;
   border-radius: 6px;
+
 }
 
 .h-90 {
@@ -551,7 +551,6 @@
   }
 
   .main-container-page {
-    flex: 1;
     height: 82%;
   }
 

@@ -2,12 +2,12 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Configuración'" />
-      <div class="row">
+      <div class="row q-pb-lg">
         <img
-          class="q-mb-md container-img"
+          class="container-img q-mr-lg"
           src="https://www.thinkchamplin.com/uploads/case-studies/main_MercyHealth_WestHospital_04.jpg"
         />
-        <div class="info q-ml-md">
+        <div class="q-py-md">
           <div class="info__title">Hospital Mercy West</div>
           <div class="info__email">admingp@mercywest.com</div>
         </div>

@@ -17,8 +17,8 @@
       <!-- Main container -->
       <div class="main-container-page">
         <general-table
-          :height="'100%'"
           v-model:row-selected="rowSelected"
+          :height="'100%'"
           :rows="maintenances"
           :loading="loading"
           :columns="columns"

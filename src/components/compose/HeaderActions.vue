@@ -21,38 +21,37 @@
       >
         <q-fab-action
           color="blue-10"
-          icon="mail"
+          label="Estadísticas"
+          to="/"
+        />
+        <q-fab-action
+          color="blue-9"
           label="Equipos"
           to="equipments"
         />
         <q-fab-action
-          color="blue-9"
+          color="blue-8"
           to="maintenances"
-          icon="alarm"
           label="Mantenimientos"
         />
         <q-fab-action
-          color="blue-8"
+          color="blue-7"
           to="reports"
-          icon="airplay"
           label="Reportes"
         />
         <q-fab-action
-          color="blue-7"
+          color="blue-6"
           to="calendar"
-          icon="room"
           label="Calendario"
         />
         <q-fab-action
-          color="blue-6"
+          color="blue-5"
           to="maintenances-plan"
-          icon="room"
           label="Planes"
         />
         <q-fab-action
-          color="blue-5"
+          color="blue-4"
           to="settings"
-          icon="room"
           label="Configuración"
         />
       </q-fab>

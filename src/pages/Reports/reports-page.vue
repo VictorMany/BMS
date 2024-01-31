@@ -15,12 +15,10 @@
         v-model:searchModel="searchModel"
       />
       <!-- Main container -->
-      <div
-        class="main-container-page"
-        style="height: 88%; overflow-y: hidden;"
-      >
+      <div class="main-container-page">
         <general-table
           v-model:row-selected="rowSelected"
+          :height="'100%'"
           :rows="reports"
           :columns="columns"
           :loading="loading"

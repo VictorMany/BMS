@@ -25,12 +25,12 @@
           <div style="max-width: 100%">
             <div
               v-if="users.length > 0"
-              class="row q-pa-none q-ma-none q-px-sm q-pb-sm"
+              class="row container-cards"
             >
               <div
                 v-for="(user, index) in users"
                 :key="index"
-                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto q-px-sm q-pb-md q-pt-none"
+                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
               >
                 <item-card
                   v-bind="user"
