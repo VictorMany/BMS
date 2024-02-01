@@ -9,7 +9,7 @@
           <div class="h-100 w-100 flex flex-center">
             <div class="login__bottom-container q-pa-lg">
               <q-input
-                class="form__item-input-login q-pl-md q-pr-md input q-mt-lg q-mb-lg"
+                class="form__input-login q-pl-md q-pr-md input q-mt-lg q-mb-lg"
                 borderless
                 dense
                 v-model="model.user"
@@ -22,7 +22,7 @@
               <q-input
                 ref="pass"
                 type="password"
-                class="form__item-input-login q-pl-md q-pr-md input"
+                class="form__input-login q-pl-md q-pr-md input"
                 borderless
                 dense
                 v-model="model.password"
@@ -123,7 +123,7 @@ export default defineComponent({
 }
 
 .form {
-  &__item-input-login {
+  &__input-login {
     border-radius: 50px !important;
     max-width: 348.65px !important;
     width: 100% !important;

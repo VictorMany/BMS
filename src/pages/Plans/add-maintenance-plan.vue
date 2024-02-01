@@ -29,7 +29,7 @@
               (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
               (val) => (val.length <= 50) || 'El campo no debe exceder 50 caracteres'
             ]"
-            class="form__item-input bg-accent"
+            class="form__input bg-accent"
             label="Nombre del plan"
           />
 
@@ -57,7 +57,7 @@
                     v-model="filter"
                     borderless
                     dense
-                    class="form__item-input q-input-equipments"
+                    class="form__input q-input-equipments"
                     label="Buscar - Filtrar equipos"
                   >
                     <template v-slot:append>
@@ -137,7 +137,7 @@
                     hide-bottom-space
                     bottom-slots
                     stack-label
-                    class="form__item-select bg-accent"
+                    class="form__select bg-accent"
                     borderless
                   >
                     <template v-slot:option="scope">
@@ -227,7 +227,7 @@
               <q-editor
                 v-model="form.observations"
                 :placeholder="'Escribe aquí las notas del plan de mantenimientos'"
-                class="form__item-textarea bg-accent"
+                class="form__textarea bg-accent"
                 :toolbar="[
                   [
                     {

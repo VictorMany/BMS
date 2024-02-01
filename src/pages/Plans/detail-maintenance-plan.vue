@@ -86,7 +86,7 @@
               class="q-pa-sm border-line border-rounded"
             >
               <div
-                class="col-12 q-pr-md form__item-area"
+                class="col-12 q-pr-md form__label-area"
                 v-html="form.observations"
               />
             </div>

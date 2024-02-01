@@ -60,7 +60,7 @@
   }
 
   .form {
-    &__item-select {
+    &__select {
       color: #7a7a7a;
     }
 
@@ -81,14 +81,14 @@
       }
     }
 
-    &__item-input,
-    &__item-input-12,
-    &__item-textarea,
+    &__input,
+    &__input-12,
+    &__textarea,
     &__date {
       color: #51565d;
     }
 
-    &__item-area,
+    &__label-area,
     &__item-model {
       color: #959494;
     }
@@ -102,7 +102,7 @@
       background-color: $primary-opacity !important;
     }
 
-    &__item-input-login {
+    &__input-login {
       background-color: #F2F2F2 !important;
     }
   }
@@ -212,7 +212,7 @@
       border: #4C607D 1px solid;
     }
 
-    &__item-select {
+    &__select {
       color: #51565d !important;
     }
 
@@ -225,7 +225,7 @@
     }
 
     &__item-model,
-    &__item-area {
+    &__label-area {
       color: #959494;
     }
 
@@ -234,16 +234,16 @@
       background-color: $accent !important;
     }
 
-    &__item-input,
-    &__item-input-12 {
+    &__input,
+    &__input-12 {
       color: #51565d;
     }
 
-    &__item-textarea {
+    &__textarea {
       color: #b5c3d7;
     }
 
-    &__item-input-login {
+    &__input-login {
       background-color: #142638 !important;
     }
   }
@@ -370,16 +370,9 @@
   width: 100% !important;
 }
 
+.border-none,
+.border-line,
 .border-shadow {
-  // box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.1) !important;
-  box-shadow: none;
-}
-
-.border-none {
-  box-shadow: none;
-}
-
-.border-line {
   box-shadow: none;
 }
 
@@ -399,7 +392,6 @@
   line-height: 22px;
 }
 
-
 .card-color {
   background-color: #00000009 !important;
 }
@@ -415,23 +407,18 @@
     font-weight: bold;
   }
 
-  &__item-label {
-    font-size: 12px;
-  }
-
-  &__item-model {
-    font-size: 13px !important;
-  }
-
   &__checkbox {
     border-radius: 5px;
   }
 
-  &__date {
+  &__date,
+  &__item-label,
+  &__item-model {
     font-size: 12px;
   }
 
-  &__item-input {
+  &__select,
+  &__input {
     min-width: 210px !important;
     font-style: normal;
     font-weight: 400;
@@ -442,18 +429,7 @@
     padding-right: 0.6rem !important;
   }
 
-  &__item-select {
-    min-width: 210px !important;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    color: #51565d;
-    border-radius: 0.3rem !important;
-    padding-left: 0.6rem !important;
-    padding-right: 0.6rem !important;
-  }
-
-  &__item-input-12 {
+  &__input-12 {
     min-width: 100% !important;
     font-style: normal;
     font-weight: 400;
@@ -463,7 +439,7 @@
     padding-right: 0.6rem !important;
   }
 
-  &__item-textarea {
+  &__textarea {
     border: none;
     font-style: normal;
     font-weight: 400;
@@ -510,7 +486,6 @@
   height: 10vh !important;
   display: none;
 }
-
 
 .q-chip,
 .q-badge {
@@ -572,11 +547,9 @@
     height: 98% !important;
   }
 
-  .q-page-container {
-    height: 100% !important;
-  }
-
-  .q-page {
+  .q-page,
+  .q-page-container,
+  .my-sticky-header-table {
     height: 100% !important;
   }
 
@@ -587,10 +560,6 @@
 
   .container-form {
     height: 92.5%;
-  }
-
-  .my-sticky-header-table {
-    height: 100% !important;
   }
 
   .container-table-plans {
@@ -608,7 +577,6 @@
 
 /* Styles for phones */
 @media only screen and (max-width: 767px) {
-
   .info {
     &__title {
       font-size: 20px;
@@ -633,12 +601,13 @@
 
   .form {
 
-    &__item-input-12,
-    &__item-textarea,
-    &__item-select,
-    &__item-input,
-    &__item-label,
+    &__input-12,
+    &__textarea,
+    &__label-area,
+    &__select,
+    &__input,
     &__date,
+    &__item-label,
     &__item-model {
       font-size: 11px !important;
     }
@@ -649,7 +618,6 @@
       font-size: 11px;
     }
   }
-
 
   .font-tree {
     font-size: 12px;

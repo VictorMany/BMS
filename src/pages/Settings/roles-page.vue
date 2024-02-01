@@ -66,7 +66,7 @@
                   Nombre del rol
                 </div>
                 <q-input
-                  class="form__item-input bg-accent"
+                  class="form__input bg-accent"
                   borderless
                   dense
                   v-model="role.title"
@@ -78,7 +78,7 @@
                   Descripción del rol
                 </div>
                 <q-input
-                  class="form__item-input bg-accent"
+                  class="form__input bg-accent"
                   borderless
                   dense
                   v-model="role.title"

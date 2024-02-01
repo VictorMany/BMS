@@ -26,7 +26,7 @@
                 v-if="item.type === 'select'"
                 v-model="item.model"
                 :name="item.key"
-                class="col-6 form__item-input-12 bg-accent"
+                class="col-6 form__input-12 bg-accent"
                 borderless
                 dense
                 hide-hint
@@ -61,7 +61,7 @@
 
               <q-input
                 v-else
-                class="col-6 form__item-input-12 bg-accent"
+                class="col-6 form__input-12 bg-accent"
                 borderless
                 dense
                 hide-hint
@@ -105,7 +105,7 @@
                   <!-- INPUT TYPE SELECT -->
                   <q-select
                     v-if="item.type === 'select'"
-                    class="textfield-select form__item-input bg-accent col-12 col-sm"
+                    class="textfield-select form__input bg-accent col-12 col-sm"
                     borderless
                     v-model="item.model"
                     :name="item.key"
@@ -145,7 +145,7 @@
                     v-model="item.model"
                     :name="item.key"
                     :readonly="item.readonly"
-                    class="col-12 col-sm form__item-input bg-accent"
+                    class="col-12 col-sm form__input bg-accent"
                     borderless
                     dense
                     hide-hint
@@ -190,7 +190,7 @@
                     hide-hint
                     bottom-slots
                     hide-bottom-space
-                    class="form__item-input bg-accent col-12 col-sm"
+                    class="form__input bg-accent col-12 col-sm"
                     :readonly="item.readonly"
                     :type="item.type ? item.type : 'text'"
                     :rules="item.rules ? item.rules : []"
@@ -226,7 +226,7 @@
                     :name="item.key"
                     :readonly="item.readonly"
                     :placeholder="'Escribe aquí tus ' + item.label"
-                    class="form__item-textarea bg-accent"
+                    class="form__textarea bg-accent"
                     :toolbar="item.toolbar ? item.toolbar : basicToolBar"
                   />
                 </div>
@@ -338,7 +338,7 @@
             v-model="item.model"
             :name="item.key"
             :placeholder="'Escribe aquí...'"
-            class="form__item-textarea bg-accent"
+            class="form__textarea bg-accent"
             :toolbar="[
               [
                 {

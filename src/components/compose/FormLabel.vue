@@ -89,7 +89,7 @@
                   class="q-pa-sm border-line"
                 >
                   <div
-                    class="col-12 q-pr-md form__item-area"
+                    class="col-12 q-pr-md form__label-area"
                     v-html="item.model"
                   />
                 </div>
@@ -155,7 +155,7 @@
           style="border-radius: 5px"
         >
           <div
-            class="col-12 q-pr-md form__item-area"
+            class="col-12 q-pr-md form__label-area"
             v-html="item.model"
           />
         </div>

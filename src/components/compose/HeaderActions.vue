@@ -189,10 +189,12 @@ export default defineComponent({
 .q-fab--align-left>.q-fab__actions--up,
 .q-fab--align-left>.q-fab__actions--down {
   background-color: #000000b8;
-  width: 90vw;
+  width: auto;
   flex-direction: column;
   align-items: flex-start;
   justify-content: start;
   border-radius: 0.5rem;
+  padding: 1rem;
+  gap: 10px;
 }
 </style>
