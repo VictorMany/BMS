@@ -1,9 +1,7 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="container-header row items-center q-ma-none q-pa-none q-mb-sm">
-    <div class="col-xs-auto column content-end">
-      <!-- <btn-action v-bind="btnMenu" /> -->
-
+    <div class="col-xs-auto column content-end show-in-mobile">
       <q-fab
         ref="menu"
         v-model="fab2"
@@ -20,36 +18,43 @@
         direction="down"
       >
         <q-fab-action
+          padding="xs"
           color="blue-10"
           label="Estadísticas"
           to="/"
         />
         <q-fab-action
+          padding="xs"
           color="blue-9"
           label="Equipos"
           to="equipments"
         />
         <q-fab-action
+          padding="xs"
           color="blue-8"
           to="maintenances"
           label="Mantenimientos"
         />
         <q-fab-action
+          padding="xs"
           color="blue-7"
           to="reports"
           label="Reportes"
         />
         <q-fab-action
+          padding="xs"
           color="blue-6"
           to="calendar"
           label="Calendario"
         />
         <q-fab-action
+          padding="xs"
           color="blue-5"
           to="maintenances-plan"
           label="Planes"
         />
         <q-fab-action
+          padding="xs"
           color="blue-4"
           to="settings"
           label="Configuración"
@@ -177,5 +182,17 @@ export default defineComponent({
   .title-page {
     color: #91c8ff84;
   }
+}
+</style>
+
+<style>
+.q-fab--align-left>.q-fab__actions--up,
+.q-fab--align-left>.q-fab__actions--down {
+  background-color: #000000b8;
+  width: 90vw;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: start;
+  border-radius: 0.5rem;
 }
 </style>

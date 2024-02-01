@@ -540,6 +540,10 @@
   width: auto !important;
 }
 
+.show-in-mobile {
+  display: none !important;
+}
+
 
 
 // RESPONSIVITY
@@ -592,6 +596,14 @@
   .container-table-plans {
     width: 84vw !important;
   }
+
+  .container-table-notifications {
+    width: 90vw !important;
+  }
+
+  .show-in-mobile {
+    display: block !important;
+  }
 }
 
 /* Styles for phones */
@@ -628,7 +640,7 @@
     &__item-label,
     &__date,
     &__item-model {
-      font-size: 11px;
+      font-size: 11px !important;
     }
   }
 

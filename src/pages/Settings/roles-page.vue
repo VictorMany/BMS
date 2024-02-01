@@ -1,19 +1,21 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
+    <div
+      class="card-page"
+      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
+    >
       <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
-      <header-actions :titlePage="'Roles de usuarios y asignación de permisos'" />
-      <div
-        class="main-container-page main-container-page-medium-dark"
-        style="height: 85%"
-      >
+
+      <header-actions :titlePage="'Permisos'" />
+
+      <div class="main-container-page">
         <q-scroll-area
-          class="full-height q-pb-sm h-100"
+          class="full-height h-100"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <div class="row q-pa-lg justify-between">
+          <div class="row justify-between">
             <div class="col-12 col-md-7 q-pr-md">
               <q-scroll-area
                 class="fit"
@@ -52,37 +54,39 @@
                 </q-list>
               </q-scroll-area>
             </div>
+
             <div class="separator border-line q-mr-md" />
-            <div class="col-12 col-md q-pr-md">
+
+            <div class="col-12 col-md">
               <div class="info__detail w-100 q-mb-md">
                 Crea un nuevo rol o selecciona uno de la lista para editarlo
               </div>
-              <div class="row w-100 q-pb-sm">
-                <div class="col-12 q-pr-md form__item-label text-weight-thin">
+              <div class="w-100 q-pb-sm">
+                <div class="form__item-label text-weight-thin">
                   Nombre del rol
                 </div>
                 <q-input
-                  class="col-12 col-sm form__item-input"
+                  class="form__item-input bg-accent"
                   borderless
                   dense
-                  filled
                   v-model="role.title"
                 />
               </div>
-              <div class="row w-100 q-pb-sm">
-                <div class="col-12 q-pr-md form__item-label text-weight-thin">
+
+              <div class="w-100 q-pb-sm">
+                <div class="form__item-label text-weight-thin">
                   Descripción del rol
                 </div>
                 <q-input
-                  class="col-12 col-sm form__item-input"
+                  class="form__item-input bg-accent"
                   borderless
                   dense
-                  filled
                   v-model="role.title"
                 />
               </div>
+
               <div
-                class="select__form border-line q-pa-md q-mt-md"
+                class="border-rounded border-line q-pa-md q-mt-md"
                 style="height: 40vh"
               >
                 <div class="q-pb-sm form__item-label__title">
@@ -101,7 +105,7 @@
                   >
                     <q-tree
                       node-key="label"
-                      class="checkbox-label"
+                      class="checkbox-label font-tree"
                       color="grey-8"
                       text-color="blue-grey-4"
                       :nodes="simple"
@@ -237,31 +241,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.main-container-page {
-  background-color: white;
-}
-
-
-
-.select {
-  &__form {
-    border-radius: 8px;
-  }
-}
-
-.checkbox-label {
-  color: #e8f3fb;
-  font-size: 13px;
-}
-
-.q-tree__node-header-content {
-  font-size: 13px;
-  color: rgb(121, 123, 123) !important;
-}
-
-.q-field__label {
-  padding-bottom: 0.5rem !important;
-}
-</style>

@@ -7,7 +7,9 @@
       <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
+
       <header-actions :titlePage="'Acerca de nosotros'" />
+
       <div class="main-container-page h-90">
         <q-scroll-area
           class="full-height h-100"
@@ -19,7 +21,7 @@
             opacity: 1,
           }"
         >
-          <div class="q-px-md-lg q-px-none-lg  h-100">
+          <div class="q-px-lg-none h-100">
             <q-parallax>
               <template v-slot:media>
                 <img

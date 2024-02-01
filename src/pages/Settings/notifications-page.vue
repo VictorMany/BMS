@@ -1,20 +1,21 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
-      <div class="column items-end q-mb-xs">
+    <div
+      class="card-page"
+      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
+    >
+      <div class="column items-end q-mt-md q-mb-sm gt-sm">
         <btn-action v-bind="btnCloseWindow" />
       </div>
+
       <header-actions
         :titlePage="'Notificaciones'"
         :btn-action="btnAction"
       />
-      <div
-        class="main-container-page"
-        style="height: 85%"
-      >
+
+      <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
-          class="full-height q-pb-sm"
-          style="height: 95% !important"
+          class="h-100"
           :thumb-style="{
             right: '0px',
             borderRadius: '5px',
@@ -60,20 +61,22 @@
               </q-item>
             </div>
           </q-list>
-          <div class="col-12 q-py-sm">
+          <div class="col-12 q-py-sm container-table-notifications">
             <div
               class="card-graphics__title q-mt-sm text-start ellipsis"
               style="border: none"
             >
               Historial de notificaciones
             </div>
+
             <general-table
+              style="overflow: scroll;"
+              class="h-100 w-100"
               :rows="rows"
               :columns="columns"
               :actions-table="actionsTable"
               v-model:row-selected="rowSelected"
               :pagination-prop="paginationProp"
-              height="auto"
             />
           </div>
         </q-scroll-area>

@@ -19,7 +19,7 @@
             opacity: 1,
           }"
         >
-          <div class="q-px-lg h-100">
+          <div class="q-px-lg-none  h-100">
             <div class="container">
               <h2>1. Introducción</h2>
               <p>Bienvenido a [nombre del sitio web], propiedad de [nombre de la empresa propietaria del sitio web]. Al

@@ -31,7 +31,7 @@
             @navigation="getDatesPerMonth"
           />
 
-          <div class="col q-my-md">
+          <div class="col q-my-md q-px-sm q-pa-md-none">
             <div class="container-colorama border-none q-pa-xs row">
               <q-radio
                 v-for="(badge, i) in optionsFilter"
@@ -96,7 +96,7 @@
 
                 <div
                   v-else-if="loading"
-                  class="q-ma-xl q-pa-xl text-center no-info border-rounded"
+                  class="q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
                 >
                   <q-spinner-pie
                     color="primary"
@@ -108,7 +108,7 @@
 
                 <div
                   v-else-if="loading === false"
-                  class="q-ma-xl q-pa-xl text-center no-info border-rounded"
+                  class="q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
                 >
                   No hay equipos para mostrar
                   <strong class="text-negative">!</strong>
@@ -239,19 +239,21 @@ export default defineComponent({
   },
 
   created() {
-    this.calendarModel = this.formatDate();
-
-    this.getEquipmentsByDate();
-
-    const currentDate = new Date();
-
-    this.getDatesPerMonth({
-      year: currentDate.getFullYear(),
-      month: currentDate.getMonth() + 1,
-    })
+    this.initInfo()
   },
 
   methods: {
+    async initInfo() {
+      this.calendarModel = this.formatDate();
+      const currentDate = new Date();
+
+      await this.getDatesPerMonth({
+        year: currentDate.getFullYear(),
+        month: currentDate.getMonth() + 1,
+      })
+
+      await this.getEquipmentsByDate();
+    },
     async getDatesPerMonth(date) {
       if (date) {
         let formattedPayload = date.year + '-' + date.month.toString().padStart(2, '0')
@@ -262,7 +264,7 @@ export default defineComponent({
 
     async getEquipmentsByDate(date = null) {
       try {
-        let auxDate = date ? date.replace(/-/g, '/') : null;
+        let auxDate = date ? date.replace(/-/g, '/') : this.formatDate().replace(/-/g, '/');
         this.loading = true;
 
         if (this.events.includes(auxDate)) {

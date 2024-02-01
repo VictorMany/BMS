@@ -39,12 +39,12 @@
           </div>
 
           <div class="row container-stats">
-            <div class="col-12 col-md-6 col-lg-3">
+            <div class="col-12 col-md-6 col-lg">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Mantenimientos vigentes
                 </div>
-                <div style="height: 200px; width: 200px">
+                <div style="height: 200px; width: 190px">
                   <doghnut-chart
                     :chart-data="chartConfigCurrentMaintenances.data"
                     :chart-options="chartConfigCurrentMaintenances.options"
@@ -52,12 +52,13 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-3">
+
+            <div class="col-12 col-md-6 col-lg">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Falla repentina
                 </div>
-                <div style="height: 200px; width: 200px">
+                <div style="height: 200px; width: 190px">
                   <doghnut-chart
                     :chart-data="chartConfigSuddenFailure.data"
                     :chart-options="chartConfigSuddenFailure.options"
@@ -65,12 +66,13 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-3">
+
+            <div class="col-12 col-md-6 col-lg">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Reemplazo por daño
                 </div>
-                <div style="height: 200px; width: 200px">
+                <div style="height: 200px; width: 190px">
                   <doghnut-chart
                     :chart-data="chartConfigReplaceObsolescence.data"
                     :chart-options="chartConfigReplaceObsolescence.options"
@@ -78,12 +80,13 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-3">
+
+            <div class="col-12 col-md-6 col-lg">
               <div class="card-graphics q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Mantenimientos preventivos
                 </div>
-                <div style="height: 200px; width: 200px">
+                <div style="height: 200px; width: 190px">
                   <doghnut-chart
                     :chart-data="chartConfigPreventive.data"
                     :chart-options="chartConfigPreventive.options"
