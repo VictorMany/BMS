@@ -1,6 +1,6 @@
 <template>
   <q-btn
-    class="btn-style border-shadow"
+    class="btn-style border-shadow border-rounded"
     :class="btnTitle ? 'q-pr-sm' : 'q-pa-none'"
     :unelevated="btnUnelevated"
     :outline="btnOutlined"
@@ -29,6 +29,13 @@
         :class="{ 'q-ma-xs': !btnTitle }"
       />
     </div>
+    <q-tooltip
+      v-if="tooltip"
+      class="bg-secondary border-rounded"
+      transition-show="rotate"
+      transition-hide="rotate"
+      :delay="500"
+    >{{ tooltip }}</q-tooltip>
   </q-btn>
 </template>
 
@@ -83,6 +90,12 @@ export default defineComponent({
       required: false,
     },
 
+    tooltip: {
+      type: String,
+      required: false,
+      default: null
+    },
+
     btnCaps: {
       type: Boolean,
       default: true,
@@ -129,7 +142,6 @@ export default defineComponent({
   background: v-bind(btnBackgroundGradient);
   color: v-bind(btnColor) !important;
   font-weight: v-bind(btnWeight) !important;
-  border-radius: 0.5rem !important;
 }
 
 .btn-style:hover {

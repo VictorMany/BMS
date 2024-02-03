@@ -1,15 +1,11 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div
-      class="card-page"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
-    >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
+    <div class="card-page">
+
       <header-actions
         :titlePage="getTitle()"
         :btn-action="btnAction"
+        :btn-close-window="btnCloseWindow"
       />
       <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
@@ -34,7 +30,6 @@
 
 <script>
 import { defineComponent } from 'vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import FormTextField from 'src/components/compose/FormTextField.vue'
 
@@ -43,7 +38,6 @@ export default defineComponent({
   components: {
     HeaderActions,
     FormTextField,
-    BtnAction
   },
 
   data() {
@@ -53,15 +47,15 @@ export default defineComponent({
         btnTitle: 'Guardar',
         iconName: 'save',
         btnWidth: 'auto',
+        tooltip: 'Guardar reporte',
         btnAction: this.createOrEdit,
         loader: false,
       },
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
 
       fields: {
@@ -349,10 +343,6 @@ export default defineComponent({
       this.getReport()
     }
   },
-
-  // beforeUnmount() {
-  //   this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
-  // },
 
   mounted() {
     if (this.equipment) {

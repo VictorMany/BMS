@@ -1,16 +1,12 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div
-      class="card-page"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
-    >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
+    <div class="card-page">
+
 
       <header-actions
         :titlePage="'Información de la cuenta'"
         :btn-action="btnAction"
+        :btn-close-window="btnCloseWindow"
       />
       <div class="main-container-page h-90">
         <q-scroll-area
@@ -47,11 +43,10 @@ export default defineComponent({
         btnWidth: 'auto',
       },
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
       fields: {
         imageInput: true,
@@ -89,18 +84,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped lang="scss">
-.container-img {
-  object-fit: cover;
-  border-radius: 10px;
-  width: 178px;
-  height: 98px;
-}
-
-.divider {
-  background: #006aff;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-}
-</style>

@@ -319,7 +319,6 @@
 
 .setting-item {
   height: 75px !important;
-  border-radius: 10px;
 
   &__title {
     font-size: 12px;
@@ -351,11 +350,10 @@
 }
 
 .main-container-page {
-  height: 85%;
+  height: 92%;
   width: 100%;
   overflow-y: scroll !important;
-  border-radius: 6px;
-
+  border-radius: 8px;
 }
 
 .h-90 {
@@ -400,15 +398,10 @@
   &__item-chip {
     background-color: #66a1d43c;
     color: $primary !important;
-    border-radius: 4px;
     padding: 0.2rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     font-weight: bold;
-  }
-
-  &__checkbox {
-    border-radius: 5px;
   }
 
   &__date,
@@ -424,7 +417,7 @@
     font-weight: 400;
     font-size: 12px;
     color: #51565d;
-    border-radius: 0.3rem !important;
+    border-radius: 8px !important;
     padding-left: 0.6rem !important;
     padding-right: 0.6rem !important;
   }
@@ -434,7 +427,7 @@
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
-    border-radius: 0.3rem !important;
+    border-radius: 8px !important;
     padding-left: 0.6rem !important;
     padding-right: 0.6rem !important;
   }
@@ -444,7 +437,6 @@
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
-    border-radius: 0.3rem !important;
   }
 
   &__image {
@@ -467,12 +459,10 @@
     min-height: 240px !important;
     height: 100% !important;
     background-clip: padding-box;
-    border-radius: 12px;
   }
 }
 
 .card-graphics {
-  border-radius: 5px;
 
   &__title {
     font-weight: 300;
@@ -485,11 +475,6 @@
 .tabs-style {
   height: 10vh !important;
   display: none;
-}
-
-.q-chip,
-.q-badge {
-  border-radius: 6px !important;
 }
 
 .border-rounded {
@@ -519,10 +504,17 @@
   display: none !important;
 }
 
+.not-show-in-mobile {
+  display: flex !important;
+}
 
+.qr-code-style {
+  width: 100% !important;
+  height: 100% !important;
+}
 
 // RESPONSIVITY
-@media only screen and (max-device-width : 1000px) {
+@media only screen and (max-width : 1000px) {
   .q-page {
     display: flex;
     justify-content: center;
@@ -563,7 +555,7 @@
   }
 
   .container-table-plans {
-    width: 88vw !important;
+    width: 84vw !important;
   }
 
   .container-table-notifications {
@@ -571,7 +563,29 @@
   }
 
   .show-in-mobile {
-    display: block !important;
+    display: flex !important;
+  }
+
+  .not-show-in-mobile {
+    display: none !important;
+  }
+
+  .drawer {
+    height: 100vh !important;
+    padding-left: 0px;
+  }
+
+  .q-drawer--mobile {
+    width: 250px !important;
+  }
+
+  .side-menu {
+    border-radius: 0 !important;
+  }
+
+  .q-tooltip {
+    font-size: 8px !important;
+    padding: 6px;
   }
 }
 

@@ -1,16 +1,10 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div
-      class="card-page q-pt-md-none"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
-    >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
-
+    <div class="card-page">
       <header-actions
         :titlePage="'Detalles del equipo'"
         :btn-action="btnAction"
+        :btn-close-window="btnCloseWindow"
       />
 
       <div class="main-container-page main-container-page-dark container-form">
@@ -33,7 +27,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue'
+// import BtnAction from 'src/components/atomic/BtnAction.vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import FormLabel from 'src/components/compose/FormLabel.vue'
 
@@ -42,7 +36,7 @@ export default defineComponent({
   components: {
     HeaderActions,
     FormLabel,
-    BtnAction
+    // BtnAction
   },
   data() {
     return {
@@ -93,13 +87,13 @@ export default defineComponent({
           {
             key: 'warrantyDate',
             label: 'Fecha de garantía',
-            type: 'date',
+            type: 'formatedDate',
             model: ''
           },
           {
             key: 'updatedAt',
             label: 'Fecha de modificación',
-            type: 'date',
+            type: 'formatedDate',
             model: ''
           },
           {
@@ -133,16 +127,16 @@ export default defineComponent({
         show: true,
         btnTitle: 'Editar',
         iconName: 'edit',
+        tooltip: 'Ir a editar equipo',
         to: this.getIdToEdit(),
         btnWidth: 'auto'
       },
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
         btnAction: this.goBack
-      }
+      },
     }
   },
   methods: {

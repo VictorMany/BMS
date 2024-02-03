@@ -3,7 +3,7 @@
     <div class="card-page">
       <div
         v-if="this.$route.query.equipment"
-        class="column items-end q-mb-xs"
+        class="column items-end q-mb-xs not-show-in-mobile"
       >
         <btn-action v-bind="btnCloseWindow" />
       </div>
@@ -55,16 +55,16 @@ export default defineComponent({
       localPagination: {},
 
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
 
       btnAction: {
         show: true,
-        btnTitle: 'Añadir reporte',
+        btnTitle: 'Agregar reporte',
+        tooltip: 'Agregar nuevo reporte',
         btnAction: this.goToAddReport,
         btnWidth: 'auto'
       },
@@ -74,16 +74,19 @@ export default defineComponent({
           icnName: 'read_more',
           icnSize: 'sm',
           icnAction: 'Detail',
+          tooltip: 'Detalle de reporte',
         },
         {
           icnName: 'edit',
           icnSize: 'xs',
           icnAction: 'Edit',
+          tooltip: 'Editar reporte',
         },
         {
           icnName: 'engineering',
           icnSize: 'xs',
           icnAction: 'Maintenance',
+          tooltip: 'Atender reporte',
         },
       ],
 

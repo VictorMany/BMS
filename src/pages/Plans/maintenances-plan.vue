@@ -56,17 +56,17 @@ export default defineComponent({
 
       btnAction: {
         show: true,
-        btnTitle: 'Añadir plan de mantenimiento',
+        btnTitle: 'Agregar plan de mantenimiento',
+        tooltip: 'Agregar nuevo plan',
         to: 'add-maintenance-plan',
         btnWidth: 'auto'
       },
 
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
 
       columns: [
@@ -89,11 +89,13 @@ export default defineComponent({
           icnName: 'read_more',
           icnSize: 'sm',
           icnAction: 'Detail',
+          tooltip: 'Detalle de plan',
         },
         {
           icnName: 'edit',
           icnSize: 'xs',
           icnAction: 'Edit',
+          tooltip: 'Editar plan',
         },
       ],
 

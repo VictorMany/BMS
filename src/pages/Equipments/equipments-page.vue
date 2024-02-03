@@ -131,7 +131,8 @@ export default defineComponent({
 
       btnAction: {
         show: true,
-        btnTitle: 'Añadir equipo',
+        btnTitle: 'Agregar equipo',
+        tooltip: 'Agregar nuevo equipo',
         to: 'add-equipment',
       },
 
@@ -230,11 +231,13 @@ export default defineComponent({
           icnName: 'read_more',
           icnSize: 'sm',
           icnAction: 'Detail',
+          tooltip: 'Detalle de equipo',
         },
         {
           icnName: 'edit',
           icnSize: 'xs',
           icnAction: 'Edit',
+          tooltip: 'Editar equipo',
         },
       ],
     };

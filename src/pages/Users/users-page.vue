@@ -1,12 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div
-      class="card-page"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
-    >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
+    <div class="card-page">
+
 
       <header-actions
         :titlePage="'Usuarios'"
@@ -101,8 +96,6 @@ import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import ItemCard from 'src/components/atomic/ItemCard.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
-import BtnAction from 'src/components/atomic/BtnAction.vue';
-
 
 export default defineComponent({
   name: 'UsersPage',
@@ -110,7 +103,6 @@ export default defineComponent({
     GeneralTable,
     HeaderActions,
     ItemCard,
-    BtnAction
   },
   data() {
     return {
@@ -122,11 +114,10 @@ export default defineComponent({
       loading: true,
 
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
 
       localPagination: {},
@@ -136,17 +127,20 @@ export default defineComponent({
           icnName: 'read_more',
           icnSize: 'sm',
           icnAction: 'Detail',
+          tooltip: 'Detalle de usuario'
         },
         {
           icnName: 'edit',
           icnSize: 'xs',
           icnAction: 'Edit',
+          tooltip: 'Editar usuario'
         },
       ],
 
       btnAction: {
         show: true,
-        btnTitle: 'Añadir usuario',
+        tooltip: 'Agregar nuevo usuario',
+        btnTitle: 'Agregar usuario',
         to: 'add-user',
       },
 

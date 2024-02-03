@@ -1,9 +1,9 @@
 <template>
   <div class="row flex items-center q-my-xs">
-      <div class="color-status q-mr-sm" />
-      <div class="text-status">
-        {{ text }}
-      </div>
+    <div class="color-status q-mr-sm border-rounded" />
+    <div class="text-status">
+      {{ text }}
+    </div>
   </div>
 </template>
 
@@ -31,8 +31,8 @@ export default defineComponent({
   background-color: v-bind(color);
   width: 15px;
   height: 15px;
-  border-radius: 8px;
 }
+
 .text-status {
   font-weight: 300;
   font-size: 13px;

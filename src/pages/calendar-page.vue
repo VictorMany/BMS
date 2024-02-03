@@ -13,7 +13,7 @@
             today-btn
             color="primary"
             mask="YYYY-MM-DD"
-            class="text-blue-blue-grey-4 border-line gt-xs"
+            class="text-blue-blue-grey-4 border-line border-rounded gt-xs"
             landscape
             :events="events"
             @update:model-value="getEquipmentsByDate"
@@ -25,14 +25,14 @@
             today-btn
             color="primary"
             mask="YYYY-MM-DD"
-            class="text-blue-blue-grey-4 border-line lt-sm w-100"
+            class="text-blue-blue-grey-4 border-line border-rounded lt-sm w-100"
             :events="events"
             @update:model-value="getEquipmentsByDate"
             @navigation="getDatesPerMonth"
           />
 
           <div class="col q-my-md q-px-sm q-pa-md-none">
-            <div class="container-colorama border-none q-pa-xs row">
+            <div class="container-colorama border-rounded q-pa-xs row">
               <q-radio
                 v-for="(badge, i) in optionsFilter"
                 :key="i"
@@ -171,6 +171,7 @@ export default defineComponent({
 
       btnAction: {
         show: true,
+        tooltip: 'Agregar nuevo plan',
         btnTitle: 'Crear plan de mantenimientos',
         to: 'add-maintenance-plan',
       },
@@ -228,11 +229,13 @@ export default defineComponent({
           icnName: 'read_more',
           icnSize: 'sm',
           icnAction: 'Detail',
+          tooltip: 'Detalle de equipo',
         },
         {
           icnName: 'edit',
           icnSize: 'xs',
           icnAction: 'Edit',
+          tooltip: 'Editar equipo',
         },
       ],
     };
@@ -372,7 +375,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .container-colorama {
   max-width: 420px !important;
-  border-radius: 5px;
 }
 
 .text-subtitle {

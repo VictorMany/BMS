@@ -3,20 +3,18 @@
     <q-form
       ref="myForm"
       class="card-page"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
     >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
+
 
       <header-actions
         titlePage="Detalles del plan"
         :btn-action="btnAction"
+        :btn-close-window="btnCloseWindow"
       />
 
       <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
-          class="q-pa-sm h-90"
+          class="h-90 q-pa-md"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <div
@@ -59,7 +57,8 @@
                     :key="index"
                   >
                     <div
-                      class="text-left chip-date q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between">
+                      class="text-left chip-date border-rounded q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
+                    >
                       {{ calcDate(day) }}
                     </div>
                     <div
@@ -106,7 +105,6 @@
 <script>
 
 import { defineComponent } from 'vue';
-import BtnAction from 'src/components/atomic/BtnAction.vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
 
@@ -114,25 +112,23 @@ export default defineComponent({
   name: 'EquipmentsPage',
   components: {
     HeaderActions,
-    BtnAction,
     GeneralTable
   },
   data() {
     return {
       btnAction: {
         show: true,
-        btnTitle: 'Guardar',
+        btnTitle: 'Editar plan',
         btnWidth: 'auto',
         loader: false,
-        btnAction: this.createOrEdit,
+        tooltip: 'Ir a editar plan de mantenimientos',
       },
 
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
 
       rows: [],
@@ -249,6 +245,5 @@ export default defineComponent({
   background-color: rgba($primary, 0.1);
   max-width: 300px;
   color: rgb(147, 150, 156);
-  border-radius: 8px;
 }
 </style>

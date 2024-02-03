@@ -1,16 +1,12 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div
-      class="card-page"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
-    >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
+    <div class="card-page">
+
 
       <header-actions
         :titlePage="'Notificaciones'"
         :btn-action="btnAction"
+        :btn-close-window="btnCloseWindow"
       />
 
       <div class="main-container-page main-container-page-medium-dark container-form">
@@ -29,7 +25,7 @@
               v-for="(item, i) in listNotifications"
               :key="i"
             >
-              <q-item class="q-mb-sm setting-item flex items-center clickable">
+              <q-item class="q-mb-sm setting-item border-rounded flex items-center clickable">
                 <q-item-section avatar>
                   <q-avatar class="avatar-item">
                     <img :src="getImageUrl(item.img)" />
@@ -74,7 +70,6 @@
               class="h-100 w-100"
               :rows="rows"
               :columns="columns"
-              :actions-table="actionsTable"
               v-model:row-selected="rowSelected"
               :pagination-prop="paginationProp"
             />
@@ -88,14 +83,12 @@
 <script>
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
-import BtnAction from 'src/components/atomic/BtnAction.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
 
 export default defineComponent({
   name: 'SettingsPage',
   components: {
     HeaderActions,
-    BtnAction,
     GeneralTable,
   },
   data() {
@@ -108,11 +101,10 @@ export default defineComponent({
         btnWidth: 'auto',
       },
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
       fields: {
         imageInput: true,
@@ -285,18 +277,6 @@ export default defineComponent({
           title_notification:
             'Hoy esta programado el plan PL-0006 Equipos de choque',
           date: '12-Jun-2022',
-        },
-      ],
-      actionsTable: [
-        {
-          icnName: 'read_more',
-          icnSize: 'sm',
-          icnAction: 'Detail',
-        },
-        {
-          icnName: 'edit',
-          icnSize: 'xs',
-          icnAction: 'Edit',
         },
       ],
       rowSelected: {},

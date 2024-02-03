@@ -14,7 +14,10 @@ export function formatPayload(context, { keys, fields }) {
                             // Verificar si la clave ya existe en FormData
                             if (!fd.has(k)) {
                                 if (fields[prop][i].type === 'select') {
-                                    fd.append(k, fields[prop][i].model?.value);
+                                    if (typeof fields[prop][i].model == 'string') {
+                                        fd.append(k, fields[prop][i].model)
+                                    } else
+                                        fd.append(k, fields[prop][i].model?.value);
                                 } else {
                                     fd.append(k, fields[prop][i].model);
                                 }
@@ -75,7 +78,7 @@ export function formatDate(date) {
 }
 
 function getModelSelected(item, valueFromServer) {
-    if (item.options) {
+    if (item.options && item.options.length > 0) {
         item.options.forEach(opt => {
             if (opt.value == valueFromServer) {
                 item.model = opt
@@ -122,11 +125,8 @@ function getModelSelected(item, valueFromServer) {
                 break;
         }
         return item
-    } else {
-        if (item.type === 'date') {
-            item.model = formatDate(valueFromServer);
-        }
-        else item.model = valueFromServer
-        return item
-    }
+    } else if (item.type === 'formatedDate') {
+        item.model = formatDate(valueFromServer);
+    } else item.model = valueFromServer
+    return item
 }

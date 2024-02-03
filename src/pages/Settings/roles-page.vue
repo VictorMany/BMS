@@ -1,12 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div
-      class="card-page"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
-    >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
+    <div class="card-page">
+
 
       <header-actions :titlePage="'Permisos'" />
 
@@ -32,7 +27,7 @@
                     v-for="(item, i) in listRoles"
                     :key="i"
                   >
-                    <q-item class="q-mb-sm setting-item flex items-center clickable">
+                    <q-item class="q-mb-sm setting-item border-rounded flex items-center clickable">
                       <q-item-section avatar>
                         <q-avatar class="avatar-item">
                           <img :src="getImageUrl(item.img)" />
@@ -140,11 +135,10 @@ export default defineComponent({
     return {
       fixed: ref(false),
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
       model: ref(null),
       listRoles: [

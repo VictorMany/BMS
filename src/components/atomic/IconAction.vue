@@ -4,7 +4,17 @@
     :name="icnName"
     :unelevated="icnUnelevated"
     :size="icnSize"
-  />
+  >
+    <q-tooltip
+      v-if="tooltip"
+      :delay="500"
+      transition-show="rotate"
+      transition-hide="rotate"
+      class="bg-secondary border-rounded"
+    >
+      {{ tooltip }}
+    </q-tooltip>
+  </q-icon>
 </template>
 
 <script>
@@ -42,6 +52,12 @@ export default defineComponent({
       required: false,
       default: 'add_circle',
     },
+
+    tooltip: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
 });
 </script>
@@ -50,6 +66,7 @@ export default defineComponent({
 .icn-style {
   color: v-bind(icnColor);
 }
+
 .icn-style:hover {
   transform: scale(1.2);
 }

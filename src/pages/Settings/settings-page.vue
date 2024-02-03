@@ -4,7 +4,7 @@
       <header-actions :titlePage="'Configuración'" />
       <div class="row q-pb-sm">
         <img
-          class="container-img q-mr-lg"
+          class="container-img q-mr-lg border-rounded"
           src="https://www.thinkchamplin.com/uploads/case-studies/main_MercyHealth_WestHospital_04.jpg"
         />
         <div class="q-py-md">
@@ -13,7 +13,7 @@
         </div>
       </div>
       <div
-        class="main-container-page main-container-page-medium-dark container-form"
+        class="main-container-page container-form"
         style="height: 60vh"
       >
         <q-scroll-area
@@ -32,9 +32,9 @@
               @click="navigateTo(item.link)"
               :key="i"
             >
-              <q-item class="q-mb-sm setting-item flex items-center clickable ">
+              <q-item class="q-mb-sm setting-item border-rounded flex items-center clickable ">
                 <q-item-section avatar>
-                  <q-avatar class="avatar-item">
+                  <q-avatar class="avatar-item border-rounded">
                     <img :src="getImageUrl(item.img)" />
                   </q-avatar>
                 </q-item-section>
@@ -145,12 +145,7 @@ export default defineComponent({
 
 .container-img {
   object-fit: cover;
-  border-radius: 10px;
   width: 178px;
   height: 98px;
-}
-
-.avatar-item {
-  border-radius: 3px !important;
 }
 </style>

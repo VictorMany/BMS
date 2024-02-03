@@ -2,68 +2,20 @@
 <template>
   <div class="container-header row items-center q-ma-none q-pa-none q-mb-sm">
     <div class="col-xs-auto column content-end show-in-mobile">
-      <q-fab
-        ref="menu"
-        v-model="fab2"
+      <q-btn
         icon="widgets"
-        vertical-actions-align="left"
         color="secondary"
-        push
-        square
-        :persistent="false"
-        label="Menú"
-        label-position="right"
-        external-label
+        unelevated
         padding="xs"
-        direction="down"
-      >
-        <q-fab-action
-          padding="xs"
-          color="blue-10"
-          label="Estadísticas"
-          to="/"
-        />
-        <q-fab-action
-          padding="xs"
-          color="blue-9"
-          label="Equipos"
-          to="equipments"
-        />
-        <q-fab-action
-          padding="xs"
-          color="blue-8"
-          to="maintenances"
-          label="Mantenimientos"
-        />
-        <q-fab-action
-          padding="xs"
-          color="blue-7"
-          to="reports"
-          label="Reportes"
-        />
-        <q-fab-action
-          padding="xs"
-          color="blue-6"
-          to="calendar"
-          label="Calendario"
-        />
-        <q-fab-action
-          padding="xs"
-          color="blue-5"
-          to="maintenances-plan"
-          label="Planes"
-        />
-        <q-fab-action
-          padding="xs"
-          color="blue-4"
-          to="settings"
-          label="Configuración"
-        />
-      </q-fab>
+        class="border-rounded"
+        @click="changeMenu()"
+      />
     </div>
+
     <div class="col-xs-auto col-sm title-page">
       {{ titlePage.toLocaleUpperCase() }}
     </div>
+
     <div
       v-if="btnAction.show"
       class="col-xs-auto column content-end gt-xs"
@@ -98,6 +50,16 @@
         v-bind="inputSearch"
         v-model:v-bind="inputSearch.heightModal"
         v-model:search-model="searchModelLocal"
+      />
+    </div>
+
+    <div
+      v-if="btnCloseWindow"
+      class="col-xs-auto column content-end"
+    >
+      <btn-action
+        v-bind="btnCloseWindow"
+        :tooltip="'Regresar'"
       />
     </div>
   </div>
@@ -135,6 +97,11 @@ export default defineComponent({
         btnTitle: 'Agregar equipo',
       }),
     },
+    btnCloseWindow: {
+      type: Object,
+      required: false,
+      default: null,
+    },
     switchContent: {
       type: Number,
       default: () => { },
@@ -145,18 +112,15 @@ export default defineComponent({
     return {
       searchModelLocal: this.searchModel,
       switchContentLocal: this.switchContent,
-      fab2: false,
     };
   },
 
-  // async beforeRouteUpdate(to, from, next) {
-  //   try {
-  //     this.fab2 = false
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   next();
-  // },
+
+  methods: {
+    changeMenu() {
+      this.$bus.emit('open-menu-from-child');
+    }
+  },
 
 
   watch: {

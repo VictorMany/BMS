@@ -15,75 +15,90 @@
             <div
               v-for="(item, i) in localTextfields.top"
               :key="i"
-              class="row items-center q-px-sm q-py-xs w-100"
             >
-              <div class="col q-pr-md form__item-label text-weight-thin">
-                {{ item.label }}
+              <div
+                v-if="shouldShow(item)"
+                class="row items-center q-px-sm q-py-xs w-100"
+              >
+                <div class="col q-pr-md form__item-label text-weight-thin">
+                  {{ item.label }}
+                </div>
+
+                <!-- INPUT TYPE SELECT -->
+                <q-select
+                  v-if="item.type === 'select'"
+                  :model-value="item.model"
+                  fill-input
+                  use-input
+                  class="col-6 form__input-12 bg-accent"
+                  borderless
+                  dense
+                  hide-hint
+                  hide-bottom-space
+                  hide-selected
+                  bottom-slots
+                  stack-label
+                  behavior="menu"
+                  :name="item.key"
+                  :readonly="item.readonly"
+                  :options="item.options"
+                  :rules="item.rules ? item.rules : []"
+                  :prefix="item.prefix ? item.prefix : ''"
+                  @filter="item.itemFilter"
+                  @input-value="item.setModel"
+                >
+                  <template v-slot:no-option>
+                    <q-item>
+                      <q-item-section class="text-grey">
+                        No results
+                      </q-item-section>
+                    </q-item>
+                  </template>
+
+                  <template v-slot:option="scope">
+                    <q-item
+                      v-bind="scope.itemProps"
+                      dense
+                    >
+                      <q-item-section>
+                        <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      v-if="item.readonly"
+                      name="lock"
+                      size="xs"
+                    />
+                  </template>
+                </q-select>
+
+                <q-input
+                  v-else
+                  class="col-6 form__input-12 bg-accent"
+                  borderless
+                  dense
+                  hide-hint
+                  hide-bottom-space
+                  bottom-slots
+                  stack-label
+                  :readonly="item.readonly"
+                  :rules="item.rules ? item.rules : []"
+                  :prefix="item.prefix ? item.prefix : ''"
+                  :name="item.key"
+                  :type="item.type ? item.type : 'text'"
+                  v-model="item.model"
+                >
+                  <template v-slot:append>
+                    <q-icon
+                      v-if="item.readonly"
+                      name="lock"
+                      size="xs"
+                    />
+                  </template>
+                </q-input>
               </div>
-
-              <!-- INPUT TYPE SELECT -->
-              <q-select
-                v-if="item.type === 'select'"
-                v-model="item.model"
-                :name="item.key"
-                class="col-6 form__input-12 bg-accent"
-                borderless
-                dense
-                hide-hint
-                hide-bottom-space
-                bottom-slots
-                stack-label
-                use-input
-                behavior="menu"
-                :options="item.options"
-                :readonly="item.readonly"
-                :rules="item.rules ? item.rules : []"
-                :prefix="item.prefix ? item.prefix : ''"
-                @filter="item.itemFilter"
-              >
-                <template v-slot:option="scope">
-                  <q-item
-                    v-bind="scope.itemProps"
-                    dense
-                  >
-                    <q-item-section>
-                      <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </template>
-                <template v-slot:append>
-                  <q-icon
-                    v-if="item.readonly"
-                    name="lock"
-                    size="xs"
-                  />
-                </template>
-              </q-select>
-
-              <q-input
-                v-else
-                class="col-6 form__input-12 bg-accent"
-                borderless
-                dense
-                hide-hint
-                hide-bottom-space
-                bottom-slots
-                stack-label
-                :readonly="item.readonly"
-                :rules="item.rules ? item.rules : []"
-                :prefix="item.prefix ? item.prefix : ''"
-                :name="item.key"
-                :type="item.type ? item.type : 'text'"
-                v-model="item.model"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    v-if="item.readonly"
-                    name="lock"
-                    size="xs"
-                  />
-                </template>
-              </q-input>
             </div>
           </div>
 
@@ -146,13 +161,13 @@
                     v-else-if="item.type === 'date'"
                     v-model="item.model"
                     :name="item.key"
-                    :readonly="item.readonly"
                     class="col-12 col-sm form__input bg-accent"
                     borderless
                     dense
                     hide-hint
                     hide-bottom-space
                     bottom-slots
+                    readonly
                     stack-label
                   >
                     <template v-slot:append>
@@ -160,7 +175,8 @@
                         v-if="!item.readonly"
                         icon="event"
                         size="xs"
-                        flat
+                        color="primary"
+                        unelevated
                         round
                       >
                         <q-popup-proxy
@@ -170,6 +186,7 @@
                         >
                           <q-date
                             v-model="item.model"
+                            mask="YYYY-MM-DD"
                             :name="item.key"
                           />
                         </q-popup-proxy>
@@ -228,7 +245,7 @@
                     :name="item.key"
                     :readonly="item.readonly"
                     :placeholder="'Escribe aquí tus ' + item.label"
-                    class="form__textarea bg-accent"
+                    class="form__textarea bg-accent border-rounded"
                     :toolbar="item.toolbar ? item.toolbar : basicToolBar"
                   />
                 </div>
@@ -253,7 +270,7 @@
             <div class="q-pr-md form__item-label text-weight-thin">
               {{ item.label }}
             </div>
-            <div class="form__item-model form__item-chip">
+            <div class="form__item-model form__item-chip border-rounded">
               {{ item.model }}
             </div>
           </div>
@@ -283,7 +300,7 @@
                     ? 'form__image64'
                     : 'form__image',
                   ImageBase64 && type !== 'user'
-                    ? 'form__image64-equipment'
+                    ? 'form__image64-equipment border-rounded'
                     : 'form__image',
                 ]"
                 no-spinner
@@ -312,7 +329,7 @@
           >
             <q-img
               :class="[
-                type === 'user' ? 'form__image64' : 'form__image64-equipment',
+                type === 'user' ? 'form__image64' : 'form__image64-equipment border-rounded',
               ]"
               no-spinner
               class="q-mx-auto q-my-auto"
@@ -340,7 +357,7 @@
             v-model="item.model"
             :name="item.key"
             :placeholder="'Escribe aquí...'"
-            class="form__textarea bg-accent"
+            class="form__textarea bg-accent border-rounded"
             :toolbar="[
               [
                 {
@@ -451,7 +468,6 @@ export default defineComponent({
         if (item.key == 'userPassword')
           return false
       } else {
-        // DO NOT SHOW STATUS EQUIPMENT WHEN CREATE EQUIPMENT
         if (item.key == 'equipmentStatus')
           return false
         if (item.key == 'reportStatus')
@@ -459,6 +475,12 @@ export default defineComponent({
         if (item.key == 'userStatus')
           return false
       } return true
+    },
+
+    shouldShow(item) {
+      if (item.shouldShow === false)
+        return false
+      return true
     },
 
     validate() {

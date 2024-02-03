@@ -1,6 +1,6 @@
 <template>
   <q-card
-    class="my-card cursor-pointer non-selectable"
+    class="my-card cursor-pointer non-selectable border-rounded"
     @click="cardAction(id)"
   >
     <q-card-section
@@ -9,7 +9,7 @@
     >
       <q-img
         v-if="cardImg"
-        class="col-5 img-style"
+        class="col-5 img-style border-rounded"
         :src="cardImg"
       />
       <q-card-section class="q-py-sm q-px-sm ellipsis w-100">
@@ -94,7 +94,6 @@ export default defineComponent({
 .my-card {
   width: 254px;
   height: 110px !important;
-  border-radius: 10px !important;
   background-color: white;
   box-shadow: none;
 }

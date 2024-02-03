@@ -3,7 +3,7 @@
     <div class="card-page">
       <div
         v-if="this.$route.query?.equipment || this.$route.query?.user"
-        class="column items-end q-mb-xs"
+        class="column items-end q-mb-xs not-show-in-mobile"
       >
         <btn-action v-bind="btnCloseWindow" />
       </div>
@@ -56,17 +56,17 @@ export default defineComponent({
 
       btnAction: {
         show: true,
-        btnTitle: 'Añadir mantenimiento',
+        btnTitle: 'Agregar mantenimiento',
+        tooltip: 'Agregar nuevo mantenimiento',
         btnAction: this.goToAddMaintenance,
         btnWidth: 'auto'
       },
 
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
 
 
@@ -90,7 +90,8 @@ export default defineComponent({
         {
           icnName: 'read_more',
           icnSize: 'sm',
-          icnAction: 'Detail'
+          icnAction: 'Detail',
+          tooltip: 'Detalle de mantenimiento',
         }
       ],
 

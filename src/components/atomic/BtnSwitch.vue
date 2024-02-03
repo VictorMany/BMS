@@ -1,6 +1,6 @@
 <template>
   <q-btn-group
-    class="btn-change-content border-shadow"
+    class="btn-change-content border-shadow border-rounded"
     :unelevated="btnUnelevated"
   >
     <q-btn
@@ -114,7 +114,6 @@ export default defineComponent({
 .btn-change-content {
   background-color: v-bind(color);
   color: v-bind(btnColor) !important;
-  border-radius: 0.5rem !important;
 }
 
 .btn-left {

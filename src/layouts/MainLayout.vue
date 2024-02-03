@@ -1,18 +1,17 @@
 <template>
-  <q-layout view="lHh lpR lFf">
+  <q-layout view="lHh lpR lFf bg-red">
     <q-drawer
       show-if-above
-      :width="350"
       :breakpoint="1000"
       v-model="leftDrawerOpen"
       class="cursor-pointer non-selectable main-menu row items-center"
     >
       <!-- drawer content -->
       <div
-        style="height: 97vh"
-        class="q-pl-md w-100"
+        style="height: 97vh;"
+        class="q-pl-md w-100 drawer"
       >
-        <div class="side-menu">
+        <div class="side-menu border-rounded">
           <div class="row">
             <div class="title text-center q-pt-lg w-100">BMS</div>
             <q-page-sticky
@@ -32,7 +31,7 @@
                     :src="getImageUrl(imageNotification)"
                   />
                 </q-avatar>
-                <q-popup-proxy class="border-radius">
+                <q-popup-proxy class="border-rounded">
                   <q-banner style="width: 400px; height: auto">
                     <div class="q-pa-sm form__item-label__title">
                       Notificaciones
@@ -54,7 +53,7 @@
                           @click="navigateTo(item.route)"
                           :key="i"
                         >
-                          <q-item class="q-mb-sm setting-item flex items-center clickable">
+                          <q-item class="q-mb-sm setting-item border-rounded flex items-center clickable">
                             <q-item-section>
                               <q-item-label class="setting-item__title">{{
                                 item.title
@@ -90,15 +89,15 @@
               style="background-color: rgba(125, 125, 125, 0.085);"
               v-if="showEquipmentDetails()"
             >
-              <div class="col-12 text-weight-medium text-primary">
+              <div class="col-12 text-weight-medium text-secondary">
                 Información del equipo
               </div>
               <div
-                class="q-mx-auto row q-my-lg"
+                class="q-mx-auto row q-my-sm"
                 :style="'width: 100%;'"
               >
                 <q-img
-                  class="form__image64-equipment q-mx-auto q-my-auto"
+                  class="form__image64-equipment q-mx-auto q-my-auto border-rounded"
                   no-spinner
                   :src="equipment?.photo"
                 />
@@ -110,7 +109,7 @@
                       Estatus del equipo
                     </div>
                     <q-chip
-                      class="q-ma-none col-auto q-mr-xs"
+                      class="q-ma-none col-auto q-mr-xs border-rounded"
                       dark
                       :style="`color: ${getStatus.color(equipment.equipmentStatus)}; background-color: ${getStatus.color(equipment.equipmentStatus)}26; font-size: 12px`"
                     >
@@ -139,9 +138,8 @@
                   </div>
                 </div>
 
-                <div class="col-4 flex items-end">
+                <div class="row justify-end">
                   <qrcode-vue
-                    class="border-radius"
                     :value="value"
                     :size="100"
                     foreground="#062841"
@@ -157,12 +155,12 @@
               class="q-pa-md bg-accent border-rounded q-mt-lg"
               v-if="showUserDetails()"
             >
-              <div class="col-12 text-weight-medium text-primary">
+              <div class="col-12 text-weight-medium text-secondary">
                 Información del usuario
               </div>
 
               <div
-                class="q-mx-auto row q-my-lg"
+                class="q-mx-auto row q-my-sm"
                 :style="'width: 100%;'"
               >
                 <q-img
@@ -179,7 +177,7 @@
                       Estatus del usuario
                     </div>
                     <q-chip
-                      class="q-ma-none col-auto q-mr-xs"
+                      class="q-ma-none col-auto q-mr-xs border-rounded"
                       dark
                       :style="`color: ${getStatus.color(user?.userStatus)}; background-color: ${getStatus.color(user?.userStatus)}26; font-size: 12px`"
                     >
@@ -211,9 +209,8 @@
                   </div>
                 </div>
 
-                <div class="col-4 flex items-end">
+                <div class="row justify-end">
                   <qrcode-vue
-                    class="border-radius"
                     :value="value"
                     :size="100"
                     foreground="#062841"
@@ -247,15 +244,15 @@
                     v-if="btn == 'qrcode'"
                   >
                     <qrcode-vue
-                      class="border-radius"
                       :value="value"
                       :size="size"
+                      class="qr-code-style border-rounded"
                       foreground="#062841"
                       background="#F3F3F3"
                       :margin="3"
                       level="L"
                     />
-                    <div class="text column wrap justify-center items-center content-center q-pa-none">
+                    <div class="text column wrap justify-center items-center content-center q-pa-none border-rounded">
                       <btn-action v-bind="btnExport" />
                     </div>
                   </div>
@@ -275,28 +272,6 @@
     <q-page-container class="container-style">
       <router-view />
     </q-page-container>
-    <!-- <q-tabs class="tabs-style">
-      <q-route-tab
-        icon="dashboard"
-        to="/"
-        exact
-      />
-      <q-route-tab
-        icon="computer"
-        to="/equipments"
-        exact
-      />
-      <q-route-tab
-        icon="home_repair_service"
-        to="/maintenances"
-        exact
-      />
-      <q-route-tab
-        icon="settings"
-        to="/settings"
-        exact
-      />
-    </q-tabs> -->
   </q-layout>
 </template>
 
@@ -316,7 +291,6 @@ export default defineComponent({
   },
 
   setup() {
-    const leftDrawerOpen = ref(false);
     const getImageUrl = (url) => {
       try {
         return new URL(`../assets/${url}`, import.meta.url).href;
@@ -328,19 +302,16 @@ export default defineComponent({
     };
 
     return {
-      leftDrawerOpen,
       getImageUrl,
       routerWatchTest() {
         return routerWatch;
-      },
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
       },
     };
   },
   data() {
     return {
       value: 'https://example.com',
+      leftDrawerOpen: false,
       size: 302,
       btnSelected: 0,
       fixed: ref(false),
@@ -533,6 +504,15 @@ export default defineComponent({
   created() {
     this.btnLinks = this.btnGeneral;
     this.setMenu(this.$route);
+
+    this.$bus.on('open-menu-from-child', () => {
+      // do some work
+      this.toggleLeftDrawer()
+    });
+  },
+
+  beforeUnmount() {
+    this.$bus.on('open-menu-from-child');
   },
 
   computed: {
@@ -547,6 +527,12 @@ export default defineComponent({
         return this.$store.getters['users/getUserGetter'];
       },
     },
+
+    // openDrawerFromChild: {
+    //   get() {
+    //     return this.$store.getters['global/getDrawer'];
+    //   },
+    // }
   },
 
   async beforeRouteUpdate(to, from, next) {
@@ -655,7 +641,10 @@ export default defineComponent({
         this.btnCloseSesion.show = false
       }
       return this.$route.query.user
-    }
+    },
+    toggleLeftDrawer() {
+      this.leftDrawerOpen = !this.leftDrawerOpen;
+    },
   },
 });
 </script>
@@ -665,7 +654,6 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   box-shadow: none;
-  border-radius: 8px !important;
   overflow: hidden;
 }
 
@@ -730,7 +718,6 @@ export default defineComponent({
   left: 0;
   width: 100%;
   height: 98%;
-  border-radius: 8px;
   opacity: 0;
   background-color: rgba(0, 0, 0, 0.3);
   color: #fff;

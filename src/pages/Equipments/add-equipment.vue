@@ -1,15 +1,11 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div
-      class="card-page"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
-    >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
+    <div class="card-page">
+
       <header-actions
         :titlePage="getTitle()"
         :btn-action="btnAction"
+        :btn-close-window="btnCloseWindow"
       />
       <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
@@ -34,7 +30,6 @@
 
 <script>
 import { defineComponent } from 'vue';
-import BtnAction from 'src/components/atomic/BtnAction.vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormTextField from 'src/components/compose/FormTextField.vue';
 
@@ -43,7 +38,6 @@ export default defineComponent({
   components: {
     HeaderActions,
     FormTextField,
-    BtnAction,
   },
   data() {
     return {
@@ -56,16 +50,16 @@ export default defineComponent({
         btnTitle: 'Guardar',
         iconName: 'save',
         btnWidth: 'auto',
+        tooltip: 'Guardar equipo',
         btnAction: this.createOrEdit,
         loader: false,
       },
 
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
 
       fields: {
@@ -78,22 +72,29 @@ export default defineComponent({
             label: 'Categoría del equipo',
             type: 'select',
             itemFilter: this.filterCategories,
+            setModel: this.setModel,
             options: [],
-            model: null,
+            model: '',
+            shouldShow: this.isEditing() ? false : true,
             rules: [
-              (val) => (val) || 'El campo es obligatorio',
+              (val) => {
+                if (typeof val === 'string') {
+                  return val.trim().length > 0 || 'El campo es obligatorio';
+                } else if (typeof val === 'object' && val !== null) {
+                  return val;
+                } else {
+                  return 'El campo es obligatorio';
+                }
+              },
             ],
           },
-          // {
-          //   key: 'categoryName',
-          //   label: 'Categoría del equipo',
-          //   model: '',
-          //   rules: [
-          //     (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-          //     (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
-          //     (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
-          //   ],
-          // },
+          {
+            key: 'categoryName',
+            label: 'Categoría del equipo',
+            model: '',
+            shouldShow: this.isEditing(),
+            readonly: true
+          },
         ],
         left: [
           {
@@ -212,7 +213,6 @@ export default defineComponent({
               (val) => {
                 const selectedDate = new Date(val);
                 const currentDate = new Date();
-
                 return selectedDate >= currentDate || 'La fecha de garantía no puede ser anterior a la fecha actual';
               }
             ],
@@ -311,17 +311,70 @@ export default defineComponent({
     },
 
     async getCategories() {
-      await this.$store.dispatch('equipments/getCategoriesAction')
+      await this.$store.dispatch('equipments/getAllCategoriesAction')
       this.fields.top[0].options = JSON.parse(JSON.stringify(this.categories));
     },
 
     async initInfo() {
       await this.getCategories()
-      console.log(this.categories)
       if (this.isEditing()) {
         await this.getEquipment()
       }
     },
+
+    // newValue(val, done) {
+    //   console.log(val)
+    //   done(val)
+    //   // done(val, 'toggle')
+
+    //   // Calling done(var) when new-value-mode is not set or "add", or done(var, "add") adds "var" content to the model
+    //   // and it resets the input textbox to empty string
+    //   // ----
+    //   // Calling done(var) when new-value-mode is "add-unique", or done(var, "add-unique") adds "var" content to the model
+    //   // only if is not already set
+    //   // and it resets the input textbox to empty string
+    //   // ----
+    //   // Calling done(var) when new-value-mode is "toggle", or done(var, "toggle") toggles the model with "var" content
+    //   // (adds to model if not already in the model, removes from model if already has it)
+    //   // and it resets the input textbox to empty string
+    //   // ----
+    //   // If "var" content is undefined/null, then it doesn't tampers with the model
+    //   // and only resets the input textbox to empty string
+
+    //   // if (val.length > 2) {
+    //   //   if (!stringOptions.includes(val)) {
+
+    //   // console.log(done(val))
+    //   //   }
+    //   // }
+    //   if (val.length > 0) {
+    //     if (!this.fields.top[0].options.includes(val)) {
+    //       this.fields.top[0].options.push(val)
+    //     }
+    //     done(val, 'toggle')
+    //   }
+    // },
+
+    // async setPropertyByKey(key, value) {
+    //   // Busca la clave en todas las secciones del objeto fields
+    //   for (const sectionKey in this.fields) {
+    //     if (Object.prototype.hasOwnProperty.call(this.fields, sectionKey)) {
+    //       const elements = this.fields[sectionKey];
+
+    //       // Verifica si elements es iterable (un objeto iterable debería tener la propiedad Symbol.iterator)
+    //       if (elements && typeof elements[Symbol.iterator] === 'function') {
+    //         // Busca la clave en cada elemento de la sección
+    //         for (let element of elements) {
+    //           if (element.key === key) {
+    //             element = { ...element, ...value };
+    //             console.log('modifico EL ELEMENTO', element)
+    //             return;
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // },
 
     getTitle() {
       if (this.isEditing()) {
@@ -363,6 +416,13 @@ export default defineComponent({
       })
     },
 
+    // filterCategories(val, update) {
+    //   update(() => {
+    //     const needle = val.toLocaleLowerCase()
+    //     this.fields.top[0].options = this.categories.filter(v => v.toLocaleLowerCase().indexOf(needle) > -1)
+    //   })
+    // },
+
     getDate() {
       return this.$store.$store.getters['global/getDate']
     },
@@ -371,6 +431,13 @@ export default defineComponent({
       return this.$route.params.id ? true : false
     },
 
+    setModel(val) {
+      console.log(val)
+      this.fields.top[0].model = val
+
+      console.log(this.fields.top[0].model)
+      console.log(this.fields.top[0])
+    }
   },
 
   computed: {
@@ -383,6 +450,18 @@ export default defineComponent({
     categories() {
       return this.$store.getters['equipments/getCategoriesGetter'];
     },
+  },
+
+  watch: {
+    // fields: {
+    //   handler(val) {
+    //     let category = val.top[0].model
+    //     if (typeof category === 'string' && category.length == 0) {
+    //       val.top[0].type = 'select'
+    //     }
+    //   },
+    //   deep: true
+    // }
   },
 
   created() {

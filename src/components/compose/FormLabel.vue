@@ -60,7 +60,7 @@
                 class="col-12 col-sm form__item-model"
               >
                 <q-chip
-                  class="q-ma-none"
+                  class="q-ma-none border-rounded"
                   dark
                   :style="`color: ${item.color}; background-color: ${item.color}26; font-size: 12px`"
                 >
@@ -85,8 +85,8 @@
                   {{ item.label }}
                 </div>
                 <div
-                  style="border-radius: 5px; height: 80%;"
-                  class="q-pa-sm border-line"
+                  style="height: 80%;"
+                  class="q-pa-sm border-line border-rounded"
                 >
                   <div
                     class="col-12 q-pr-md form__label-area"
@@ -114,13 +114,13 @@
           <div class="q-pr-md form__item-label text-weight-thin">
             {{ item.label }}
           </div>
-          <div class="form__item-model form__item-chip q-pl-md">
+          <div class="form__item-model form__item-chip q-pl-md border-rounded">
             {{ item.model }}
           </div>
         </div>
 
         <div
-          v-if="item.key === 'photo'"
+          v-if="item.key === 'photo' && item.model"
           class="q-mx-auto row q-my-lg"
           :style="type === 'user'
             ? 'width: 254px !important; height: 254px; border-radius: 50%'
@@ -129,7 +129,7 @@
         >
           <q-img
             :class="[
-              type === 'user' ? 'form__image64' : 'form__image64-equipment',
+              type === 'user' ? 'form__image64' : 'form__image64-equipment border-rounded',
             ]"
             no-spinner
             class="q-mx-auto q-my-auto"
@@ -146,14 +146,11 @@
       :key="i"
       class="col-12 q-pa-sm q-my-md"
     >
-      <div v-if="item.label">
+      <div v-if="item.label && item.model">
         <div class="col-12 q-pr-md form__item-label text-weight-thin q-mb-xs">
           {{ item.label }}
         </div>
-        <div
-          class="q-pa-sm w-100 h-100 border-line"
-          style="border-radius: 5px"
-        >
+        <div class="q-pa-sm w-100 h-100 border-line border-rounded">
           <div
             class="col-12 q-pr-md form__label-area"
             v-html="item.model"

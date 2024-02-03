@@ -1,12 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div
-      class="card-page"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
-    >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
+    <div class="card-page">
+
 
       <header-actions :titlePage="'Acerca de nosotros'" />
 
@@ -153,13 +148,11 @@
 <script>
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
-import BtnAction from 'src/components/atomic/BtnAction.vue';
 
 export default defineComponent({
   name: 'SettingsPage',
   components: {
     HeaderActions,
-    BtnAction,
   },
   data() {
     return {
@@ -197,11 +190,10 @@ export default defineComponent({
       ],
       basicToolBar: [['unordered', 'ordered']],
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
     };
   },
@@ -236,17 +228,6 @@ export default defineComponent({
   }
 }
 
-.container-img {
-  object-fit: cover;
-  border-radius: 10px;
-  width: 178px;
-  height: 98px;
-}
-
-.avatar-item {
-  border-radius: 3px !important;
-}
-
 h1,
 h2,
 h4 {
@@ -255,20 +236,6 @@ h4 {
 
 p {
   margin-bottom: 1em;
-}
-
-.button {
-  display: inline-block;
-  padding: 1em 2em;
-  background-color: #5d5d5d;
-  color: #ffffff;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.2s ease;
-}
-
-.button:hover {
-  background-color: #333333;
 }
 
 span {

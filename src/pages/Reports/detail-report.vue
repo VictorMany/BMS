@@ -1,16 +1,10 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div
-      class="card-page"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
-    >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
-
+    <div class="card-page">
       <header-actions
-        :titlePage="'Detalle de reporte'"
+        :titlePage="'Detalles del equipo'"
         :btn-action="btnAction"
+        :btn-close-window="btnCloseWindow"
       />
 
       <div class="main-container-page main-container-page-dark container-form">
@@ -33,7 +27,6 @@
 
 <script>
 import { defineComponent } from 'vue';
-import BtnAction from 'src/components/atomic/BtnAction.vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormLabel from 'src/components/compose/FormLabel.vue';
 
@@ -42,7 +35,6 @@ export default defineComponent({
   components: {
     HeaderActions,
     FormLabel,
-    BtnAction,
   },
   data() {
     return {
@@ -100,16 +92,16 @@ export default defineComponent({
         show: true,
         btnTitle: 'Editar',
         iconName: 'edit',
+        tooltip: 'Ir a editar reporte',
         to: this.getIdToEdit(),
         btnWidth: 'auto',
       },
 
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
     };
   },

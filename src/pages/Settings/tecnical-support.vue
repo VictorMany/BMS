@@ -1,12 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div
-      class="card-page"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
-    >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
+    <div class="card-page">
+
       <header-actions :titlePage="'Soporte técnico'" />
       <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
@@ -51,7 +46,7 @@
         <div class="row flex flex-center align-center q-px-lg">
           <div class="col">
             <q-input
-              class="q-pl-md q-pr-md input-message"
+              class="q-pl-md q-pr-md input-message border-rounded"
               style="heigh: 120px !important"
               borderless
               v-model="newMessage"
@@ -87,11 +82,10 @@ export default defineComponent({
       },
       newMessage: '',
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
       fields: {
         top: [
@@ -133,6 +127,5 @@ export default defineComponent({
 
 .input-message {
   background-color: rgba($primary, 0.2);
-  border-radius: 0.8rem;
 }
 </style>

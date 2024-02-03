@@ -2,7 +2,7 @@
 <template>
   <q-input
     v-model="modelLocal"
-    class="input-style q-px-sm"
+    class="input-style q-px-sm border-rounded"
     borderless
     dense
     :label="inputLabel"
@@ -17,7 +17,7 @@
     <template v-slot:append>
       <q-btn
         v-if="items?.length"
-        class="btn-style border-shadow q-pa-none q-pl-md q-pr-xs filter"
+        class="btn-style border-shadow q-pa-none q-pl-md q-pr-xs filter border-rounded"
         :label="btnFilter.title"
         :size="'sm'"
         no-caps
@@ -29,7 +29,7 @@
             class="q-ml-md q-ma-xs"
           />
         </div>
-        <q-popup-proxy class="border-radius">
+        <q-popup-proxy class="border-rounded">
           <q-banner
             class="border-shadow q-px-sm"
             style="width: 300px; height: auto"
@@ -55,7 +55,7 @@
                     v-if="item.options"
                     v-model="item.isExpanded"
                     :class="{ 'bg-accent q-mb-sm': item.isExpanded }"
-                    class="border-radius setting-item__title"
+                    class="border-rounded setting-item__title"
                     @update:model-value="updateHeight(item)"
                   >
                     <!-- @before-hide="resetSelected()" -->
@@ -84,10 +84,10 @@
                       <div
                         v-for="(opt, j) in item.options"
                         :key="j"
-                        class="item-filter"
+                        class="item-filter border-rounded"
                       >
                         <q-item
-                          class="flex items-center border-radius q-mt-sm"
+                          class="flex items-center border-rounded q-mt-sm"
                           :class="{ 'bg-accent': item.isExpanded }"
                           clickable
                           dense
@@ -108,7 +108,7 @@
 
                   <q-item
                     v-else
-                    class="flex items-center border-radius"
+                    class="flex items-center border-rounded"
                     clickable
                     @click="setSelectedFilter(item)"
                   >
@@ -273,12 +273,10 @@ export default defineComponent({
   font-size: 14px;
   color: v-bind(inputColor);
   background: v-bind(inputBackground);
-  border-radius: 0.5rem !important;
 }
 
 .btn-style {
   color: white;
-  border-radius: 0.5rem !important;
 }
 
 .avatar-item {
@@ -288,7 +286,6 @@ export default defineComponent({
 
 .item-filter:hover {
   background-color: rgb(($primary), 0.07);
-  border-radius: 0.5rem;
 }
 
 

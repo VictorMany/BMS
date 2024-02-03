@@ -73,7 +73,7 @@
       <template v-slot:body-cell-status="props">
         <q-td :props="props">
           <q-badge
-            class="justify-center"
+            class="justify-center border-rounded"
             :class="checkColor(props.value)"
             :label="props.value"
           />

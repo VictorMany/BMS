@@ -2,7 +2,7 @@
   <q-item
     clickable
     tag="a"
-    class="item"
+    class="item border-rounded"
     @click="navigateTo"
   >
     <q-item-section>
@@ -97,7 +97,6 @@ export default defineComponent({
 .item {
   margin-top: 0.8rem;
   background-color: v-bind(localBackgroundColor);
-  border-radius: 5px;
   color: v-bind(localColor);
 }
 

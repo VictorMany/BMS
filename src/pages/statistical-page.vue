@@ -15,7 +15,7 @@
         >
           <div class="row container-stats">
             <div class="col-12 col-md">
-              <div class="card-graphics">
+              <div class="card-graphics border-rounded">
                 <div class="card-graphics__title text-center q-pa-sm ellipsis">
                   Atención a reportes por falla
                 </div>
@@ -26,7 +26,7 @@
               </div>
             </div>
             <div class="col-12 col-md">
-              <div class="card-graphics">
+              <div class="card-graphics border-rounded">
                 <div class="card-graphics__title text-center q-pa-sm ellipsis">
                   Equipos médicos reemplazados por obsolencia o daño
                 </div>
@@ -40,7 +40,7 @@
 
           <div class="row container-stats">
             <div class="col-12 col-md-6 col-lg">
-              <div class="card-graphics q-pb-lg row justify-center">
+              <div class="card-graphics border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Mantenimientos vigentes
                 </div>
@@ -54,7 +54,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg">
-              <div class="card-graphics q-pb-lg row justify-center">
+              <div class="card-graphics border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Falla repentina
                 </div>
@@ -68,7 +68,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg">
-              <div class="card-graphics q-pb-lg row justify-center">
+              <div class="card-graphics border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Reemplazo por daño
                 </div>
@@ -82,7 +82,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg">
-              <div class="card-graphics q-pb-lg row justify-center">
+              <div class="card-graphics border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Mantenimientos preventivos
                 </div>
@@ -96,29 +96,32 @@
             </div>
           </div>
 
-          <div class="col-12 q-pa-sm gt-sm">
-            <div class="row q-pb-sm">
-              <div class="col">
-                <div
-                  class="card-graphics__title text-start ellipsis"
-                  style="border: none"
-                >
-                  Últimos reportes
-                </div>
-              </div>
-              <div class="col-auto">
-                <btn-action
-                  :btn-title="btnAction.title"
-                  :btn-color="btnAction.color"
-                  :btn-background-gradient="btnAction.backgroundGradient"
-                  :icon-name="btnAction.icon"
-                  :btn-size="btnAction.size"
-                  v-bind="btnAction"
-                />
+          <div class="q-px-md q-pt-sm not-show-in-mobile row w-100">
+            <div class="col">
+              <div
+                class="card-graphics__title text-start ellipsis"
+                style="border: none"
+              >
+                Últimos reportes
               </div>
             </div>
+            <div class="col-auto">
+              <btn-action
+                :btn-title="btnAction.title"
+                :btn-color="btnAction.color"
+                :btn-background-gradient="btnAction.backgroundGradient"
+                :icon-name="btnAction.icon"
+                :btn-size="btnAction.size"
+                v-bind="btnAction"
+              />
+            </div>
+          </div>
+
+          <div class="q-pa-md not-show-in-mobile">
             <general-table
               height="auto"
+              class="w-100"
+              style="width: 100% !important;"
               :rows="reports"
               :columns="columns"
               :actions-table="actionsTable"
@@ -436,6 +439,7 @@ export default defineComponent({
           icnName: 'read_more',
           icnSize: 'sm',
           icnAction: 'Detail',
+          tooltip: 'Detalle de reporte',
         },
       ],
       rowSelected: {},

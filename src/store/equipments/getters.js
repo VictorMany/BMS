@@ -21,7 +21,8 @@ export function getEquipmentsGetter(state) {
 export function getCategoriesGetter(state) {
   let categories = state.categories.map(category => ({
     ...category,
-    value: category.id.split(' ')[0],
+    value: category?.id?.split(' ')[0] ? category?.id?.split(' ')[0] : category.CategoryId,
+    label: category.label ? category.label : category.categoryName
   }));
   return categories
 }

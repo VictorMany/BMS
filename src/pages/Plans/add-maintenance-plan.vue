@@ -3,20 +3,18 @@
     <q-form
       ref="myForm"
       class="card-page"
-      :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
     >
-      <div class="column items-end q-mt-md q-mb-sm gt-sm">
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
+
 
       <header-actions
         :titlePage="getTitle()"
         :btn-action="btnAction"
+        :btn-close-window="btnCloseWindow"
       />
 
       <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
-          class="q-pa-sm q-pa-lg-lg h-90"
+          class="q-pa-md q-pa-lg-lg h-90"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <q-input
@@ -119,7 +117,7 @@
                     size="sm"
                     v-model="form.hasFrequency"
                     label="Frecuencia"
-                    class="form__checkbox q-mr-md q-pa-sm"
+                    class="form__checkbox q-mr-md q-pa-sm border-rounded"
                     dense
                   />
                 </div>
@@ -176,7 +174,7 @@
                 ref="myDatePicker"
                 v-model="form.maintenanceDates"
                 mask="YYYY-MM-DD"
-                class="text-blue-blue-grey-4 border-line border-rounded gt-sm"
+                class="text-blue-blue-grey-4 border-line border-rounded not-show-in-mobile"
                 :multiple="!form.hasFrequency"
                 landscape
               />
@@ -195,7 +193,7 @@
                 :key="index"
               >
                 <div
-                  class="text-left chip-date q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
+                  class="text-left chip-date border-rounded q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
                   @click="setCalendarTo(day)"
                 >
                   {{ calcDate(day) }}
@@ -203,7 +201,7 @@
                     v-if="!form.maintenanceFrequency"
                     @click="deleteDate(day)"
                     size="xs"
-                    class="avatar-item"
+                    class="avatar-item "
                   >
                     <q-icon name="close" />
                   </q-avatar>
@@ -227,7 +225,7 @@
               <q-editor
                 v-model="form.observations"
                 :placeholder="'Escribe aquí las notas del plan de mantenimientos'"
-                class="form__textarea bg-accent"
+                class="form__textarea bg-accent border-rounded"
                 :toolbar="[
                   [
                     {
@@ -269,7 +267,6 @@
 <script>
 
 import { ref, defineComponent } from 'vue';
-import BtnAction from 'src/components/atomic/BtnAction.vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
 import { addMonths, format } from 'date-fns';
@@ -282,7 +279,6 @@ export default defineComponent({
   },
   components: {
     HeaderActions,
-    BtnAction,
     GeneralTable
   },
   data() {
@@ -296,15 +292,15 @@ export default defineComponent({
         iconName: 'save',
         btnWidth: 'auto',
         loader: false,
+        tooltip: 'Agregar plan de mantenimientos',
         btnAction: this.createOrEdit,
       },
 
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
-        btnAction: this.goBack,
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.goBack
       },
 
       form: {
@@ -720,7 +716,6 @@ export default defineComponent({
   background-color: rgba($primary, 0.1);
   max-width: 300px;
   color: rgb(147, 150, 156);
-  border-radius: 8px;
 }
 
 .avatar-item {

@@ -28,7 +28,7 @@ module.exports = configure(function (ctx) {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
     boot: [
-
+      'bus',
       'axios'
     ],
 
@@ -94,7 +94,7 @@ module.exports = configure(function (ctx) {
       cssAddon: true,
       config: {
         notify: {
-          position: 'bottom-right'
+          position: 'bottom-right',
         }
       },
 
