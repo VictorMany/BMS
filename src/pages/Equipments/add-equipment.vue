@@ -54,10 +54,12 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
+        iconName: 'save',
         btnWidth: 'auto',
         btnAction: this.createOrEdit,
         loader: false,
       },
+
       btnCloseWindow: {
         iconName: 'close',
         btnBackground: '#FF9900',
@@ -82,9 +84,21 @@ export default defineComponent({
               (val) => (val) || 'El campo es obligatorio',
             ],
           },
+          // {
+          //   key: 'categoryName',
+          //   label: 'Categoría del equipo',
+          //   model: '',
+          //   rules: [
+          //     (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+          //     (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
+          //     (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
+          //   ],
+          // },
+        ],
+        left: [
           {
-            key: 'equipmentName',
-            label: 'Nombre del equipo',
+            key: 'equipmentModel',
+            label: 'Modelo del equipo',
             model: '',
             rules: [
               (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
@@ -92,8 +106,6 @@ export default defineComponent({
               (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
             ],
           },
-        ],
-        left: [
           {
             key: 'serialNumber',
             label: 'Número de serie',
@@ -112,16 +124,6 @@ export default defineComponent({
           {
             key: 'equipmentBrand',
             label: 'Marca',
-            model: '',
-            rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-              (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
-            ],
-          },
-          {
-            key: 'equipmentModel',
-            label: 'Modelo del equipo',
             model: '',
             rules: [
               (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
@@ -186,8 +188,8 @@ export default defineComponent({
             type: 'select',
             model: null,
             options: [
-              { label: 'Activo', index: 1, value: true },
-              { label: 'Inactivo', index: 2, value: false },
+              { label: 'Activo', index: 1, value: 1 },
+              { label: 'Inactivo', index: 2, value: 0 },
             ],
           },
           {
@@ -310,7 +312,15 @@ export default defineComponent({
 
     async getCategories() {
       await this.$store.dispatch('equipments/getCategoriesAction')
-      this.localCategories = JSON.parse(JSON.stringify(this.categories));
+      this.fields.top[0].options = JSON.parse(JSON.stringify(this.categories));
+    },
+
+    async initInfo() {
+      await this.getCategories()
+      console.log(this.categories)
+      if (this.isEditing()) {
+        await this.getEquipment()
+      }
     },
 
     getTitle() {
@@ -376,11 +386,7 @@ export default defineComponent({
   },
 
   created() {
-    this.getCategories()
-
-    if (this.isEditing()) {
-      this.getEquipment()
-    }
+    this.initInfo()
   },
 });
 </script>

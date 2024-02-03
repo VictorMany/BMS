@@ -50,8 +50,8 @@ export default defineComponent({
         createdAt: '',
         top: [
           {
-            key: 'equipmentName',
-            label: 'Nombre del equipo',
+            key: 'categoryName',
+            label: 'Categoría del equipo',
             model: ''
           },
           {

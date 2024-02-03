@@ -34,6 +34,7 @@
                 bottom-slots
                 stack-label
                 use-input
+                behavior="menu"
                 :options="item.options"
                 :readonly="item.readonly"
                 :rules="item.rules ? item.rules : []"
@@ -115,6 +116,7 @@
                     bottom-slots
                     stack-label
                     use-input
+                    behavior="menu"
                     :options="item.options"
                     :readonly="item.readonly"
                     :rules="item.rules ? item.rules : []"

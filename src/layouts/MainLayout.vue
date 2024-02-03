@@ -120,10 +120,10 @@
                 </div>
                 <div class="col-8">
                   <div class="col-12 form__item-label text-weight-thin">
-                    {{ 'Nombre del equipo' }}
+                    {{ 'Categoría del equipo' }}
                   </div>
                   <div class="col-12  form__item-model q-mb-md">
-                    {{ equipment?.equipmentName }}
+                    {{ equipment?.categoryName }}
                   </div>
                   <div class="col-12 form__item-label text-weight-thin">
                     {{ 'Numero de control' }}

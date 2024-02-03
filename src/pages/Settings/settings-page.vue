@@ -13,8 +13,8 @@
         </div>
       </div>
       <div
-        class="main-container-page"
-        style="height: 68%"
+        class="main-container-page main-container-page-medium-dark container-form"
+        style="height: 60vh"
       >
         <q-scroll-area
           class="fit"

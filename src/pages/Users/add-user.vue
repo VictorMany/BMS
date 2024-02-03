@@ -52,6 +52,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
+        iconName: 'save',
         btnWidth: 'auto',
         btnAction: this.createOrEdit,
         loader: false,

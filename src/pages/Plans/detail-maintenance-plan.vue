@@ -23,7 +23,7 @@
             v-if="form.planName"
             class="row items-center"
           >
-            <div class="form__item-label text-weight-thin">
+            <div class="form__item-label text-weight-medium">
               Nombre del plan
             </div>
             <div class="col-12 form__item-model text-weight-medium">

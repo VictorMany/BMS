@@ -46,7 +46,7 @@ export default defineComponent({
         top: [
           {
             key: 'IdEquipment',
-            label: 'Nombre del equipo',
+            label: 'Categoría del equipo',
             model: '',
           },
           {

@@ -50,6 +50,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
+        iconName: 'save',
         btnWidth: 'auto',
         btnAction: this.createMaintenance,
         loader: false,
@@ -267,7 +268,7 @@ export default defineComponent({
     getEquipmentDefault() {
       this.setModelValueByKey('idEquipment', {
         value: this.equipment.IdEquipment,
-        label: this.equipment.equipmentName
+        label: this.equipment.categoryName
       })
       this.setModelValueByKey('photo', this.equipment.photo)
       this.setModelValueByKey('serialNumber', this.equipment.serialNumber)
@@ -276,7 +277,7 @@ export default defineComponent({
     getEquipmentFromReport() {
       this.setModelValueByKey('idEquipment', {
         value: this.report.idEquipment,
-        label: this.report.Equipment.equipmentName
+        label: this.report.Equipment.categoryName
       })
       this.setModelValueByKey('maintenanceType', {
         value: 'correctivo',

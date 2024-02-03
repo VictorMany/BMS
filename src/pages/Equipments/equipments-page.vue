@@ -38,7 +38,7 @@
 
             <div
               v-else-if="loading"
-              class="q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
             >
               <q-spinner-pie
                 color="primary"
@@ -50,7 +50,7 @@
 
             <div
               v-else-if="loading === false"
-              class="q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
             >
               No hay equipos para mostrar
               <strong class="text-negative">!</strong>
@@ -137,13 +137,13 @@ export default defineComponent({
 
       inputSearch: {
         show: true,
-        inputLabel: 'Nombre del equipo',
+        inputLabel: 'Categoría del equipo',
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
         heightModal: 290,
         items: [
           {
-            title: 'Nombre del equipo',
+            title: 'Categoría del equipo',
             filter: 'name',
             icon: 'badge',
           },

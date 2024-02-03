@@ -66,7 +66,7 @@
     </div>
     <div
       v-if="btnAction.show"
-      class="col-xs-auto column content-end gt-sm"
+      class="col-xs-auto column content-end gt-xs"
     >
       <btn-action v-bind="btnAction" />
     </div>
@@ -80,7 +80,7 @@
 
     <div
       v-if="btnAction.show"
-      class="col-xs-auto column content-end lt-md"
+      class="col-xs-auto column content-end lt-sm"
       :class="{ 'q-ml-auto': !switchContent }"
     >
       <btn-action

@@ -3,7 +3,7 @@ import { formatDate } from '../global/actions';
 export function getEquipmentsGetter(state) {
   let equipments = state.equipments.map(equipment => ({
     id: equipment.IdEquipment,
-    cardTitle: equipment.equipmentName,
+    cardTitle: equipment.categoryName,
     cardImg: equipment.photo,
     cardLabels: [
       { label: 'Marca:', info: equipment.equipmentBrand },
@@ -11,7 +11,7 @@ export function getEquipmentsGetter(state) {
     ],
     cardDate: formatDate(equipment.createdAt),
     // FOR THE DETAILS MAINTENANCE AND REPORT
-    label: equipment.equipmentName,
+    label: equipment.categoryName,
     value: equipment.IdEquipment,
     serialNumber: equipment.serialNumber,
   }));

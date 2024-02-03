@@ -51,6 +51,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
+        iconName: 'save',
         btnWidth: 'auto',
         btnAction: this.createOrEdit,
         loader: false,
@@ -239,10 +240,10 @@ export default defineComponent({
     },
 
     getEquipmentDefault() {
-      if (this.equipment.equipmentName && !this.fields.top[0].model) {
+      if (this.equipment.categoryName && !this.fields.top[0].model) {
         this.fields.top[0].model = {
           value: this.equipment.IdEquipment,
-          label: this.equipment.equipmentName
+          label: this.equipment.categoryName
         }
       }
       if (this.equipment.photo && this.fields.right[1].model === null) {

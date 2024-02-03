@@ -84,7 +84,7 @@ export async function postEquipmentAction(context, equipment) {
     let keys = {
         equipmentBrand: '',
         equipmentModel: '',
-        equipmentName: '',
+        categoryName: '',
         CategoryId: '',
         location: '',
         manufacturingYear: '',
@@ -118,7 +118,7 @@ export async function updateEquipmentAction(context, equipment) {
     let keys = {
         equipmentBrand: '',
         equipmentModel: '',
-        equipmentName: '',
+        categoryName: '',
         equipmentStatus: '',
         location: '',
         manufacturingYear: '',

@@ -87,34 +87,32 @@
 
               <div
                 class="border-rounded border-line q-pa-md q-mt-md"
-                style="height: 40vh"
+                style="height: 50vh"
               >
                 <div class="q-pb-sm form__item-label__title">
                   Listado de permisos
                 </div>
-                <div class="h-90">
-                  <q-scroll-area
-                    class="fit"
-                    :thumb-style="{
-                      right: '6px',
-                      borderRadius: '5px',
-                      background: 'rgba(29, 100, 231, 0.2)',
-                      width: '5px',
-                      opacity: 1,
-                    }"
-                  >
-                    <q-tree
-                      node-key="label"
-                      class="checkbox-label font-tree"
-                      color="grey-8"
-                      text-color="blue-grey-4"
-                      :nodes="simple"
-                      v-model:ticked="ticked"
-                      :tick-strategy="tickStrategy"
-                      default-expand-all
-                    />
-                  </q-scroll-area>
-                </div>
+                <q-scroll-area
+                  class="fit"
+                  :thumb-style="{
+                    right: '6px',
+                    borderRadius: '5px',
+                    background: 'rgba(29, 100, 231, 0.2)',
+                    width: '5px',
+                    opacity: 1,
+                  }"
+                >
+                  <q-tree
+                    node-key="label"
+                    class="checkbox-label font-tree"
+                    color="grey-8"
+                    text-color="blue-grey-4"
+                    :nodes="simple"
+                    v-model:ticked="ticked"
+                    :tick-strategy="tickStrategy"
+                    default-expand-all
+                  />
+                </q-scroll-area>
               </div>
               <div class="column items-end q-my-lg">
                 <btn-action v-bind="btnAction" />

@@ -51,7 +51,7 @@ export async function formatDetails(context, { keys, fields }) {
 
     if (keys.Equipment) {
         // add equipment name
-        fields.top[0].model = keys.Equipment.equipmentName;
+        fields.top[0].model = keys.Equipment.categoryName;
         // add serialNumber
         fields.right[0].model = keys.Equipment.serialNumber;
         // add photo

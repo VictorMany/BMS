@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div
-      class="card-page"
+      class="card-page q-pt-md-none"
       :style="$q.platform.is.desktop ? 'padding-top: 0 !important' : ''"
     >
       <div class="column items-end q-mt-md q-mb-sm gt-sm">
@@ -51,8 +51,8 @@ export default defineComponent({
         createdAt: '',
         left: [
           {
-            key: 'equipmentName',
-            label: 'Nombre del equipo',
+            key: 'categoryName',
+            label: 'Categoría del equipo',
             model: '',
           },
           {

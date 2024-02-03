@@ -21,7 +21,7 @@
       >
         <q-scroll-area
           v-if="switchContent === 1"
-          style="height: 85% !important"
+          style="height: 90.5% !important"
           class="fit"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
@@ -45,7 +45,7 @@
 
             <div
               v-else-if="loading"
-              class="q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
             >
               <q-spinner-pie
                 color="primary"
@@ -56,7 +56,7 @@
             </div>
 
             <div
-              class="q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
               v-else-if="loading === false"
             >
               No hay usuarios para mostrar
