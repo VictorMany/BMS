@@ -372,11 +372,11 @@ export default defineComponent({
       // Table
       columns: [
         {
-          name: 'title_report',
+          name: 'reason',
           required: true,
           label: 'Reporte',
           align: 'left',
-          field: (row) => row.title_report,
+          field: (row) => row.reason,
           format: (val) => `${val}`,
           sortable: true,
         },
@@ -411,7 +411,7 @@ export default defineComponent({
       rows: [
         {
           id: 1,
-          title_report: 'Este es un reporte',
+          reason: 'Este es un reporte',
           encharged_name: 'Juan de Dios Balagarde',
           date: '12-Jun-2022',
           status: 'Atendido',
@@ -419,7 +419,7 @@ export default defineComponent({
         },
         {
           id: 2,
-          title_report: 'Correctivo',
+          reason: 'Correctivo',
           encharged_name: 'Luis Martínez Sierra',
           date: '12-Jun-2022',
           status: 'Pendiente',
@@ -427,7 +427,7 @@ export default defineComponent({
         },
         {
           id: 3,
-          title_report: 'Este es un reporte',
+          reason: 'Este es un reporte',
           encharged_name: 'Juan de Dios Balagarde',
           date: '12-Jun-2022',
           status: 'Atendido',

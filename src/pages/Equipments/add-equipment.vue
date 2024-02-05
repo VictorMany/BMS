@@ -7,6 +7,7 @@
         :btn-action="btnAction"
         :btn-close-window="btnCloseWindow"
       />
+
       <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
           class="h-90 q-pa-xs-none q-pa-lg-sm"

@@ -9,7 +9,7 @@
   }
 
   .setting-item {
-    background-color: $bg-clear;
+    background-color: white;
 
     &__title {
       color: #062841;
@@ -331,7 +331,7 @@
 }
 
 .setting-item:hover {
-  background-color: rgb(($primary), 0.2);
+  background-color: $accent;
   transform: scale(1);
 }
 
@@ -587,10 +587,7 @@
     font-size: 8px !important;
     padding: 6px;
   }
-}
 
-/* Styles for phones */
-@media only screen and (max-width: 767px) {
   .info {
     &__title {
       font-size: 20px;
@@ -625,6 +622,10 @@
     &__item-model {
       font-size: 11px !important;
     }
+  }
+
+  .options-select {
+    font-size: 11px !important;
   }
 
   .card-graphics {

@@ -2,7 +2,7 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions
-        :titlePage="'Detalles del equipo'"
+        :titlePage="'Detalles de reporte'"
         :btn-action="btnAction"
         :btn-close-window="btnCloseWindow"
       />
@@ -40,7 +40,9 @@ export default defineComponent({
     return {
       fields: {
         createdAt: '',
-        top: [
+        top: [],
+
+        left: [
           {
             key: 'categoryName',
             label: 'Categoría del equipo',
@@ -51,9 +53,6 @@ export default defineComponent({
             label: 'Encargado',
             model: ''
           },
-        ],
-
-        left: [
           {
             key: 'reason',
             label: 'Motivo',
@@ -78,7 +77,7 @@ export default defineComponent({
         right: [
           {
             key: 'serialNumber',
-            label: 'Número de serie',
+            label: 'Número de serie del equipo',
             model: ''
           },
           {

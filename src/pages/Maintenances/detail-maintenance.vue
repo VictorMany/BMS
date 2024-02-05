@@ -37,7 +37,8 @@ export default defineComponent({
   data() {
     return {
       fields: {
-        top: [
+        top: [],
+        left: [
           {
             key: 'categoryName',
             label: 'Categoría del equipo',
@@ -48,8 +49,6 @@ export default defineComponent({
             label: 'Encargado',
             model: ''
           },
-        ],
-        left: [
           {
             key: 'reason',
             label: 'Motivo',

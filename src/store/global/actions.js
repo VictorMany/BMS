@@ -47,18 +47,25 @@ export async function formatDetails(context, { keys, fields }) {
             }
         }
     }
+
     if (keys.User) {
-        // add incharged name
-        fields.top[1].model = keys.User.userName;
+        updateFieldByKeyInAllArrays(fields, 'userName', {
+            model: keys.User.userName
+        })
     }
 
     if (keys.Equipment) {
-        // add equipment name
-        fields.top[0].model = keys.Equipment.categoryName;
-        // add serialNumber
-        fields.right[0].model = keys.Equipment.serialNumber;
-        // add photo
-        fields.right[1].model = keys.Equipment.photo;
+        updateFieldByKeyInAllArrays(fields, 'categoryName', {
+            model: keys.Equipment.categoryName
+        })
+
+        updateFieldByKeyInAllArrays(fields, 'serialNumber', {
+            model: keys.Equipment.serialNumber
+        })
+
+        updateFieldByKeyInAllArrays(fields, 'photo', {
+            model: keys.Equipment.photo
+        })
     }
 
     return fields;
@@ -125,8 +132,21 @@ function getModelSelected(item, valueFromServer) {
                 break;
         }
         return item
-    } else if (item.type === 'formatedDate') {
+    } else if (item.type == 'formatedDate') {
         item.model = formatDate(valueFromServer);
     } else item.model = valueFromServer
     return item
+}
+
+function updateFieldByKeyInAllArrays(fields, key, updates) {
+    for (const arrayKey in fields) {
+        if (Array.isArray(fields[arrayKey])) {
+            const fieldEntry = fields[arrayKey].find(entry => entry.key === key);
+            if (fieldEntry) {
+                Object.assign(fieldEntry, updates);
+                return; // Termina la iteración después de encontrar la primera coincidencia
+            }
+        }
+    }
+    console.error(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
 }

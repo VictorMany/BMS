@@ -216,7 +216,7 @@ export default defineComponent({
           align: 'center',
           sortable: true,
         },
-        { name: 'status', label: 'Estatus', field: 'status', align: 'center', sortable: true },
+        { name: 'status', label: 'Reportes', field: 'status', align: 'center', sortable: true },
         {
           name: 'actions',
           label: 'Acciones',
@@ -242,7 +242,7 @@ export default defineComponent({
           icnName: 'engineering',
           icnSize: 'xs',
           icnAction: 'Maintenance',
-          tooltip: 'Hacer mantenimiento',
+          tooltip: 'Realizarle mantenimiento',
         },
       ],
     };

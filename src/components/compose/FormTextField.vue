@@ -52,7 +52,10 @@
                       dense
                     >
                       <q-item-section>
-                        <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
+                        <q-item-label
+                          class="options-select"
+                          :class="scope.selected ? 'primary' : 'text-grey'"
+                        >{{ scope.label }}</q-item-label>
                       </q-item-section>
                     </q-item>
                   </template>
@@ -102,7 +105,10 @@
                       dense
                     >
                       <q-item-section>
-                        <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
+                        <q-item-label
+                          class="options-select"
+                          :class="scope.selected ? 'primary' : 'text-grey'"
+                        >{{ scope.label }}</q-item-label>
                       </q-item-section>
                     </q-item>
                   </template>
@@ -184,7 +190,10 @@
                         dense
                       >
                         <q-item-section>
-                          <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
+                          <q-item-label
+                            class="options-select"
+                            :class="scope.selected ? 'primary' : 'text-grey'"
+                          >{{ scope.label }}</q-item-label>
                         </q-item-section>
                       </q-item>
                     </template>
@@ -234,7 +243,10 @@
                         dense
                       >
                         <q-item-section>
-                          <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
+                          <q-item-label
+                            class="options-select"
+                            :class="scope.selected ? 'primary' : 'text-grey'"
+                          >{{ scope.label }}</q-item-label>
                         </q-item-section>
                       </q-item>
                     </template>

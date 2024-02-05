@@ -64,9 +64,9 @@ export default defineComponent({
 
         top: [
           {
-            key: 'idEquipment',
+            key: this.isEditing() ? 'categoryName' : 'idEquipment',
+            type: this.isEditing() ? 'text' : 'select',
             label: 'Equipo',
-            type: 'select',
             options: [],
             model: null,
             itemFilter: this.filterEquipments,
@@ -76,9 +76,9 @@ export default defineComponent({
             ],
           },
           {
-            key: 'userId',
+            key: this.isEditing() ? 'userName' : 'userId',
+            type: this.isEditing() ? 'text' : 'select',
             label: 'Encargado',
-            type: 'select',
             options: [],
             model: null,
             itemFilter: this.filterUsers,
@@ -235,17 +235,36 @@ export default defineComponent({
 
     getEquipmentDefault() {
       if (this.equipment.categoryName && !this.fields.top[0].model) {
-        this.fields.top[0].model = {
-          value: this.equipment.IdEquipment,
-          label: this.equipment.categoryName
-        }
+        this.updateFieldByKeyInAllArrays('idEquipment', {
+          model: {
+            value: this.equipment.IdEquipment,
+            label: this.equipment.categoryName
+          }
+        })
       }
       if (this.equipment.photo && this.fields.right[1].model === null) {
-        this.fields.right[1].model = this.equipment.photo
+        this.updateFieldByKeyInAllArrays('photo', {
+          model: this.equipment.photo
+        })
       }
       if (this.equipment.serialNumber && !this.fields.right[0].model) {
-        this.fields.right[0].model = this.equipment.serialNumber
+        this.updateFieldByKeyInAllArrays('serialNumber', {
+          model: this.equipment.serialNumber
+        })
       }
+    },
+
+    updateFieldByKeyInAllArrays(key, updates) {
+      for (const arrayKey in this.fields) {
+        if (Array.isArray(this.fields[arrayKey])) {
+          const fieldEntry = this.fields[arrayKey].find(entry => entry.key === key);
+          if (fieldEntry) {
+            Object.assign(fieldEntry, updates);
+            return; // Termina la iteración después de encontrar la primera coincidencia
+          }
+        }
+      }
+      console.error(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
     },
 
     getDate() {
@@ -294,7 +313,9 @@ export default defineComponent({
     async filterUsers(val, update) {
       if (val === '') {
         update(() => {
-          this.fields.top[1].options = this.users
+          this.updateFieldByKeyInAllArrays('userId', {
+            options: this.users
+          })
         })
         return
       } else {
@@ -305,19 +326,23 @@ export default defineComponent({
 
       update(() => {
         const needle = val.toLowerCase()
-        this.fields.top[1].options = this.users.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
-      })
 
-      this.$forceUpdate()
+        this.updateFieldByKeyInAllArrays('userId', {
+          options: this.users.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+        })
+      })
     },
 
     async filterEquipments(val, update) {
       if (val === '') {
         update(() => {
           this.equipments.map(e => {
-            e.label = `${e.cardTitle}, ${e.equipmentModel}, No. serie: ${e.serialNumber}`
+            e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
           })
-          this.fields.top[0].options = this.equipments
+
+          this.updateFieldByKeyInAllArrays('idEquipment', {
+            options: this.equipments
+          })
         })
         return
       } else {
@@ -329,13 +354,13 @@ export default defineComponent({
       update(() => {
         const needle = val.toLowerCase()
         this.equipments.map(e => {
-          e.label = `${e.cardTitle}, ${e.equipmentModel}, No. serie: ${e.serialNumber}`
+          e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
         })
 
-        this.fields.top[0].options = this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+        this.updateFieldByKeyInAllArrays('idEquipment', {
+          options: this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+        })
       })
-
-      this.$forceUpdate()
     }
   },
 

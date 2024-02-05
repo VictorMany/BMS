@@ -2,22 +2,17 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Configuración'" />
-      <div class="row q-pb-sm">
-        <img
+      <div class="main-container-page card-color q-pa-sm main-container-page-medium-dark container-form">
+        <!-- <img
           class="container-img q-mr-lg border-rounded"
           src="https://www.thinkchamplin.com/uploads/case-studies/main_MercyHealth_WestHospital_04.jpg"
         />
         <div class="q-py-md">
           <div class="info__title">Hospital Mercy West</div>
           <div class="info__email">admingp@mercywest.com</div>
-        </div>
-      </div>
-      <div
-        class="main-container-page container-form"
-        style="height: 60vh"
-      >
+        </div> -->
         <q-scroll-area
-          class="fit"
+          class="fit h-100"
           :thumb-style="{
             right: '1px',
             borderRadius: '5px',
@@ -32,7 +27,7 @@
               @click="navigateTo(item.link)"
               :key="i"
             >
-              <q-item class="q-mb-sm setting-item border-rounded flex items-center clickable ">
+              <q-item class="q-mb-sm setting-item border-rounded flex items-center">
                 <q-item-section avatar>
                   <q-avatar class="avatar-item border-rounded">
                     <img :src="getImageUrl(item.img)" />
@@ -137,11 +132,11 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.body--light {
-  .card-page {
-    background: white;
-  }
-}
+// .body--light {
+//   .card-page {
+//     background: white;
+//   }
+// }
 
 .container-img {
   object-fit: cover;

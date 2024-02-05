@@ -35,69 +35,59 @@
             1-. Elige los equipos que quieras incluir en el plan
           </div>
 
-          <div style="height: 50vh">
-            <q-scroll-area
-              class="fit"
-              :thumb-style="{
-                borderRadius: '5px',
-                background: 'rgba(29, 100, 231, 0.2)',
-                width: '5px',
-                opacity: 1,
-              }"
+          <div>
+            <div
+              class="row"
+              style="gap: 20px"
             >
-              <div
-                class="row"
-                style="gap: 20px"
-              >
-                <div class="col-12 col-sm-auto col-md-4 border-line q-pa-sm border-rounded">
-                  <q-input
-                    ref="filterRef"
-                    v-model="filter"
-                    borderless
-                    dense
-                    class="form__input q-input-equipments"
-                    label="Buscar - Filtrar equipos"
-                  >
-                    <template v-slot:append>
-                      <q-icon
-                        v-if="filter !== ''"
-                        name="clear"
-                        class="cursor-pointer"
-                        @click="resetFilter"
-                      />
-                    </template>
-                  </q-input>
+              <div class="col-12 col-sm-auto col-md-4 border-line q-pa-sm border-rounded">
+                <q-input
+                  ref="filterRef"
+                  v-model="filter"
+                  borderless
+                  dense
+                  class="form__input q-input-equipments"
+                  label="Buscar - Filtrar equipos"
+                >
+                  <template v-slot:append>
+                    <q-icon
+                      v-if="filter !== ''"
+                      name="clear"
+                      class="cursor-pointer"
+                      @click="resetFilter"
+                    />
+                  </template>
+                </q-input>
 
-                  <q-tree
-                    v-model:ticked="form.equipmentIds"
-                    style="overflow-y: scroll;"
-                    class="font-tree"
-                    no-transition
-                    :nodes="localCategories"
-                    tick-strategy="leaf"
-                    node-key="id"
-                    no-nodes-label="No hay equipos para mostrar"
-                    label-key="label"
-                    :filter="filter"
-                    :filter-method="filterEquipments"
-                    @lazy-load="getEquipmentsByCategory"
-                  />
-                </div>
-
-                <div class="col-12 col-sm container-table-plans">
-                  <general-table
-                    style="overflow: scroll;"
-                    class="h-100 w-100"
-                    :rows="rows"
-                    :columns="columns"
-                    :paginationProp="{
-                      rowsPerPage: null
-                    }"
-                    :show-pagination="false"
-                  />
-                </div>
+                <q-tree
+                  v-model:ticked="form.equipmentIds"
+                  style="overflow-y: scroll; height: 50vh"
+                  class="font-tree"
+                  no-transition
+                  :nodes="localCategories"
+                  tick-strategy="leaf"
+                  node-key="id"
+                  no-nodes-label="No hay equipos para mostrar"
+                  label-key="label"
+                  :filter="filter"
+                  :filter-method="filterEquipments"
+                  @lazy-load="getEquipmentsByCategory"
+                />
               </div>
-            </q-scroll-area>
+
+              <div class="col-12 col-sm container-table-plans">
+                <general-table
+                  style="overflow: scroll;"
+                  class="h-100 w-100"
+                  :rows="rows"
+                  :columns="columns"
+                  :paginationProp="{
+                    rowsPerPage: null
+                  }"
+                  :show-pagination="false"
+                />
+              </div>
+            </div>
           </div>
 
           <div

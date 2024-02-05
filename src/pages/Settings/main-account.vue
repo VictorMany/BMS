@@ -1,16 +1,14 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-
-
       <header-actions
         :titlePage="'Información de la cuenta'"
         :btn-action="btnAction"
         :btn-close-window="btnCloseWindow"
       />
-      <div class="main-container-page h-90">
+      <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
-          class="full-height h-100"
+          class="h-90 q-pa-xs-none q-pa-lg-sm"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <form-text-field :fields="fields" />
@@ -24,14 +22,12 @@
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormTextField from 'src/components/compose/FormTextField.vue';
-import BtnAction from 'src/components/atomic/BtnAction.vue';
 
 export default defineComponent({
   name: 'SettingsPage',
   components: {
     HeaderActions,
     FormTextField,
-    BtnAction,
   },
   data() {
     return {

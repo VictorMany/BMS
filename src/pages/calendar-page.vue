@@ -241,7 +241,7 @@ export default defineComponent({
           icnName: 'engineering',
           icnSize: 'xs',
           icnAction: 'Maintenance',
-          tooltip: 'Hacer mantenimiento',
+          tooltip: 'Realizarle mantenimiento',
         },
       ],
     };

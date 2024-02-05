@@ -226,7 +226,9 @@ export default defineComponent({
     filterUsers(val, update) {
       if (val === '') {
         update(() => {
-          this.fields.top[0].options = this.users
+          this.updateFieldByKeyInAllArrays('userId', {
+            options: this.users
+          })
         })
         return
       } else {
@@ -237,14 +239,22 @@ export default defineComponent({
 
       update(() => {
         const needle = val.toLowerCase()
-        this.fields.top[0].options = this.users.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+        this.updateFieldByKeyInAllArrays('userId', {
+          options: this.users.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+        })
       })
     },
 
     filterEquipments(val, update) {
       if (val === '') {
         update(() => {
-          this.fields.top[1].options = this.equipments
+          this.equipments.map(e => {
+            e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
+          })
+
+          this.updateFieldByKeyInAllArrays('idEquipment', {
+            options: this.equipments
+          })
         })
         return
       } else {
@@ -255,7 +265,14 @@ export default defineComponent({
 
       update(() => {
         const needle = val.toLowerCase()
-        this.fields.top[1].options = this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+
+        this.equipments.map(e => {
+          e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
+        })
+
+        this.updateFieldByKeyInAllArrays('idEquipment', {
+          options: this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+        })
       })
     },
 
@@ -300,7 +317,21 @@ export default defineComponent({
           }
         }
       }
-    }
+      // Si la clave no se encuentra, puedes manejarlo según tus necesidades
+    },
+
+    updateFieldByKeyInAllArrays(key, updates) {
+      for (const arrayKey in this.fields) {
+        if (Array.isArray(this.fields[arrayKey])) {
+          const fieldEntry = this.fields[arrayKey].find(entry => entry.key === key);
+          if (fieldEntry) {
+            Object.assign(fieldEntry, updates);
+            return; // Termina la iteración después de encontrar la primera coincidencia
+          }
+        }
+      }
+      console.error(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
+    },
   },
 
   created() {

@@ -136,11 +136,11 @@ export default defineComponent({
 
       columns: [
         {
-          name: 'title_report',
+          name: 'reason',
           required: true,
           label: 'Reporte',
           align: 'left',
-          field: row => row.title_report,
+          field: row => row.reason,
           format: val => `${val}`,
           sortable: true
         },
@@ -224,8 +224,32 @@ export default defineComponent({
       // Delete from the LOCAL STORAGE IF EXIST
       this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
 
-      await this.getReport(payload)
+      // await this.getReport(payload)
+      const report = this.reports.find(e => e.id == payload)
 
+      // this.setModelValueByKey('idEquipment', {
+      //   value: this.report.idEquipment,
+      //   label: this.report.Equipment.categoryName
+      // })
+      // this.setModelValueByKey('maintenanceType', {
+      //   value: 'correctivo',
+      //   label: 'Correctivo'
+      // })
+      // this.setModelValueByKey('photo', this.report.Equipment.photo)
+      // this.setModelValueByKey('serialNumber', this.report.Equipment.serialNumber)
+      // this.setModelValueByKey('observations', 'Mantenimiento a causa de un report por: ' + this.report.reason)
+
+      // console.log(this.reports, payload, {
+      //   photo: ''
+      // })
+
+
+      // console.log(report)
+
+      this.$store.commit('reports/MUTATE_REPORT', report)
+
+
+      // console.log('Ir al mantenimiento')
       this.$router.push({
         name: 'add-maintenance'
       });
