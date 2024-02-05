@@ -122,7 +122,6 @@ export default defineComponent({
     rowSelected: {
       handler(val) {
         if (val.action === 'Edit') {
-          console.log(val)
           this.goToEdit(val.id);
         } else if (val.action === 'Detail') {
           this.goToDetails(val.id);

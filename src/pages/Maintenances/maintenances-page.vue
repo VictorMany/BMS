@@ -69,7 +69,6 @@ export default defineComponent({
         btnAction: this.goBack
       },
 
-
       columns: [
         {
           name: 'type_maintenance',
@@ -83,6 +82,7 @@ export default defineComponent({
         { name: 'encharged_name', label: 'Nombre del encargado', field: 'encharged_name', align: 'left', sortable: true },
         { name: 'date', label: 'Fecha de mantenimiento', field: 'date', align: 'center', sortable: true },
         { name: 'total_cost', label: 'Gasto total', field: 'total_cost', align: 'center', sortable: true },
+        { name: 'status', label: 'Estatus', field: 'status', align: 'center', sortable: true },
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
       ],
 

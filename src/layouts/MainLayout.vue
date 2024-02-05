@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh lpR lFf bg-red">
+  <q-layout view="lHh lpR lFf">
     <q-drawer
       show-if-above
       :breakpoint="1000"
@@ -276,7 +276,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import BtnMenu from 'src/components/atomic/BtnMenu.vue';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
 import QrcodeVue from 'qrcode.vue';
@@ -314,7 +314,6 @@ export default defineComponent({
       leftDrawerOpen: false,
       size: 302,
       btnSelected: 0,
-      fixed: ref(false),
       imageNotification: 'svg/notifications_.svg',
       btnLinks: [],
       selected: null,

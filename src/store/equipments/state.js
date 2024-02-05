@@ -2,6 +2,7 @@ export default function () {
   return {
     equipments: [],
     categories: [],
+    locations: [],
     equipment: JSON.parse(localStorage.getItem('equipment')) || null,
     message: '',
     pagination: {

@@ -18,10 +18,15 @@ export async function getEquipmentAction(context, params) {
         if (response.status == 200) {
             // We call the global action to format our payload
             context.commit('MUTATE_EQUIPMENT', response.data.contents.equipment)
-            const payload = await context.dispatch('global/formatDetails', {
-                keys: response.data.contents.equipment,
-                fields: params.fields
-            }, { root: true });
+
+            let payload
+
+            if (params.fields) {
+                payload = await context.dispatch('global/formatDetails', {
+                    keys: response.data.contents.equipment,
+                    fields: params.fields
+                }, { root: true });
+            }
 
             return payload
         } else {
@@ -45,6 +50,17 @@ export async function getAllCategoriesAction(context) {
     return service.getAllCategories().then(async (response) => {
         if (response.status == 200) {
             context.commit('MUTATE_CATEGORIES', response.data.contents.categories);
+            return true
+        } else {
+            return response
+        }
+    })
+}
+
+export async function getAllLocationsAction(context) {
+    return service.getAllLocations().then(async (response) => {
+        if (response.status == 200) {
+            context.commit('MUTATE_LOCATIONS', response.data.contents.locations);
             return true
         } else {
             return response
@@ -96,6 +112,7 @@ export async function postEquipmentAction(context, equipment) {
         equipmentBrand: '',
         equipmentModel: '',
         CategoryId: '',
+        LocationId: '',
         location: '',
         manufacturingYear: '',
         observations: '',
@@ -130,7 +147,7 @@ export async function updateEquipmentAction(context, equipment) {
         equipmentModel: '',
         categoryName: '',
         equipmentStatus: '',
-        location: '',
+        LocationId: '',
         manufacturingYear: '',
         observations: '',
         price: '',

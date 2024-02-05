@@ -203,9 +203,9 @@ export default defineComponent({
           sortable: true,
         },
         {
-          name: 'brand',
-          label: 'Marca del equipo',
-          field: 'brand',
+          name: 'model',
+          label: 'Modelo',
+          field: 'model',
           align: 'left',
           sortable: true,
         },
@@ -237,6 +237,12 @@ export default defineComponent({
           icnAction: 'Edit',
           tooltip: 'Editar equipo',
         },
+        {
+          icnName: 'engineering',
+          icnSize: 'xs',
+          icnAction: 'Maintenance',
+          tooltip: 'Hacer mantenimiento',
+        },
       ],
     };
   },
@@ -257,6 +263,7 @@ export default defineComponent({
 
       await this.getEquipmentsByDate();
     },
+
     async getDatesPerMonth(date) {
       if (date) {
         let formattedPayload = date.year + '-' + date.month.toString().padStart(2, '0')
@@ -281,6 +288,18 @@ export default defineComponent({
         console.log(error);
         this.$store.commit('equipments/MUTATE_EQUIPMENTS', []);
       }
+    },
+
+    async goToMaintenance(payload) {
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+      await this.getEquipment(payload)
+      this.$router.push({
+        name: 'add-maintenance'
+      });
+    },
+
+    async getEquipment(id) {
+      await this.$store.dispatch('equipments/getEquipmentAction', { id })
     },
 
     formatDate(date) {
@@ -339,6 +358,8 @@ export default defineComponent({
           this.goToEdit(val.id);
         } else if (val.action === 'Detail') {
           this.goToDetails(val.id);
+        } else if (val.action === 'Maintenance') {
+          this.goToMaintenance(val.id);
         }
       },
       deep: true,
@@ -356,7 +377,7 @@ export default defineComponent({
         return {
           id: e.id,
           equipment: e.cardTitle,
-          brand: e.cardLabels[0].info,
+          model: e.cardLabels[0].info,
           no_serie: e.cardLabels[1].info,
           date: e.cardDate,
         };

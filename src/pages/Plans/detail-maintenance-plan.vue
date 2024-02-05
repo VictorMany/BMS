@@ -122,6 +122,7 @@ export default defineComponent({
         btnWidth: 'auto',
         loader: false,
         tooltip: 'Ir a editar plan de mantenimientos',
+        to: this.getIdToEdit(),
       },
 
       btnCloseWindow: {
@@ -218,6 +219,10 @@ export default defineComponent({
       this.form.equipments.forEach((e => {
         this.rows = [...this.rows, ...e.children]
       }))
+    },
+
+    getIdToEdit() {
+      return `edit-${this.$route.params.id}-maintenance-plan`
     },
 
     calcDate(date) {

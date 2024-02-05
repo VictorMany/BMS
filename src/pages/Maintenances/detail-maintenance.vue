@@ -1,9 +1,10 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-
-
-      <header-actions :title-page="'Detalles del mantenimiento'" />
+      <header-actions
+        :title-page="'Detalles del mantenimiento'"
+        :btn-close-window="btnCloseWindow"
+      />
       <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
           class="h-90"
@@ -38,7 +39,7 @@ export default defineComponent({
       fields: {
         top: [
           {
-            key: 'IdEquipment',
+            key: 'categoryName',
             label: 'Categoría del equipo',
             model: '',
           },

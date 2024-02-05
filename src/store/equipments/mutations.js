@@ -6,6 +6,10 @@ export function MUTATE_CATEGORIES(state, payload) {
   state.categories = payload;
 }
 
+export function MUTATE_LOCATIONS(state, payload) {
+  state.locations = payload;
+}
+
 export function MUTATE_EQUIPMENT(state, payload) {
   state.equipment = payload
   localStorage.setItem('equipment', JSON.stringify(payload))

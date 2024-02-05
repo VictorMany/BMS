@@ -75,9 +75,9 @@
         </div>
 
         <general-table
-          :height="'100%'"
           v-else-if="switchContent === 2"
           v-model:row-selected="rowSelected"
+          :height="'100%'"
           :rows="rows"
           :columns="columns"
           :actions-table="actionsTable"
@@ -117,7 +117,7 @@ export default defineComponent({
 
       rowSelected: {},
 
-      selectedFilterText: 'name',
+      selectedFilterText: 'category',
 
       paginationCards: {
         descending: false,
@@ -126,7 +126,7 @@ export default defineComponent({
       },
 
       params: {
-        name: '',
+        category: '',
       },
 
       btnAction: {
@@ -145,7 +145,7 @@ export default defineComponent({
         items: [
           {
             title: 'Categoría del equipo',
-            filter: 'name',
+            filter: 'category',
             icon: 'badge',
           },
           {
@@ -190,17 +190,15 @@ export default defineComponent({
       columns: [
         {
           name: 'equipment',
-          required: true,
           label: 'Equipo',
           align: 'left',
           field: 'equipment',
-          format: (val) => `${val}`,
           sortable: true,
         },
         {
-          name: 'brand',
-          label: 'Marca del equipo',
-          field: 'brand',
+          name: 'model',
+          label: 'Modelo',
+          field: 'model',
           align: 'left',
           sortable: true,
         },
@@ -218,6 +216,7 @@ export default defineComponent({
           align: 'center',
           sortable: true,
         },
+        { name: 'status', label: 'Estatus', field: 'status', align: 'center', sortable: true },
         {
           name: 'actions',
           label: 'Acciones',
@@ -239,6 +238,12 @@ export default defineComponent({
           icnAction: 'Edit',
           tooltip: 'Editar equipo',
         },
+        {
+          icnName: 'engineering',
+          icnSize: 'xs',
+          icnAction: 'Maintenance',
+          tooltip: 'Hacer mantenimiento',
+        },
       ],
     };
   },
@@ -254,6 +259,8 @@ export default defineComponent({
           this.goToEdit(val.id);
         } else if (val.action === 'Detail') {
           this.goToDetails(val.id);
+        } else if (val.action === 'Maintenance') {
+          this.goToMaintenance(val.id);
         }
       },
       deep: true,
@@ -300,9 +307,10 @@ export default defineComponent({
         return {
           id: e.id,
           equipment: e.cardTitle,
-          brand: e.cardLabels[0].info,
+          model: e.cardLabels[0].info,
           no_serie: e.cardLabels[1].info,
           date: e.cardDate,
+          status: e.status
         };
       });
     },
@@ -321,11 +329,20 @@ export default defineComponent({
       this.loading = false
     },
 
-    setSelectedStatus(opt) {
-      this.params = {
-        status: opt ? 1 : 0,
-      };
-      this.getEquipments(this.params)
+    async goToMaintenance(payload) {
+      console.log(payload)
+      // Delete from the LOCAL STORAGE IF EXIST
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+
+      await this.getEquipment(payload)
+
+      this.$router.push({
+        name: 'add-maintenance'
+      });
+    },
+
+    async getEquipment(id) {
+      await this.$store.dispatch('equipments/getEquipmentAction', { id })
     },
 
     setSelectedOptionFilter(activeFilters, removedFilter = null) {
@@ -339,6 +356,7 @@ export default defineComponent({
       }
       this.getEquipments(this.params);
     },
+
 
     setSelectedFilter(opt) {
       // IF CHANGE THE MODEL SELECTED

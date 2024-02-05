@@ -13,8 +13,24 @@
         :src="cardImg"
       />
       <q-card-section class="q-py-sm q-px-sm ellipsis w-100">
-        <div class="card-typography q-pb-xs ellipsis">
-          {{ cardTitle }}
+
+        <div class="row flex align-center q-pb-xs">
+          <q-tooltip
+            v-if="isReported"
+            :delay="100"
+            transition-show="rotate"
+            transition-hide="rotate"
+            class="bg-secondary border-rounded"
+          >
+            Equipo reportado
+          </q-tooltip>
+          <div class="card-typography ellipsis col q-my-auto">
+            {{ cardTitle }}
+          </div>
+          <div
+            v-if="isReported"
+            class="is-reported-badge col-auto q-my-auto"
+          />
         </div>
         <div
           v-for="(label, i) in cardLabels"
@@ -61,6 +77,11 @@ export default defineComponent({
       type: String,
       default: '',
       required: false,
+    },
+    isReported: {
+      type: Boolean,
+      required: false,
+      default: null,
     },
     index: { type: Number },
     id: { type: [Number, String] },
@@ -130,6 +151,13 @@ export default defineComponent({
   /* Oculta el contenido que desborda */
   text-overflow: ellipsis;
   /* Muestra puntos suspensivos (...) cuando hay desbordamiento */
+}
+
+.is-reported-badge {
+  background-color: $secondary;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
 }
 
 @media only screen and (max-device-width: 599px) {

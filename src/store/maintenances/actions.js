@@ -1,6 +1,7 @@
 import service from 'src/api/maintenances'
 
 export async function getMaintenancesAction(context, params) {
+    console.log(params)
     return service.getMaintenances(params).then(async (response) => {
         if (response.status == 200) {
             context.commit('MUTATE_MAINTENANCES', response.data.contents.maintenances)

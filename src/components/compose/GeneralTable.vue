@@ -4,9 +4,9 @@
     :style="`height: ${height}`"
     class="general-table"
   >
+    <!-- v-model:pagination="pagination" -->
     <q-table
-      row-key="id"
-      v-model:pagination="pagination"
+      :row-key="rowKey"
       :rows="rows"
       :columns="columns"
       :rows-per-page-options="[-1]"
@@ -133,6 +133,11 @@ export default defineComponent({
       required: false,
       default: null
     },
+    rowKey: {
+      type: String,
+      required: false,
+      default: 'id'
+    }
   },
   setup() {
     const pagination = ref({
@@ -140,6 +145,7 @@ export default defineComponent({
       rowsPerPage: 12,
       pagesNumber: 1,
       page: 1,
+      sortBy: 'equipment'
     });
 
     return {
@@ -163,9 +169,23 @@ export default defineComponent({
         case 'Atendido':
           color = 'badge-attended';
           break;
+        case 'Reportado':
+          color = 'badge-pending';
+          break;
+        case 'Sin reportes':
+          color = 'badge-positive';
+          break;
+        case 'correctivo':
+          color = 'badge-pending';
+          break;
+        case 'preventivo':
+          color = 'badge-positive';
+          break;
         case 'Pendiente':
           color = 'badge-pending';
           break;
+        default:
+          color = 'badge-attended';
       }
       return color;
     },
@@ -208,7 +228,7 @@ export default defineComponent({
 }
 
 .badge-attended {
-  width: 80px;
+  width: 85px;
   height: 25px;
   font-weight: bolder !important;
   color: $primary;
@@ -216,11 +236,19 @@ export default defineComponent({
 }
 
 .badge-pending {
-  width: 80px;
+  width: 85px;
   height: 25px;
   font-weight: bolder !important;
   color: $secondary;
   background-color: rgba($secondary, 0.2);
+}
+
+.badge-positive {
+  width: 85px;
+  height: 25px;
+  font-weight: bolder !important;
+  color: $positive;
+  background-color: rgba($positive, 0.2);
 }
 
 .pagination-style {

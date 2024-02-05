@@ -70,11 +70,11 @@ export default defineComponent({
           {
             key: 'CategoryId',
             label: 'Categoría del equipo',
-            type: 'select',
+            type: 'autocomplete',
             itemFilter: this.filterCategories,
-            setModel: this.setModel,
+            setModel: this.setModelCategory,
             options: [],
-            model: '',
+            model: null,
             shouldShow: this.isEditing() ? false : true,
             rules: [
               (val) => {
@@ -133,10 +133,12 @@ export default defineComponent({
             ],
           },
           {
-            key: 'location',
+            key: 'LocationId',
             label: 'Ubicación',
-            type: 'select',
+            type: 'autocomplete',
             model: null,
+            itemFilter: this.filterLocations,
+            setModel: this.setModelLocation,
             options: [
               { label: 'Hospital C', index: 1, value: 'Hospital C' },
               { label: 'Área de choque', index: 2, value: 'Área de choque' },
@@ -152,7 +154,15 @@ export default defineComponent({
               { label: 'Servicios de apoyo', index: 12, value: 'Servicios de apoyo' },
             ],
             rules: [
-              (val) => (val) || 'El campo es obligatorio'
+              (val) => {
+                if (typeof val === 'string') {
+                  return val.trim().length > 0 || 'El campo es obligatorio';
+                } else if (typeof val === 'object' && val !== null) {
+                  return val;
+                } else {
+                  return 'El campo es obligatorio';
+                }
+              },
             ],
           },
           {
@@ -312,69 +322,43 @@ export default defineComponent({
 
     async getCategories() {
       await this.$store.dispatch('equipments/getAllCategoriesAction')
-      this.fields.top[0].options = JSON.parse(JSON.stringify(this.categories));
+      this.updateFieldByKeyInAllArrays('CategoryId', {
+        options: JSON.parse(JSON.stringify(this.categories))
+      })
+    },
+
+    async getLocations() {
+      try {
+        await this.$store.dispatch('equipments/getAllLocationsAction')
+        this.updateFieldByKeyInAllArrays('LocationId', {
+          options: JSON.parse(JSON.stringify(this.locations))
+        })
+      } catch (error) {
+        console.log(error)
+      }
     },
 
     async initInfo() {
+      await this.getLocations()
       await this.getCategories()
+
       if (this.isEditing()) {
         await this.getEquipment()
       }
     },
 
-    // newValue(val, done) {
-    //   console.log(val)
-    //   done(val)
-    //   // done(val, 'toggle')
-
-    //   // Calling done(var) when new-value-mode is not set or "add", or done(var, "add") adds "var" content to the model
-    //   // and it resets the input textbox to empty string
-    //   // ----
-    //   // Calling done(var) when new-value-mode is "add-unique", or done(var, "add-unique") adds "var" content to the model
-    //   // only if is not already set
-    //   // and it resets the input textbox to empty string
-    //   // ----
-    //   // Calling done(var) when new-value-mode is "toggle", or done(var, "toggle") toggles the model with "var" content
-    //   // (adds to model if not already in the model, removes from model if already has it)
-    //   // and it resets the input textbox to empty string
-    //   // ----
-    //   // If "var" content is undefined/null, then it doesn't tampers with the model
-    //   // and only resets the input textbox to empty string
-
-    //   // if (val.length > 2) {
-    //   //   if (!stringOptions.includes(val)) {
-
-    //   // console.log(done(val))
-    //   //   }
-    //   // }
-    //   if (val.length > 0) {
-    //     if (!this.fields.top[0].options.includes(val)) {
-    //       this.fields.top[0].options.push(val)
-    //     }
-    //     done(val, 'toggle')
-    //   }
-    // },
-
-    // async setPropertyByKey(key, value) {
-    //   // Busca la clave en todas las secciones del objeto fields
-    //   for (const sectionKey in this.fields) {
-    //     if (Object.prototype.hasOwnProperty.call(this.fields, sectionKey)) {
-    //       const elements = this.fields[sectionKey];
-
-    //       // Verifica si elements es iterable (un objeto iterable debería tener la propiedad Symbol.iterator)
-    //       if (elements && typeof elements[Symbol.iterator] === 'function') {
-    //         // Busca la clave en cada elemento de la sección
-    //         for (let element of elements) {
-    //           if (element.key === key) {
-    //             element = { ...element, ...value };
-    //             console.log('modifico EL ELEMENTO', element)
-    //             return;
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // },
+    updateFieldByKeyInAllArrays(key, updates) {
+      for (const arrayKey in this.fields) {
+        if (Array.isArray(this.fields[arrayKey])) {
+          const fieldEntry = this.fields[arrayKey].find(entry => entry.key === key);
+          if (fieldEntry) {
+            Object.assign(fieldEntry, updates);
+            return; // Termina la iteración después de encontrar la primera coincidencia
+          }
+        }
+      }
+      console.error(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
+    },
 
     getTitle() {
       if (this.isEditing()) {
@@ -406,22 +390,36 @@ export default defineComponent({
     filterCategories(val, update) {
       if (val === '') {
         update(() => {
-          this.fields.top[0].options = this.categories
+          this.updateFieldByKeyInAllArrays('CategoryId', {
+            options: this.categories
+          })
         })
         return
       }
       update(() => {
         const needle = val.toLowerCase()
-        this.fields.top[0].options = this.categories.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+        this.updateFieldByKeyInAllArrays('CategoryId', {
+          options: this.categories.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+        })
       })
     },
 
-    // filterCategories(val, update) {
-    //   update(() => {
-    //     const needle = val.toLocaleLowerCase()
-    //     this.fields.top[0].options = this.categories.filter(v => v.toLocaleLowerCase().indexOf(needle) > -1)
-    //   })
-    // },
+    filterLocations(val, update) {
+      if (val === '') {
+        update(() => {
+          this.updateFieldByKeyInAllArrays('LocationId', {
+            options: this.locations
+          })
+        })
+        return
+      }
+      update(() => {
+        const needle = val.toLowerCase()
+        this.updateFieldByKeyInAllArrays('LocationId', {
+          options: this.locations.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+        })
+      })
+    },
 
     getDate() {
       return this.$store.$store.getters['global/getDate']
@@ -431,37 +429,33 @@ export default defineComponent({
       return this.$route.params.id ? true : false
     },
 
-    setModel(val) {
-      console.log(val)
-      this.fields.top[0].model = val
+    setModelCategory(val) {
+      const category = this.categories.find((cat) => cat.categoryName === val)
+      this.updateFieldByKeyInAllArrays('CategoryId', {
+        model: category ? category : val
+      })
+    },
 
-      console.log(this.fields.top[0].model)
-      console.log(this.fields.top[0])
+    setModelLocation(val) {
+      const location = this.categories.find((cat) => cat.categoryName === val)
+      this.updateFieldByKeyInAllArrays('LocationId', {
+        model: location ? location : val
+      })
     }
   },
 
   computed: {
-    equipments: {
-      get() {
-        return this.$store.getters['equipments/getEquipmentsGetter'];
-      },
+    equipments() {
+      return this.$store.getters['equipments/getEquipmentsGetter'];
     },
 
     categories() {
       return this.$store.getters['equipments/getCategoriesGetter'];
     },
-  },
 
-  watch: {
-    // fields: {
-    //   handler(val) {
-    //     let category = val.top[0].model
-    //     if (typeof category === 'string' && category.length == 0) {
-    //       val.top[0].type = 'select'
-    //     }
-    //   },
-    //   deep: true
-    // }
+    locations() {
+      return this.$store.getters['equipments/getLocationsGetter'];
+    },
   },
 
   created() {

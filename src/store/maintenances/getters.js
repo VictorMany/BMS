@@ -7,6 +7,7 @@ export function getMaintenancesGetter(state) {
         encharged_name: maintenance.User?.userName,
         date: formatDate(maintenance.createdAt),
         total_cost: maintenance.cost,
+        status: maintenance.maintenanceType,
     }));
     return maintenances
 }

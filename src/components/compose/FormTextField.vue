@@ -27,6 +27,47 @@
                 <!-- INPUT TYPE SELECT -->
                 <q-select
                   v-if="item.type === 'select'"
+                  v-model="item.model"
+                  fill-input
+                  use-input
+                  class="col-6 form__input-12 bg-accent"
+                  borderless
+                  dense
+                  hide-hint
+                  hide-bottom-space
+                  hide-selected
+                  bottom-slots
+                  stack-label
+                  behavior="menu"
+                  :name="item.key"
+                  :readonly="item.readonly"
+                  :options="item.options"
+                  :rules="item.rules ? item.rules : []"
+                  :prefix="item.prefix ? item.prefix : ''"
+                  @filter="item.itemFilter"
+                >
+                  <template v-slot:option="scope">
+                    <q-item
+                      v-bind="scope.itemProps"
+                      dense
+                    >
+                      <q-item-section>
+                        <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      v-if="item.readonly"
+                      name="lock"
+                      size="xs"
+                    />
+                  </template>
+                </q-select>
+
+                <!-- INPUT TYPE autocomplete -->
+                <q-select
+                  v-else-if="item.type === 'autocomplete'"
                   :model-value="item.model"
                   fill-input
                   use-input
@@ -50,7 +91,7 @@
                   <template v-slot:no-option>
                     <q-item>
                       <q-item-section class="text-grey">
-                        No results
+                        No hay coincidencia, se agregará automáticamente lo que escribas
                       </q-item-section>
                     </q-item>
                   </template>
@@ -137,6 +178,56 @@
                     :rules="item.rules ? item.rules : []"
                     :prefix="item.prefix ? item.prefix : ''"
                   >
+                    <template v-slot:option="scope">
+                      <q-item
+                        v-bind="scope.itemProps"
+                        dense
+                      >
+                        <q-item-section>
+                          <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </template>
+                    <template v-slot:append>
+                      <q-icon
+                        v-if="item.readonly"
+                        name="lock"
+                        size="xs"
+                      />
+                    </template>
+                  </q-select>
+
+                  <!-- INPUT TYPE AUTOCOMPLETE -->
+                  <q-select
+                    v-else-if="item.type === 'autocomplete'"
+                    :model-value="item.model"
+                    fill-input
+                    use-input
+                    borderless
+                    dense
+                    hide-hint
+                    hide-bottom-space
+                    hide-selected
+                    bottom-slots
+                    stack-label
+                    behavior="menu"
+                    :name="item.key"
+                    class="textfield-select form__input bg-accent col-12 col-sm"
+                    :readonly="item.readonly"
+                    :options="item.options"
+                    :rules="item.rules ? item.rules : []"
+                    :prefix="item.prefix ? item.prefix : ''"
+                    @filter="item.itemFilter"
+                    @input-value="item.setModel"
+                  >
+                    <template v-slot:no-option>
+                      <q-item>
+                        <q-item-section class="text-grey">
+                          No hay coincidencia, se agregará automáticamente lo que escribas
+                        </q-item-section>
+                      </q-item>
+                    </template>
+
                     <template v-slot:option="scope">
                       <q-item
                         v-bind="scope.itemProps"

@@ -27,7 +27,6 @@
 
 <script>
 import { defineComponent } from 'vue'
-// import BtnAction from 'src/components/atomic/BtnAction.vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import FormLabel from 'src/components/compose/FormLabel.vue'
 
@@ -36,7 +35,6 @@ export default defineComponent({
   components: {
     HeaderActions,
     FormLabel,
-    // BtnAction
   },
   data() {
     return {
@@ -65,7 +63,7 @@ export default defineComponent({
             model: ''
           },
           {
-            key: 'location',
+            key: 'locationName',
             label: 'Ubicación',
             model: ''
           },

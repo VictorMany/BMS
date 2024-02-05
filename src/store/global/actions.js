@@ -13,7 +13,7 @@ export function formatPayload(context, { keys, fields }) {
                         if (k == fields[prop][i][key]) {
                             // Verificar si la clave ya existe en FormData
                             if (!fd.has(k)) {
-                                if (fields[prop][i].type === 'select') {
+                                if (fields[prop][i].type === 'select' || fields[prop][i].type === 'autocomplete') {
                                     if (typeof fields[prop][i].model == 'string') {
                                         fd.append(k, fields[prop][i].model)
                                     } else

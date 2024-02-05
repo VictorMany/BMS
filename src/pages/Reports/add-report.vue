@@ -284,15 +284,11 @@ export default defineComponent({
     },
 
     async getUsers(params) {
-      this.loading = true
       await this.$store.dispatch('users/getUsersAction', params);
-      this.loading = false
     },
 
     async getEquipments(params) {
-      this.loading = true
       await this.$store.dispatch('equipments/getEquipmentsAction', params);
-      this.loading = false
     },
 
     async filterUsers(val, update) {
@@ -318,6 +314,9 @@ export default defineComponent({
     async filterEquipments(val, update) {
       if (val === '') {
         update(() => {
+          this.equipments.map(e => {
+            e.label = `${e.cardTitle}, ${e.equipmentModel}, No. serie: ${e.serialNumber}`
+          })
           this.fields.top[0].options = this.equipments
         })
         return
@@ -329,6 +328,10 @@ export default defineComponent({
 
       update(() => {
         const needle = val.toLowerCase()
+        this.equipments.map(e => {
+          e.label = `${e.cardTitle}, ${e.equipmentModel}, No. serie: ${e.serialNumber}`
+        })
+
         this.fields.top[0].options = this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
       })
 
