@@ -91,9 +91,12 @@ export default defineComponent({
         left: [
           {
             key: 'reason',
-            label: 'Reporte',
+            label: 'Motivo',
             model: '',
             readonly: this.isEditing(),
+            rules: [
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+            ],
           },
           {
             key: 'reportStatus',

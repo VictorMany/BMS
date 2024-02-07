@@ -103,6 +103,9 @@ export default defineComponent({
             key: 'reason',
             label: 'Motivo',
             model: '',
+            rules: [
+              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+            ],
           },
           {
             key: 'cost',
