@@ -168,7 +168,7 @@
                   <!-- INPUT TYPE SELECT -->
                   <q-select
                     v-if="item.type === 'select'"
-                    class="textfield-select form__input bg-accent col-12 col-sm"
+                    class="form__input bg-accent col-12 col-sm"
                     borderless
                     v-model="item.model"
                     :name="item.key"
@@ -220,8 +220,8 @@
                     bottom-slots
                     stack-label
                     behavior="menu"
+                    class="form__input bg-accent col-12 col-sm"
                     :name="item.key"
-                    class="textfield-select form__input bg-accent col-12 col-sm"
                     :readonly="item.readonly"
                     :options="item.options"
                     :rules="item.rules ? item.rules : []"

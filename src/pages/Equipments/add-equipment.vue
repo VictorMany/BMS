@@ -425,7 +425,7 @@ export default defineComponent({
     },
 
     setModelLocation(val) {
-      const location = this.categories.find((cat) => cat.categoryName === val)
+      const location = this.locations.find((loc) => loc.locationName === val)
       this.updateFieldByKeyInAllArrays('LocationId', {
         model: location ? location : val
       })
