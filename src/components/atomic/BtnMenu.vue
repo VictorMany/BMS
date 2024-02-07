@@ -50,8 +50,8 @@ export default defineComponent({
     navigateTo() {
       if (this.link?.id) {
         this.$router.push({
-          name: this.link?.link,
-          params: { id: this.link?.id },
+          name: this.link.link,
+          params: { id: this.link.id },
         });
       } else {
         if (this.link?.searchByIdEquipment) {
@@ -81,6 +81,11 @@ export default defineComponent({
       if (this.index === this.selected) {
         return '#1e65e820';
       }
+
+      if (this.$q.dark.isActive) {
+        return 'rgb(19, 26, 38, .2)'
+      }
+
       return this.background;
     },
     localColor() {
@@ -96,7 +101,7 @@ export default defineComponent({
 <style scoped>
 .item {
   margin-top: 0.8rem;
-  background-color: v-bind(localBackgroundColor);
+  background-color: v-bind(localBackgroundColor) !important;
   color: v-bind(localColor);
 }
 

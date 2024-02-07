@@ -2,14 +2,13 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
 
-
       <header-actions
         :titlePage="'Notificaciones'"
         :btn-action="btnAction"
         :btn-close-window="btnCloseWindow"
       />
 
-      <div class="main-container-page main-container-page-medium-dark container-form">
+      <div class="main-container-page main-container-page-medium-dark container-form q-pa-sm">
         <q-scroll-area
           class="h-100"
           :thumb-style="{
@@ -100,12 +99,14 @@ export default defineComponent({
         to: 'settings',
         btnWidth: 'auto',
       },
+
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',
         btnColor: '#FF9900',
         btnAction: this.goBack
       },
+
       fields: {
         imageInput: true,
         top: [
@@ -129,11 +130,12 @@ export default defineComponent({
           },
         ],
         right: [],
-        textarea: {},
       },
+
       paginationProp: {
         rowsPerPage: 7,
       },
+
       listNotifications: [
         {
           title: 'Recibir correos electrónicos',

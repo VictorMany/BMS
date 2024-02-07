@@ -46,7 +46,7 @@ export default defineComponent({
         left: [
           {
             key: 'userName',
-            class: 'q-pb-md',
+            class: 'q-pb-sm',
             label: 'Nombre',
             model: '',
           },

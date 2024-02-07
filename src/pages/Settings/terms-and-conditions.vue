@@ -1,8 +1,10 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-
-      <header-actions :titlePage="'Términos y condiciones'" />
+      <header-actions
+        :titlePage="'Términos y condiciones'"
+        :btn-close-window="btnCloseWindow"
+      />
       <div class="main-container-page h-90">
         <q-scroll-area
           class="full-height h-100"
@@ -86,13 +88,11 @@
 <script>
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue'
 
 export default defineComponent({
   name: 'SettingsPage',
   components: {
     HeaderActions,
-    BtnAction
   },
   data() {
     return {
@@ -128,13 +128,13 @@ export default defineComponent({
           link: 'tecnical-support'
         }
       ],
+
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
         btnAction: this.goBack
-      }
+      },
     }
   },
   setup() {

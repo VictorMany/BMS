@@ -216,7 +216,7 @@ export default defineComponent({
 
     showAlert({ msg, color, title, classes }) {
       this.$q.notify({
-        message: title ? title : 'Ocurrió un error al crear el usuario',
+        message: title ? title : 'Ocurrió un error al crear el mantenimiento',
         caption: msg ? msg : 'Inténtalo de nuevo más tarde',
         color: color ? color : 'secondary',
         classes: classes ? classes : 'border-rounded',
@@ -296,7 +296,7 @@ export default defineComponent({
       })
       this.setModelValueByKey('photo', this.report.Equipment.photo)
       this.setModelValueByKey('serialNumber', this.report.Equipment.serialNumber)
-      this.setModelValueByKey('observations', 'Mantenimiento a causa de un report por: ' + this.report.reason)
+      this.setModelValueByKey('observations', 'Mantenimiento a causa de un reporte por: ' + this.report.reason)
     },
 
     setModelValueByKey(key, value) {
@@ -379,8 +379,8 @@ export default defineComponent({
       // Get the image, and no-serie every change of the equipment selected
       handler(val) {
         if (val.top[1].model && val.right[1].model != val.top[1].model.cardImg && val.top[1].model.cardImg) {
-          val.right[1].model = val.top[1].model.cardImg
-          val.right[0].model = val.top[1].model.serialNumber
+          this.setModelValueByKey('photo', val.top[1].model.cardImg)
+          this.setModelValueByKey('serialNumber', val.top[1].model.serialNumber)
         }
       },
       deep: true,

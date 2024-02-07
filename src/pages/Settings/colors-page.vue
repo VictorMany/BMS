@@ -2,8 +2,11 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
 
+      <header-actions
+        :titlePage="'Aspecto del sistema'"
+        :btn-close-window="btnCloseWindow"
+      />
 
-      <header-actions :titlePage="'Aspecto del sistema'" />
       <div class="main-container-page container-form">
         <q-scroll-area
           class="h-90"
@@ -98,14 +101,13 @@
 <script>
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue'
 
 export default defineComponent({
   name: 'SettingsPage',
   components: {
     HeaderActions,
-    BtnAction
   },
+
   data() {
     return {
       listSettings: [
@@ -140,13 +142,14 @@ export default defineComponent({
           link: 'tecnical-support'
         }
       ],
+
       btnCloseWindow: {
-        iconName: 'close',
-        btnBackground: '#FF9900',
-        btnColor: '#FFFFFF',
-        btnSize: 'xs',
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
         btnAction: this.goBack
-      }
+      },
+
     }
   },
   setup() {

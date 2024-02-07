@@ -2,14 +2,15 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
 
-
       <header-actions
         :titlePage="'Usuarios'"
         :btnAction="btnAction"
+        :btn-close-window="btnCloseWindow"
         :inputSearch="inputSearch"
         v-model:searchModel="searchModel"
         v-model:switch-content="switchContent"
       />
+
       <div
         class="main-container-page"
         :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
@@ -79,6 +80,7 @@
         <general-table
           v-else-if="switchContent === 2"
           v-model:row-selected="rowSelected"
+          :height="'100%'"
           :rows="rows"
           :columns="columns"
           :actions-table="actionsTable"

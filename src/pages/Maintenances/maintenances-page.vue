@@ -1,19 +1,15 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <div
-        v-if="this.$route.query?.equipment || this.$route.query?.user"
-        class="column items-end q-mb-xs not-show-in-mobile"
-      >
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
 
       <header-actions
         titlePage="Mantenimientos"
         :btnAction="btnAction"
+        :btn-close-window="showCloseBtn() ? btnCloseWindow : null"
         :inputSearch="inputSearch"
         v-model:searchModel="searchModel"
       />
+
       <!-- Main container -->
       <div class="main-container-page">
         <general-table
@@ -36,14 +32,12 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import GeneralTable from 'src/components/compose/GeneralTable.vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue';
 
 export default defineComponent({
   name: 'MaintenancesPage',
   components: {
     HeaderActions,
     GeneralTable,
-    BtnAction
   },
   data() {
     return {
@@ -66,7 +60,8 @@ export default defineComponent({
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',
         btnColor: '#FF9900',
-        btnAction: this.goBack
+        btnAction: this.goBack,
+        shouldHide: this.$route.query?.equipment || this.$route.query?.user
       },
 
       columns: [
@@ -208,6 +203,10 @@ export default defineComponent({
       this.$router.push({
         name: 'add-maintenance'
       })
+    },
+
+    showCloseBtn() {
+      return this.$route.query?.equipment || this.$route.query?.user
     },
 
     goToDetails(payload) {

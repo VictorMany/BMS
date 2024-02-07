@@ -134,7 +134,15 @@ function getModelSelected(item, valueFromServer) {
         return item
     } else if (item.type == 'formatedDate') {
         item.model = formatDate(valueFromServer);
-    } else item.model = valueFromServer
+    } else if (item.key == 'isReported') {
+        item.model = valueFromServer ? item.model = 'Si' : item.model = 'Sin reportes'
+        return item
+    }
+    // else if (item.key == 'price') {
+    //     item.model = '$ ' + valueFromServer
+    //     return item
+    // } 
+    else item.model = valueFromServer
     return item
 }
 

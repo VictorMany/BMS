@@ -17,7 +17,8 @@ export async function getEquipmentAction(context, params) {
     return service.getEquipment(params.id).then(async (response) => {
         if (response.status == 200) {
             // We call the global action to format our payload
-            context.commit('MUTATE_EQUIPMENT', response.data.contents.equipment)
+            const equipment = response.data.contents.equipment
+            context.commit('MUTATE_EQUIPMENT', equipment)
 
             let payload
 

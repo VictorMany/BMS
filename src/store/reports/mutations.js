@@ -4,5 +4,6 @@ export function MUTATE_REPORTS(state, payload) {
 
 export function MUTATE_REPORT(state, payload) {
     state.report = payload
+
     localStorage.setItem('report', JSON.stringify(payload))
 }

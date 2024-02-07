@@ -140,20 +140,7 @@ export default defineComponent({
             model: null,
             itemFilter: this.filterLocations,
             setModel: this.setModelLocation,
-            options: [
-              { label: 'Hospital C', index: 1, value: 'Hospital C' },
-              { label: 'Área de choque', index: 2, value: 'Área de choque' },
-              { label: 'Consultas externas', index: 3, value: 'Consultas externas' },
-              { label: 'Unidades de hospitalización', index: 4, value: 'Unidades de hospitalización' },
-              { label: 'Quirófanos', index: 5, value: 'Quirófanos' },
-              { label: 'Laboratorios', index: 6, value: 'Laboratorios' },
-              { label: 'Radiología', index: 7, value: 'Radiología' },
-              { label: 'Farmacia', index: 8, value: 'Farmacia' },
-              { label: 'Terapia física y rehabilitación', index: 9, value: 'Terapia física y rehabilitación' },
-              { label: 'Cuidados intensivos', index: 10, value: 'Cuidados intensivos' },
-              { label: 'Unidades de cuidados paliativos', index: 11, value: 'Unidades de cuidados paliativos' },
-              { label: 'Servicios de apoyo', index: 12, value: 'Servicios de apoyo' },
-            ],
+            options: [],
             rules: [
               (val) => {
                 if (typeof val === 'string') {

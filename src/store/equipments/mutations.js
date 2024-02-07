@@ -11,8 +11,15 @@ export function MUTATE_LOCATIONS(state, payload) {
 }
 
 export function MUTATE_EQUIPMENT(state, payload) {
-  state.equipment = payload
-  localStorage.setItem('equipment', JSON.stringify(payload))
+  if (payload === null) {
+    state.equipment = null;
+    localStorage.removeItem('equipment');
+    return;
+  }
+
+  const equipment = { ...payload, categoryName: `${payload.categoryName} - ${payload.equipmentModel} - No. serie: ${payload.serialNumber}` };
+  state.equipment = equipment;
+  localStorage.setItem('equipment', JSON.stringify(equipment));
 }
 
 export function MUTATE_DETAILS(state, payload) {

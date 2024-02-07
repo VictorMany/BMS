@@ -1,6 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
+
       <header-actions
         :titlePage="'Equipos'"
         :btnAction="btnAction"
@@ -8,6 +9,7 @@
         v-model:searchModel="searchModel"
         v-model:switch-content="switchContent"
       />
+
       <div
         class="main-container-page"
         :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
@@ -333,6 +335,7 @@ export default defineComponent({
       console.log(payload)
       // Delete from the LOCAL STORAGE IF EXIST
       this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+      this.$store.commit('reports/MUTATE_REPORT', null)
 
       await this.getEquipment(payload)
 

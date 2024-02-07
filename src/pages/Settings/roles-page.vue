@@ -2,8 +2,10 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
 
-
-      <header-actions :titlePage="'Permisos'" />
+      <header-actions
+        :titlePage="'Permisos'"
+        :btn-close-window="btnCloseWindow"
+      />
 
       <div class="main-container-page">
         <q-scroll-area
@@ -134,12 +136,14 @@ export default defineComponent({
   data() {
     return {
       fixed: ref(false),
+
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',
         btnColor: '#FF9900',
         btnAction: this.goBack
       },
+
       model: ref(null),
       listRoles: [
         {

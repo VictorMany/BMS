@@ -1,7 +1,23 @@
 <template>
   <div class="container q-py-sm">
-    <Doughnut :data="chartData" :options="chartOptions" />
-    <div v-if="chartData.text" class="label w-100 flex justify-center">
+    <Doughnut
+      v-if="loaded"
+      :data="chartData"
+      :options="chartOptions"
+    />
+    <q-tooltip
+      class="border-rounded"
+      :style="`background-color: ${chartData.datasets[0].borderColor[0]}`"
+      anchor="bottom middle"
+      self="center middle"
+      transition-hide="scale"
+    >
+      {{ chartData.datasets[0].label }}
+    </q-tooltip>
+    <div
+      v-if="chartData.text"
+      class="label w-100 flex justify-center"
+    >
       {{ chartData.text }}
     </div>
   </div>
@@ -40,7 +56,12 @@ export default {
     },
     chartOptions: {
       type: Object,
-      default: () => {},
+      default: () => { },
+    },
+    loaded: {
+      type: Boolean,
+      required: false,
+      default: false
     },
   },
   data() {
@@ -60,6 +81,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 .label {
   font-weight: 600;
   font-size: 35px;

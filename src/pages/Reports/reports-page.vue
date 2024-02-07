@@ -1,17 +1,18 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <div
+      <!-- <div
         v-if="this.$route.query.equipment"
         class="column items-end q-mb-xs not-show-in-mobile"
       >
         <btn-action v-bind="btnCloseWindow" />
-      </div>
+      </div> -->
 
       <header-actions
         titlePage="Reportes"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
+        :btn-close-window="showCloseBtn() ? btnCloseWindow : null"
         v-model:searchModel="searchModel"
       />
       <!-- Main container -->
@@ -36,14 +37,12 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import GeneralTable from 'src/components/compose/GeneralTable.vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue';
 
 export default defineComponent({
   name: 'ReportsPage',
   components: {
     HeaderActions,
     GeneralTable,
-    BtnAction
   },
   data() {
     return {
@@ -87,6 +86,7 @@ export default defineComponent({
           icnSize: 'xs',
           icnAction: 'Maintenance',
           tooltip: 'Atender reporte',
+          // hidden: row => !row.isReported
         },
       ],
 
@@ -204,6 +204,10 @@ export default defineComponent({
       this.loading = false
     },
 
+    showCloseBtn() {
+      return this.$route.query.equipment
+    },
+
     goToAddReport() {
       // Delete from the LOCAL STORAGE IF EXIST
       this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
@@ -224,42 +228,15 @@ export default defineComponent({
       // Delete from the LOCAL STORAGE IF EXIST
       this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
 
-      // await this.getReport(payload)
-      const report = this.reports.find(e => e.id == payload)
+      const report = JSON.parse(JSON.stringify(this.reports.find(e => e.id == payload)))
 
-      // this.setModelValueByKey('idEquipment', {
-      //   value: this.report.idEquipment,
-      //   label: this.report.Equipment.categoryName
-      // })
-      // this.setModelValueByKey('maintenanceType', {
-      //   value: 'correctivo',
-      //   label: 'Correctivo'
-      // })
-      // this.setModelValueByKey('photo', this.report.Equipment.photo)
-      // this.setModelValueByKey('serialNumber', this.report.Equipment.serialNumber)
-      // this.setModelValueByKey('observations', 'Mantenimiento a causa de un report por: ' + this.report.reason)
-
-      // console.log(this.reports, payload, {
-      //   photo: ''
-      // })
-
-
-      // console.log(report)
+      report.Equipment.categoryName += ` - ${report.Equipment.equipmentModel} - No. serie: ${report.Equipment.serialNumber}`
 
       this.$store.commit('reports/MUTATE_REPORT', report)
 
-
-      // console.log('Ir al mantenimiento')
       this.$router.push({
         name: 'add-maintenance'
       });
-    },
-
-    async getReport(id) {
-      const params = {
-        id: id,
-      }
-      await this.$store.dispatch('reports/getReportAction', params)
     },
 
     goToEdit(payload) {

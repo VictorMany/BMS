@@ -5,6 +5,7 @@ import maintenances from './maintenances'
 import maintenancePlans from './maintenances-plan'
 import users from './users'
 import reports from './reports'
+import stats from './stats'
 import { createStore } from 'vuex'
 
 
@@ -16,7 +17,8 @@ export default store(function (/* { ssrContext } */) {
       maintenances,
       maintenancePlans,
       users,
-      reports
+      reports,
+      stats,
     },
 
     // eslint-disable-next-line no-undef

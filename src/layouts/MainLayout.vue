@@ -89,7 +89,7 @@
               style="background-color: rgba(125, 125, 125, 0.085);"
               v-if="showEquipmentDetails()"
             >
-              <div class="col-12 text-weight-medium text-secondary">
+              <div class="col-12 text-weight-thin text-secondary">
                 Información del equipo
               </div>
               <div
@@ -130,12 +130,6 @@
                   <div class="col-12  form__item-model q-mb-md">
                     {{ equipment?.trackingNumber }}
                   </div>
-                  <div class="col-12 form__item-label text-weight-thin">
-                    {{ 'Número de serie' }}
-                  </div>
-                  <div class="col-12  form__item-model q-mb-md">
-                    {{ equipment?.serialNumber }}
-                  </div>
                 </div>
 
                 <div class="row justify-end">
@@ -155,7 +149,7 @@
               class="q-pa-md bg-accent border-rounded q-mt-lg"
               v-if="showUserDetails()"
             >
-              <div class="col-12 text-weight-medium text-secondary">
+              <div class="col-12 text-weight-thin text-secondary">
                 Información del usuario
               </div>
 
@@ -526,12 +520,6 @@ export default defineComponent({
         return this.$store.getters['users/getUserGetter'];
       },
     },
-
-    // openDrawerFromChild: {
-    //   get() {
-    //     return this.$store.getters['global/getDrawer'];
-    //   },
-    // }
   },
 
   async beforeRouteUpdate(to, from, next) {

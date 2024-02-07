@@ -2,8 +2,10 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
 
-
-      <header-actions :titlePage="'Acerca de nosotros'" />
+      <header-actions
+        :titlePage="'Acerca de nosotros'"
+        :btn-close-window="btnCloseWindow"
+      />
 
       <div class="main-container-page h-90">
         <q-scroll-area
@@ -189,6 +191,7 @@ export default defineComponent({
         },
       ],
       basicToolBar: [['unordered', 'ordered']],
+
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',

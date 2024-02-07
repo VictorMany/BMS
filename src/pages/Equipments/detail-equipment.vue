@@ -95,6 +95,11 @@ export default defineComponent({
             model: ''
           },
           {
+            key: 'isReported',
+            label: 'Reportado',
+            model: ''
+          },
+          {
             key: 'equipmentStatus',
             label: 'Estatus',
             type: 'status',

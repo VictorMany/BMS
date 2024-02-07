@@ -15,7 +15,7 @@
         >
           <div class="row container-stats">
             <div class="col-12 col-md">
-              <div class="card-graphics border-rounded">
+              <div class="card-graphics h-100 border-rounded">
                 <div class="card-graphics__title text-center q-pa-sm ellipsis">
                   Atención a reportes por falla
                 </div>
@@ -26,8 +26,8 @@
               </div>
             </div>
             <div class="col-12 col-md">
-              <div class="card-graphics border-rounded">
-                <div class="card-graphics__title text-center q-pa-sm ellipsis">
+              <div class="card-graphics h-100 border-rounded">
+                <div class="card-graphics__title text-center q-pa-sm">
                   Equipos médicos reemplazados por obsolencia o daño
                 </div>
                 <area-chart
@@ -39,57 +39,61 @@
           </div>
 
           <div class="row container-stats">
-            <div class="col-12 col-md-6 col-lg">
-              <div class="card-graphics border-rounded q-pb-lg row justify-center">
-                <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
-                  Mantenimientos vigentes
+            <div class="col-12 col-md col-lg">
+              <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
+                <div class="card-graphics__title w-100 text-center q-pa-sm">
+                  Cumplimiento de Mantenimientos Preventivos Programados
                 </div>
                 <div style="height: 200px; width: 190px">
                   <doghnut-chart
-                    :chart-data="chartConfigCurrentMaintenances.data"
-                    :chart-options="chartConfigCurrentMaintenances.options"
+                    :chart-data="complianceWithScheduledPreventiveMaintenances.data"
+                    :chart-options="complianceWithScheduledPreventiveMaintenances.options"
+                    :loaded="loaded"
                   />
                 </div>
               </div>
             </div>
 
-            <div class="col-12 col-md-6 col-lg">
-              <div class="card-graphics border-rounded q-pb-lg row justify-center">
-                <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
-                  Falla repentina
+            <div class="col-12 col-md col-lg">
+              <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
+                <div class="card-graphics__title w-100 text-center q-pa-sm">
+                  Atención a reportes por falla
                 </div>
                 <div style="height: 200px; width: 190px">
                   <doghnut-chart
-                    :chart-data="chartConfigSuddenFailure.data"
-                    :chart-options="chartConfigSuddenFailure.options"
+                    :chart-data="attentionToFailurePercentage.data"
+                    :chart-options="attentionToFailurePercentage.options"
+                    :loaded="loaded"
                   />
                 </div>
               </div>
             </div>
 
-            <div class="col-12 col-md-6 col-lg">
-              <div class="card-graphics border-rounded q-pb-lg row justify-center">
-                <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
-                  Reemplazo por daño
+            <div class="col-12 col-md col-lg">
+              <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
+                <div class="card-graphics__title w-100 text-center q-pa-sm">
+                  Reemplazo por obsolencia o daño
                 </div>
                 <div style="height: 200px; width: 190px">
                   <doghnut-chart
-                    :chart-data="chartConfigReplaceObsolescence.data"
-                    :chart-options="chartConfigReplaceObsolescence.options"
+                    :chart-data="replacementDueToObsoleteOrDamagePercentage.data"
+                    :chart-options="replacementDueToObsoleteOrDamagePercentage.options"
+                    :loaded="loaded"
                   />
                 </div>
               </div>
             </div>
 
-            <div class="col-12 col-md-6 col-lg">
-              <div class="card-graphics border-rounded q-pb-lg row justify-center">
+            <div class="col-12 col-md col-lg">
+              <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
                   Mantenimientos preventivos
                 </div>
                 <div style="height: 200px; width: 190px">
                   <doghnut-chart
-                    :chart-data="chartConfigPreventive.data"
-                    :chart-options="chartConfigPreventive.options"
+                    :chart-data="suddenFailurePercentage.data"
+                    :chart-options="suddenFailurePercentage.options"
+                    :loaded="loaded"
                   />
                 </div>
               </div>
@@ -156,6 +160,7 @@ export default defineComponent({
   data() {
     return {
       loadingReportsTable: true,
+      loaded: true,
 
       chartConfigReports: {
         data: {
@@ -183,7 +188,6 @@ export default defineComponent({
             },
           ],
         },
-        // chart.options.elements.line.tension = smooth ? 0.4 : 0;
 
         options: {
           elements: {
@@ -232,7 +236,6 @@ export default defineComponent({
             },
           ],
         },
-        // chart.options.elements.line.tension = smooth ? 0.4 : 0;
 
         options: {
           elements: {
@@ -255,13 +258,14 @@ export default defineComponent({
           },
         },
       },
-      chartConfigCurrentMaintenances: {
+
+      complianceWithScheduledPreventiveMaintenances: {
         data: {
           datasets: [
             {
-              label: 'My First Dataset',
-              data: [70, 30],
-              backgroundColor: ['#1e65e820', '#1e65e8'],
+              label: 'Porcentaje de cumplimiento de mantenimientos preventivos programados',
+              data: [],
+              backgroundColor: ['#1e65e8', '#1e65e820'],
               borderColor: ['#1e65e8'],
               hoverOffset: 4,
               cutout: '80%',
@@ -269,9 +273,14 @@ export default defineComponent({
           ],
           text: '30%',
         },
-        // chart.options.elements.line.tension = smooth ? 0.4 : 0;
+
         options: {
           responsive: true,
+          plugins: {
+            tooltip: {
+              enabled: false,
+            }
+          },
           maintainAspectRatio: true,
           elements: {
             arc: {
@@ -280,12 +289,12 @@ export default defineComponent({
           },
         },
       },
-      chartConfigReplaceObsolescence: {
+      replacementDueToObsoleteOrDamagePercentage: {
         data: {
           datasets: [
             {
-              label: 'My First Dataset',
-              data: [70, 30],
+              label: 'Porcentaje de equipos reemplazados por obsolencia o daño',
+              data: [],
               backgroundColor: ['#5C59FF', '#5C59FF20'],
               borderColor: ['#5C59FF'],
               hoverOffset: 4,
@@ -294,9 +303,13 @@ export default defineComponent({
           ],
           text: '30%',
         },
-        // chart.options.elements.line.tension = smooth ? 0.4 : 0;
         options: {
           responsive: true,
+          plugins: {
+            tooltip: {
+              enabled: false,
+            }
+          },
           maintainAspectRatio: true,
           elements: {
             arc: {
@@ -305,12 +318,12 @@ export default defineComponent({
           },
         },
       },
-      chartConfigSuddenFailure: {
+      attentionToFailurePercentage: {
         data: {
           datasets: [
             {
-              label: 'My First Dataset',
-              data: [30, 70],
+              label: 'Porcentaje de equipos atendidos por reporte de falla',
+              data: [],
               backgroundColor: ['#FF5959', '#FF595920'],
               borderColor: ['#FF5959'],
               hoverOffset: 4,
@@ -319,9 +332,13 @@ export default defineComponent({
           ],
           text: '30%',
         },
-        // chart.options.elements.line.tension = smooth ? 0.4 : 0;
         options: {
           responsive: true,
+          plugins: {
+            tooltip: {
+              enabled: false,
+            }
+          },
           maintainAspectRatio: true,
           elements: {
             arc: {
@@ -330,12 +347,12 @@ export default defineComponent({
           },
         },
       },
-      chartConfigPreventive: {
+      suddenFailurePercentage: {
         data: {
           datasets: [
             {
-              label: 'My First Dataset',
-              data: [30, 70],
+              label: 'Porcentaje de equipos por falla repentina',
+              data: [],
               backgroundColor: ['#1AD4D4', '#1AD4D420'],
               borderColor: ['#1AD4D4'],
               hoverOffset: 4,
@@ -344,9 +361,13 @@ export default defineComponent({
           ],
           text: '30%',
         },
-        // chart.options.elements.line.tension = smooth ? 0.4 : 0;
         options: {
           responsive: true,
+          plugins: {
+            tooltip: {
+              enabled: false,
+            }
+          },
           maintainAspectRatio: true,
           elements: {
             arc: {
@@ -448,6 +469,7 @@ export default defineComponent({
 
   mounted() {
     this.getReports();
+    this.getStats();
   },
 
   computed: {
@@ -466,6 +488,35 @@ export default defineComponent({
       this.loadingReportsTable = false
     },
 
+    async getPercentage(preventiveMaintenances, chart) {
+      chart.data = {
+        datasets: [
+          {
+            ...chart.data.datasets[0],
+            data: [preventiveMaintenances, (100 - preventiveMaintenances)]
+          }
+        ],
+        text: preventiveMaintenances.toFixed(1) + '%'
+      }
+    },
+
+
+    async getStats() {
+      const stats = await this.$store.dispatch('stats/getStatsAction');
+
+      const preventiveMaintenances = stats.additionalStatistics.complianceWithScheduledPreventiveMaintenances
+      const attentionToReports = stats.additionalStatistics.attentionToFailurePercentage
+      const replacementForDamage = stats.additionalStatistics.replacementDueToObsoleteOrDamagePercentage
+      const suddenFailurePercentage = stats.additionalStatistics.suddenFailurePercentage
+
+      await this.getPercentage(preventiveMaintenances, this.complianceWithScheduledPreventiveMaintenances)
+      await this.getPercentage(attentionToReports, this.attentionToFailurePercentage)
+      await this.getPercentage(replacementForDamage, this.replacementDueToObsoleteOrDamagePercentage)
+      await this.getPercentage(suddenFailurePercentage, this.suddenFailurePercentage)
+
+      this.loaded = true
+    },
+
     goToDetails(payload) {
       console.log('Ver detalle', payload);
       this.$router.push({ name: 'detail-report', params: { id: payload } });
@@ -476,16 +527,6 @@ export default defineComponent({
       handler(val) {
         if (val.action === 'Detail') {
           this.goToDetails(val.id);
-        }
-      },
-      deep: true,
-    },
-    switchContent: {
-      handler(val) {
-        if (val === 1) {
-          console.log('Show cards');
-        } else if (val === 2) {
-          console.log('Show table');
         }
       },
       deep: true,

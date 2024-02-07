@@ -12,7 +12,7 @@
       />
     </div>
 
-    <div class="col-xs-auto col-sm title-page">
+    <div class="col-xs col-sm title-page">
       {{ titlePage.toLocaleUpperCase() }}
     </div>
 
@@ -42,6 +42,16 @@
     </div>
 
     <div
+      v-if="btnCloseWindow"
+      class="col-xs-auto column content-end"
+    >
+      <btn-action
+        v-bind="btnCloseWindow"
+        :tooltip="'Regresar'"
+      />
+    </div>
+
+    <div
       v-if="inputSearch"
       class="col-md-4 col-xs-12 column content-end"
     >
@@ -50,16 +60,6 @@
         v-bind="inputSearch"
         v-model:v-bind="inputSearch.heightModal"
         v-model:search-model="searchModelLocal"
-      />
-    </div>
-
-    <div
-      v-if="btnCloseWindow"
-      class="col-xs-auto column content-end"
-    >
-      <btn-action
-        v-bind="btnCloseWindow"
-        :tooltip="'Regresar'"
       />
     </div>
   </div>

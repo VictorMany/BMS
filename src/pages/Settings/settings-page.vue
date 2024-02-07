@@ -3,14 +3,6 @@
     <div class="card-page">
       <header-actions :titlePage="'Configuración'" />
       <div class="main-container-page card-color q-pa-sm main-container-page-medium-dark container-form">
-        <!-- <img
-          class="container-img q-mr-lg border-rounded"
-          src="https://www.thinkchamplin.com/uploads/case-studies/main_MercyHealth_WestHospital_04.jpg"
-        />
-        <div class="q-py-md">
-          <div class="info__title">Hospital Mercy West</div>
-          <div class="info__email">admingp@mercywest.com</div>
-        </div> -->
         <q-scroll-area
           class="fit h-100"
           :thumb-style="{

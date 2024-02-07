@@ -2,7 +2,11 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
 
-      <header-actions :titlePage="'Soporte técnico'" />
+      <header-actions
+        :titlePage="'Soporte técnico'"
+        :btn-close-window="btnCloseWindow"
+      />
+
       <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
           class="h-90 q-pa-xs-none q-pa-lg-sm"
@@ -81,12 +85,14 @@ export default defineComponent({
         iconName: 'send',
       },
       newMessage: '',
+
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',
         btnColor: '#FF9900',
         btnAction: this.goBack
       },
+
       fields: {
         top: [
           {

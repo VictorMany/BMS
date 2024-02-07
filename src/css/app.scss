@@ -287,6 +287,15 @@
   .login-page {
     background-color: #181b1e84;
   }
+
+  input,
+  select {
+    color: #b8cddd !important;
+    -webkit-text-fill-color: #b8cddd !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    caret-color: #b8cddd;
+  }
 }
 
 
