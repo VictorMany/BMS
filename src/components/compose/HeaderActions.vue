@@ -13,7 +13,7 @@
     </div>
 
     <div class="col-xs col-sm title-page">
-      {{ titlePage.toLocaleUpperCase() }}
+      {{ titlePage }}
     </div>
 
     <div

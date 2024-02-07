@@ -332,8 +332,6 @@ export default defineComponent({
     },
 
     async goToMaintenance(payload) {
-      console.log(payload)
-      // Delete from the LOCAL STORAGE IF EXIST
       this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
       this.$store.commit('reports/MUTATE_REPORT', null)
 

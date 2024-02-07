@@ -24,127 +24,25 @@
                   {{ item.label }}
                 </div>
 
-                <!-- INPUT TYPE SELECT -->
-                <q-select
+                <select-component
                   v-if="item.type === 'select'"
-                  v-model="item.model"
-                  fill-input
-                  use-input
                   class="col-6 form__input-12 bg-accent"
-                  borderless
-                  dense
-                  hide-hint
-                  hide-bottom-space
-                  hide-selected
-                  bottom-slots
-                  stack-label
-                  behavior="menu"
-                  :name="item.key"
-                  :readonly="item.readonly"
-                  :options="item.options"
-                  :rules="item.rules ? item.rules : []"
-                  :prefix="item.prefix ? item.prefix : ''"
-                  @filter="item.itemFilter"
-                >
-                  <template v-slot:option="scope">
-                    <q-item
-                      v-bind="scope.itemProps"
-                      dense
-                    >
-                      <q-item-section>
-                        <q-item-label
-                          class="options-select"
-                          :class="scope.selected ? 'primary' : 'text-grey'"
-                        >{{ scope.label }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      v-if="item.readonly"
-                      name="lock"
-                      size="xs"
-                    />
-                  </template>
-                </q-select>
+                  v-model:model="item.model"
+                  :item="item"
+                />
 
-                <!-- INPUT TYPE autocomplete -->
-                <q-select
+                <autocomplete-component
                   v-else-if="item.type === 'autocomplete'"
-                  :model-value="item.model"
-                  fill-input
-                  use-input
                   class="col-6 form__input-12 bg-accent"
-                  borderless
-                  dense
-                  hide-hint
-                  hide-bottom-space
-                  hide-selected
-                  bottom-slots
-                  stack-label
-                  behavior="menu"
-                  :name="item.key"
-                  :readonly="item.readonly"
-                  :options="item.options"
-                  :rules="item.rules ? item.rules : []"
-                  :prefix="item.prefix ? item.prefix : ''"
-                  @filter="item.itemFilter"
-                  @input-value="item.setModel"
-                >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey">
-                        No hay coincidencia, se agregará automáticamente lo que escribas
-                      </q-item-section>
-                    </q-item>
-                  </template>
+                  :item="item"
+                />
 
-                  <template v-slot:option="scope">
-                    <q-item
-                      v-bind="scope.itemProps"
-                      dense
-                    >
-                      <q-item-section>
-                        <q-item-label
-                          class="options-select"
-                          :class="scope.selected ? 'primary' : 'text-grey'"
-                        >{{ scope.label }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      v-if="item.readonly"
-                      name="lock"
-                      size="xs"
-                    />
-                  </template>
-                </q-select>
-
-                <q-input
+                <input-component
                   v-else
                   class="col-6 form__input-12 bg-accent"
-                  borderless
-                  dense
-                  hide-hint
-                  hide-bottom-space
-                  bottom-slots
-                  stack-label
-                  :readonly="item.readonly"
-                  :rules="item.rules ? item.rules : []"
-                  :prefix="item.prefix ? item.prefix : ''"
-                  :name="item.key"
-                  :type="item.type ? item.type : 'text'"
-                  v-model="item.model"
-                >
-                  <template v-slot:append>
-                    <q-icon
-                      v-if="item.readonly"
-                      name="lock"
-                      size="xs"
-                    />
-                  </template>
-                </q-input>
+                  v-model:model="item.model"
+                  :item="item"
+                />
               </div>
             </div>
           </div>
@@ -158,176 +56,39 @@
             >
               <div class="full-width">
                 <div
-                  v-if="showItem(item)"
+                  v-if="showItem(item) && shouldShow(item)"
                   class="row w-100 q-px-sm q-pb-sm"
                 >
                   <div class="col-12 col-md-12 col-lg-5 q-pr-md q-pt-sm form__item-label text-weight-thin">
                     {{ item.label }}
                   </div>
 
-                  <!-- INPUT TYPE SELECT -->
-                  <q-select
+                  <select-component
                     v-if="item.type === 'select'"
                     class="form__input bg-accent col-12 col-sm"
-                    borderless
-                    v-model="item.model"
-                    :name="item.key"
-                    dense
-                    hide-hint
-                    hide-bottom-space
-                    bottom-slots
-                    stack-label
-                    use-input
-                    behavior="menu"
-                    :options="item.options"
-                    :readonly="item.readonly"
-                    :rules="item.rules ? item.rules : []"
-                    :prefix="item.prefix ? item.prefix : ''"
-                  >
-                    <template v-slot:option="scope">
-                      <q-item
-                        v-bind="scope.itemProps"
-                        dense
-                      >
-                        <q-item-section>
-                          <q-item-label
-                            class="options-select"
-                            :class="scope.selected ? 'primary' : 'text-grey'"
-                          >{{ scope.label }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
-                    </template>
-                    <template v-slot:append>
-                      <q-icon
-                        v-if="item.readonly"
-                        name="lock"
-                        size="xs"
-                      />
-                    </template>
-                  </q-select>
+                    v-model:model="item.model"
+                    :item="item"
+                  />
 
-                  <!-- INPUT TYPE AUTOCOMPLETE -->
-                  <q-select
+                  <autocomplete-component
                     v-else-if="item.type === 'autocomplete'"
-                    :model-value="item.model"
-                    fill-input
-                    use-input
-                    borderless
-                    dense
-                    hide-hint
-                    hide-bottom-space
-                    hide-selected
-                    bottom-slots
-                    stack-label
-                    behavior="menu"
                     class="form__input bg-accent col-12 col-sm"
-                    :name="item.key"
-                    :readonly="item.readonly"
-                    :options="item.options"
-                    :rules="item.rules ? item.rules : []"
-                    :prefix="item.prefix ? item.prefix : ''"
-                    @filter="item.itemFilter"
-                    @input-value="item.setModel"
-                  >
-                    <template v-slot:no-option>
-                      <q-item>
-                        <q-item-section class="text-grey">
-                          No hay coincidencia, se agregará automáticamente lo que escribas
-                        </q-item-section>
-                      </q-item>
-                    </template>
+                    :item="item"
+                  />
 
-                    <template v-slot:option="scope">
-                      <q-item
-                        v-bind="scope.itemProps"
-                        dense
-                      >
-                        <q-item-section>
-                          <q-item-label
-                            class="options-select"
-                            :class="scope.selected ? 'primary' : 'text-grey'"
-                          >{{ scope.label }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
-                    </template>
-                    <template v-slot:append>
-                      <q-icon
-                        v-if="item.readonly"
-                        name="lock"
-                        size="xs"
-                      />
-                    </template>
-                  </q-select>
-
-                  <!-- INPUT TYPE DATE -->
-                  <q-input
+                  <date-component
                     v-else-if="item.type === 'date'"
-                    v-model="item.model"
-                    :name="item.key"
                     class="col-12 col-sm form__input bg-accent"
-                    borderless
-                    dense
-                    hide-hint
-                    hide-bottom-space
-                    bottom-slots
-                    readonly
-                    stack-label
-                  >
-                    <template v-slot:append>
-                      <q-btn
-                        v-if="!item.readonly"
-                        icon="event"
-                        size="xs"
-                        color="primary"
-                        unelevated
-                        round
-                      >
-                        <q-popup-proxy
-                          cover
-                          transition-show="scale"
-                          transition-hide="scale"
-                        >
-                          <q-date
-                            v-model="item.model"
-                            mask="YYYY-MM-DD"
-                            :name="item.key"
-                          />
-                        </q-popup-proxy>
-                      </q-btn>
+                    v-model:model="item.model"
+                    :item="item"
+                  />
 
-                      <q-icon
-                        v-else
-                        name="lock"
-                        size="xs"
-                      />
-                    </template>
-                  </q-input>
-
-                  <!-- NORMAL INPUT -->
-                  <q-input
+                  <input-component
                     v-else
-                    v-model="item.model"
-                    :name="item.key"
-                    dense
-                    hide-hint
-                    bottom-slots
-                    hide-bottom-space
                     class="form__input bg-accent col-12 col-sm"
-                    :readonly="item.readonly"
-                    :type="item.type ? item.type : 'text'"
-                    :rules="item.rules ? item.rules : []"
-                    :prefix="item.prefix ? item.prefix : ''"
-                    stack-label
-                    borderless
-                  >
-                    <template v-slot:append>
-                      <q-icon
-                        v-if="item.readonly"
-                        name="lock"
-                        size="xs"
-                      />
-                    </template>
-                  </q-input>
+                    v-model:model="item.model"
+                    :item="item"
+                  />
                 </div>
               </div>
             </div>
@@ -343,13 +104,12 @@
                   <div class="q-ma-sm form__item-label text-weight-thin">
                     {{ item.label }}
                   </div>
-                  <q-editor
-                    v-model="item.model"
-                    :name="item.key"
-                    :readonly="item.readonly"
-                    :placeholder="'Escribe aquí tus ' + item.label"
-                    class="form__textarea bg-accent border-rounded"
+
+                  <editor-component
+                    v-model:model="item.model"
+                    :item="item"
                     :toolbar="item.toolbar ? item.toolbar : basicToolBar"
+                    class="form__textarea bg-accent border-rounded"
                   />
                 </div>
               </div>
@@ -456,28 +216,11 @@
           <div class="q-my-sm form__item-label text-weight-thin">
             {{ item.label }}
           </div>
-          <q-editor
-            v-model="item.model"
-            :name="item.key"
-            :placeholder="'Escribe aquí...'"
+
+          <editor-component
+            v-model:model="item.model"
+            :item="item"
             class="form__textarea bg-accent border-rounded"
-            :toolbar="[
-              [
-                {
-                  label: $q.lang.editor.fontSize,
-                  icon: $q.iconSet.editor.fontSize,
-                  fixedLabel: true,
-                  fixedIcon: true,
-                  list: 'no-icons',
-                  options: ['size-1', 'size-2', 'size-3', 'size-4', 'size-5'],
-                },
-                'bold',
-                'italic',
-                'strike',
-                'underline',
-              ],
-              ['unordered', 'ordered'],
-            ]"
           />
         </div>
       </div>
@@ -496,9 +239,23 @@
 <!-- eslint-disable no-empty -->
 <script>
 import { defineComponent } from 'vue';
+import AutocompleteComponent from 'src/components/atomic/Form/AutocompleteComponent.vue';
+import DateComponent from '../atomic/Form/DateComponent.vue';
+import SelectComponent from '../atomic/Form/SelectComponent.vue';
+import EditorComponent from '../atomic/Form/EditorComponent.vue';
+import InputComponent from '../atomic/Form/InputComponent.vue';
 
 export default defineComponent({
-  name: 'InputSearch',
+  name: 'MaintenancesPage',
+
+  components: {
+    AutocompleteComponent,
+    DateComponent,
+    SelectComponent,
+    EditorComponent,
+    InputComponent
+  },
+
   props: {
     type: {
       type: String,

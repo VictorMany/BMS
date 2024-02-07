@@ -592,6 +592,8 @@
     border-radius: 0 !important;
   }
 
+  // FONT SIZE
+
   .q-tooltip {
     font-size: 8px !important;
     padding: 6px;
@@ -643,7 +645,8 @@
     }
   }
 
-  .font-tree {
-    font-size: 12px;
+  .font-tree,
+  .q-item-label {
+    font-size: 12px !important;
   }
 }

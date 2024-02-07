@@ -33,6 +33,7 @@
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormTextField from 'src/components/compose/FormTextField.vue';
+import { rules } from '../../../utils/validationRules';
 
 export default defineComponent({
   key: 'EquipmentsPage',
@@ -77,17 +78,7 @@ export default defineComponent({
             options: [],
             model: null,
             shouldShow: this.isEditing() ? false : true,
-            rules: [
-              (val) => {
-                if (typeof val === 'string') {
-                  return val.trim().length > 0 || 'El campo es obligatorio';
-                } else if (typeof val === 'object' && val !== null) {
-                  return val;
-                } else {
-                  return 'El campo es obligatorio';
-                }
-              },
-            ],
+            rules: [rules.requiredAutocomplete],
           },
           {
             key: 'categoryName',
@@ -96,27 +87,29 @@ export default defineComponent({
             shouldShow: this.isEditing(),
             readonly: true
           },
+          {
+            key: 'LocationId',
+            label: 'Ubicación',
+            type: 'autocomplete',
+            model: null,
+            itemFilter: this.filterLocations,
+            setModel: this.setModelLocation,
+            options: [],
+            rules: [rules.requiredAutocomplete],
+          },
         ],
         left: [
           {
             key: 'equipmentModel',
             label: 'Modelo del equipo',
             model: '',
-            rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-              (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
-            ],
+            rules: [rules.requiredString, rules.maxLength(60), rules.alphanumeric],
           },
           {
             key: 'serialNumber',
             label: 'Número de serie',
             model: '',
-            rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-              (val) => (val.length <= 30) || 'El campo no debe exceder 30 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
-            ],
+            rules: [rules.requiredString, rules.maxLength(30), rules.alphanumeric],
           },
           {
             key: 'trackingNumber',  //este valor lo llena back
@@ -127,59 +120,20 @@ export default defineComponent({
             key: 'equipmentBrand',
             label: 'Marca',
             model: '',
-            rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-              (val) => (val.length <= 60) || 'El campo no debe exceder 60 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
-            ],
-          },
-          {
-            key: 'LocationId',
-            label: 'Ubicación',
-            type: 'autocomplete',
-            model: null,
-            itemFilter: this.filterLocations,
-            setModel: this.setModelLocation,
-            options: [],
-            rules: [
-              (val) => {
-                if (typeof val === 'string') {
-                  return val.trim().length > 0 || 'El campo es obligatorio';
-                } else if (typeof val === 'object' && val !== null) {
-                  return val;
-                } else {
-                  return 'El campo es obligatorio';
-                }
-              },
-            ],
+            rules: [rules.requiredString, rules.maxLength(60), rules.alphanumeric],
           },
           {
             key: 'manufacturingYear',
             label: 'Año del equipo',
             type: 'number',
-            rules: [
-              (val) =>
-                /^\d{4}$/.test(val) || 'Debe ser un año válido (formato: YYYY)',
-              (val) => {
-                const enteredYear = parseInt(val, 10);
-                const currentYear = new Date().getFullYear();
-                return (
-                  enteredYear <= currentYear ||
-                  'Debe ser un año anterior al año actual'
-                );
-              },
-            ],
+            rules: [rules.validYear, rules.pastYear],
             model: '',
           },
           {
             key: 'provider',
             label: 'Provedor',
             model: '',
-            rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-              (val) => (val.length <= 60) || 'El campo no debe exceder 50 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
-            ],
+            rules: [rules.requiredString, rules.maxLength(50), rules.alphanumeric],
           },
           {
             key: 'equipmentStatus',   //este valor lo llena back
@@ -196,10 +150,10 @@ export default defineComponent({
             label: 'Costo',
             model: '',
             rules: [
-              (val) => (val !== undefined && val !== null) || 'El campo es obligatorio',
-              (val) => !isNaN(val) || 'Ingresa un valor numérico',
-              (val) => parseFloat(val) >= 0 || 'El costo debe ser mayor o igual a 0',
-              (val) => (val.toString().indexOf('.') === -1 || val.toString().split('.')[1].length <= 2) || 'El campo no debe tener más de dos decimales'
+              rules.requiredNumber,
+              rules.numeric,
+              rules.nonNegative,
+              rules.maxDecimalPlaces
             ],
           },
           {
@@ -207,13 +161,7 @@ export default defineComponent({
             label: 'Fecha de garantía',
             type: 'date',
             model: '',
-            rules: [
-              (val) => {
-                const selectedDate = new Date(val);
-                const currentDate = new Date();
-                return selectedDate >= currentDate || 'La fecha de garantía no puede ser anterior a la fecha actual';
-              }
-            ],
+            rules: [rules.futureDate],
           },
         ],
         right: [
@@ -300,12 +248,6 @@ export default defineComponent({
           this.createEquipment()
         }
       }
-    },
-
-    async getEquipments(params) {
-      this.loading = true
-      await this.$store.dispatch('equipments/getEquipmentsAction', params);
-      this.loading = false
     },
 
     async getCategories() {

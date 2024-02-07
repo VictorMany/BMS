@@ -620,7 +620,7 @@ export default defineComponent({
       if (this.$route.query.equipment) {
         this.btnCloseSesion.show = false
       }
-      return this.$route.query.equipment
+      return this.$route.query.equipment && this.equipment
     },
 
     showUserDetails() {
