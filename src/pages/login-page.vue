@@ -8,12 +8,17 @@
           </div>
           <div class="h-100 w-100 flex flex-center">
             <div class="login__bottom-container q-pa-lg">
-
               <q-input
-                class="form__input-login q-pl-md q-pr-md input q-mt-lg q-mb-lg"
+                class="form__input-login q-pl-md q-pr-md q-mt-lg q-mb-lg"
                 borderless
                 dense
-                v-model="model.user"
+                type="mail"
+                hide-hint
+                bottom-slots
+                hide-bottom-space
+                stack-label
+                v-model="model.email"
+                :rules="[rules.validEmail, rules.requiredString]"
                 label="Usuario"
               >
                 <template v-slot:prepend>
@@ -24,10 +29,15 @@
               <q-input
                 ref="pass"
                 type="password"
-                class="form__input-login q-pl-md q-pr-md input"
-                borderless
+                class="form__input-login q-pl-md q-pr-md"
                 dense
-                v-model="model.password"
+                borderless
+                hide-hint
+                bottom-slots
+                hide-bottom-space
+                stack-label
+                v-model="model.userPassword"
+                :rules="[rules.requiredString]"
                 label="Contraseña"
               >
                 <template v-slot:prepend>
@@ -50,7 +60,7 @@
 </template>
 
 <script>
-import { showSuccess, showWarning } from 'app/utils/utils';
+import { rules, showSuccess, showWarning } from 'app/utils/utils';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
 import { defineComponent } from 'vue';
 export default defineComponent({
@@ -58,9 +68,10 @@ export default defineComponent({
   data() {
     return {
       model: {
-        user: '',
-        password: '',
+        email: '',
+        userPassword: '',
       },
+      rules,
 
       btnAction: {
         btnTitle: 'Iniciar sesión',
@@ -90,8 +101,9 @@ export default defineComponent({
         }
         this.btnAction.loader = false;
       } catch (error) {
+        console.log(error.response.data.message)
         this.btnAction.loader = false;
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+        showWarning(this.$q, { msg: error.response ? error.response.data.message : error });
       }
     },
 
@@ -104,14 +116,13 @@ export default defineComponent({
 .form {
   &__input-login {
     border-radius: 50px !important;
-    max-width: 348.65px !important;
     width: 100% !important;
-    height: 46.69px !important;
-    padding-top: 0.2rem !important;
+    padding-inline: 28px !important;
+    padding-block: 5px !important;
   }
 }
 
-.q-field__label {
+.q-field__messages {
   padding-bottom: 1rem !important;
 }
 

@@ -274,6 +274,8 @@ import { defineComponent } from 'vue';
 import BtnMenu from 'src/components/atomic/BtnMenu.vue';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
 import QrcodeVue from 'qrcode.vue';
+import { setAuthHeader } from 'src/api/auth';
+import { deleteTokenCookie } from 'app/utils/utils';
 
 export default defineComponent({
   name: 'newLayout',
@@ -505,7 +507,7 @@ export default defineComponent({
   },
 
   beforeUnmount() {
-    this.$bus.on('open-menu-from-child');
+    this.$bus.off('open-menu-from-child');
   },
 
   computed: {
@@ -593,7 +595,8 @@ export default defineComponent({
     },
 
     logout() {
-      console.log('Login');
+      setAuthHeader(null)
+      deleteTokenCookie(null)
       this.$router.replace('/login');
     },
 

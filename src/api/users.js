@@ -1,6 +1,6 @@
 import { api } from 'boot/axios'; // Asegúrate de que la ruta sea la correcta si estás importando el archivo desde otro lugar
 
-export default class EquipmentService {
+export default class UserService {
     static endpoint = 'http://3.20.181.72:3000/bms/user/'; //http://3.20.181.72:3000/bms/user/list
 
     // Obtiene todos los usuarios

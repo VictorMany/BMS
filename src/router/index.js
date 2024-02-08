@@ -1,7 +1,7 @@
+/* eslint-disable no-undef */
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
-
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -25,6 +25,24 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
+
+  Router.beforeEach((to, from, next) => {
+    const middlewareQueue = to.meta || [];
+    let index = 0;
+
+    const nextMiddleware = () => {
+      const middleware = middlewareQueue[index];
+      index++;
+
+      if (middleware) {
+        middleware({ to, from, next });
+      } else {
+        next();
+      }
+    };
+
+    nextMiddleware();
+  });
 
   return Router
 })

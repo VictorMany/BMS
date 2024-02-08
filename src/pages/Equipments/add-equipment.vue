@@ -77,7 +77,7 @@ export default defineComponent({
             setModel: this.setModelCategory,
             options: [],
             model: null,
-            shouldShow: this.isEditing() ? false : true,
+            shouldShow: !this.isEditing(),
             rules: [rules.requiredAutocomplete],
           },
           {
@@ -136,10 +136,11 @@ export default defineComponent({
             rules: [rules.requiredString, rules.maxLength(50), rules.alphanumeric],
           },
           {
-            key: 'equipmentStatus',   //este valor lo llena back
+            key: 'equipmentStatus',
             label: 'Estatus',
             type: 'select',
             model: null,
+            shouldShow: this.isEditing(),
             options: [
               { label: 'Activo', index: 1, value: 1 },
               { label: 'Inactivo', index: 2, value: 0 },
@@ -149,6 +150,8 @@ export default defineComponent({
             key: 'price',
             label: 'Costo',
             model: '',
+            prefix: '$',
+            type: 'number',
             rules: [
               rules.requiredNumber,
               rules.numeric,

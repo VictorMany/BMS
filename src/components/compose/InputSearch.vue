@@ -6,7 +6,6 @@
     borderless
     dense
     :label="inputLabel"
-    :dark="false"
   >
     <template v-slot:prepend>
       <q-icon
@@ -29,10 +28,10 @@
             class="q-ml-md q-ma-xs"
           />
         </div>
-        <q-popup-proxy class="border-rounded">
+        <q-popup-proxy class="border-rounded modal-ios">
           <q-banner
-            class="border-shadow q-px-sm"
-            style="width: 300px; height: auto"
+            class="border-shadow q-px-sm border-rounded"
+            style="width: 300px; height: auto; background-color: transparent; "
           >
             <q-scroll-area
               :style="`height: ${heightModalLocal}px !important`"
@@ -44,8 +43,7 @@
                 opacity: 1,
               }"
             >
-
-              <q-list class="q-px-none">
+              <q-list class="q-px-none border-rounded">
                 <div
                   v-for="(item, i) in items"
                   class="item-filter"
@@ -272,7 +270,7 @@ export default defineComponent({
   font-weight: 400;
   font-size: 14px;
   color: v-bind(inputColor);
-  background: v-bind(inputBackground);
+  background: rgba($primary, 0.1);
 }
 
 .btn-style {
@@ -284,9 +282,9 @@ export default defineComponent({
   background-color: $primary;
 }
 
-.item-filter:hover {
-  background-color: rgb(($primary), 0.07);
-}
+// .item-filter:hover {
+//   background-color: rgb(($primary), 0.07);
+// }
 
 
 .my-menu-link {

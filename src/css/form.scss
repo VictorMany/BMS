@@ -44,10 +44,6 @@
     &__date_container {
       background-color: $primary-opacity !important;
     }
-
-    &__input-login {
-      background-color: #F2F2F2 !important;
-    }
   }
 }
 
@@ -96,10 +92,6 @@
 
     &__textarea {
       color: #b5c3d7;
-    }
-
-    &__input-login {
-      background-color: #142638 !important;
     }
   }
 
@@ -183,6 +175,11 @@
     height: 100% !important;
     background-clip: padding-box;
   }
+}
+
+input,
+select {
+  background-clip: text !important;
 }
 
 // RESPONSIVITY

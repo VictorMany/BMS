@@ -330,10 +330,6 @@ export default defineComponent({
       } else {
         if (item.key == 'equipmentStatus')
           return false
-        if (item.key == 'reportStatus')
-          return false
-        if (item.key == 'userStatus')
-          return false
       } return true
     },
 

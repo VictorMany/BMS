@@ -125,6 +125,7 @@ export default defineComponent({
             label: 'Estatus',
             type: 'select',
             model: null,
+            shouldShow: this.isEditing(),
             options: [
               { label: 'Activo', status: true, value: true },
               { label: 'Inactivo', status: false, value: false },

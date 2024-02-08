@@ -165,7 +165,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'InputSearch',
+  name: 'DetailsComponent',
   props: {
     type: {
       type: String,
@@ -178,55 +178,6 @@ export default defineComponent({
       default: () => { },
     },
   },
-  data() {
-    return {
-      pdfObject: {
-        name: '',
-        file: {},
-      },
-      ImageBase64: null,
-    };
-  },
-  methods: {
-    uploadFile(e) {
-      const file = e.target.files[0];
-      try {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.ImageBase64 = reader.result;
-        };
-        reader.readAsDataURL(file);
-        if (file !== undefined) {
-          this.pdfObject.name = file.name;
-          this.pdfObject.file = file;
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    clearFileInput(ctrl) {
-      try {
-        ctrl.value = null;
-        this.pdfObject.name = '';
-        this.pdfObject.file = {};
-        this.ImageBase64 = null;
-      } catch (ex) {
-        console.log(ex);
-      }
-      if (ctrl.value) {
-        ctrl.parentNode.replaceChild(ctrl.cloneNode(true), ctrl);
-      }
-    },
-  },
 });
 </script>
 
-<style lang="scss">
-.btn-background {
-  background: rgb(0, 106, 255);
-  background: linear-gradient(34deg,
-      rgba(0, 106, 255, 0.2) 0%,
-      rgba(45, 185, 255, 0.2) 44%,
-      rgba(0, 243, 255, 0.2) 100%);
-}
-</style>

@@ -488,15 +488,15 @@ export default defineComponent({
       this.loadingReportsTable = false
     },
 
-    async getPercentage(preventiveMaintenances, chart) {
+    async getPercentage(data, chart) {
       chart.data = {
         datasets: [
           {
             ...chart.data.datasets[0],
-            data: [preventiveMaintenances, (100 - preventiveMaintenances)]
+            data: [data, (100 - data)]
           }
         ],
-        text: preventiveMaintenances.toFixed(1) + '%'
+        text: data ? data.toFixed(1) + '%' : '0%'
       }
     },
 

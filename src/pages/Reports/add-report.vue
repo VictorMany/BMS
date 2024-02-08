@@ -103,6 +103,7 @@ export default defineComponent({
             label: 'Estatus',
             type: 'select',
             model: null,
+            shouldShow: this.isEditing(),
             options: [
               { label: 'Pendiente', status: true, value: true },
               { label: 'Atendido', status: false, value: false },

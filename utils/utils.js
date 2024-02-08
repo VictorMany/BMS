@@ -60,9 +60,15 @@ export function saveTokenToCookie(token) {
     document.cookie = `token=${token}; path=/`;
 }
 
+// Método para borrar la cookie de token
+export function deleteTokenCookie() {
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+}
+
 // Obtener el token de la cookie
 export function getTokenFromCookie() {
     const cookies = document.cookie.split(';');
+
     for (const cookie of cookies) {
         const [name, value] = cookie.trim().split('=');
         if (name === 'token') {
