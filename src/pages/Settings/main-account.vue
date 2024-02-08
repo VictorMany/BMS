@@ -11,7 +11,7 @@
           class="h-90 q-pa-xs-none q-pa-lg-sm"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <form-text-field :fields="fields" />
+          <form-component :fields="fields" />
         </q-scroll-area>
       </div>
     </div>
@@ -21,13 +21,13 @@
 <script>
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
-import FormTextField from 'src/components/compose/FormTextField.vue';
+import FormComponent from 'src/components/compose/FormComponent.vue';
 
 export default defineComponent({
   name: 'SettingsPage',
   components: {
     HeaderActions,
-    FormTextField,
+    FormComponent,
   },
   data() {
     return {

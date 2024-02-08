@@ -28,7 +28,7 @@
 <script>
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import FormLabel from 'src/components/compose/FormLabel.vue'
+import FormLabel from 'src/components/compose/DetailsComponent.vue'
 
 export default defineComponent({
   name: 'EquipmentsPage',

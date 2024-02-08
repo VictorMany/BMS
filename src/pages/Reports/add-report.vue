@@ -13,7 +13,7 @@
           class="h-90 q-pa-xs-none q-pa-lg-sm"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <form-text-field
+          <form-component
             ref="fieldsComponent"
             :fields="fields"
           />
@@ -32,14 +32,14 @@
 <script>
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import FormTextField from 'src/components/compose/FormTextField.vue'
+import FormComponent from 'src/components/compose/FormComponent.vue'
 import { rules, showSuccess, showWarning } from 'app/utils/utils';
 
 export default defineComponent({
   name: 'Add-Report',
   components: {
     HeaderActions,
-    FormTextField,
+    FormComponent,
   },
 
   data() {
