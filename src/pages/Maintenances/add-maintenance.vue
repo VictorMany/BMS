@@ -32,6 +32,7 @@
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormTextField from 'src/components/compose/FormTextField.vue';
+import { rules, showSuccess, showWarning } from 'app/utils/utils';
 
 export default defineComponent({
   name: 'EquipmentsPage',
@@ -50,12 +51,14 @@ export default defineComponent({
         btnAction: this.createMaintenance,
         loader: false,
       },
+
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',
         btnColor: '#FF9900',
         btnAction: this.goBack
       },
+
       fields: {
         createdAt: this.getCreatedAt(),
         id: null,
@@ -69,9 +72,7 @@ export default defineComponent({
             itemFilter: this.filterUsers,
             options: [],
             model: null,
-            rules: [
-              (val) => (val) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredObject],
           },
           {
             key: 'idEquipment',
@@ -80,9 +81,7 @@ export default defineComponent({
             itemFilter: this.filterEquipments,
             options: [],
             model: null,
-            rules: [
-              (val) => (val) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredObject],
           },
         ],
         left: [
@@ -95,17 +94,13 @@ export default defineComponent({
               { label: 'Preventivo', index: 1, value: 'preventivo' },
               { label: 'Correctivo', index: 2, value: 'correctivo' },
             ],
-            rules: [
-              (val) => (val) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredObject],
           },
           {
             key: 'reason',
             label: 'Motivo',
             model: '',
-            rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredString],
           },
           {
             key: 'cost',
@@ -113,9 +108,7 @@ export default defineComponent({
             type: 'number',
             prefix: '$',
             model: '',
-            rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredString],
           },
         ],
         textareas: [
@@ -170,39 +163,45 @@ export default defineComponent({
             this.fields
           );
           if (res === true) {
-            this.showAlert({ title: 'Éxito al crear', msg: 'El mantenimiento se ha agregado', color: 'green-14' });
+            showSuccess(this.$q, { title: 'Éxito al crear el mantenimiento', msg: 'El mantenimiento se ha agregado' });
             this.$router.go(-1);
           } else {
-            this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+            showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
           }
           this.btnAction.loader = false;
         } catch (error) {
           this.btnAction.loader = false;
-          this.showAlert({ msg: error.response ? error.response.data.details : error });
+          showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
         }
       }
     },
 
     async getMaintenance() {
-      this.loading = true
-      const params = {
-        id: this.$route.params.id,
-        fields: this.fields
+      try {
+        const params = {
+          id: this.$route.params.id,
+          fields: this.fields
+        }
+        await this.$store.dispatch('maintenances/getMaintenanceAction', params)
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
-      await this.$store.dispatch('maintenances/getMaintenanceAction', params)
-      this.loading = false
     },
 
     async getUsers(params) {
-      this.loading = true
-      await this.$store.dispatch('users/getUsersAction', params);
-      this.loading = false
+      try {
+        await this.$store.dispatch('users/getUsersAction', params);
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+      }
     },
 
     async getEquipments(params) {
-      this.loading = true
-      await this.$store.dispatch('equipments/getEquipmentsAction', params);
-      this.loading = false
+      try {
+        await this.$store.dispatch('equipments/getEquipmentsAction', params);
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+      }
     },
 
     getDate() {
@@ -215,15 +214,6 @@ export default defineComponent({
 
     getCreatedAt() {
       return this.$store.getters['global/getDate']
-    },
-
-    showAlert({ msg, color, title, classes }) {
-      this.$q.notify({
-        message: title ? title : 'Ocurrió un error al crear el mantenimiento',
-        caption: msg ? msg : 'Inténtalo de nuevo más tarde',
-        color: color ? color : 'secondary',
-        classes: classes ? classes : 'border-rounded',
-      });
     },
 
     filterUsers(val, update) {

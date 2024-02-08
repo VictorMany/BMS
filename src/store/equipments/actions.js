@@ -133,7 +133,6 @@ export async function postEquipmentAction(context, equipment) {
 
     return await service.postEquipment(payload).then(async (response) => {
         if (response.status == 201) {
-            // context.commit('ADD_EQUIPMENT', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
             return true
         } else {
             return response

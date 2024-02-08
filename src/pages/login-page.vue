@@ -8,6 +8,7 @@
           </div>
           <div class="h-100 w-100 flex flex-center">
             <div class="login__bottom-container q-pa-lg">
+
               <q-input
                 class="form__input-login q-pl-md q-pr-md input q-mt-lg q-mb-lg"
                 borderless
@@ -19,6 +20,7 @@
                   <q-icon name="account_circle" />
                 </template>
               </q-input>
+
               <q-input
                 ref="pass"
                 type="password"
@@ -32,10 +34,13 @@
                   <q-icon name="lock" />
                 </template>
               </q-input>
+
               <label class="login__legend text-weight-thin q-ma-sm">Olvidaste la contraseña</label>
+
               <div class="col login__submit flex flex-center">
                 <btn-action v-bind="btnAction" />
               </div>
+
             </div>
           </div>
         </div>
@@ -45,6 +50,7 @@
 </template>
 
 <script>
+import { showSuccess, showWarning } from 'app/utils/utils';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
 import { defineComponent } from 'vue';
 export default defineComponent({
@@ -55,6 +61,7 @@ export default defineComponent({
         user: '',
         password: '',
       },
+
       btnAction: {
         btnTitle: 'Iniciar sesión',
         btnColor: '#FFFFFF',
@@ -68,60 +75,32 @@ export default defineComponent({
     };
   },
   methods: {
-    login() {
-      console.log('Login');
-      this.$router.replace('/');
+    async login() {
+      this.btnAction.loader = true;
+      try {
+        const res = await this.$store.dispatch(
+          'users/loginAction',
+          this.model
+        );
+        if (res === true) {
+          showSuccess(this.$q, { title: 'Inicio de sesión exitoso' });
+          this.$router.replace('/');
+        } else {
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+        }
+        this.btnAction.loader = false;
+      } catch (error) {
+        this.btnAction.loader = false;
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+      }
     },
+
   },
   components: { BtnAction },
 });
 </script>
 
 <style lang="scss" scoped>
-.login {
-  &__main-container {
-    position: relative;
-    border-radius: 40px;
-    width: 100%;
-    max-width: 474px;
-    height: 527px;
-  }
-
-  &__top-container {
-    border-radius: 40px;
-    width: 100%;
-    max-width: 474px;
-    height: 251.83px;
-  }
-
-  &__title {
-    font-style: normal;
-    font-weight: 200;
-    font-size: 55px;
-    color: #ffffff;
-    margin-bottom: 8rem;
-  }
-
-  &__bottom-container {
-    position: absolute;
-    top: 19.06%;
-    bottom: 1.52%;
-    width: 85%;
-    height: 390.94px;
-    // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    box-shadow: none;
-    border-radius: 40px;
-  }
-
-  &__legend {
-    font-size: 12px;
-  }
-
-  &__submit {
-    margin-top: 5rem;
-  }
-}
-
 .form {
   &__input-login {
     border-radius: 50px !important;

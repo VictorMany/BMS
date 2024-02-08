@@ -1,4 +1,14 @@
+import { getTokenFromCookie, saveTokenToCookie } from 'app/utils/utils'
+import EquipmentService from 'src/api/equipments'
+import MaintenanceService from 'src/api/maintenances'
+import MaintenancePlanService from 'src/api/maintenances-plan'
+import ReportService from 'src/api/reports'
+import StatsService from 'src/api/stats'
+import UserService from 'src/api/users'
+
+
 import service from 'src/api/users'
+
 
 export async function getUsersAction(context, params) {
     return service.getUsers(params).then(async (response) => {
@@ -50,6 +60,25 @@ export async function postUserAction(context, user) {
 
     return await service.postUser(payload).then(async (response) => {
         if (response.status == 201) {
+            return true
+        } else {
+            return response
+        }
+    })
+}
+
+export async function loginAction(context, form) {
+    // Those are the keys you need in your payload and find in the fields
+    return await service.login(form).then(async (response) => {
+        if (response.status == 201) {
+            saveTokenToCookie(response.data.token);
+
+            EquipmentService.setToken(getTokenFromCookie())
+            MaintenanceService.setToken(getTokenFromCookie())
+            MaintenancePlanService.setToken(getTokenFromCookie())
+            ReportService.setToken(getTokenFromCookie())
+            StatsService.setToken(getTokenFromCookie())
+            UserService.setToken(getTokenFromCookie())
             return true
         } else {
             return response

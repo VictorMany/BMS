@@ -34,6 +34,7 @@
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormTextField from 'src/components/compose/FormTextField.vue';
+import { rules, showSuccess, showWarning } from 'app/utils/utils';
 
 export default defineComponent({
   key: 'UsersPage',
@@ -70,9 +71,9 @@ export default defineComponent({
             label: 'Nombre del usuario',
             readonly: this.isEditing(),
             rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-              (val) => (val.length <= 50) || 'El campo no debe exceder 50 caracteres',
-              (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/.test(val) || 'El campo solo debe contener letras'
+              rules.requiredString,
+              rules.maxLength(50),
+              rules.alpha
             ],
             model: '',
           },
@@ -83,9 +84,9 @@ export default defineComponent({
             readonly: this.isEditing(),
             model: '',
             rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-              (val) => (val.length <= 50) || 'El campo no debe exceder 50 caracteres',
-              (val) => /\S+@\S+\.\S+/.test(val) || 'Formato de correo electrónico inválido'
+              rules.requiredString,
+              rules.maxLength(50),
+              rules.validEmail
             ],
           },
         ],
@@ -95,9 +96,7 @@ export default defineComponent({
             label: 'Contraseña',
             type: 'password',
             model: '',
-            rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredString],
           },
           {
             key: 'phone',
@@ -105,8 +104,8 @@ export default defineComponent({
             type: 'number',
             model: '',
             rules: [
-              (val) => /^\d{10}$/.test(val) || 'El número de teléfono debe tener 10 dígitos',
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
+              rules.validPhoneNumber,
+              rules.requiredString,
             ],
           },
           {
@@ -119,9 +118,7 @@ export default defineComponent({
               { label: 'Auxiliar', index: 2, value: 2 },
               { label: 'Funciones básicas', index: 3, value: 3 },
             ],
-            rules: [
-              (val) => (val) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredObject],
           },
           {
             key: 'userStatus',
@@ -132,9 +129,7 @@ export default defineComponent({
               { label: 'Activo', status: true, value: true },
               { label: 'Inactivo', status: false, value: false },
             ],
-            rules: [
-              (val) => (val) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredObject],
           },
           {
             key: 'birthday',
@@ -142,9 +137,7 @@ export default defineComponent({
             label: 'Fecha de nacimiento',
             type: 'date',
             model: null,
-            rules: [
-              (val) => (val) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredObject],
           },
         ],
         right: [
@@ -168,54 +161,58 @@ export default defineComponent({
   methods: {
     async createUser() {
       this.btnAction.loader = true;
+
       try {
         const res = await this.$store.dispatch(
           'users/postUserAction',
           this.fields
         );
         if (res === true) {
-          this.showAlert({ title: 'Éxito al crear', msg: 'El usuario se ha agregado', color: 'green-14' });
+          showSuccess(this.$q, { title: 'Éxito al crear el usuario', msg: 'El usuario se ha agregado' });
           this.$router.go(-1);
         } else {
-          this.showAlert({});
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
         }
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        this.showAlert({ msg: error.response ? error.response.data.details : error });
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
     },
 
     async getUser() {
-      this.loading = true
-      const params = {
-        id: this.$route.params.id,
-        fields: this.fields
+      try {
+        this.loading = true
+        const params = {
+          id: this.$route.params.id,
+          fields: this.fields
+        }
+        await this.$store.dispatch('users/getUserAction', params)
+        this.loading = false
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
-      await this.$store.dispatch('users/getUserAction', params)
-      this.loading = false
     },
 
     async editUser() {
       this.btnAction.loader = true;
-      this.fields.id = this.$route.params.id
 
       try {
+        this.fields.id = this.$route.params.id
         const res = await this.$store.dispatch(
           'users/updateUserAction',
           this.fields
         );
         if (res === true) {
-          this.showAlert({ title: 'Éxito al editar', msg: 'El usuario se ha actualizado', color: 'green-14' });
+          showSuccess(this.$q, { title: 'Éxito al editar el usuario', msg: 'El usuario se ha actualizado' });
           this.$router.go(-1);
         } else {
-          this.showAlert({});
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
         }
         this.btnAction.loader = false;
       } catch (error) {
-        console.log(error)
         this.btnAction.loader = false;
-        this.showAlert({});
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -249,15 +246,6 @@ export default defineComponent({
         return ''
       }
       else return this.$store.getters['global/getDate']
-    },
-
-    showAlert({ msg, color, title, classes }) {
-      this.$q.notify({
-        message: title ? title : 'Ocurrió un error al crear el usuario',
-        caption: msg ? msg : 'Inténtalo de nuevo más tarde',
-        color: color ? color : 'secondary',
-        classes: classes ? classes : 'border-rounded',
-      });
     },
 
     isEditing() {

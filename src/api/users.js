@@ -24,4 +24,9 @@ export default class EquipmentService {
     static updateUser(payload, id) {
         return api.put(this.endpoint + 'update/' + id, payload);
     }
+
+    // Login
+    static login(payload) {
+        return api.post(this.endpoint + 'login', payload);
+    }
 }

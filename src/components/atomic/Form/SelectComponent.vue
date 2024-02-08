@@ -52,7 +52,7 @@ export default defineComponent({
             required: true,
         },
         model: {
-            type: [Object, null],
+            type: [Object, null, String],
             required: true,
         }
     },

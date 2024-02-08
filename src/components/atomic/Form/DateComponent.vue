@@ -7,8 +7,9 @@
         hide-hint
         hide-bottom-space
         bottom-slots
-        :readonly="item.readonly"
+        readonly
         stack-label
+        @click="$refs.proxy.show()"
     >
         <template v-slot:append>
             <q-btn
@@ -20,6 +21,7 @@
                 round
             >
                 <q-popup-proxy
+                    ref="proxy"
                     cover
                     transition-show="scale"
                     transition-hide="scale"

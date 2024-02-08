@@ -8,9 +8,9 @@
     <q-tooltip
       v-if="tooltip"
       :delay="500"
-      transition-show="rotate"
-      transition-hide="rotate"
-      class="bg-secondary border-rounded"
+      transition-show="scale"
+      transition-hide="scale"
+      class="tooltip-container border-rounded"
     >
       {{ tooltip }}
     </q-tooltip>

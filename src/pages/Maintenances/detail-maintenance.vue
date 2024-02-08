@@ -57,7 +57,7 @@ export default defineComponent({
           {
             key: 'cost',
             label: 'Costo',
-            pref: '$',
+            affix: '$',
             model: '',
             color: ''
           },

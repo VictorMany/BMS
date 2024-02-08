@@ -40,6 +40,7 @@ export default defineComponent({
     return {
       fields: {
         createdAt: '',
+
         top: [],
 
         left: [
@@ -66,6 +67,7 @@ export default defineComponent({
             color: ''
           },
         ],
+
         textareas: [
           {
             type: 'textarea',
@@ -74,6 +76,7 @@ export default defineComponent({
             model: ''
           }
         ],
+
         right: [
           {
             key: 'serialNumber',

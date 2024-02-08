@@ -31,9 +31,9 @@
     </div>
     <q-tooltip
       v-if="tooltip"
-      class="bg-secondary border-rounded"
-      transition-show="rotate"
-      transition-hide="rotate"
+      class="tooltip-container border-rounded"
+      transition-show="scale"
+      transition-hide="scale"
       :delay="500"
     >{{ tooltip }}</q-tooltip>
   </q-btn>

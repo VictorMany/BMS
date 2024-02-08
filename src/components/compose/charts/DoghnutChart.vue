@@ -11,6 +11,7 @@
       anchor="bottom middle"
       self="center middle"
       transition-hide="scale"
+      transition-show="scale"
     >
       {{ chartData.datasets[0].label }}
     </q-tooltip>

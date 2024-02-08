@@ -1,7 +1,8 @@
 // app global css in SCSS form
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
 @import "global";
-
+@import "form";
+@import "login";
 
 .body--light {
   .card-page {
@@ -59,72 +60,18 @@
     border: 1px solid $primary-opacity;
   }
 
-  .form {
-    &__select {
-      color: #7a7a7a;
-    }
-
-    &__checkbox {
-      background-color: white;
-      color: #7a7a7a;
-      border: #4C607D 1px solid;
-    }
-
-    &__item-label {
-      color: #293138;
-      font-size: 13px;
-
-      &__title {
-        color: #293138;
-        font-size: 15px;
-        font-weight: 500;
-      }
-    }
-
-    &__input,
-    &__input-12,
-    &__textarea,
-    &__date {
-      color: #51565d;
-    }
-
-    &__label-area,
-    &__item-model {
-      color: #959494;
-    }
-
-    &__image64,
-    &__image64-equipment {
-      background-color: white;
-    }
-
-    &__date_container {
-      background-color: $primary-opacity !important;
-    }
-
-    &__input-login {
-      background-color: #F2F2F2 !important;
-    }
-  }
-
   .container-colorama {
     background: #06284110;
   }
 
-  .login {
-    &__top-container {
-      background: linear-gradient(249.89deg, $primary 6.95%, #89D5FF 111.53%);
-    }
-
-    &__title,
-    &__bottom-container,
-    &__main-container {
-      color: #FFFFFF;
-    }
+  .alert-container {
+    background-color: rgba(80, 76, 76, 0.25) !important;
+    color: rgb(80, 76, 76) !important;
   }
 
-  .login-page {
-    background-color: #dce1e6;
+  .tooltip-container {
+    background-color: rgba(80, 76, 76, 0.25) !important;
+    color: rgb(80, 76, 76) !important;
   }
 }
 
@@ -197,57 +144,6 @@
     color: #6A7985 !important;
   }
 
-  .form {
-    &__item-label {
-      color: #6A7985;
-
-      &__title {
-        color: #91c8ff84;
-      }
-    }
-
-    &__checkbox {
-      background-color: #181b1e;
-      color: #51565d;
-      border: #4C607D 1px solid;
-    }
-
-    &__select {
-      color: #51565d !important;
-    }
-
-    &__date {
-      color: #91c8ff84;
-    }
-
-    &__date_container {
-      background-color: #334c646e !important;
-    }
-
-    &__item-model,
-    &__label-area {
-      color: #959494;
-    }
-
-    &__image64,
-    &__image64-equipment {
-      background-color: $accent !important;
-    }
-
-    &__input,
-    &__input-12 {
-      color: #51565d;
-    }
-
-    &__textarea {
-      color: #b5c3d7;
-    }
-
-    &__input-login {
-      background-color: #142638 !important;
-    }
-  }
-
   .btn-background-dark {
     background-color: $accent !important;
   }
@@ -266,38 +162,16 @@
     color: $blue-grey-4;
   }
 
-  .login {
-    &__main-container {
-      background: #334c646e;
-    }
-
-    &__top-container {
-      background: linear-gradient(249.89deg, #0077ff44 6.95%, #89d6ff6a 111.53%);
-    }
-
-    &__title {
-      color: #b8dbff;
-    }
-
-    &__bottom-container {
-      background-color: #000000ad;
-    }
+  .alert-container {
+    background-color: rgba(255, 255, 255, 0.091) !important;
+    color: #dce1e6;
   }
 
-  .login-page {
-    background-color: #181b1e84;
-  }
-
-  input,
-  select {
-    color: #b8cddd !important;
-    -webkit-text-fill-color: #b8cddd !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    caret-color: #b8cddd;
+  .tooltip-container {
+    background-color: rgba(255, 255, 255, 0.091) !important;
+    color: #dce1e6;
   }
 }
-
 
 .btn-style {
   background-color: $primary !important;
@@ -403,74 +277,6 @@
   background-color: #00000009 !important;
 }
 
-.form {
-  &__item-chip {
-    background-color: #66a1d43c;
-    color: $primary !important;
-    padding: 0.2rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    font-weight: bold;
-  }
-
-  &__date,
-  &__item-label,
-  &__item-model {
-    font-size: 12px;
-  }
-
-  &__select,
-  &__input {
-    min-width: 210px !important;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    color: #51565d;
-    border-radius: 8px !important;
-    padding-left: 0.6rem !important;
-    padding-right: 0.6rem !important;
-  }
-
-  &__input-12 {
-    min-width: 100% !important;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    border-radius: 8px !important;
-    padding-left: 0.6rem !important;
-    padding-right: 0.6rem !important;
-  }
-
-  &__textarea {
-    border: none;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-  }
-
-  &__image {
-    object-fit: fill !important;
-    width: 50px !important;
-    height: 50px !important;
-  }
-
-  &__image64 {
-    object-fit: fill !important;
-    width: 170px !important;
-    height: 170px !important;
-    background-clip: padding-box;
-    border-radius: 50%;
-  }
-
-  &__image64-equipment {
-    object-fit: fill !important;
-    width: 100% !important;
-    min-height: 240px !important;
-    height: 100% !important;
-    background-clip: padding-box;
-  }
-}
-
 .card-graphics {
 
   &__title {
@@ -520,6 +326,20 @@
 .qr-code-style {
   width: 100% !important;
   height: 100% !important;
+}
+
+
+.alert-container {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(2px) !important;
+  padding-block: 10px;
+  font-weight: 500 !important;
+}
+
+.tooltip-container {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(2px) !important;
+  font-weight: 600 !important;
 }
 
 // RESPONSIVITY
@@ -593,7 +413,6 @@
   }
 
   // FONT SIZE
-
   .q-tooltip {
     font-size: 8px !important;
     padding: 6px;
@@ -619,24 +438,6 @@
     &__subtitle {
       font-size: 9px;
     }
-  }
-
-  .form {
-
-    &__input-12,
-    &__textarea,
-    &__label-area,
-    &__select,
-    &__input,
-    &__date,
-    &__item-label,
-    &__item-model {
-      font-size: 11px !important;
-    }
-  }
-
-  .options-select {
-    font-size: 11px !important;
   }
 
   .card-graphics {

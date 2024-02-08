@@ -18,9 +18,9 @@
           <q-tooltip
             v-if="isReported"
             :delay="100"
-            transition-show="rotate"
-            transition-hide="rotate"
-            class="bg-secondary border-rounded"
+            transition-show="scale"
+            transition-hide="scale"
+            class="border-rounded tooltip-container"
           >
             Equipo reportado
           </q-tooltip>

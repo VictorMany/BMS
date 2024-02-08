@@ -271,7 +271,7 @@ export default defineComponent({
               cutout: '80%',
             },
           ],
-          text: '30%',
+          text: '',
         },
 
         options: {
@@ -301,7 +301,7 @@ export default defineComponent({
               cutout: '80%',
             },
           ],
-          text: '30%',
+          text: '',
         },
         options: {
           responsive: true,
@@ -330,7 +330,7 @@ export default defineComponent({
               cutout: '80%',
             },
           ],
-          text: '30%',
+          text: '',
         },
         options: {
           responsive: true,
@@ -359,7 +359,7 @@ export default defineComponent({
               cutout: '80%',
             },
           ],
-          text: '30%',
+          text: '',
         },
         options: {
           responsive: true,

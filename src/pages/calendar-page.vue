@@ -161,7 +161,7 @@ export default defineComponent({
       events: [],
 
       optionsFilter: [
-        { color: 'primary', label: 'Mantenimientos hechos', value: 'opt1' },
+        // { color: 'primary', label: 'Mantenimientos hechos', value: 'opt1' },
         {
           color: 'secondary',
           label: 'Mantenimientos programados',

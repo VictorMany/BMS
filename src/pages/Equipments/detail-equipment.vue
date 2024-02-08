@@ -80,6 +80,7 @@ export default defineComponent({
           {
             key: 'price',
             label: 'Costo',
+            affix: '$',
             model: ''
           },
           {

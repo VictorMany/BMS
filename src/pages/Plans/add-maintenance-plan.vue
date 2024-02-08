@@ -4,8 +4,6 @@
       ref="myForm"
       class="card-page"
     >
-
-
       <header-actions
         :titlePage="getTitle()"
         :btn-action="btnAction"
@@ -24,8 +22,8 @@
             hide-hint
             hide-bottom-space
             :rules="[
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-              (val) => (val.length <= 50) || 'El campo no debe exceder 50 caracteres'
+              rules.requiredString,
+              rules.maxLength(50)
             ]"
             class="form__input bg-accent"
             label="Nombre del plan"
@@ -260,17 +258,16 @@ import { ref, defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
 import { addMonths, format } from 'date-fns';
+import { rules, showWarning, showSuccess } from 'app/utils/utils';
 
 
 export default defineComponent({
   name: 'EquipmentsPage',
-  props: {
-
-  },
   components: {
     HeaderActions,
     GeneralTable
   },
+
   data() {
     return {
       delaySearch: 300,
@@ -366,6 +363,12 @@ export default defineComponent({
     };
   },
 
+  setup() {
+    return {
+      rules
+    }
+  },
+
   created() {
     this.getCategories();
   },
@@ -439,47 +442,48 @@ export default defineComponent({
           this.form
         );
         if (res === true) {
-          this.showAlert({ title: 'Éxito al crear', msg: 'El plan de mantenimientos se ha agregado', color: 'green-14' });
+          showSuccess(this.$q, { title: 'Éxito al crear el plan', msg: 'El plan de mantenimientos se ha agregado' });
           this.$router.go(-1);
         } else {
-          this.showAlert({});
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
         }
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        this.showAlert({ msg: error.response ? error.response.data.details : error });
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
     },
 
     async getMaintenancePlan() {
-      const params = {
-        id: this.$route.params.id
+      try {
+        const params = {
+          id: this.$route.params.id
+        }
+        this.form = { ...this.form, ...await this.$store.dispatch('maintenancePlans/getMaintenancePlanAction', params) }
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
-
-      this.form = { ...this.form, ...await this.$store.dispatch('maintenancePlans/getMaintenancePlanAction', params) }
     },
 
     async editMaintenancePlan() {
       this.btnAction.loader = true;
-
-      this.form.id = this.$route.params.id
-
       try {
+        this.form.id = this.$route.params.id
+
         const res = await this.$store.dispatch(
           'maintenancePlans/updateMaintenancePlanAction',
           this.form
         );
         if (res === true) {
-          this.showAlert({ title: 'Éxito al editar', msg: 'El plan de mantenimientos se ha actualizado', color: 'green-14' });
+          showSuccess(this.$q, { title: 'Éxito al editar el plan de mantenimientos', msg: 'El plan de mantenimientos se ha actualizado' });
           this.$router.go(-1);
         } else {
-          this.showAlert({});
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
         }
         this.btnAction.loader = false;
       } catch (error) {
-        console.log(error)
         this.btnAction.loader = false;
-        this.showAlert({});
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -498,41 +502,44 @@ export default defineComponent({
     },
 
     async getCategories() {
-      this.loading = true
-      await this.$store.dispatch('equipments/getCategoriesAction')
+      try {
+        await this.$store.dispatch('equipments/getCategoriesAction')
+        this.localCategories = JSON.parse(JSON.stringify(this.categories));
 
-      this.localCategories = JSON.parse(JSON.stringify(this.categories));
+        if (this.isEditing()) {
+          await this.getMaintenancePlan()
+          if (this.form && this.form?.equipments) {
 
-      if (this.isEditing()) {
-        await this.getMaintenancePlan()
-        if (this.form && this.form?.equipments) {
-
-          this.form.equipments.forEach((cat) => {
-            let existingCategory = this.localCategories.find((cat2) => cat.id === cat2.id);
-            if (existingCategory) {
-              existingCategory.children = cat.children;
-            } else {
-              this.localCategories.unshift(cat);
-            }
-          });
+            this.form.equipments.forEach((cat) => {
+              let existingCategory = this.localCategories.find((cat2) => cat.id === cat2.id);
+              if (existingCategory) {
+                existingCategory.children = cat.children;
+              } else {
+                this.localCategories.unshift(cat);
+              }
+            });
+          }
         }
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
-
-      this.loading = false
     },
 
     async getEquipmentsByCategory({ key, node, done }) {
+      try {
+        const equipments = [
+          ...node.children,
+          ...await this.$store.dispatch('equipments/getEquipmentsByCategoryAction', {
+            categoryId: key
+          })]
 
-      const equipments = [
-        ...node.children,
-        ...await this.$store.dispatch('equipments/getEquipmentsByCategoryAction', {
-          categoryId: key
-        })]
 
-
-      if (equipments.length > 0)
-        done(equipments)
-      else done([])
+        if (equipments.length > 0)
+          done(equipments)
+        else done([])
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+      }
     },
 
     getTitle() {
@@ -551,15 +558,6 @@ export default defineComponent({
 
     isEditing() {
       return this.$route.params.id ? true : false
-    },
-
-    showAlert({ msg, color, title, classes }) {
-      this.$q.notify({
-        message: title ? title : 'Ocurrió un error al crear el plan de mantenimientos',
-        caption: msg ? msg : 'Inténtalo de nuevo más tarde',
-        color: color ? color : 'secondary',
-        classes: classes ? classes : 'border-rounded',
-      });
     },
 
     calcDate(date) {
@@ -663,7 +661,7 @@ export default defineComponent({
     validateDates() {
       let dates = this.form.maintenanceDates.length > 0
       if (!dates) {
-        this.showAlert({
+        showWarning(this.$q, {
           title: 'Mínimo debe contener una fecha',
           msg: 'El plan de mantenimientos al menos debe de contener una fecha'
         })
@@ -674,7 +672,7 @@ export default defineComponent({
     validateEquipments() {
       let equipments = this.form.equipmentIds.length > 0
       if (!equipments) {
-        this.showAlert({
+        showWarning(this.$q, {
           title: 'Mínimo debe de incluir un equipo',
           msg: 'El plan de mantenimientos al menos debe de incluir un equipo'
         })

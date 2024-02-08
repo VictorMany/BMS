@@ -33,7 +33,7 @@
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormTextField from 'src/components/compose/FormTextField.vue';
-import { rules } from '../../../utils/validationRules';
+import { rules, showSuccess, showWarning } from '../../../utils/utils';
 
 export default defineComponent({
   key: 'EquipmentsPage',
@@ -182,61 +182,12 @@ export default defineComponent({
     };
   },
   methods: {
-    // ######### CRUD ########## //
-    async createEquipment() {
-      this.btnAction.loader = true;
-      try {
-        const res = await this.$store.dispatch(
-          'equipments/postEquipmentAction',
-          this.fields
-        );
+    async initInfo() {
+      await this.getLocations()
+      await this.getCategories()
 
-        if (res === true) {
-          this.showAlert({ title: 'Éxito al crear', msg: 'El equipo se ha agregado', color: 'green-14' });
-          this.$router.go(-1);
-        } else {
-          console.log(res)
-          this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
-        }
-        this.btnAction.loader = false;
-      } catch (error) {
-        this.btnAction.loader = false;
-        console.log(error)
-        this.showAlert({ msg: error.response ? error.response.data.details : error });
-      }
-    },
-
-    async getEquipment() {
-      this.loading = true
-
-      const params = {
-        id: this.$route.params.id,
-        fields: this.fields
-      }
-
-      await this.$store.dispatch('equipments/getEquipmentAction', params)
-      this.loading = false
-    },
-
-    async editEquipment() {
-      this.btnAction.loader = true;
-      this.fields.id = this.$route.params.id
-
-      try {
-        const res = await this.$store.dispatch(
-          'equipments/updateEquipmentAction',
-          this.fields
-        );
-        if (res === true) {
-          this.showAlert({ title: 'Éxito al editar', msg: 'El equipo se ha actualizado', color: 'green-14' });
-          this.$router.go(-1);
-        } else {
-          this.showAlert({});
-        }
-        this.btnAction.loader = false;
-      } catch (error) {
-        this.btnAction.loader = false;
-        this.showAlert({});
+      if (this.isEditing()) {
+        await this.getEquipment()
       }
     },
 
@@ -250,11 +201,70 @@ export default defineComponent({
       }
     },
 
+    async createEquipment() {
+      this.btnAction.loader = true;
+      try {
+        const res = await this.$store.dispatch(
+          'equipments/postEquipmentAction',
+          this.fields
+        );
+
+        if (res === true) {
+          showSuccess(this.$q, { title: 'Éxito al crear el equipo', msg: 'El equipo se ha agregado' });
+          this.$router.go(-1);
+        } else {
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+        }
+        this.btnAction.loader = false;
+      } catch (error) {
+        this.btnAction.loader = false;
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+      }
+    },
+
+    async getEquipment() {
+      try {
+        const params = {
+          id: this.$route.params.id,
+          fields: this.fields
+        }
+        await this.$store.dispatch('equipments/getEquipmentAction', params)
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : 'No se pudo obtener el equipo' });
+      }
+    },
+
+    async editEquipment() {
+      this.btnAction.loader = true;
+
+      try {
+        this.fields.id = this.$route.params.id
+        const res = await this.$store.dispatch(
+          'equipments/updateEquipmentAction',
+          this.fields
+        );
+        if (res === true) {
+          showSuccess(this.$q, { title: 'Éxito al editar el equipo', msg: 'El equipo se ha actualizado' });
+          this.$router.go(-1);
+        } else {
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+        }
+        this.btnAction.loader = false;
+      } catch (error) {
+        this.btnAction.loader = false;
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+      }
+    },
+
     async getCategories() {
-      await this.$store.dispatch('equipments/getAllCategoriesAction')
-      this.updateFieldByKeyInAllArrays('CategoryId', {
-        options: JSON.parse(JSON.stringify(this.categories))
-      })
+      try {
+        await this.$store.dispatch('equipments/getAllCategoriesAction')
+        this.updateFieldByKeyInAllArrays('CategoryId', {
+          options: JSON.parse(JSON.stringify(this.categories))
+        })
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+      }
     },
 
     async getLocations() {
@@ -264,16 +274,7 @@ export default defineComponent({
           options: JSON.parse(JSON.stringify(this.locations))
         })
       } catch (error) {
-        console.log(error)
-      }
-    },
-
-    async initInfo() {
-      await this.getLocations()
-      await this.getCategories()
-
-      if (this.isEditing()) {
-        await this.getEquipment()
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -306,15 +307,6 @@ export default defineComponent({
 
     goBack() {
       this.$router.go(-1);
-    },
-
-    showAlert({ msg, color, title, classes }) {
-      this.$q.notify({
-        message: title ? title : 'Ocurrió un error al crear el equipo',
-        caption: msg ? msg : 'Inténtalo de nuevo más tarde',
-        color: color ? color : 'secondary',
-        classes: classes ? classes : 'border-rounded',
-      });
     },
 
     filterCategories(val, update) {

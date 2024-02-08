@@ -7,6 +7,7 @@
         :btn-action="btnAction"
         :btn-close-window="btnCloseWindow"
       />
+
       <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
           class="h-90 q-pa-xs-none q-pa-lg-sm"
@@ -32,6 +33,7 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import FormTextField from 'src/components/compose/FormTextField.vue'
+import { rules, showSuccess, showWarning } from 'app/utils/utils';
 
 export default defineComponent({
   name: 'Add-Report',
@@ -72,7 +74,7 @@ export default defineComponent({
             itemFilter: this.filterEquipments,
             readonly: this.isEditing(),
             rules: this.isEditing() ? [] : [
-              (val) => (val) || 'El campo es obligatorio',
+              rules.requiredObject,
             ],
           },
           {
@@ -84,7 +86,7 @@ export default defineComponent({
             itemFilter: this.filterUsers,
             readonly: this.isEditing(),
             rules: this.isEditing() ? [] : [
-              (val) => (val) || 'El campo es obligatorio',
+              rules.requiredObject,
             ],
           },
         ],
@@ -94,9 +96,7 @@ export default defineComponent({
             label: 'Motivo',
             model: '',
             readonly: this.isEditing(),
-            rules: [
-              (val) => (val && val.trim().length > 0) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredString],
           },
           {
             key: 'reportStatus',
@@ -107,9 +107,7 @@ export default defineComponent({
               { label: 'Pendiente', status: true, value: true },
               { label: 'Atendido', status: false, value: false },
             ],
-            rules: [
-              (val) => (val) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredObject],
           },
           {
             key: 'reportUrgency',
@@ -122,9 +120,7 @@ export default defineComponent({
               { label: 'Media', index: 2, value: 'medio' },
               { label: 'Baja', index: 3, value: 'bajo' },
             ],
-            rules: [
-              (val) => (val) || 'El campo es obligatorio',
-            ],
+            rules: [rules.requiredObject],
           },
         ],
         right: [
@@ -179,27 +175,29 @@ export default defineComponent({
             this.fields
           );
           if (res === true) {
-            this.showAlert({ title: 'Éxito al crear', msg: 'El reporte se ha agregado', color: 'green-14' });
+            showSuccess(this.$q, { title: 'Éxito al crear el reporte', msg: 'El reporte se ha agregado' });
             this.$router.go(-1);
           } else {
-            this.showAlert({ msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+            showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
           }
           this.btnAction.loader = false;
         } catch (error) {
           this.btnAction.loader = false;
-          this.showAlert({ msg: error.response ? error.response.data.details : error });
+          showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
         }
       }
     },
 
     async getReport() {
-      this.loading = true
-      const params = {
-        id: this.$route.params.id,
-        fields: this.fields
+      try {
+        const params = {
+          id: this.$route.params.id,
+          fields: this.fields
+        }
+        await this.$store.dispatch('reports/getReportAction', params)
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
-      await this.$store.dispatch('reports/getReportAction', params)
-      this.loading = false
     },
 
     async editReport() {
@@ -214,18 +212,86 @@ export default defineComponent({
           }
         );
         if (res === true) {
-          this.showAlert({ title: 'Éxito al editar', msg: 'El reporte se ha actualizado', color: 'green-14' });
+          showSuccess(this.$q, { title: 'Éxito al editar el reporte', msg: 'El reporte se ha actualizado' });
           this.$router.go(-1);
         } else {
-          console.log(res)
-          this.showAlert({});
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
         }
         this.btnAction.loader = false;
       } catch (error) {
         console.log(error)
         this.btnAction.loader = false;
-        this.showAlert({});
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
+    },
+
+    async getUsers(params) {
+      try {
+        await this.$store.dispatch('users/getUsersAction', params);
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+      }
+    },
+
+    async getEquipments(params) {
+      try {
+        await this.$store.dispatch('equipments/getEquipmentsAction', params);
+      } catch (error) {
+        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+      }
+    },
+
+    async filterUsers(val, update) {
+      if (val === '') {
+        update(() => {
+          this.updateFieldByKeyInAllArrays('userId', {
+            options: this.users
+          })
+        })
+        return
+      } else {
+        await this.getUsers({
+          name: val
+        })
+      }
+
+      update(() => {
+        const needle = val.toLowerCase()
+
+        this.updateFieldByKeyInAllArrays('userId', {
+          options: this.users.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+        })
+      })
+    },
+
+    async filterEquipments(val, update) {
+      if (val === '') {
+        update(() => {
+          this.equipments.map(e => {
+            e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
+          })
+
+          this.updateFieldByKeyInAllArrays('idEquipment', {
+            options: this.equipments
+          })
+        })
+        return
+      } else {
+        await this.getEquipments({
+          name: val
+        })
+      }
+
+      update(() => {
+        const needle = val.toLowerCase()
+        this.equipments.map(e => {
+          e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
+        })
+
+        this.updateFieldByKeyInAllArrays('idEquipment', {
+          options: this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+        })
+      })
     },
 
     createOrEdit() {
@@ -292,79 +358,10 @@ export default defineComponent({
       else return this.$store.getters['global/getDate']
     },
 
-    showAlert({ msg, color, title, classes }) {
-      this.$q.notify({
-        message: title ? title : 'Ocurrió un error al crear el reporte',
-        caption: msg ? msg : 'Inténtalo de nuevo más tarde',
-        color: color ? color : 'secondary',
-        classes: classes ? classes : 'border-rounded',
-      });
-    },
-
     isEditing() {
       return this.$route.params.id ? true : false
     },
 
-    async getUsers(params) {
-      await this.$store.dispatch('users/getUsersAction', params);
-    },
-
-    async getEquipments(params) {
-      await this.$store.dispatch('equipments/getEquipmentsAction', params);
-    },
-
-    async filterUsers(val, update) {
-      if (val === '') {
-        update(() => {
-          this.updateFieldByKeyInAllArrays('userId', {
-            options: this.users
-          })
-        })
-        return
-      } else {
-        await this.getUsers({
-          name: val
-        })
-      }
-
-      update(() => {
-        const needle = val.toLowerCase()
-
-        this.updateFieldByKeyInAllArrays('userId', {
-          options: this.users.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
-        })
-      })
-    },
-
-    async filterEquipments(val, update) {
-      if (val === '') {
-        update(() => {
-          this.equipments.map(e => {
-            e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
-          })
-
-          this.updateFieldByKeyInAllArrays('idEquipment', {
-            options: this.equipments
-          })
-        })
-        return
-      } else {
-        await this.getEquipments({
-          name: val
-        })
-      }
-
-      update(() => {
-        const needle = val.toLowerCase()
-        this.equipments.map(e => {
-          e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
-        })
-
-        this.updateFieldByKeyInAllArrays('idEquipment', {
-          options: this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
-        })
-      })
-    }
   },
 
   created() {

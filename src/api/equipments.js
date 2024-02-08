@@ -3,6 +3,11 @@ import { api } from 'boot/axios'; // Asegúrate de que la ruta sea la correcta s
 export default class EquipmentService {
     static endpoint = 'http://3.20.181.72:3000/bms/equipment/';
 
+    // Método para establecer el token en las solicitudes
+    static setToken(token) {
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+
     // Obtiene todos los equipos
     static getEquipments(params) {
         return api.get(this.endpoint + 'list', {
