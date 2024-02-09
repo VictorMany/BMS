@@ -72,7 +72,6 @@ export async function loginAction(context, form) {
     // Those are the keys you need in your payload and find in the fields
     return await service.login(form).then(async (response) => {
         if (response.status == 200) {
-            console.log(response.data.token)
             //Add token to cookies
             saveTokenToCookie(response.data.token);
             // add header to api authorization

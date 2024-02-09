@@ -1,5 +1,8 @@
 <template>
-  <div class="fullscreen q-pa-md flex flex-center bg-white main-container-page-dark">
+  <q-form
+    ref="myForm"
+    class="fullscreen q-pa-md flex flex-center bg-white main-container-page-dark"
+  >
     <div class="card-page login-page">
       <div class="flex flex-center align-center h-100 w-100">
         <div class="login__main-container">
@@ -9,7 +12,7 @@
           <div class="h-100 w-100 flex flex-center">
             <div class="login__bottom-container q-pa-lg">
               <q-input
-                class="form__input-login q-pl-md q-pr-md q-mt-lg q-mb-lg"
+                class="form__input-login q-px-md q-my-lg"
                 borderless
                 dense
                 type="mail"
@@ -29,7 +32,7 @@
               <q-input
                 ref="pass"
                 type="password"
-                class="form__input-login q-pl-md q-pr-md"
+                class="form__input-login q-px-md"
                 dense
                 borderless
                 hide-hint
@@ -56,7 +59,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </q-form>
 </template>
 
 <script>
@@ -77,33 +80,33 @@ export default defineComponent({
         btnTitle: 'Iniciar sesión',
         btnColor: '#FFFFFF',
         btnWidth: '100%',
-        btnAction: this.login,
-        style: 'height: 40.98px',
+        loader: false,
         iconName: '',
-        btnBackgroundGradient:
-          'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
+        btnAction: this.login,
+        btnBackground: this.$q.dark.isActive ? '#1e65e820' : '#1e65e8'
       },
     };
   },
   methods: {
     async login() {
-      this.btnAction.loader = true;
-      try {
-        const res = await this.$store.dispatch(
-          'users/loginAction',
-          this.model
-        );
-        if (res === true) {
-          showSuccess(this.$q, { title: 'Inicio de sesión exitoso' });
-          this.$router.replace('/');
-        } else {
-          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+      if (await this.$refs.myForm.validate()) {
+        this.btnAction.loader = true;
+        try {
+          const res = await this.$store.dispatch(
+            'users/loginAction',
+            this.model
+          );
+          if (res === true) {
+            showSuccess(this.$q, { title: 'Inicio de sesión exitoso' });
+            this.$router.replace('/');
+          } else {
+            showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+          }
+          this.btnAction.loader = false;
+        } catch (error) {
+          this.btnAction.loader = false;
+          showWarning(this.$q, { msg: error.response ? error.response.data.message : error });
         }
-        this.btnAction.loader = false;
-      } catch (error) {
-        console.log(error.response.data.message)
-        this.btnAction.loader = false;
-        showWarning(this.$q, { msg: error.response ? error.response.data.message : error });
       }
     },
 

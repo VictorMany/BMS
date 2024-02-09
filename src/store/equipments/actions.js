@@ -143,15 +143,9 @@ export async function postEquipmentAction(context, equipment) {
 export async function updateEquipmentAction(context, equipment) {
     // Those are the keys you need in your payload and find in the fields
     let keys = {
-        equipmentBrand: '',
-        equipmentModel: '',
-        categoryName: '',
         equipmentStatus: '',
         LocationId: '',
-        manufacturingYear: '',
         observations: '',
-        price: '',
-        provider: '',
         serialNumber: '',
         trackingNumber: '',
         warrantyDate: '',

@@ -160,13 +160,13 @@ export default defineComponent({
   border-radius: 50%;
 }
 
-@media only screen and (max-device-width: 599px) {
+@media only screen and (max-width: 599px) {
   .my-card {
     width: 100% !important;
   }
 }
 
-@media only screen and (min-device-width: 1000px) {
+@media only screen and (min-width: 1000px) {
   .my-card {
     width: 280px !important;
   }

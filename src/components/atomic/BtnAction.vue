@@ -6,29 +6,37 @@
     :outline="btnOutlined"
     :no-caps="btnCaps"
     :text-color="btnColor"
-    :label="btnTitle ? btnTitle : ''"
+    :label="!loader && btnTitle ? btnTitle : ''"
     :size="btnSize"
     :to="to"
     @click="btnAction"
   >
     <div
-      v-if="iconName != ''"
+      v-if="loader"
       class="no-wrap q-pa-none"
-      :class="{ 'q-ml-auto': btnTitle }"
     >
       <q-spinner-ball
         v-if="loader"
         size="sm"
-        class="q-ml-sm q-mb-xs"
-        color="primary"
+        class="q-mx-auto"
+        style="width: 32px;"
+        :class="{ 'q-mx-xs': !btnTitle }"
+        color="secondary"
       />
+    </div>
+
+    <div
+      v-if="!loader && iconName != ''"
+      class="no-wrap q-pa-none q-ml-auto"
+    >
       <q-icon
-        v-else-if="loader === false"
+        v-if="loader === false"
         right
         :name="iconName"
         :class="{ 'q-ma-xs': !btnTitle }"
       />
     </div>
+
     <q-tooltip
       v-if="tooltip"
       class="tooltip-container border-rounded"
