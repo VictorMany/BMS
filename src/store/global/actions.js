@@ -59,6 +59,10 @@ export async function formatDetails(context, { keys, fields }) {
             model: keys.Equipment.categoryName
         })
 
+        updateFieldByKeyInAllArrays(fields, 'equipmentModel', {
+            model: keys.Equipment.equipmentModel
+        })
+
         updateFieldByKeyInAllArrays(fields, 'serialNumber', {
             model: keys.Equipment.serialNumber
         })

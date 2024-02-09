@@ -90,6 +90,13 @@ export default defineComponent({
             readonly: true
           },
           {
+            key: 'equipmentModel',
+            label: 'Modelo del equipo',
+            model: '',
+            shouldShow: this.isEditing(),
+            readonly: true
+          },
+          {
             key: 'userName',
             type: 'text',
             label: 'Encargado',

@@ -10,7 +10,7 @@
           class="h-90"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
         >
-          <form-label
+          <details-component
             :fields="fields"
             :loading="loading"
           />
@@ -29,13 +29,13 @@
 <script>
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
-import FormLabel from 'src/components/compose/DetailsComponent.vue'
+import DetailsComponent from 'src/components/compose/DetailsComponent.vue'
 
 export default defineComponent({
   name: 'EquipmentsPage',
   components: {
     HeaderActions,
-    FormLabel,
+    DetailsComponent,
   },
   data() {
     return {
@@ -48,6 +48,11 @@ export default defineComponent({
             key: 'categoryName',
             label: 'Categoría del equipo',
             model: '',
+          },
+          {
+            key: 'equipmentModel',
+            label: 'Modelo del equipo',
+            model: ''
           },
           {
             key: 'userName',
