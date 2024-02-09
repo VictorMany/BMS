@@ -60,7 +60,7 @@ export default defineComponent({
         {
           title: 'Mi cuenta',
           subtitle: 'Detalles de mi cuenta',
-          img: 'hospital.png',
+          img: 'account.png',
           link: {
             route: 'edit-user',
             params: 1

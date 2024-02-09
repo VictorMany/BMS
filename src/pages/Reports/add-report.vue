@@ -151,6 +151,7 @@ export default defineComponent({
             key: 'report',
             type: 'textarea',
             label: 'Observaciones del reporte',
+            required: true,
             readonly: this.isEditing(),
             model: '',
             toolbar: [[{

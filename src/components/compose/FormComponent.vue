@@ -364,19 +364,20 @@ export default defineComponent({
     },
 
     validate() {
-      this.validateTextAreas()
-
-      return this.$refs.myForm.validate().then(success => { return success })
+      return this.$refs.myForm.validate().then(success => { return success && this.validateTextAreas() })
     },
 
     validateTextAreas() {
       let textareas = [...(this.fields.textareas || []), ...(this.fields.bottom || [])];
 
       for (let textarea of textareas) {
-        if (textarea && textarea.required && !textarea.value) {
+        if (textarea && textarea.required && !textarea.model) {
           showWarning(this.$q, { title: 'Hay campos requeridos sin llenar', msg: `El campo de ${textarea.label} es requerido` });
+          return false
         }
       }
+
+      return true
     },
 
     uploadFile(e) {

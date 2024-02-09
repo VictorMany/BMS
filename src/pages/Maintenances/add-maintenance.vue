@@ -136,7 +136,7 @@ export default defineComponent({
             key: 'observations',
             type: 'textarea',
             label: 'Actividades y observaciones del mantenimiento',
-            required: true,
+            required: false,
             model: '',
           }
         ],

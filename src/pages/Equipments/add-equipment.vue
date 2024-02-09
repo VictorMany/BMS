@@ -186,7 +186,7 @@ export default defineComponent({
             key: 'observations',
             type: 'textarea',
             label: 'Observaciones del equipo',
-            required: true,
+            required: false,
             model: '',
           }
         ]
