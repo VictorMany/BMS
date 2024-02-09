@@ -41,6 +41,8 @@ export default defineComponent({
   },
   data() {
     return {
+      loading: true,
+      
       fields: {
         createdAt: '',
 
@@ -124,8 +126,6 @@ export default defineComponent({
     },
 
     async getReport() {
-      this.loading = true
-
       const params = {
         id: this.$route.params.id,
         fields: this.fields
