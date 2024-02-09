@@ -1,7 +1,7 @@
 import { api } from 'boot/axios'; // Asegúrate de que la ruta sea la correcta si estás importando el archivo desde otro lugar
 
 export default class MaintenanceService {
-    static endpoint = 'http://3.20.181.72:3000/bms/maintenance/'; //http://3.20.181.72:3000/bms/Maintenance/list
+    static endpoint = '/bms/maintenance/';
 
     static getMaintenances(params) {
         return api.get(this.endpoint + 'list', {

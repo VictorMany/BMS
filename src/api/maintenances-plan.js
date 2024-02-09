@@ -1,7 +1,7 @@
 import { api } from 'boot/axios'; // Asegúrate de que la ruta sea la correcta si estás importando el archivo desde otro lugar
 
 export default class MaintenancePlanService {
-    static endpoint = 'http://3.20.181.72:3000/bms/maintenancePlan/';
+    static endpoint = '/bms/maintenancePlan/';
 
     static postMaintenancePlan(payload) {
         return api.post(this.endpoint + 'create', payload);

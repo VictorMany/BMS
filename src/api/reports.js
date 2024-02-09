@@ -1,7 +1,7 @@
 import { api } from 'boot/axios'; // Asegúrate de que la ruta sea la correcta si estás importando el archivo desde otro lugar
 
 export default class ReportService {
-    static endpoint = 'http://3.20.181.72:3000/bms/report/'; //http://3.20.181.72:3000/bms/Report/list
+    static endpoint = '/bms/report/';
 
     // Obtiene todos los reportes
     static getReports(params) {
