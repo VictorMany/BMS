@@ -59,8 +59,6 @@ export default defineComponent({
             label: 'Dirección',
             model: '',
           },
-        ],
-        left: [
           {
             label: 'Tipo de cuenta',
             model: '',
@@ -68,6 +66,7 @@ export default defineComponent({
             options: ['Premium', 'Prueba de una semana'],
           },
         ],
+        left: [],
         right: [],
         textarea: {},
       },

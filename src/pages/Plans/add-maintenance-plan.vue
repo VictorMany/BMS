@@ -460,7 +460,7 @@ export default defineComponent({
         }
         this.form = { ...this.form, ...await this.$store.dispatch('maintenancePlans/getMaintenancePlanAction', params) }
       } catch (error) {
-        throw new Error(error)
+        console.log(error)
       }
     },
 
@@ -519,7 +519,7 @@ export default defineComponent({
           }
         }
       } catch (error) {
-        throw new Error(error)
+        console.log(error)
       }
     },
 
@@ -536,7 +536,7 @@ export default defineComponent({
           done(equipments)
         else done([])
       } catch (error) {
-        throw new Error(error)
+        console.log(error)
       }
     },
 

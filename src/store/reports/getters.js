@@ -7,7 +7,7 @@ export function getReportsGetter(state) {
         reason: report.reason,
 
         Equipment: {
-            maintenanceType: 'correctivo',
+            maintenanceType: 'Correctivo',
             ...report.Equipment
         },
 

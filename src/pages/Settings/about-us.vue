@@ -158,40 +158,6 @@ export default defineComponent({
   },
   data() {
     return {
-      listSettings: [
-        {
-          title: 'Cuenta principal',
-          subtitle: 'Información asociada a tu cuenta en el sistema',
-          img: 'main_account.svg',
-          link: 'main-account',
-        },
-        {
-          title: 'Notificaciones',
-          subtitle: 'Alertas del sistema',
-          img: 'notifications.svg',
-          link: 'notifications',
-        },
-        {
-          title: 'Colores',
-          subtitle: 'Color de énfasis, color de tema',
-          img: 'colours.svg',
-          link: 'colors',
-        },
-        {
-          title: 'Roles y permisos',
-          subtitle: 'Accesos y permisos dinámicos dentro del sistema',
-          img: 'roles.svg',
-          link: 'roles',
-        },
-        {
-          title: 'Soporte técnico',
-          subtitle: 'Ayuda, reportar error, contacto',
-          img: 'tecnical_support.svg',
-          link: 'tecnical-support',
-        },
-      ],
-      basicToolBar: [['unordered', 'ordered']],
-
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',

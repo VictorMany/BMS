@@ -46,14 +46,12 @@ export default boot(({ app, router }) => {
         avatar: '../src/assets/png/warning.png'
       });
     } else {
-
       Notify.create({
         message: 'Se produjo un error en la solicitud',
         caption: error?.response?.data?.details ? error?.response?.data?.details : 'Inténtalo de nuevo más tarde',
         classes: 'border-rounded alert-container',
         avatar: '../src/assets/png/warning.png'
       });
-
       // showWarning(this.$q, { msg: error.response ? error.response.data.message : error });
       if (error?.response?.data?.message) {
         Notify.create({

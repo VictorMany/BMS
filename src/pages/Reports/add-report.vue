@@ -15,6 +15,7 @@
         >
           <form-component
             ref="fieldsComponent"
+            :loading="loading"
             :fields="fields"
           />
         </q-scroll-area>
@@ -44,6 +45,8 @@ export default defineComponent({
 
   data() {
     return {
+      loading: false,
+
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
@@ -53,6 +56,7 @@ export default defineComponent({
         btnAction: this.createOrEdit,
         loader: false,
       },
+
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',
@@ -66,28 +70,32 @@ export default defineComponent({
 
         top: [
           {
-            key: this.isEditing() ? 'categoryName' : 'idEquipment',
-            type: this.isEditing() ? 'text' : 'select',
+            key: 'idEquipment',
             label: 'Equipo',
+            type: 'select',
             options: [],
             model: null,
             itemFilter: this.filterEquipments,
+            shouldShow: !this.isEditing(),
             readonly: this.isEditing(),
             rules: this.isEditing() ? [] : [
               rules.requiredObject,
             ],
           },
           {
-            key: this.isEditing() ? 'userName' : 'userId',
-            type: this.isEditing() ? 'text' : 'select',
+            key: 'categoryName',
+            label: 'Categoría del equipo',
+            model: '',
+            shouldShow: this.isEditing(),
+            readonly: true
+          },
+          {
+            key: 'userName',
+            type: 'text',
             label: 'Encargado',
-            options: [],
             model: null,
-            itemFilter: this.filterUsers,
             readonly: this.isEditing(),
-            rules: this.isEditing() ? [] : [
-              rules.requiredObject,
-            ],
+            shouldShow: this.isEditing()
           },
         ],
         left: [
@@ -117,9 +125,9 @@ export default defineComponent({
             readonly: this.isEditing(),
             model: null,
             options: [
-              { label: 'Alta', index: 1, value: 'alto' },
-              { label: 'Media', index: 2, value: 'medio' },
-              { label: 'Baja', index: 3, value: 'bajo' },
+              { label: 'Alta', index: 1, value: 'Alta' },
+              { label: 'Media', index: 2, value: 'Media' },
+              { label: 'Baja', index: 3, value: 'Baja' },
             ],
             rules: [rules.requiredObject],
           },
@@ -196,8 +204,10 @@ export default defineComponent({
           fields: this.fields
         }
         await this.$store.dispatch('reports/getReportAction', params)
+        this.loading = false
       } catch (error) {
-        throw new Error(error)
+        this.loading = false
+        console.log(error)
       }
     },
 
@@ -207,10 +217,7 @@ export default defineComponent({
       try {
         const res = await this.$store.dispatch(
           'reports/updateReportAction',
-          {
-            idReport: this.$route.params.id,
-            idUser: 11
-          }
+          { idReport: this.$route.params.id }
         );
         if (res === true) {
           showSuccess(this.$q, { title: 'Éxito al editar el reporte', msg: 'El reporte se ha actualizado' });
@@ -221,15 +228,7 @@ export default defineComponent({
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        throw new Error(error)
-      }
-    },
-
-    async getUsers(params) {
-      try {
-        await this.$store.dispatch('users/getUsersAction', params);
-      } catch (error) {
-        throw new Error(error)
+        console.log(error)
       }
     },
 
@@ -237,31 +236,8 @@ export default defineComponent({
       try {
         await this.$store.dispatch('equipments/getEquipmentsAction', params);
       } catch (error) {
-        throw new Error(error)
+        console.log(error)
       }
-    },
-
-    async filterUsers(val, update) {
-      if (val === '') {
-        update(() => {
-          this.updateFieldByKeyInAllArrays('userId', {
-            options: this.users
-          })
-        })
-        return
-      } else {
-        await this.getUsers({
-          name: val
-        })
-      }
-
-      update(() => {
-        const needle = val.toLowerCase()
-
-        this.updateFieldByKeyInAllArrays('userId', {
-          options: this.users.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
-        })
-      })
     },
 
     async filterEquipments(val, update) {
@@ -365,10 +341,12 @@ export default defineComponent({
   },
 
   created() {
-    this.getUsers({})
-    this.getEquipments({})
+    this.loading = true
     if (this.isEditing()) {
       this.getReport()
+      this.getEquipments({})
+    } else {
+      this.loading = false
     }
   },
 
@@ -379,11 +357,6 @@ export default defineComponent({
   },
 
   computed: {
-    users: {
-      get() {
-        return this.$store.getters['users/getUsersGetter'];
-      },
-    },
     equipments: {
       get() {
         return this.$store.getters['equipments/getEquipmentsGetter'];

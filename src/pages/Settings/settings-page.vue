@@ -2,7 +2,7 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Configuración'" />
-      <div class="main-container-page card-color q-pa-sm main-container-page-medium-dark container-form">
+      <div class="main-container-page container-form">
         <q-scroll-area
           class="fit h-100"
           :thumb-style="{
@@ -58,10 +58,13 @@ export default defineComponent({
     return {
       listSettings: [
         {
-          title: 'Cuenta principal',
-          subtitle: 'Información asociada a tu cuenta en el sistema',
+          title: 'Mi cuenta',
+          subtitle: 'Detalles de mi cuenta',
           img: 'hospital.png',
-          link: 'main-account'
+          link: {
+            route: 'edit-user',
+            params: 1
+          }
         },
         {
           title: 'Notificaciones',
@@ -117,7 +120,14 @@ export default defineComponent({
   },
   methods: {
     navigateTo(link) {
-      this.$router.push({ path: link })
+      if (link.params) {
+        this.$router.push({
+          name: link.route,
+          params: {
+            id: link.params
+          }
+        })
+      } else { this.$router.push({ path: link }) }
     }
   }
 })

@@ -113,12 +113,12 @@ export default defineComponent({
               {
                 title: 'Correctivo',
                 filter: 'maintenanceType',
-                value: 'correctivo',
+                value: 'Correctivo',
               },
               {
                 title: 'Preventivo',
                 filter: 'maintenanceType',
-                value: 'preventivo',
+                value: 'Preventivo',
               }
             ]
           },

@@ -66,15 +66,6 @@ export default defineComponent({
 
         top: [
           {
-            key: 'userId',
-            label: 'Encargado',
-            type: 'select',
-            itemFilter: this.filterUsers,
-            options: [],
-            model: null,
-            rules: [rules.requiredObject],
-          },
-          {
             key: 'idEquipment',
             label: 'Equipo',
             type: 'select',
@@ -91,8 +82,8 @@ export default defineComponent({
             model: '',
             type: 'select',
             options: [
-              { label: 'Preventivo', index: 1, value: 'preventivo' },
-              { label: 'Correctivo', index: 2, value: 'correctivo' },
+              { label: 'Preventivo', index: 1, value: 'Preventivo' },
+              { label: 'Correctivo', index: 2, value: 'Correctivo' },
             ],
             rules: [rules.requiredObject],
           },
@@ -116,12 +107,14 @@ export default defineComponent({
             key: 'tools',
             type: 'textarea',
             label: 'Herramientas',
+            required: true,
             model: '',
           },
           {
             key: 'materials',
             type: 'textarea',
             label: 'Materiales',
+            required: true,
             model: '',
           },
         ],
@@ -141,7 +134,9 @@ export default defineComponent({
         bottom: [
           {
             key: 'observations',
+            type: 'textarea',
             label: 'Actividades y observaciones del mantenimiento',
+            required: true,
             model: '',
           }
         ],
@@ -184,15 +179,7 @@ export default defineComponent({
         }
         await this.$store.dispatch('maintenances/getMaintenanceAction', params)
       } catch (error) {
-        throw new Error(error)
-      }
-    },
-
-    async getUsers(params) {
-      try {
-        await this.$store.dispatch('users/getUsersAction', params);
-      } catch (error) {
-        throw new Error(error)
+        console.log(error)
       }
     },
 
@@ -200,7 +187,7 @@ export default defineComponent({
       try {
         await this.$store.dispatch('equipments/getEquipmentsAction', params);
       } catch (error) {
-        throw new Error(error)
+        console.log(error)
       }
     },
 
@@ -214,28 +201,6 @@ export default defineComponent({
 
     getCreatedAt() {
       return this.$store.getters['global/getDate']
-    },
-
-    filterUsers(val, update) {
-      if (val === '') {
-        update(() => {
-          this.updateFieldByKeyInAllArrays('userId', {
-            options: this.users
-          })
-        })
-        return
-      } else {
-        this.getUsers({
-          name: val
-        })
-      }
-
-      update(() => {
-        const needle = val.toLowerCase()
-        this.updateFieldByKeyInAllArrays('userId', {
-          options: this.users.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
-        })
-      })
     },
 
     filterEquipments(val, update) {
@@ -284,7 +249,7 @@ export default defineComponent({
         label: this.report.Equipment.categoryName
       })
       this.setModelValueByKey('maintenanceType', {
-        value: 'correctivo',
+        value: 'Correctivo',
         label: 'Correctivo'
       })
       this.setModelValueByKey('photo', this.report.Equipment.photo)
@@ -328,7 +293,6 @@ export default defineComponent({
   },
 
   created() {
-    this.getUsers({})
     this.getEquipments({})
   },
 
@@ -342,12 +306,6 @@ export default defineComponent({
   },
 
   computed: {
-    users: {
-      get() {
-        return this.$store.getters['users/getUsersGetter'];
-      },
-    },
-
     report: {
       get() {
         return this.$store.getters['reports/getReportGetter'];
@@ -371,9 +329,9 @@ export default defineComponent({
     fields: {
       // Get the image, and no-serie every change of the equipment selected
       handler(val) {
-        if (val.top[1].model && val.right[1].model != val.top[1].model.cardImg && val.top[1].model.cardImg) {
-          this.setModelValueByKey('photo', val.top[1].model.cardImg)
-          this.setModelValueByKey('serialNumber', val.top[1].model.serialNumber)
+        if (val.top[0].model && val.right[1].model != val.top[0].model.cardImg && val.top[0].model.cardImg) {
+          this.setModelValueByKey('photo', val.top[0].model.cardImg)
+          this.setModelValueByKey('serialNumber', val.top[0].model.serialNumber)
         }
       },
       deep: true,

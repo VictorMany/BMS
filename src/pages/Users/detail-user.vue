@@ -14,6 +14,7 @@
         >
           <form-label
             :fields="fields"
+            :loading="loading"
             type="user"
           />
         </q-scroll-area>
@@ -42,6 +43,8 @@ export default defineComponent({
   data() {
     return {
       fields: {
+        loading: false,
+
         createdAt: '',
         left: [
           {

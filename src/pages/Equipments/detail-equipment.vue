@@ -12,7 +12,10 @@
           class="h-90"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
         >
-          <form-label :fields="fields" />
+          <form-label
+            :fields="fields"
+            :loading="loading"
+          />
         </q-scroll-area>
         <div
           class="col-12 form__date_container form__date column justify-center q-px-lg"
@@ -39,6 +42,7 @@ export default defineComponent({
   data() {
     return {
       loading: false,
+
       fields: {
         createdAt: '',
         left: [
@@ -122,6 +126,7 @@ export default defineComponent({
         bottom: [
           {
             key: 'observations',
+            type: 'textarea',
             label: 'Observaciones del equipo biomédico',
             model: ''
           }

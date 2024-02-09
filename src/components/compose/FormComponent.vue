@@ -1,5 +1,22 @@
 <template>
-  <q-form ref="myForm">
+  <div
+    class="w-100 absolute-full flex flex-center"
+    style="height: 80vh;"
+    v-if="loading"
+  >
+    <div class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded">
+      <q-spinner-pie
+        color="primary"
+        class="q-mt-lg"
+        size="4em"
+      />
+      <div class="text-primary q-ma-lg">Cargando ...</div>
+    </div>
+  </div>
+  <q-form
+    v-else
+    ref="myForm"
+  >
     <div
       class="row q-pa-sm"
       style="max-width: 1200px"
@@ -222,6 +239,7 @@
             :item="item"
             class="form__textarea bg-accent border-rounded"
           />
+
         </div>
       </div>
 
@@ -244,6 +262,7 @@ import DateComponent from '../atomic/Form/DateComponent.vue';
 import SelectComponent from '../atomic/Form/SelectComponent.vue';
 import EditorComponent from '../atomic/Form/EditorComponent.vue';
 import InputComponent from '../atomic/Form/InputComponent.vue';
+import { showWarning } from 'app/utils/utils';
 
 export default defineComponent({
   name: 'MaintenancesPage',
@@ -273,6 +292,12 @@ export default defineComponent({
       required: false,
       default: () => { },
     },
+
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false,
+    }
   },
   setup() {
     const getImageUrl = (url) => {
@@ -302,7 +327,9 @@ export default defineComponent({
     localTextfields: {
       handler(val) {
         this.$emit('update:fields', val);
-        this.$refs.myForm.resetValidation()
+
+        if (this.$refs.myForm)
+          this.$refs.myForm.resetValidation()
       },
       deep: true,
     },
@@ -327,9 +354,6 @@ export default defineComponent({
         // DO NOT SHOW PASSWORD ITEM WHEN EDIT USER
         if (item.key == 'userPassword')
           return false
-      } else {
-        if (item.key == 'equipmentStatus')
-          return false
       } return true
     },
 
@@ -340,13 +364,19 @@ export default defineComponent({
     },
 
     validate() {
-      return this.$refs.myForm.validate().then(success => {
-        if (success) {
-          return true
-        } else {
-          return false
+      this.validateTextAreas()
+
+      return this.$refs.myForm.validate().then(success => { return success })
+    },
+
+    validateTextAreas() {
+      let textareas = [...(this.fields.textareas || []), ...(this.fields.bottom || [])];
+
+      for (let textarea of textareas) {
+        if (textarea && textarea.required && !textarea.value) {
+          showWarning(this.$q, { title: 'Hay campos requeridos sin llenar', msg: `El campo de ${textarea.label} es requerido` });
         }
-      })
+      }
     },
 
     uploadFile(e) {

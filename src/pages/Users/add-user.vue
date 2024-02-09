@@ -15,6 +15,7 @@
           <form-component
             ref="fieldsComponent"
             :fields="fields"
+            :loading="loading"
             type="user"
           />
         </q-scroll-area>
@@ -44,6 +45,8 @@ export default defineComponent({
   },
   data() {
     return {
+      loading: false,
+
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
@@ -103,10 +106,7 @@ export default defineComponent({
             label: 'Teléfono',
             type: 'number',
             model: '',
-            rules: [
-              rules.validPhoneNumber,
-              rules.requiredString,
-            ],
+            rules: [rules.validPhoneNumber, rules.requiredString],
           },
           {
             key: 'userRole',
@@ -190,7 +190,8 @@ export default defineComponent({
         await this.$store.dispatch('users/getUserAction', params)
         this.loading = false
       } catch (error) {
-        throw new Error(error)
+        this.loading = false
+        console.log(error)
       }
     },
 
@@ -235,7 +236,7 @@ export default defineComponent({
 
     getTitle() {
       if (this.isEditing()) {
-        return 'Editar usuario'
+        return 'Información del usuario'
       }
       else return 'Agregar usuario'
     },

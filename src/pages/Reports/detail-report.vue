@@ -12,7 +12,10 @@
           class="h-90"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <form-label :fields="fields" />
+          <form-label
+            :fields="fields"
+            :loading="loading"
+          />
         </q-scroll-area>
         <div
           class="col-12 form__date_container form__date column justify-center q-px-lg"
@@ -42,7 +45,6 @@ export default defineComponent({
         createdAt: '',
 
         top: [],
-
         left: [
           {
             key: 'categoryName',
@@ -57,6 +59,11 @@ export default defineComponent({
           {
             key: 'reason',
             label: 'Motivo',
+            model: ''
+          },
+          {
+            key: 'reportUrgency',
+            label: 'Prioridad',
             model: ''
           },
           {

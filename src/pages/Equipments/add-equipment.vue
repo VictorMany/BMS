@@ -15,6 +15,7 @@
         >
           <form-component
             ref="fieldsComponent"
+            :loading="loading"
             :fields="fields"
           />
         </q-scroll-area>
@@ -36,7 +37,7 @@ import FormComponent from 'src/components/compose/FormComponent.vue';
 import { rules, showSuccess, showWarning } from '../../../utils/utils';
 
 export default defineComponent({
-  key: 'EquipmentsPage',
+  key: 'AddEquipment',
   components: {
     HeaderActions,
     FormComponent,
@@ -183,7 +184,9 @@ export default defineComponent({
         bottom: [
           {
             key: 'observations',
+            type: 'textarea',
             label: 'Observaciones del equipo',
+            required: true,
             model: '',
           }
         ]
@@ -192,11 +195,14 @@ export default defineComponent({
   },
   methods: {
     async initInfo() {
+      this.loading = true
       await this.getLocations()
-      await this.getCategories()
 
       if (this.isEditing()) {
         await this.getEquipment()
+      } else {
+        await this.getCategories()
+        this.loading = false
       }
     },
 
@@ -237,8 +243,10 @@ export default defineComponent({
           fields: this.fields
         }
         await this.$store.dispatch('equipments/getEquipmentAction', params)
+        this.loading = false
       } catch (error) {
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : 'No se pudo obtener el equipo' });
+        console.log(error)
+        this.loading = false
       }
     },
 
@@ -270,7 +278,7 @@ export default defineComponent({
           options: JSON.parse(JSON.stringify(this.categories))
         })
       } catch (error) {
-        throw new Error(error)
+        console.log(error)
       }
     },
 
@@ -281,7 +289,7 @@ export default defineComponent({
           options: JSON.parse(JSON.stringify(this.locations))
         })
       } catch (error) {
-        throw new Error(error)
+        console.log(error)
       }
     },
 

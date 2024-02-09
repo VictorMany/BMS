@@ -1,5 +1,20 @@
 <template>
   <div
+    class="w-100 absolute-full flex flex-center"
+    style="height: 80vh;"
+    v-if="loading"
+  >
+    <div class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded">
+      <q-spinner-pie
+        color="primary"
+        class="q-mt-lg"
+        size="4em"
+      />
+      <div class="text-primary q-ma-lg">Cargando ...</div>
+    </div>
+  </div>
+  <div
+    v-else
     class="row q-pa-sm"
     style="max-width: 1200px"
   >
@@ -172,11 +187,18 @@ export default defineComponent({
       default: '',
       required: false,
     },
+
     fields: {
       type: Object,
       required: true,
       default: () => { },
     },
+
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false,
+    }
   },
 });
 </script>

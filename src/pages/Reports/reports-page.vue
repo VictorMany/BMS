@@ -135,16 +135,9 @@ export default defineComponent({
       },
 
       columns: [
-        {
-          name: 'reason',
-          required: true,
-          label: 'Reporte',
-          align: 'left',
-          field: row => row.reason,
-          format: val => `${val}`,
-          sortable: true
-        },
-        { name: 'encharged_name', label: 'Nombre del encargado', field: 'encharged_name', align: 'left', sortable: true },
+        { name: 'reason', required: true, label: 'Reporte', align: 'left', field: row => row.reason, format: val => `${val}`, sortable: true },
+        { name: 'encharged_name', label: 'Encargado', field: 'encharged_name', align: 'left', sortable: true },
+        { name: 'reportUrgency', label: 'Prioridad', field: 'reportUrgency', align: 'left', sortable: true },
         { name: 'date', label: 'Fecha del reporte', field: 'date', align: 'center', sortable: true },
         { name: 'status', label: 'Estatus', field: 'status', align: 'center', sortable: true },
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }

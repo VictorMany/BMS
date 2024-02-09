@@ -175,10 +175,10 @@ export default defineComponent({
         case 'Sin reportes':
           color = 'badge-positive';
           break;
-        case 'correctivo':
+        case 'Correctivo':
           color = 'badge-pending';
           break;
-        case 'preventivo':
+        case 'Preventivo':
           color = 'badge-positive';
           break;
         case 'Pendiente':

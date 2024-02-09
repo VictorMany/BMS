@@ -59,7 +59,7 @@
               </div>
             </div>
           </div>
-          <q-item class="q-mb-sm setting-item  border-rounded flex items-center clickable">
+          <!-- <q-item class="q-mb-sm setting-item  border-rounded flex items-center clickable">
             <q-item-section avatar>
               <q-avatar class="avatar-item border-rounded">
                 <img :src="getImageUrl('color.png')" />
@@ -91,7 +91,7 @@
                 </div>
               </div>
             </q-item-section>
-          </q-item>
+          </q-item> -->
         </q-scroll-area>
       </div>
     </div>
@@ -110,39 +110,6 @@ export default defineComponent({
 
   data() {
     return {
-      listSettings: [
-        {
-          title: 'Cuenta principal',
-          subtitle: 'Información asociada a tu cuenta en el sistema',
-          img: 'main_account.svg',
-          link: 'main-account'
-        },
-        {
-          title: 'Notificaciones',
-          subtitle: 'Alertas del sistema',
-          img: 'notifications.svg',
-          link: 'notifications'
-        },
-        {
-          title: 'Colores',
-          subtitle: 'Color de énfasis, color de tema',
-          img: 'colours.svg',
-          link: 'colors'
-        },
-        {
-          title: 'Roles y permisos',
-          subtitle: 'Accesos y permisos dinámicos dentro del sistema',
-          img: 'roles.svg',
-          link: 'roles'
-        },
-        {
-          title: 'Soporte técnico',
-          subtitle: 'Ayuda, reportar error, contacto',
-          img: 'tecnical_support.svg',
-          link: 'tecnical-support'
-        }
-      ],
-
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',
