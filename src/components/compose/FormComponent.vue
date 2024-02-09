@@ -1,7 +1,6 @@
 <template>
   <div
     class="w-100 absolute-full flex flex-center"
-    style="height: 80vh;"
     v-if="loading"
   >
     <div class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded">
