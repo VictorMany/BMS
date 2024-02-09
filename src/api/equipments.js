@@ -1,7 +1,7 @@
 import { api } from 'boot/axios'; // Asegúrate de que la ruta sea la correcta si estás importando el archivo desde otro lugar
 
 export default class EquipmentService {
-    static endpoint = 'http://3.20.181.72:3000/bms/equipment/';
+    static endpoint = '/bms/equipment/';
 
     // Obtiene todos los equipos
     static getEquipments(params) {
@@ -31,14 +31,14 @@ export default class EquipmentService {
         let date = params.date;
         delete params.date
 
-        return api.get('http://3.20.181.72:3000/bms/maintenancePlan/listByDate/' + date, {
+        return api.get('/bms/maintenancePlan/listByDate/' + date, {
             params
         })
     }
 
     // Obtiene todos los equipos
     static getDatesPerMonth(params) {
-        return api.get('http://3.20.181.72:3000/bms/maintenancePlan/listByMonth/' + params)
+        return api.get('/bms/maintenancePlan/listByMonth/' + params)
     }
 
 

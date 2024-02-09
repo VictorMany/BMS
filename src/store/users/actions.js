@@ -78,7 +78,9 @@ export async function loginAction(context, form) {
             setAuthHeader(response.data.token);
             return true
         } else {
-            return response
+            // Si la respuesta no fue exitosa, manejar el error
+            // Puedes lanzar un nuevo error para que se maneje en el catch
+            throw new Error(`Error: Se recibió un código de estado ${response.status}`);
         }
     })
 }

@@ -450,7 +450,6 @@ export default defineComponent({
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -461,7 +460,7 @@ export default defineComponent({
         }
         this.form = { ...this.form, ...await this.$store.dispatch('maintenancePlans/getMaintenancePlanAction', params) }
       } catch (error) {
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+        throw new Error(error)
       }
     },
 
@@ -483,7 +482,6 @@ export default defineComponent({
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -521,7 +519,7 @@ export default defineComponent({
           }
         }
       } catch (error) {
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+        throw new Error(error)
       }
     },
 
@@ -538,7 +536,7 @@ export default defineComponent({
           done(equipments)
         else done([])
       } catch (error) {
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+        throw new Error(error)
       }
     },
 

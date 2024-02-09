@@ -6,7 +6,7 @@
     :outline="btnOutlined"
     :no-caps="btnCaps"
     :text-color="btnColor"
-    :label="!loader && btnTitle ? btnTitle : ''"
+    :label="btnTitle ? btnTitle : ''"
     :size="btnSize"
     :to="to"
     @click="btnAction"
@@ -19,7 +19,7 @@
         v-if="loader"
         size="sm"
         class="q-mx-auto"
-        style="width: 32px;"
+        style="width: 35px;"
         :class="{ 'q-mx-xs': !btnTitle }"
         color="secondary"
       />

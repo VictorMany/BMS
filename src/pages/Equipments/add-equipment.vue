@@ -227,7 +227,6 @@ export default defineComponent({
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -261,7 +260,6 @@ export default defineComponent({
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -272,7 +270,7 @@ export default defineComponent({
           options: JSON.parse(JSON.stringify(this.categories))
         })
       } catch (error) {
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+        throw new Error(error)
       }
     },
 
@@ -283,7 +281,7 @@ export default defineComponent({
           options: JSON.parse(JSON.stringify(this.locations))
         })
       } catch (error) {
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+        throw new Error(error)
       }
     },
 

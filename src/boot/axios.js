@@ -1,15 +1,14 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
+import { Notify } from 'quasar';
+import { setAuthHeader } from 'src/api/auth';
+import { getTokenFromCookie } from 'app/utils/utils';
 
-// Be careful when using SSR for cross-request state pollution
-// due to creating a Singleton instance here;
-// If any client changes this (global) instance, it might be a
-// good idea to move this instance creation inside of the
-// "export default () => {}" function below (which runs individually
-// for each client)
-const api = axios.create({ baseURL: 'https://api.example.com' })
+const api = axios.create({ baseURL: 'http://3.20.181.72:3000' })
 
-export default boot(({ app }) => {
+setAuthHeader(getTokenFromCookie()); // Establece las cabeceras de Axios con el token, si está disponible
+
+export default boot(({ app, router }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = axios
@@ -18,7 +17,44 @@ export default boot(({ app }) => {
 
   app.config.globalProperties.$api = api
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
-  //       so you can easily perform requests against your app's API
+  //   
+
+  api.interceptors.response.use(function (response) {
+    return response;
+  }, function (error) {
+    if (error && error.response && error.response.status === 401) {
+      // send to LOGIN
+      Notify.create({
+        message: 'Su sesión ha caducado',
+        caption: 'Redireccionando a inicio de sesión',
+        classes: 'border-rounded alert-container',
+        avatar: '../src/assets/png/warning.png'
+      });
+
+      router.push({ name: 'login' });
+    } else if (!error.response) {
+      Notify.create({
+        message: 'No tienes internet',
+        caption: 'Inténtalo de nuevo cuando regrese la conexión',
+        classes: 'border-rounded alert-container'
+      });
+    } else if (error.response.status === 404) {
+      Notify.create({
+        message: 'El recurso no existe',
+        caption: 'Reporte este error',
+        classes: 'border-rounded alert-container',
+        avatar: '../src/assets/png/warning.png'
+      });
+    } else {
+      Notify.create({
+        message: 'Se produjo un error en la solicitud',
+        caption: error?.response?.data?.details ? error?.response?.data?.details : 'Inténtalo de nuevo más tarde',
+        classes: 'border-rounded alert-container',
+        avatar: '../src/assets/png/warning.png'
+      });
+    }
+    return Promise.reject(error);
+  });
 })
 
 export { api }

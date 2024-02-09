@@ -177,7 +177,6 @@ export default defineComponent({
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
     },
 
@@ -191,7 +190,7 @@ export default defineComponent({
         await this.$store.dispatch('users/getUserAction', params)
         this.loading = false
       } catch (error) {
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
+        throw new Error(error)
       }
     },
 
@@ -213,7 +212,6 @@ export default defineComponent({
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
-        showWarning(this.$q, { msg: error.response ? error.response.data.details : error });
       }
     },
 
