@@ -34,8 +34,8 @@ export default boot(({ app, router }) => {
       router.push({ name: 'login' });
     } else if (!error.response) {
       Notify.create({
-        message: 'No tienes internet',
-        caption: 'Inténtalo de nuevo cuando regrese la conexión',
+        message: 'Ocurrió una falla en la red',
+        caption: 'Inténtalo de nuevo más tarde',
         classes: 'border-rounded alert-container'
       });
     } else if (error.response.status === 404) {
