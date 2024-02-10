@@ -43,7 +43,7 @@
 
     <div
       v-if="btnCloseWindow"
-      class="col-xs-auto column content-end"
+      class="col-xs-auto column content-end btn-close-order"
     >
       <btn-action
         v-bind="btnCloseWindow"

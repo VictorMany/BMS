@@ -1,5 +1,8 @@
 <template>
-  <LineChart :data="chartData" :options="chartOptions" />
+  <LineChart
+    :data="chartData"
+    :options="chartOptions"
+  />
 </template>
 
 <script>
@@ -34,7 +37,7 @@ export default {
     },
     chartOptions: {
       type: Object,
-      default: () => {},
+      default: () => { },
     },
   },
 };

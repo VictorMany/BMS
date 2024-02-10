@@ -30,7 +30,6 @@ export default boot(({ app, router }) => {
         classes: 'border-rounded alert-container',
         avatar: '../src/assets/png/warning.png'
       });
-
       router.push({ name: 'login' });
     } else if (!error.response) {
       Notify.create({

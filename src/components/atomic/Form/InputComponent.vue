@@ -7,9 +7,9 @@
         bottom-slots
         hide-bottom-space
         :readonly="item.readonly"
-        :type="item.type ? item.type : 'text'"
-        :rules="item.rules ? item.rules : []"
-        :prefix="item.prefix ? item.prefix : ''"
+        :type="inputType"
+        :rules="item.rules || []"
+        :prefix="item.prefix || ''"
         stack-label
         borderless
     >
@@ -18,6 +18,11 @@
                 v-if="item.readonly"
                 name="lock"
                 size="xs"
+            />
+            <q-icon
+                v-if="item.type === 'password'"
+                @click="togglePasswordVisibility"
+                :name="visibilityIcon"
             />
         </template>
     </q-input>
@@ -36,30 +41,39 @@ export default defineComponent({
         model: {
             type: [String, Number],
             required: true,
-        }
+        },
     },
     data() {
         return {
-            localModel: this.model
+            localModel: this.model,
+            showPassword: false,
         };
     },
-    methods: {
-        updateParent() {
-            this.$emit('update:model', this.localModel);
-        }
+    computed: {
+        inputType() {
+            return this.item.type === 'password' && !this.item.readonly ? (this.showPassword ? 'text' : 'password') : 'text';
+        },
+        visibilityIcon() {
+            return this.showPassword ? 'visibility_off' : 'visibility';
+        },
     },
     watch: {
-        localModel(newValue, oldValue) {
-            if (newValue !== oldValue) {
-                this.updateParent();
-            }
-        },
-        model(newValue, oldValue) {
-            if (newValue !== oldValue) {
+        model(newValue) {
+            if (newValue !== this.localModel) {
                 this.localModel = newValue;
             }
-        }
-    }
+        },
+        localModel(newValue, oldValue) {
+            if (newValue !== oldValue) {
+                this.$emit('update:model', newValue);
+            }
+        },
+    },
+    methods: {
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
+        },
+    },
 });
 </script>
   

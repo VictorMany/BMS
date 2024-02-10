@@ -356,8 +356,16 @@
   font-weight: 600 !important;
 }
 
+.btn-close-order {
+  order: 1;
+}
+
 // RESPONSIVITY
-@media only screen and (max-width : 1000px) {
+@media only screen and (max-width : 1024px) {
+  .btn-close-order {
+    order: 0;
+  }
+
   .q-page {
     display: flex;
     justify-content: center;

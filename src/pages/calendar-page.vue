@@ -161,7 +161,6 @@ export default defineComponent({
       events: [],
 
       optionsFilter: [
-        // { color: 'primary', label: 'Mantenimientos hechos', value: 'opt1' },
         {
           color: 'secondary',
           label: 'Mantenimientos programados',
@@ -253,7 +252,7 @@ export default defineComponent({
 
   methods: {
     async initInfo() {
-      this.calendarModel = this.formatDate();
+      this.calendarModel = this.formatDate(new Date());
       const currentDate = new Date();
 
       await this.getDatesPerMonth({

@@ -31,7 +31,7 @@
 
               <q-input
                 ref="pass"
-                type="password"
+                :type="show ? 'password' : 'text'"
                 class="form__input-login q-px-md"
                 dense
                 borderless
@@ -41,10 +41,17 @@
                 stack-label
                 v-model="model.userPassword"
                 :rules="[rules.requiredString]"
+                @keydown.enter="login"
                 label="Contraseña"
               >
                 <template v-slot:prepend>
                   <q-icon name="lock" />
+                </template>
+                <template v-slot:append>
+                  <q-icon
+                    @click="show = !show"
+                    :name="visibilityIcon"
+                  />
                 </template>
               </q-input>
 
@@ -53,7 +60,6 @@
               <div class="col login__submit flex flex-center">
                 <btn-action v-bind="btnAction" />
               </div>
-
             </div>
           </div>
         </div>
@@ -63,9 +69,10 @@
 </template>
 
 <script>
-import { rules, showSuccess, showWarning } from 'app/utils/utils';
+import { rules, showWarning } from 'app/utils/utils';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
 import { defineComponent } from 'vue';
+
 export default defineComponent({
   name: 'EquipmentsPage',
   data() {
@@ -75,6 +82,7 @@ export default defineComponent({
         userPassword: '',
       },
       rules,
+      show: true,
 
       btnAction: {
         btnTitle: 'Iniciar sesión',
@@ -83,7 +91,7 @@ export default defineComponent({
         loader: false,
         iconName: '',
         btnAction: this.login,
-        btnBackground: this.$q.dark.isActive ? '#1e65e820' : '#1e65e8'
+        btnBackground: this.$q.dark.isActive ? '#1e65e820' : '#1e65e8',
       },
     };
   },
@@ -92,12 +100,8 @@ export default defineComponent({
       if (await this.$refs.myForm.validate()) {
         this.btnAction.loader = true;
         try {
-          const res = await this.$store.dispatch(
-            'users/loginAction',
-            this.model
-          );
+          const res = await this.$store.dispatch('users/loginAction', this.model);
           if (res === true) {
-            showSuccess(this.$q, { title: 'Inicio de sesión exitoso' });
             this.$router.replace('/');
           } else {
             showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
@@ -105,13 +109,16 @@ export default defineComponent({
           this.btnAction.loader = false;
         } catch (error) {
           this.btnAction.loader = false;
-          // showWarning(this.$q, { msg: error.response ? error.response.data.message : error });
         }
       }
     },
-
   },
   components: { BtnAction },
+  computed: {
+    visibilityIcon() {
+      return this.model.userPassword.trim() ? (this.show ? 'visibility' : 'visibility_off') : '';
+    },
+  },
 });
 </script>
 
