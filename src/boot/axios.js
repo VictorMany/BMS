@@ -4,7 +4,7 @@ import { Notify } from 'quasar';
 import { setAuthHeader } from 'src/api/auth';
 import { getTokenFromCookie } from 'app/utils/utils';
 
-const api = axios.create({ baseURL: 'https://bk.bmsystemll.com' })
+const api = axios.create({ baseURL: 'https://bmsystemll.com' })
 
 setAuthHeader(getTokenFromCookie()); // Establece las cabeceras de Axios con el token, si está disponible
 
