@@ -104,8 +104,6 @@ export default defineComponent({
             readonly: this.isEditing(),
             shouldShow: this.isEditing()
           },
-        ],
-        left: [
           {
             key: 'reason',
             label: 'Motivo',
@@ -113,6 +111,8 @@ export default defineComponent({
             readonly: this.isEditing(),
             rules: [rules.requiredString],
           },
+        ],
+        left: [
           {
             key: 'reportStatus',
             label: 'Estatus',
@@ -350,9 +350,10 @@ export default defineComponent({
 
   created() {
     this.loading = true
+    this.getEquipments()
+
     if (this.isEditing()) {
       this.getReport()
-      this.getEquipments({})
     } else {
       this.loading = false
     }

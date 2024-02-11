@@ -252,7 +252,7 @@ export default defineComponent({
 
   methods: {
     async initInfo() {
-      this.calendarModel = this.formatDate(new Date());
+      this.calendarModel = this.formatDate();
       const currentDate = new Date();
 
       await this.getDatesPerMonth({

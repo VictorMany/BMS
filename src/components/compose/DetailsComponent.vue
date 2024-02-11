@@ -99,10 +99,7 @@
                 <div class="q-mb-sm form__item-label text-weight-thin">
                   {{ item.label }}
                 </div>
-                <div
-                  style="height: 80%;"
-                  class="q-pa-sm border-line border-rounded"
-                >
+                <div class="q-pa-sm border-line border-rounded">
                   <div
                     class="col-12 q-pr-md form__label-area"
                     v-html="item.model"

@@ -31,7 +31,7 @@
 
               <q-input
                 ref="pass"
-                :type="show ? 'password' : 'text'"
+                v-model="model.userPassword"
                 class="form__input-login q-px-md"
                 dense
                 borderless
@@ -39,10 +39,11 @@
                 bottom-slots
                 hide-bottom-space
                 stack-label
-                v-model="model.userPassword"
+                label="Contraseña"
+                autocomplete="new-password"
+                :type="show ? 'password' : 'text'"
                 :rules="[rules.requiredString]"
                 @keydown.enter="login"
-                label="Contraseña"
               >
                 <template v-slot:prepend>
                   <q-icon name="lock" />

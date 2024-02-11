@@ -74,6 +74,12 @@ export default defineComponent({
             model: null,
             rules: [rules.requiredObject],
           },
+          {
+            key: 'reason',
+            label: 'Motivo',
+            model: '',
+            rules: [rules.requiredString],
+          },
         ],
         left: [
           {
@@ -87,12 +93,7 @@ export default defineComponent({
             ],
             rules: [rules.requiredObject],
           },
-          {
-            key: 'reason',
-            label: 'Motivo',
-            model: '',
-            rules: [rules.requiredString],
-          },
+
           {
             key: 'cost',
             label: 'Costo',
