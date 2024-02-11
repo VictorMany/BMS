@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Notify } from 'quasar';
 import { setAuthHeader } from 'src/api/auth';
 import { getTokenFromCookie } from 'app/utils/utils';
+const warning = new URL('../src/assets/png/warning.png', import.meta.url).href
 
 const api = axios.create({ baseURL: 'https://bmsystemll.com' })
 
@@ -28,7 +29,7 @@ export default boot(({ app, router }) => {
         message: 'Su sesión ha caducado',
         caption: 'Redireccionando a inicio de sesión',
         classes: 'border-rounded alert-container',
-        avatar: '~assets/png/warning.png'
+        avatar: warning
       });
       router.push({ name: 'login' });
     } else if (!error.response) {
@@ -42,21 +43,21 @@ export default boot(({ app, router }) => {
         message: 'El recurso no existe',
         caption: 'Reporte este error',
         classes: 'border-rounded alert-container',
-        avatar: '~assets/png/warning.png'
+        avatar: warning
       });
     } else {
       Notify.create({
         message: 'Se produjo un error en la solicitud',
         caption: error?.response?.data?.details ? error?.response?.data?.details : 'Inténtalo de nuevo más tarde',
         classes: 'border-rounded alert-container',
-        avatar: '~assets/png/warning.png'
+        avatar: warning
       });
       if (error?.response?.data?.message) {
         Notify.create({
           message: 'Se produjo un error en la solicitud',
           caption: error.response.data.message,
           classes: 'border-rounded alert-container',
-          avatar: '~assets/png/warning.png'
+          avatar: warning
         });
       }
     }
