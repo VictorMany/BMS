@@ -1,3 +1,6 @@
+const warning = new URL('../src/assets/png/warning.png', import.meta.url).href
+const success = new URL('../src/assets/png/success.png', import.meta.url).href
+
 export const rules = {
     requiredString: (val) => (typeof val === 'string' && val.trim().length > 0) || 'El campo es obligatorio',
     requiredObject: (val) => (typeof val === 'object' && val !== null) || 'El campo es obligatorio',
@@ -49,7 +52,7 @@ export const showWarning = ($q, { msg, title, avatar }) => {
         message: title ? title : 'Ocurrió un error',
         caption: msg ? msg : 'Inténtalo de nuevo más tarde',
         classes: 'border-rounded alert-container',
-        avatar: avatar ? avatar : '~assets/png/warning.png' // Utiliza la ruta relativa correcta
+        avatar: avatar ? avatar : warning // Utiliza la ruta relativa correcta
     });
 };
 
@@ -58,7 +61,7 @@ export const showSuccess = ($q, { msg, title, avatar }) => {
         message: title ? title : 'Éxito al realizar la operación',
         caption: msg ? msg : 'La operación se realizó correctamente',
         classes: 'border-rounded alert-container',
-        avatar: avatar ? avatar : '~assets/png/success.png' // Utiliza la ruta relativa correcta
+        avatar: avatar ? avatar : success // Utiliza la ruta relativa correcta
     });
 };
 
