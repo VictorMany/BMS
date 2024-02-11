@@ -70,6 +70,14 @@ export default defineComponent({
 
         top: [
           {
+            key: 'userName',
+            type: 'text',
+            label: 'Encargado',
+            model: null,
+            readonly: this.isEditing(),
+            shouldShow: this.isEditing()
+          },
+          {
             key: 'idEquipment',
             label: 'Equipo',
             type: 'select',
@@ -95,14 +103,6 @@ export default defineComponent({
             model: '',
             shouldShow: this.isEditing(),
             readonly: true
-          },
-          {
-            key: 'userName',
-            type: 'text',
-            label: 'Encargado',
-            model: null,
-            readonly: this.isEditing(),
-            shouldShow: this.isEditing()
           },
           {
             key: 'reason',

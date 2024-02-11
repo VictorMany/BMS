@@ -9,6 +9,7 @@
         bottom-slots
         readonly
         stack-label
+        :rules="item.rules"
         @click="$refs.proxy.show()"
     >
         <template v-slot:append>
@@ -30,6 +31,8 @@
                         v-model="localModel"
                         mask="YYYY-MM-DD"
                         :name="item.key"
+                        navigation-min-year-month="1900/01"
+                        :navigation-max-year-month="item.restrictedMaxDate ? item.restrictedMaxDate : '2100/12'"
                     />
                 </q-popup-proxy>
             </q-btn>

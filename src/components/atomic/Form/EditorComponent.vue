@@ -1,5 +1,15 @@
 <template>
+    <div
+        v-if="item.readonly"
+        class="q-pa-sm border-line border-rounded"
+    >
+        <div
+            class="col-12 q-pr-md form__label-area"
+            v-html="item.model"
+        />
+    </div>
     <q-editor
+        v-else
         v-model="localModel"
         :name="item.key"
         :placeholder="'Escribe aquí...'"

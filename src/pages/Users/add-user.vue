@@ -134,11 +134,12 @@ export default defineComponent({
           },
           {
             key: 'birthday',
-            readonly: this.isEditing(),
             label: 'Fecha de nacimiento',
             type: 'date',
             model: null,
-            rules: [rules.requiredObject],
+            readonly: this.isEditing(),
+            restrictedMaxDate: this.restrictedMaxDate(),
+            rules: [rules.requiredString, rules.adultAge],
           },
         ],
         right: [
@@ -225,6 +226,15 @@ export default defineComponent({
         }
       }
     },
+
+    restrictedMaxDate() {
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      const eighteenYearsAgo = currentYear - 18;
+      return `${eighteenYearsAgo}/${month}`;
+    },
+
 
     getDate() {
       return this.$store.$store.getters['global/getDate']

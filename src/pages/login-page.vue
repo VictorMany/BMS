@@ -22,6 +22,7 @@
                 stack-label
                 v-model="model.email"
                 :rules="[rules.validEmail, rules.requiredString]"
+                name="email"
                 label="Usuario"
               >
                 <template v-slot:prepend>

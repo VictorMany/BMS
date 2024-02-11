@@ -31,7 +31,7 @@
         <q-popup-proxy class="border-rounded modal-ios">
           <q-banner
             class="border-shadow q-px-sm border-rounded"
-            style="width: 300px; height: auto; background-color: transparent; "
+            style="width: 300px; height: auto;"
           >
             <q-scroll-area
               :style="`height: ${heightModalLocal}px !important`"

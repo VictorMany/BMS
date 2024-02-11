@@ -20,7 +20,7 @@
                 size="xs"
             />
             <q-icon
-                v-if="item.type === 'password'"
+                v-if="item.type === 'password' && localModel.trim()"
                 @click="togglePasswordVisibility"
                 :name="visibilityIcon"
             />
@@ -51,7 +51,14 @@ export default defineComponent({
     },
     computed: {
         inputType() {
-            return this.item.type === 'password' && !this.item.readonly ? (this.showPassword ? 'text' : 'password') : 'text';
+            if (this.item && typeof this.item === 'object') {
+                if (this.item.type === 'password' && !this.item.readonly) {
+                    return this.showPassword ? 'text' : 'password';
+                } else if (this.item.type) {
+                    return this.item.type;
+                }
+            }
+            return 'text';
         },
         visibilityIcon() {
             return this.showPassword ? 'visibility_off' : 'visibility';

@@ -92,10 +92,7 @@
               class="col q-pa-sm"
               :key="i"
             >
-              <div
-                class="col-12"
-                style="height: 100%;"
-              >
+              <div class="col-12 h-100">
                 <div class="q-mb-sm form__item-label text-weight-thin">
                   {{ item.label }}
                 </div>

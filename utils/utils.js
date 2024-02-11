@@ -13,6 +13,13 @@ export const rules = {
     maxLength(maxLength) {
         return (val) => (val.length <= maxLength) || `El campo no debe exceder ${maxLength} caracteres`;
     },
+    adultAge: (val) => {
+        const currentDate = new Date();
+        const birthDate = new Date(val);
+        const minAdultDate = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
+
+        return birthDate <= minAdultDate || 'Debes ser mayor de edad para continuar';
+    },
     pastYear: (val) => {
         const enteredYear = parseInt(val, 10);
         const currentYear = new Date().getFullYear();
