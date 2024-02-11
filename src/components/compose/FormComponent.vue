@@ -199,7 +199,7 @@
           </div>
 
           <div
-            v-if="item.readImage"
+            v-if="item.readImage && item.model"
             class="row q-px-sm q-py-xs q-mx-auto q-mt-lg"
             :style="type === 'user'
               ? 'width: 254px !important; height: 254px; border-radius: 50%'

@@ -49,7 +49,7 @@ export const showWarning = ($q, { msg, title, avatar }) => {
         message: title ? title : 'Ocurrió un error',
         caption: msg ? msg : 'Inténtalo de nuevo más tarde',
         classes: 'border-rounded alert-container',
-        avatar: avatar ? avatar : '../src/assets/png/warning.png' // Utiliza la ruta relativa correcta
+        avatar: avatar ? avatar : '~assets/png/warning.png' // Utiliza la ruta relativa correcta
     });
 };
 
@@ -58,7 +58,7 @@ export const showSuccess = ($q, { msg, title, avatar }) => {
         message: title ? title : 'Éxito al realizar la operación',
         caption: msg ? msg : 'La operación se realizó correctamente',
         classes: 'border-rounded alert-container',
-        avatar: avatar ? avatar : '../src/assets/png/success.png' // Utiliza la ruta relativa correcta
+        avatar: avatar ? avatar : '~assets/png/success.png' // Utiliza la ruta relativa correcta
     });
 };
 

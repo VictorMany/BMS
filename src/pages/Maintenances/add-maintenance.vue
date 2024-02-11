@@ -330,7 +330,7 @@ export default defineComponent({
     fields: {
       // Get the image, and no-serie every change of the equipment selected
       handler(val) {
-        if (val.top[0].model && val.right[1].model != val.top[0].model.cardImg && val.top[0].model.cardImg) {
+        if (val.top[0].model && val.right[1].model != val.top[0].model.serialNumber && val.top[0].model.serialNumber) {
           this.setModelValueByKey('photo', val.top[0].model.cardImg)
           this.setModelValueByKey('serialNumber', val.top[0].model.serialNumber)
         }

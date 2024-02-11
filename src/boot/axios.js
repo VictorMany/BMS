@@ -28,7 +28,7 @@ export default boot(({ app, router }) => {
         message: 'Su sesión ha caducado',
         caption: 'Redireccionando a inicio de sesión',
         classes: 'border-rounded alert-container',
-        avatar: '../src/assets/png/warning.png'
+        avatar: '~assets/png/warning.png'
       });
       router.push({ name: 'login' });
     } else if (!error.response) {
@@ -42,22 +42,21 @@ export default boot(({ app, router }) => {
         message: 'El recurso no existe',
         caption: 'Reporte este error',
         classes: 'border-rounded alert-container',
-        avatar: '../src/assets/png/warning.png'
+        avatar: '~assets/png/warning.png'
       });
     } else {
       Notify.create({
         message: 'Se produjo un error en la solicitud',
         caption: error?.response?.data?.details ? error?.response?.data?.details : 'Inténtalo de nuevo más tarde',
         classes: 'border-rounded alert-container',
-        avatar: '../src/assets/png/warning.png'
+        avatar: '~assets/png/warning.png'
       });
-      // showWarning(this.$q, { msg: error.response ? error.response.data.message : error });
       if (error?.response?.data?.message) {
         Notify.create({
           message: 'Se produjo un error en la solicitud',
           caption: error.response.data.message,
           classes: 'border-rounded alert-container',
-          avatar: '../src/assets/png/warning.png'
+          avatar: '~assets/png/warning.png'
         });
       }
     }

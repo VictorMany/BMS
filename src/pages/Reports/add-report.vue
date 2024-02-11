@@ -287,7 +287,7 @@ export default defineComponent({
     },
 
     getEquipmentDefault() {
-      if (this.equipment.categoryName && !this.fields.top[0].model) {
+      if (this.equipment.categoryName && !this.fields.top[1].model) {
         this.updateFieldByKeyInAllArrays('idEquipment', {
           model: {
             value: this.equipment.IdEquipment,
@@ -383,10 +383,15 @@ export default defineComponent({
     fields: {
       // Get the image, and no-serie every change of the equipment selected
       handler(val) {
-        if ((val.top[0].model && val.right[1].model != val.top[0].model.cardImg && val.top[0].model.cardImg) &&
-          !this.isEditing()) {
-          val.right[1].model = val.top[0].model.cardImg
-          val.right[0].model = val.top[0].model.serialNumber
+        if ((val.top[1].model
+          && val.right[1].model != val.top[1].model.serialNumber && val.top[1].model.serialNumber)
+          && !this.isEditing()) {
+          this.updateFieldByKeyInAllArrays('photo', {
+            model: val.top[1].model.cardImg
+          })
+          this.updateFieldByKeyInAllArrays('serialNumber', {
+            model: val.top[1].model.serialNumber
+          })
         }
       },
       deep: true,
