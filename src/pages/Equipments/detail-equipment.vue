@@ -88,6 +88,12 @@ export default defineComponent({
             model: ''
           },
           {
+            key: 'nextMaintenanceDate',
+            label: 'Próximo mantenimiento',
+            type: 'formatedDate',
+            model: ''
+          },
+          {
             key: 'warrantyDate',
             label: 'Fecha de garantía',
             type: 'formatedDate',

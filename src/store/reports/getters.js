@@ -12,7 +12,7 @@ export function getReportsGetter(state) {
         },
 
         encharged_name: report.User?.userName,
-        status: report.reportStatus ? 'Pendiente' : 'Atendido',
+        status: report.reportStatus,
         date: formatDate(report.createdAt),
         total_cost: report.cost,
 

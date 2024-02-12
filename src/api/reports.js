@@ -10,6 +10,13 @@ export default class ReportService {
         });
     }
 
+    // Cancelar reporte por id
+    static cancelReport(params) {
+        console.log(params)
+        return api.put(this.endpoint + 'deactivate/' + params);
+    }
+
+
     // Obtiene todos los reportes
     static getReportsByEquipment(params) {
         let id = params.id;

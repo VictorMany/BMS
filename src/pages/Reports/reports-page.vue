@@ -76,12 +76,6 @@ export default defineComponent({
           tooltip: 'Detalle de reporte',
         },
         {
-          icnName: 'edit',
-          icnSize: 'xs',
-          icnAction: 'Edit',
-          tooltip: 'Editar reporte',
-        },
-        {
           icnName: 'engineering',
           icnSize: 'xs',
           icnAction: 'Maintenance',
@@ -116,14 +110,19 @@ export default defineComponent({
             icon: 'engineering',
             options: [
               {
-                title: 'Atendido',
+                title: 'Resuelto',
                 filter: 'reportStatus',
-                value: 0
+                value: 'Resuelto'
               },
               {
                 title: 'Pendiente',
                 filter: 'reportStatus',
-                value: 1
+                value: 'Pendiente'
+              },
+              {
+                title: 'Cancelado',
+                filter: 'reportStatus',
+                value: 'Cancelado'
               }
             ]
           }
@@ -157,9 +156,7 @@ export default defineComponent({
   watch: {
     rowSelected: {
       handler(val) {
-        if (val.action === 'Edit') {
-          this.goToEdit(val.id);
-        } else if (val.action === 'Detail') {
+        if (val.action === 'Detail') {
           this.goToDetails(val.id);
         } else if (val.action === 'Maintenance') {
           this.goToMaintenance(val.id);

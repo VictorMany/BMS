@@ -32,6 +32,7 @@
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import DetailsComponent from 'src/components/compose/DetailsComponent.vue';
+import { showSuccess } from 'app/utils/utils';
 
 export default defineComponent({
   name: 'EquipmentsPage',
@@ -42,7 +43,7 @@ export default defineComponent({
   data() {
     return {
       loading: true,
-      
+
       fields: {
         createdAt: '',
 
@@ -106,11 +107,12 @@ export default defineComponent({
 
       btnAction: {
         show: true,
-        btnTitle: 'Editar',
-        iconName: 'edit',
-        tooltip: 'Ir a editar reporte',
-        to: this.getIdToEdit(),
+        btnTitle: 'Cancelar reporte',
+        iconName: 'cancel',
+        tooltip: 'Cancelar reporte',
         btnWidth: 'auto',
+        btnAction: this.cancelReport,
+        loader: false,
       },
 
       btnCloseWindow: {
@@ -122,8 +124,20 @@ export default defineComponent({
     };
   },
   methods: {
-    getIdToEdit() {
-      return `edit-${this.$route.params.id}-report`
+    async cancelReport() {
+      try {
+        this.btnAction.loader = true
+        const params = {
+          id: this.$route.params.id,
+        }
+        await this.$store.dispatch('reports/cancelReportAction', params)
+        this.btnAction.loader = false
+        showSuccess(this.$q, { title: 'Éxito al cancelar el reporte', msg: 'El reporte se ha cancelado' });
+        this.goBack()
+      } catch (error) {
+        this.btnAction.loader = false
+        console.log(error)
+      }
     },
 
     goBack() {

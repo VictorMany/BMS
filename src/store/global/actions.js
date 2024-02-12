@@ -81,11 +81,15 @@ export function addSttingsToLocalStorage(context, newData) {
 
 export function formatDate(date) {
     const initialDate = new Date(date);
-    // Ajustar la zona horaria a la de España (GMT+1)
-    const fechaLocal = new Date(initialDate.getTime() + initialDate.getTimezoneOffset() * 60000);
-    const optFormat = { day: 'numeric', month: 'long', year: 'numeric' };
-    const fechaFormateada = fechaLocal.toLocaleDateString('es-ES', optFormat);
-    return fechaFormateada;
+    if (!isNaN(initialDate)) {
+        // Ajustar la zona horaria a la de España (GMT+1)
+        const fechaLocal = new Date(initialDate.getTime() + initialDate.getTimezoneOffset() * 60000);
+        const optFormat = { day: 'numeric', month: 'long', year: 'numeric' };
+        const fechaFormateada = fechaLocal.toLocaleDateString('es-MX', optFormat);
+        return fechaFormateada;
+    } else {
+        return '';
+    }
 }
 
 function getModelSelected(item, valueFromServer) {
@@ -106,13 +110,15 @@ function getModelSelected(item, valueFromServer) {
         }
         return item
     } else if (item.key == 'reportStatus') {
-        if (valueFromServer) {
-            item.model = 'Pendiente'
+        if (valueFromServer == 'Pendiente') {
             item.color = '#FF9900'
-        } else {
-            item.model = 'Atendido'
+        } else if (valueFromServer == 'Resuelto') {
             item.color = '#1e65e8'
+        } else if (valueFromServer == 'Cancelado') {
+            item.color = '#dc4e5f'
         }
+        item.model = valueFromServer
+
         return item
     } else if (item.key == 'maintenanceType') {
         if (valueFromServer === 'preventivo') {

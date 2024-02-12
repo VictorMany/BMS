@@ -166,11 +166,14 @@ export default defineComponent({
     checkColor(status) {
       let color;
       switch (status) {
-        case 'Atendido':
+        case 'Resuelto':
           color = 'badge-attended';
           break;
         case 'Reportado':
           color = 'badge-pending';
+          break;
+        case 'Cancelado':
+          color = 'badge-cancelled';
           break;
         case 'Sin reportes':
           color = 'badge-positive';
@@ -241,6 +244,14 @@ export default defineComponent({
   font-weight: bolder !important;
   color: $secondary;
   background-color: rgba($secondary, 0.2);
+}
+
+.badge-cancelled {
+  width: 85px;
+  height: 25px;
+  font-weight: bolder !important;
+  color: $negative;
+  background-color: rgba($negative, 0.2);
 }
 
 .badge-positive {

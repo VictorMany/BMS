@@ -143,17 +143,6 @@ export default defineComponent({
             rules: [rules.requiredString, rules.maxLength(50), rules.alphanumeric],
           },
           {
-            key: 'equipmentStatus',
-            label: 'Estatus',
-            type: 'select',
-            model: null,
-            shouldShow: this.isEditing(),
-            options: [
-              { label: 'Activo', index: 1, value: 1 },
-              { label: 'Inactivo', index: 2, value: 0 },
-            ],
-          },
-          {
             key: 'price',
             label: 'Costo',
             model: '',
@@ -168,10 +157,29 @@ export default defineComponent({
             ],
           },
           {
+            key: 'nextMaintenanceDate',
+            label: 'Próximo mantenimiento',
+            type: 'date',
+            model: '',
+            readonly: true,
+            shouldShow: this.isEditing(),
+          },
+          {
             key: 'warrantyDate',
             label: 'Fecha de garantía',
             type: 'date',
             model: '',
+          },
+          {
+            key: 'equipmentStatus',
+            label: 'Estatus',
+            type: 'select',
+            model: null,
+            shouldShow: this.isEditing(),
+            options: [
+              { label: 'Activo', index: 1, value: 1 },
+              { label: 'Inactivo', index: 2, value: 0 },
+            ],
           },
         ],
         right: [

@@ -114,18 +114,6 @@ export default defineComponent({
         ],
         left: [
           {
-            key: 'reportStatus',
-            label: 'Estatus',
-            type: 'select',
-            model: null,
-            shouldShow: this.isEditing(),
-            options: [
-              { label: 'Pendiente', status: true, value: true },
-              { label: 'Atendido', status: false, value: false },
-            ],
-            rules: [rules.requiredObject],
-          },
-          {
             key: 'reportUrgency',
             label: 'Prioridad',
             type: 'select',

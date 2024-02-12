@@ -44,10 +44,12 @@
                     class="h-100 w-100"
                     :rows="rows"
                     :columns="columns"
+                    v-model:row-selected="rowSelected"
                     :paginationProp="{
                       rowsPerPage: null
                     }"
                     :show-pagination="false"
+                    :actions-table="actionsTable"
                   />
                 </div>
 
@@ -134,6 +136,8 @@ export default defineComponent({
 
       rows: [],
 
+      rowSelected: {},
+
       form: {
         id: null,
         planName: '',
@@ -161,7 +165,7 @@ export default defineComponent({
         {
           name: 'location',
           label: 'Ubicación',
-          field: 'location',
+          field: 'locationName',
           align: 'left',
           sortable: true,
         },
@@ -171,7 +175,17 @@ export default defineComponent({
           field: 'serialNumber',
           align: 'center',
           sortable: true,
-        }
+        },
+        { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
+      ],
+
+      actionsTable: [
+        {
+          icnName: 'engineering',
+          icnSize: 'xs',
+          icnAction: 'Maintenance',
+          tooltip: 'Realizarle mantenimiento'
+        },
       ],
     };
   },
@@ -204,6 +218,18 @@ export default defineComponent({
       },
       immediate: true, // Para manejar el caso cuando el componente se carga inicialmente
     },
+
+    rowSelected: {
+      handler(val) {
+        console.log(val.id)
+
+        if (val.action === 'Maintenance') {
+          console.log(val.id)
+          this.goToMaintenance(val.id);
+        }
+      },
+      deep: true,
+    },
   },
 
   methods: {
@@ -219,6 +245,22 @@ export default defineComponent({
       this.form.equipments.forEach((e => {
         this.rows = [...this.rows, ...e.children]
       }))
+    },
+
+    async goToMaintenance(payload) {
+      console.log(payload)
+      // Delete from the LOCAL STORAGE IF EXIST
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+
+      // const report = JSON.parse(JSON.stringify(this.reports.find(e => e.id == payload)))
+
+      // report.Equipment.categoryName += ` - ${report.Equipment.equipmentModel} - No. serie: ${report.Equipment.serialNumber}`
+
+      // this.$store.commit('reports/MUTATE_REPORT', report)
+
+      this.$router.push({
+        name: 'add-maintenance'
+      });
     },
 
     getIdToEdit() {

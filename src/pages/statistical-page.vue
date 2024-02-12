@@ -322,7 +322,7 @@ export default defineComponent({
         data: {
           datasets: [
             {
-              label: 'Porcentaje de equipos atendidos por reporte de falla',
+              label: 'Porcentaje de equipos Resueltos por reporte de falla',
               data: [],
               backgroundColor: ['#FF5959', '#FF595920'],
               borderColor: ['#FF5959'],
@@ -427,32 +427,6 @@ export default defineComponent({
           label: 'Acciones',
           field: 'actions',
           align: 'center',
-        },
-      ],
-      rows: [
-        {
-          id: 1,
-          reason: 'Este es un reporte',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: '',
-        },
-        {
-          id: 2,
-          reason: 'Correctivo',
-          encharged_name: 'Luis Martínez Sierra',
-          date: '12-Jun-2022',
-          status: 'Pendiente',
-          actions: '',
-        },
-        {
-          id: 3,
-          reason: 'Este es un reporte',
-          encharged_name: 'Juan de Dios Balagarde',
-          date: '12-Jun-2022',
-          status: 'Atendido',
-          actions: '',
         },
       ],
       actionsTable: [

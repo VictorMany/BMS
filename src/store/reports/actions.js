@@ -50,6 +50,17 @@ export async function getReportAction(context, params) {
     })
 }
 
+export async function cancelReportAction(context, params) {
+    return service.cancelReport(params.id).then(async (response) => {
+        if (response.status == 200) {
+            return true
+        } else {
+            return response
+        }
+    })
+}
+
+
 export async function postReportAction(context, report) {
     // Those are the keys you need in your payload and find in the fields
     let keys = {

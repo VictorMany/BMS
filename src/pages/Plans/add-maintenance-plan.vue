@@ -346,7 +346,7 @@ export default defineComponent({
         {
           name: 'location',
           label: 'Ubicación',
-          field: 'location',
+          field: 'locationName',
           align: 'left',
           sortable: true,
         },

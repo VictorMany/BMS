@@ -10,7 +10,7 @@
         readonly
         stack-label
         :rules="item.rules"
-        @click="$refs.proxy.show()"
+        @click="item.readonly ? () => { } : $refs.proxy.show()"
     >
         <template v-slot:append>
             <q-btn
