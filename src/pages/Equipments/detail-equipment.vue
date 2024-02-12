@@ -51,11 +51,11 @@ export default defineComponent({
             label: 'Categoría del equipo',
             model: '',
           },
-          {
-            key: 'trackingNumber',
-            label: 'Número de control',
-            model: ''
-          },
+          // {
+          //   key: 'trackingNumber',
+          //   label: 'Número de control',
+          //   model: ''
+          // },
           {
             key: 'equipmentBrand',
             label: 'Marca',
