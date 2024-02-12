@@ -115,12 +115,6 @@ export default defineComponent({
             rules: [rules.requiredString, rules.maxLength(30), rules.alphanumeric],
           },
           {
-            key: 'trackingNumber',  //este valor lo llena back
-            label: 'Número de control',
-            readonly: this.isEditing(),
-            model: '',
-          },
-          {
             key: 'equipmentBrand',
             label: 'Marca',
             model: '',
