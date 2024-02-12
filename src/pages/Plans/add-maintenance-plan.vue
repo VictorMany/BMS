@@ -168,7 +168,7 @@
               />
             </div>
 
-            <div class="col-sm col-12 q-pt-md-md">
+            <div class="col-sm col-12 q-pt-md-lg">
               <div
                 v-if="sortedDates.length > 0"
                 class="form__item-label text-weight-thin"
