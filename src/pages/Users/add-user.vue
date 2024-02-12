@@ -230,8 +230,9 @@ export default defineComponent({
     restrictedMaxDate() {
       const currentDate = new Date();
       const currentYear = currentDate.getFullYear();
-      const month = currentDate.getMonth();
+      const month = currentDate.getMonth().toString().padStart(2, '0');
       const eighteenYearsAgo = currentYear - 18;
+
       return `${eighteenYearsAgo}/${month}`;
     },
 

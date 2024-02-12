@@ -7,62 +7,58 @@ const warning = new URL('../../src/assets/png/warning.png', import.meta.url).hre
 
 const api = axios.create({ baseURL: 'https://bmsystemll.com' })
 
-setAuthHeader(getTokenFromCookie()); // Establece las cabeceras de Axios con el token, si está disponible
+setAuthHeader(getTokenFromCookie());
 
 export default boot(({ app, router }) => {
-  // for use inside Vue files (Options API) through this.$axios and this.$api
-
   app.config.globalProperties.$axios = axios
-  // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
-  //       so you won't necessarily have to import axios in each vue file
-
   app.config.globalProperties.$api = api
-  // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
-  //   
 
   api.interceptors.response.use(function (response) {
     return response;
   }, function (error) {
-    if (error && error.response && error.response.status === 401) {
-      // send to LOGIN
-      Notify.create({
-        message: 'Su sesión ha caducado',
-        caption: 'Redireccionando a inicio de sesión',
-        classes: 'border-rounded alert-container',
-        avatar: warning
-      });
-      router.push({ name: 'login' });
-    } else if (!error.response) {
-      Notify.create({
-        message: 'Ocurrió una falla en la red',
-        caption: 'Inténtalo de nuevo más tarde',
-        classes: 'border-rounded alert-container'
-      });
-    } else if (error.response.status === 404) {
-      Notify.create({
-        message: 'El recurso no existe',
-        caption: 'Reporte este error',
-        classes: 'border-rounded alert-container',
-        avatar: warning
-      });
-    } else {
-      Notify.create({
-        message: 'Se produjo un error en la solicitud',
-        caption: error?.response?.data?.details ? error?.response?.data?.details : 'Inténtalo de nuevo más tarde',
-        classes: 'border-rounded alert-container',
-        avatar: warning
-      });
-      if (error?.response?.data?.message) {
-        Notify.create({
-          message: 'Se produjo un error en la solicitud',
-          caption: error.response.data.message,
-          classes: 'border-rounded alert-container',
-          avatar: warning
-        });
-      }
-    }
+    handleErrorResponse(error, router);
     return Promise.reject(error);
   });
 })
+
+function handleErrorResponse(error, router) {
+  const message = getErrorMessage(error);
+  const caption = getErrorCaption(error);
+
+  Notify.create({
+    message,
+    caption,
+    classes: 'border-rounded alert-container',
+    avatar: warning
+  });
+
+  if (shouldRedirectToLogin(error)) {
+    router.push({ name: 'login' });
+  }
+}
+
+function getErrorMessage(error) {
+  if (error && error.response && error.response.status === 404) {
+    return 'El recurso no existe';
+  } else if (!error.response) {
+    return 'Ocurrió una falla en la red';
+  } else {
+    return error?.response?.data?.message || 'Se produjo un error en la solicitud';
+  }
+}
+
+function getErrorCaption(error) {
+  if (!error.response) {
+    return 'Inténtalo de nuevo más tarde';
+  } else if (error.response.status === 401 && error.response?.data?.message === 'Credenciales inválidas') {
+    return 'Redireccionando a inicio de sesión';
+  } else {
+    return error?.response?.data?.details || 'Inténtalo de nuevo más tarde';
+  }
+}
+
+function shouldRedirectToLogin(error) {
+  return error && error.response && error.response.status === 401;
+}
 
 export { api }

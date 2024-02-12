@@ -19,7 +19,7 @@
     style="max-width: 1200px"
   >
 
-    <div class="col-12 col-lg-5 col-md-6 q-pb-xs">
+    <div class="col-12 col-lg-5 col-sm-6 q-pb-xs">
       <div class="row">
         <!-- TOP SECTION -->
         <div
@@ -110,7 +110,7 @@
     </div>
 
     <!-- RIGHT SECTION -->
-    <div class="col-12 col-md q-py-sm">
+    <div class="col-12 col-sm q-py-sm">
       <div
         v-for="(item, i) in fields.right"
         v-bind="item"

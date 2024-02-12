@@ -297,6 +297,12 @@
   display: none;
 }
 
+ul,
+ol {
+  padding-left: 1rem;
+}
+
+
 .border-rounded {
   border-radius: 0.6rem !important
 }

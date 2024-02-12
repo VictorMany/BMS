@@ -7,115 +7,41 @@
         :btn-close-window="btnCloseWindow"
       />
 
-      <div class="main-container-page">
+      <div class="main-container-page container-form">
         <q-scroll-area
-          class="full-height h-100"
+          class="fit h-100"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <div class="row justify-between">
-            <div class="col-12 col-md-7 q-pr-md">
-              <q-scroll-area
-                class="fit"
-                :thumb-style="{
-                  right: '1px',
-                  borderRadius: '5px',
-                  background: 'rgba(29, 100, 231, 0.2)',
-                  width: '5px',
-                  opacity: 1,
-                }"
-              >
-                <q-list>
-                  <div
-                    v-for="(item, i) in listRoles"
-                    :key="i"
-                  >
-                    <q-item class="q-mb-sm setting-item border-rounded flex items-center clickable">
-                      <q-item-section avatar>
-                        <q-avatar class="avatar-item">
-                          <img :src="getImageUrl(item.img)" />
-                        </q-avatar>
-                      </q-item-section>
-                      <q-item-section>
-                        <q-item-label class="setting-item__title">{{
-                          item.title
-                        }}</q-item-label>
-                        <q-item-label
-                          class="setting-item__subtitle"
-                          caption
-                        >{{
-                          item.subtitle
-                        }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </div>
-                </q-list>
-              </q-scroll-area>
-            </div>
-
-            <div class="separator border-line q-mr-md" />
-
-            <div class="col-12 col-md">
-              <div class="info__detail w-100 q-mb-md">
-                Crea un nuevo rol o selecciona uno de la lista para editarlo
-              </div>
-              <div class="w-100 q-pb-sm">
-                <div class="form__item-label text-weight-thin">
-                  Nombre del rol
-                </div>
-                <q-input
-                  class="form__input bg-accent"
-                  borderless
-                  dense
-                  v-model="role.title"
-                />
-              </div>
-
-              <div class="w-100 q-pb-sm">
-                <div class="form__item-label text-weight-thin">
-                  Descripción del rol
-                </div>
-                <q-input
-                  class="form__input bg-accent"
-                  borderless
-                  dense
-                  v-model="role.title"
-                />
-              </div>
-
-              <div
-                class="border-rounded border-line q-pa-md q-mt-md"
-                style="height: 50vh"
-              >
-                <div class="q-pb-sm form__item-label__title">
-                  Listado de permisos
-                </div>
-                <q-scroll-area
-                  class="fit"
-                  :thumb-style="{
-                    right: '6px',
-                    borderRadius: '5px',
-                    background: 'rgba(29, 100, 231, 0.2)',
-                    width: '5px',
-                    opacity: 1,
-                  }"
+          <div class="row">
+            <div class="col-12 col-md-10">
+              <q-list>
+                <div
+                  v-for="(item, i) in listRoles"
+                  :key="i"
                 >
-                  <q-tree
-                    node-key="label"
-                    class="checkbox-label font-tree"
-                    color="grey-8"
-                    text-color="blue-grey-4"
-                    :nodes="simple"
-                    v-model:ticked="ticked"
-                    :tick-strategy="tickStrategy"
-                    default-expand-all
-                  />
-                </q-scroll-area>
-              </div>
-              <div class="column items-end q-my-lg">
-                <btn-action v-bind="btnAction" />
-              </div>
+                  <q-item class="q-mb-sm setting-item border-rounded flex items-center clickable">
+                    <q-item-section avatar>
+                      <q-avatar class="avatar-item">
+                        <img :src="getImageUrl(item.img)" />
+                      </q-avatar>
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label class="setting-item__title">{{
+                        item.title
+                      }}</q-item-label>
+                      <q-item-label
+                        class="setting-item__subtitle"
+                        caption
+                      >{{
+                        item.subtitle
+                      }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </div>
+              </q-list>
             </div>
           </div>
+
         </q-scroll-area>
       </div>
     </div>
@@ -124,14 +50,12 @@
 
 <script>
 import { ref, defineComponent } from 'vue';
-import BtnAction from 'src/components/atomic/BtnAction.vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 
 export default defineComponent({
   name: 'EquipmentsPage',
   components: {
     HeaderActions,
-    BtnAction,
   },
   data() {
     return {

@@ -20,13 +20,13 @@
       class="row q-pa-sm"
       style="max-width: 1200px"
     >
-      <div class="col-12 col-lg-5 col-md-6 q-pb-xs">
+      <div class="col-12 col-lg-5 col-sm-6 q-pb-xs">
         <div class="row">
 
           <!-- TOP SECTION -->
           <div
             v-if="localTextfields.top.length > 0"
-            class="col-12 col-sm-10 col-md-12 q-pb-xs"
+            class="col-12 q-pb-xs"
           >
             <div
               v-for="(item, i) in localTextfields.top"
@@ -135,7 +135,7 @@
       </div>
 
       <!-- RIGHT SECTION -->
-      <div class="col-12 col-md q-py-sm">
+      <div class="col-12 col-sm q-py-sm">
         <div
           v-for="(item, i) in localTextfields.right"
           v-bind="item"
@@ -193,7 +193,7 @@
                   ? clearFileInput($refs.fileUpload)
                   : $refs.fileUpload.click()
                 ">
-                Carga una imagen desde tus archivos
+                Carga una imagen desde tus archivos (opcional)
               </span>
             </div>
           </div>

@@ -13,32 +13,36 @@
             opacity: 1,
           }"
         >
-          <q-list>
-            <div
-              v-for="(item, i) in listSettings"
-              @click="navigateTo(item.link)"
-              :key="i"
-            >
-              <q-item class="q-mb-sm setting-item border-rounded flex items-center">
-                <q-item-section avatar>
-                  <q-avatar class="avatar-item border-rounded">
-                    <img :src="getImageUrl(item.img)" />
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label class="setting-item__title">{{
-                    item.title
-                  }}</q-item-label>
-                  <q-item-label
-                    class="setting-item__subtitle"
-                    caption
-                  >{{
-                    item.subtitle
-                  }}</q-item-label>
-                </q-item-section>
-              </q-item>
+          <div class="row">
+            <div class="col-12 col-md-10">
+              <q-list>
+                <div
+                  v-for="(item, i) in listSettings"
+                  @click="navigateTo(item.link)"
+                  :key="i"
+                >
+                  <q-item class="q-mb-sm setting-item border-rounded flex items-center">
+                    <q-item-section avatar>
+                      <q-avatar class="avatar-item border-rounded">
+                        <img :src="getImageUrl(item.img)" />
+                      </q-avatar>
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label class="setting-item__title">{{
+                        item.title
+                      }}</q-item-label>
+                      <q-item-label
+                        class="setting-item__subtitle"
+                        caption
+                      >{{
+                        item.subtitle
+                      }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </div>
+              </q-list>
             </div>
-          </q-list>
+          </div>
         </q-scroll-area>
       </div>
     </div>

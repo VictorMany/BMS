@@ -42,9 +42,9 @@ export default defineComponent({
   },
   data() {
     return {
-      fields: {
-        loading: false,
+      loading: false,
 
+      fields: {
         createdAt: '',
         left: [
           {
@@ -122,14 +122,16 @@ export default defineComponent({
 
     async getUser() {
       this.loading = true
+      try {
+        const params = {
+          id: this.$route.params.id,
+          fields: this.fields
+        }
 
-      const params = {
-        id: this.$route.params.id,
-        fields: this.fields
+        await this.$store.dispatch('users/getUserAction', params)
+      } catch (error) {
+        this.loading = false
       }
-
-      await this.$store.dispatch('users/getUserAction', params)
-      this.loading = false
     },
   },
   mounted() {

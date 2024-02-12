@@ -93,6 +93,7 @@
                 Información del equipo
               </div>
               <div
+                v-if="equipment.photo"
                 class="q-mx-auto row q-my-sm"
                 :style="'width: 100%;'"
               >
@@ -154,6 +155,7 @@
               </div>
 
               <div
+                v-if="user.photo"
                 class="q-mx-auto row q-my-sm"
                 :style="'width: 100%;'"
               >

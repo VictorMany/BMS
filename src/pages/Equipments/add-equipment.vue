@@ -117,6 +117,7 @@ export default defineComponent({
           {
             key: 'trackingNumber',  //este valor lo llena back
             label: 'Número de control',
+            readonly: this.isEditing(),
             model: '',
           },
           {
@@ -171,7 +172,6 @@ export default defineComponent({
             label: 'Fecha de garantía',
             type: 'date',
             model: '',
-            rules: [rules.futureDate],
           },
         ],
         right: [
@@ -185,7 +185,7 @@ export default defineComponent({
           {
             key: 'observations',
             type: 'textarea',
-            label: 'Observaciones del equipo',
+            label: 'Observaciones del equipo (opcional)',
             required: false,
             model: '',
           }
