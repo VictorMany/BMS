@@ -67,7 +67,7 @@ export default defineComponent({
           img: 'account.png',
           link: {
             route: 'edit-user',
-            params: 1
+            params: 0
           }
         },
         {
@@ -124,7 +124,7 @@ export default defineComponent({
   },
   methods: {
     navigateTo(link) {
-      if (link.params) {
+      if (link.params || link.params === 0) {
         this.$router.push({
           name: link.route,
           params: {
@@ -136,17 +136,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style scoped lang="scss">
-// .body--light {
-//   .card-page {
-//     background: white;
-//   }
-// }
-
-.container-img {
-  object-fit: cover;
-  width: 178px;
-  height: 98px;
-}
-</style>

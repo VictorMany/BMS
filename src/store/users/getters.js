@@ -14,8 +14,13 @@ export function getUsersGetter(state) {
     return users
 }
 
+
 export function getPaginationGetter(state) {
     return state.pagination
+}
+
+export function getRoleGetter(state) {
+    return state.role
 }
 
 export function getUserGetter(state) {

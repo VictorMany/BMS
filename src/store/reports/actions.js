@@ -34,7 +34,7 @@ export async function getReportAction(context, params) {
             // We call the global action to format our payload
             context.commit('MUTATE_REPORT', response.data.contents.report)
             // We call the global action to format our payload
-            let payload
+            let payload = response
 
             if (params.fields) {
                 payload = await context.dispatch('global/formatDetails', {

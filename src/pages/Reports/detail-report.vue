@@ -46,7 +46,12 @@ export default defineComponent({
 
       fields: {
         createdAt: '',
-
+        extras: [
+          {
+            key: 'showBtn',
+            model: ''
+          }
+        ],
         top: [],
         left: [
           {
@@ -145,13 +150,21 @@ export default defineComponent({
     },
 
     async getReport() {
-      const params = {
-        id: this.$route.params.id,
-        fields: this.fields
-      }
+      try {
+        const params = {
+          id: this.$route.params.id,
+          fields: this.fields
+        }
 
-      await this.$store.dispatch('reports/getReportAction', params)
-      this.loading = false
+        await this.$store.dispatch('reports/getReportAction', params)
+
+        this.btnAction.show = this.fields.extras[0].model
+
+        this.loading = false
+      } catch (error) {
+        console.log(error)
+        this.loading = false
+      }
     },
   },
   created() {

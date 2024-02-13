@@ -12,7 +12,8 @@ export default class UserService {
 
     // Obtiene todos los usuarios
     static getUser(id) {
-        return api.get(this.endpoint + 'get/' + id);
+        if (Number(id)) return api.get(this.endpoint + 'get/' + id);
+        else return api.get(this.endpoint + 'get');
     }
 
     // Generar nuevo usuario

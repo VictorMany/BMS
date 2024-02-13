@@ -124,11 +124,12 @@ export default defineComponent({
       this.loading = true
       try {
         const params = {
-          id: this.$route.params.id,
+          id: this.$route.params.id ? this.$route.params.id : 0,
           fields: this.fields
         }
 
         await this.$store.dispatch('users/getUserAction', params)
+        this.loading = false
       } catch (error) {
         this.loading = false
       }

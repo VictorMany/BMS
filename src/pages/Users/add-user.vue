@@ -68,6 +68,13 @@ export default defineComponent({
         createdAt: this.getCreatedAt(),
         id: null,
 
+        extras: [
+          {
+            key: 'UserId',
+            model: ''
+          }
+        ],
+
         top: [
           {
             key: 'userName',
@@ -126,6 +133,7 @@ export default defineComponent({
             type: 'select',
             model: null,
             shouldShow: this.isEditing(),
+            readonly: true,
             options: [
               { label: 'Activo', status: true, value: true },
               { label: 'Inactivo', status: false, value: false },
@@ -151,6 +159,8 @@ export default defineComponent({
         ],
         bottom: [],
       },
+
+      userId: null
     };
   },
 
@@ -188,7 +198,17 @@ export default defineComponent({
           id: this.$route.params.id,
           fields: this.fields
         }
+
         await this.$store.dispatch('users/getUserAction', params)
+        this.userId = this.fields.extras[0].model
+
+        // console.log(this.fields)
+        // console.log(this.role)
+
+        this.updateFieldByKeyInAllArrays('userStatus', {
+          readonly: this.readOnlyStatusAdmin()
+        })
+
         this.loading = false
       } catch (error) {
         this.loading = false
@@ -200,7 +220,7 @@ export default defineComponent({
       this.btnAction.loader = true;
 
       try {
-        this.fields.id = this.$route.params.id
+        this.fields.id = this.userId
         const res = await this.$store.dispatch(
           'users/updateUserAction',
           this.fields
@@ -225,6 +245,56 @@ export default defineComponent({
           this.createUser()
         }
       }
+    },
+
+    readOnlyStatusAdmin() {
+      // const userRole = this.getModelValueByKey('userRole');
+
+      // // console.log(userRole.value, this.role, this.$route.params.id);
+      // // console.log(userRole.value == this.role, 'EL ROLE ES EL MISMO');
+      // // console.log(Number(this.$route.params.id) != 0, 'Existe un ID');
+
+      // // const rolesSonIguales = userRole.value == this.roleFromLogin;
+      // const idExiste = Number(this.$route.params.id) == 0;
+      // const readonly = (this.roleFromLogin === 1 && idExiste);
+
+      // // console.log('ROLES IGUALES', rolesSonIguales)
+      // // console.log('EXISTE ID', idExiste)
+      // // console.log('ES READONLY', readonly)
+
+      // return !readonly;
+    },
+
+    getModelValueByKey(key) {
+      // Busca la clave en todas las secciones del objeto fields
+      for (const sectionKey in this.fields) {
+        if (Object.prototype.hasOwnProperty.call(this.fields, sectionKey)) {
+          const elements = this.fields[sectionKey];
+
+          // Verifica si elements es iterable (un objeto iterable debería tener la propiedad Symbol.iterator)
+          if (elements && typeof elements[Symbol.iterator] === 'function') {
+            // Busca la clave en cada elemento de la sección
+            for (const element of elements) {
+              if (element.key === key) {
+                return element.model
+              }
+            }
+          }
+        }
+      }
+    },
+
+    updateFieldByKeyInAllArrays(key, updates) {
+      for (const arrayKey in this.fields) {
+        if (Array.isArray(this.fields[arrayKey])) {
+          const fieldEntry = this.fields[arrayKey].find(entry => entry.key === key);
+          if (fieldEntry) {
+            Object.assign(fieldEntry, updates);
+            return; // Termina la iteración después de encontrar la primera coincidencia
+          }
+        }
+      }
+      console.error(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
     },
 
     restrictedMaxDate() {
@@ -261,8 +331,17 @@ export default defineComponent({
 
     isEditing() {
       return this.$route.params.id ? true : false
-    }
+    },
   },
+
+
+  computed: {
+    roleFromLogin: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
+      },
+    },
+  }
 });
 </script>
 

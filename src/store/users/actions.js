@@ -76,6 +76,8 @@ export async function loginAction(context, form) {
             saveTokenToCookie(response.data.token);
             // add header to api authorization
             setAuthHeader(response.data.token);
+            //Mutate role in LS
+            context.commit('MUTATE_ROLE', response.data.Rol)
             return true
         } else {
             // Si la respuesta no fue exitosa, manejar el error
@@ -108,7 +110,6 @@ export async function updateUserAction(context, user) {
         }
     })
 }
-
 
 export function getUserGetter(state) {
     return state.user

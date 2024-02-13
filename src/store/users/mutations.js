@@ -18,6 +18,10 @@ export function MUTATE_USER(state, payload) {
     localStorage.setItem('user', JSON.stringify(payload))
 }
 
+export function MUTATE_ROLE(state, payload) {
+    state.role = payload
+    localStorage.setItem('role', JSON.stringify(payload))
+}
 
 export function UPDATE_USER(state, payload) {
     state.users = [...state.users, payload];

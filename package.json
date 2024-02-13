@@ -17,6 +17,8 @@
     "axios": "^0.21.4",
     "chart.js": "^4.2.1",
     "date-fns": "^3.2.0",
+    "particles.js": "^2.0.0",
+    "particlesjs": "^2.2.3",
     "qrcode.vue": "^3.4.1",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
