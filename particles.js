@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // eslint-disable-next-line no-undef
     particlesJS('particles-js', {
         particles: {
             number: {

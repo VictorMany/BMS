@@ -2,63 +2,74 @@
   <q-form
     ref="myForm"
     class="fullscreen q-pa-md flex flex-center"
+    style="background-color: transparent; !important"
   >
-    <div class="login__main-container">
-      <div class="login__top-container flex flex-center">
-        <div class="login__title">BMS</div>
-      </div>
-      <div class="h-100 w-100 flex flex-center">
-        <div class="login__bottom-container q-pa-lg">
-          <q-input
-            class="form__input-login q-px-md q-my-lg"
-            borderless
-            dense
-            type="mail"
-            hide-hint
-            bottom-slots
-            hide-bottom-space
-            stack-label
-            v-model="model.email"
-            :rules="[rules.validEmail, rules.requiredString]"
-            name="email"
-            label="Usuario"
-          >
-            <template v-slot:prepend>
-              <q-icon name="account_circle" />
-            </template>
-          </q-input>
+    <div
+      class="card-page login-page"
+      style="background-color: transparent; !important"
+    >
+      <div
+        class="flex flex-center align-center h-100 w-100"
+        style="background-color: transparent; !important"
+      >
+        <div class="login__main-container">
+          <div class="login__top-container flex flex-center">
+            <div class="login__title">BMS</div>
+          </div>
+          <div class="h-100 w-100 flex flex-center">
+            <div class="login__bottom-container q-pa-lg">
+              <q-input
+                class="form__input-login q-px-md q-my-lg"
+                borderless
+                dense
+                type="mail"
+                hide-hint
+                bottom-slots
+                hide-bottom-space
+                stack-label
+                v-model="model.email"
+                :rules="[rules.validEmail, rules.requiredString]"
+                name="email"
+                label="Usuario"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="account_circle" />
+                </template>
+              </q-input>
 
-          <q-input
-            ref="pass"
-            v-model="model.userPassword"
-            class="form__input-login q-px-md"
-            dense
-            borderless
-            hide-hint
-            bottom-slots
-            hide-bottom-space
-            stack-label
-            label="Contraseña"
-            autocomplete="new-password"
-            :type="show ? 'password' : 'text'"
-            :rules="[rules.requiredString]"
-            @keydown.enter="login"
-          >
-            <template v-slot:prepend>
-              <q-icon name="lock" />
-            </template>
-            <template v-slot:append>
-              <q-icon
-                @click="show = !show"
-                :name="visibilityIcon"
-              />
-            </template>
-          </q-input>
+              <q-input
+                ref="pass"
+                v-model="model.userPassword"
+                class="form__input-login q-px-md"
+                dense
+                borderless
+                hide-hint
+                bottom-slots
+                hide-bottom-space
+                stack-label
+                label="Contraseña"
+                autocomplete="new-password"
+                :type="show ? 'password' : 'text'"
+                :rules="[rules.requiredString]"
+                @keydown.enter="login"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="lock" />
+                </template>
+                <template v-slot:append>
+                  <q-icon
+                    @click="show = !show"
+                    :name="visibilityIcon"
+                  />
+                </template>
+              </q-input>
 
-          <label class="login__legend text-weight-thin q-ma-sm">Olvidaste la contraseña</label>
+              <label class="login__legend text-weight-thin q-ma-sm">Olvidaste la contraseña</label>
 
-          <div class="col login__submit flex flex-center">
-            <btn-action v-bind="btnAction" />
+              <div class="col login__submit flex flex-center">
+                <btn-action v-bind="btnAction" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -73,7 +84,6 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'EquipmentsPage',
-
   data() {
     return {
       model: {
@@ -119,6 +129,8 @@ export default defineComponent({
     },
   },
 });
+
+
 </script>
 
 
