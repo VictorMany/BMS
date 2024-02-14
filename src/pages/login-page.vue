@@ -1,17 +1,10 @@
 <template>
   <q-form
     ref="myForm"
-    class="fullscreen q-pa-md flex flex-center"
-    style="background-color: transparent; !important"
+    class="fullscreen q-pa-md flex flex-center bg-white main-container-page-dark"
   >
-    <div
-      class="card-page login-page"
-      style="background-color: transparent; !important"
-    >
-      <div
-        class="flex flex-center align-center h-100 w-100"
-        style="background-color: transparent; !important"
-      >
+    <div class="card-page login-page">
+      <div class="flex flex-center align-center h-100 w-100">
         <div class="login__main-container">
           <div class="login__top-container flex flex-center">
             <div class="login__title">BMS</div>
