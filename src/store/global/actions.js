@@ -121,7 +121,7 @@ function getModelSelected(item, valueFromServer) {
 
         return item
     } else if (item.key == 'maintenanceType') {
-        if (valueFromServer === 'preventivo') {
+        if (valueFromServer === 'Preventivo') {
             item.model = 'Preventivo'
             item.color = '#10D13A'
         } else {

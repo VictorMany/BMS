@@ -304,7 +304,7 @@ export default defineComponent({
     formatDate(date) {
       if (!date) {
         date = new Date();
-        date.setDate(date.getDate() - 1)
+        date.setDate(date.getDate())
       } else {
         date = new Date(date)
       }

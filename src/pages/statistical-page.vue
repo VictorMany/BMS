@@ -2,9 +2,9 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Estadísticas'" />
-      <div class="main-container-page card-color main-container-page-medium-dark h-90">
+      <div class="main-container-page card-color main-container-page-medium-dark">
         <q-scroll-area
-          class="fit"
+          class="fit h-100"
           :thumb-style="{
             right: '0px',
             borderRadius: '5px',
@@ -42,12 +42,27 @@
             <div class="col-12 col-md col-lg">
               <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm">
-                  Cumplimiento de Mantenimientos Preventivos Programados
+                  Porcentaje de mantenimientos correctivos
                 </div>
-                <div style="height: 200px; width: 190px">
+                <div class="container-graph">
                   <doghnut-chart
-                    :chart-data="complianceWithScheduledPreventiveMaintenances.data"
-                    :chart-options="complianceWithScheduledPreventiveMaintenances.options"
+                    :chart-data="correctiveMaintenancePercentage.data"
+                    :chart-options="correctiveMaintenancePercentage.options"
+                    :loaded="loaded"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md col-lg">
+              <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
+                <div class="card-graphics__title w-100 text-center q-pa-sm">
+                  Porcentaje de mantenimientos preventivos
+                </div>
+                <div class="container-graph">
+                  <doghnut-chart
+                    :chart-data="preventiveMaintenancePercentage.data"
+                    :chart-options="preventiveMaintenancePercentage.options"
                     :loaded="loaded"
                   />
                 </div>
@@ -59,7 +74,7 @@
                 <div class="card-graphics__title w-100 text-center q-pa-sm">
                   Atención a reportes por falla
                 </div>
-                <div style="height: 200px; width: 190px">
+                <div class="container-graph">
                   <doghnut-chart
                     :chart-data="attentionToFailurePercentage.data"
                     :chart-options="attentionToFailurePercentage.options"
@@ -72,24 +87,9 @@
             <div class="col-12 col-md col-lg">
               <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm">
-                  Reemplazo por obsolencia o daño
+                  Porcentaje de equipos por falla repentina
                 </div>
-                <div style="height: 200px; width: 190px">
-                  <doghnut-chart
-                    :chart-data="replacementDueToObsoleteOrDamagePercentage.data"
-                    :chart-options="replacementDueToObsoleteOrDamagePercentage.options"
-                    :loaded="loaded"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12 col-md col-lg">
-              <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
-                <div class="card-graphics__title w-100 text-center q-pa-sm ellipsis">
-                  Mantenimientos preventivos
-                </div>
-                <div style="height: 200px; width: 190px">
+                <div class="container-graph">
                   <doghnut-chart
                     :chart-data="suddenFailurePercentage.data"
                     :chart-options="suddenFailurePercentage.options"
@@ -174,7 +174,7 @@ export default defineComponent({
                 above: '#4FF2734D',
               },
               label: 'Este mes',
-              data: [300, -100, 450, 750, 450],
+              data: [300, -100, 450, 750],
             },
             {
               backgroundColor: '#4FF2F24D',
@@ -184,7 +184,7 @@ export default defineComponent({
                 above: '#4FF2F24D',
               },
               label: 'Mes anterior',
-              data: [600, 550, 750, 250, 700],
+              data: [600, 550, 0, 250],
             },
           ],
         },
@@ -259,7 +259,7 @@ export default defineComponent({
         },
       },
 
-      complianceWithScheduledPreventiveMaintenances: {
+      correctiveMaintenancePercentage: {
         data: {
           datasets: [
             {
@@ -289,7 +289,8 @@ export default defineComponent({
           },
         },
       },
-      replacementDueToObsoleteOrDamagePercentage: {
+
+      preventiveMaintenancePercentage: {
         data: {
           datasets: [
             {
@@ -463,6 +464,7 @@ export default defineComponent({
     },
 
     async getPercentage(data, chart) {
+      console.log('LA DATA', data)
       chart.data = {
         datasets: [
           {
@@ -478,14 +480,14 @@ export default defineComponent({
     async getStats() {
       const stats = await this.$store.dispatch('stats/getStatsAction');
 
-      const preventiveMaintenances = stats.additionalStatistics.complianceWithScheduledPreventiveMaintenances
+      const preventiveMaintenances = stats.additionalStatistics.correctiveMaintenancePercentage
       const attentionToReports = stats.additionalStatistics.attentionToFailurePercentage
-      const replacementForDamage = stats.additionalStatistics.replacementDueToObsoleteOrDamagePercentage
+      const replacementForDamage = stats.additionalStatistics.preventiveMaintenancePercentage
       const suddenFailurePercentage = stats.additionalStatistics.suddenFailurePercentage
 
-      await this.getPercentage(preventiveMaintenances, this.complianceWithScheduledPreventiveMaintenances)
+      await this.getPercentage(preventiveMaintenances, this.correctiveMaintenancePercentage)
       await this.getPercentage(attentionToReports, this.attentionToFailurePercentage)
-      await this.getPercentage(replacementForDamage, this.replacementDueToObsoleteOrDamagePercentage)
+      await this.getPercentage(replacementForDamage, this.preventiveMaintenancePercentage)
       await this.getPercentage(suddenFailurePercentage, this.suddenFailurePercentage)
 
       this.loaded = true
@@ -516,13 +518,13 @@ export default defineComponent({
 }
 
 
-@media only screen and (max-device-width: 1000px) {
+@media only screen and (max-width: 1000px) {
   .container-stats {
     max-width: 93.5vw;
   }
 }
 
-@media only screen and (max-device-width: 350px) {
+@media only screen and (max-width: 350px) {
   .container-stats {
     max-width: 88vw;
   }

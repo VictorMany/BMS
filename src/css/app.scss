@@ -360,6 +360,11 @@ ol {
   order: 1;
 }
 
+.container-graph {
+  height: 200px;
+  width: 180px;
+}
+
 // RESPONSIVITY
 @media only screen and (max-width : 1024px) {
   .btn-close-order {

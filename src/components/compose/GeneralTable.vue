@@ -266,13 +266,13 @@ export default defineComponent({
   color: #ffffff !important;
 }
 
-@media only screen and (max-device-height: 819px) {
+@media only screen and (max-height: 819px) {
   .my-sticky-header-table {
-    height: 92%;
+    height: 97%;
   }
 }
 
-@media only screen and (min-device-height: 820px) {
+@media only screen and (min-height: 820px) {
   .my-sticky-header-table {
     height: 100%;
   }

@@ -166,7 +166,7 @@
         </div>
         <div class="q-pa-sm w-100 h-100 border-line border-rounded">
           <div
-            class="col-12 q-pr-md form__label-area "
+            class="col-12 q-pr-md form__label-area"
             v-html="item.model"
           />
         </div>
