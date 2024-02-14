@@ -2,9 +2,9 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Estadísticas'" />
-      <div class="main-container-page card-color h-100">
+      <div class="main-container-page h-90">
         <q-scroll-area
-          class="fit h-90"
+          class="fit h-100"
           :thumb-style="{
             borderRadius: '5px',
             background: 'rgba(29, 100, 231, 0.2)',
@@ -13,7 +13,7 @@
           }"
         >
           <div class="row container-stats">
-            <div class="col-12 col-md">
+            <!-- <div class="col-12 col-md">
               <div class="card-graphics h-100 border-rounded">
                 <div class="card-graphics__title text-center q-pa-sm ellipsis">
                   Atención a reportes por falla
@@ -23,8 +23,25 @@
                   :chart-options="chartConfigReports.options"
                 />
               </div>
-            </div>
-            <div class="col-12 col-md">
+            </div> -->
+
+            <graph-component
+              class="col-12 col-md"
+              title-card="Atención a reportes por falla"
+              type="area"
+              :payload="chartConfigReports"
+              :loaded="loaded"
+            />
+
+            <graph-component
+              class="col-12 col-md"
+              title-card="Equipos médicos reemplazados por obsolencia o daño"
+              type="area"
+              :payload="chartConfigEquipments"
+              :loaded="loaded"
+            />
+
+            <!-- <div class="col-12 col-md">
               <div class="card-graphics h-100 border-rounded">
                 <div class="card-graphics__title text-center q-pa-sm">
                   Equipos médicos reemplazados por obsolencia o daño
@@ -34,11 +51,11 @@
                   :chart-options="chartConfigEquipments.options"
                 />
               </div>
-            </div>
+            </div> -->
           </div>
 
           <div class="row container-stats">
-            <div class="col-12 col-md col-lg">
+            <!-- <div class="col-12 col-md col-lg">
               <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm">
                   Porcentaje de mantenimientos correctivos
@@ -51,9 +68,25 @@
                   />
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="col-12 col-md col-lg">
+            <graph-component
+              class="col-12 col-md col-lg"
+              title-card="Porcentaje de mantenimientos correctivos"
+              type="doghnut"
+              :payload="correctiveMaintenancePercentage"
+              :loaded="loaded"
+            />
+
+            <graph-component
+              class="col-12 col-md col-lg"
+              title-card="Porcentaje de mantenimientos preventivos"
+              type="doghnut"
+              :payload="preventiveMaintenancePercentage"
+              :loaded="loaded"
+            />
+
+            <!-- <div class="col-12 col-md col-lg">
               <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm">
                   Porcentaje de mantenimientos preventivos
@@ -66,9 +99,9 @@
                   />
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="col-12 col-md col-lg">
+            <!-- <div class="col-12 col-md col-lg">
               <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm">
                   Porcentaje de atención a reportes por falla
@@ -81,9 +114,17 @@
                   />
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="col-12 col-md col-lg">
+            <graph-component
+              class="col-12 col-md col-lg"
+              title-card="Porcentaje de atención a reportes por falla"
+              type="doghnut"
+              :payload="attentionToFailurePercentage"
+              :loaded="loaded"
+            />
+
+            <!-- <div class="col-12 col-md col-lg">
               <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm">
                   Porcentaje de equipos por falla repentina
@@ -96,7 +137,15 @@
                   />
                 </div>
               </div>
-            </div>
+            </div> -->
+
+            <graph-component
+              class="col-12 col-md col-lg"
+              title-card="Porcentaje de atención a reportes por falla"
+              type="doghnut"
+              :payload="suddenFailurePercentage"
+              :loaded="loaded"
+            />
           </div>
 
           <div class="q-px-sm q-py-md not-show-in-mobile row w-100">
@@ -142,19 +191,21 @@
 <script>
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
-import AreaChart from 'src/components/compose/charts/AreaChart.vue';
-import DoghnutChart from 'src/components/compose/charts/DoghnutChart.vue';
+// import AreaChart from 'src/components/compose/charts/AreaChart.vue';
+// import DoghnutChart from 'src/components/compose/charts/DoghnutChart.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
+import GraphComponent from 'src/components/compose/charts/GraphComponent.vue';
 
 export default defineComponent({
   name: 'StatisticalPage',
   components: {
     HeaderActions,
-    AreaChart,
-    DoghnutChart,
+    // AreaChart,
+    // DoghnutChart,
     GeneralTable,
     BtnAction,
+    GraphComponent
   },
   data() {
     return {

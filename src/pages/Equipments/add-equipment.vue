@@ -125,7 +125,7 @@ export default defineComponent({
           },
           {
             key: 'provider',
-            label: 'Provedor',
+            label: 'Proveedor',
             model: '',
             readonly: this.isEditing(),
             rules: [rules.requiredString, rules.maxLength(50), rules.alphanumeric],

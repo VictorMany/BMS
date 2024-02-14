@@ -4,6 +4,7 @@
     :class="btnTitle ? 'q-pr-sm' : 'q-pa-none'"
     :unelevated="btnUnelevated"
     :outline="btnOutlined"
+    :disable="loader"
     :no-caps="btnCaps"
     :text-color="btnColor"
     :label="btnTitle ? btnTitle : ''"

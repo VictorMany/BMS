@@ -13,8 +13,7 @@
         :src="cardImg"
       />
       <q-card-section class="q-py-sm q-px-sm ellipsis w-100">
-
-        <div class="row flex align-center q-pb-xs">
+        <div class="row flex align-center q-pb-xs ellipsis">
           <q-tooltip
             v-if="isReported"
             :delay="100"

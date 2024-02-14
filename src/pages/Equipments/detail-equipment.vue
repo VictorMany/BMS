@@ -67,7 +67,7 @@ export default defineComponent({
           },
           {
             key: 'provider',
-            label: 'Provedor',
+            label: 'Proveedor',
             model: ''
           },
           {
