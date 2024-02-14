@@ -1,11 +1,10 @@
-const warning = new URL('../src/assets/png/warning.png', import.meta.url).href
-const success = new URL('../src/assets/png/success.png', import.meta.url).href
+const warning = new URL('../src/assets/png/warning.png', import.meta.url).href;
+const success = new URL('../src/assets/png/success.png', import.meta.url).href;
 
 export const rules = {
     requiredString: (val) => (typeof val === 'string' && val.trim().length > 0) || 'El campo es obligatorio',
     requiredObject: (val) => (typeof val === 'object' && val !== null) || 'El campo es obligatorio',
     requiredNumber: (val) => (val !== undefined && val !== null) || 'El campo es obligatorio',
-    numeric: (val) => !isNaN(val) || 'Ingresa un valor numérico',
     alpha: (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/.test(val) || 'El campo solo debe contener letras',
     alphanumeric: (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números',
     nonNegative: (val) => parseFloat(val) >= 0 || 'El costo debe ser mayor o igual a 0',
@@ -13,6 +12,15 @@ export const rules = {
     validYear: (val) => /^\d{4}$/.test(val) || 'Debe ser un año válido (formato: YYYY)',
     validEmail: (val) => /\S+@\S+\.\S+/.test(val) || 'Formato de correo electrónico inválido',
     validPhoneNumber: (val) => /^\d{10}$/.test(val) || 'El número de teléfono debe tener 10 dígitos',
+    numeric: (val) => {
+        if (isNaN(val)) {
+            return 'Ingresa un valor numérico';
+        } else if (/\d+e\d+/i.test(val)) {
+            return 'No se aceptan números en formato exponencial';
+        } else {
+            return true;
+        }
+    },
     maxLength(maxLength) {
         return (val) => (val.length <= maxLength) || `El campo no debe exceder ${maxLength} caracteres`;
     },
@@ -33,7 +41,11 @@ export const rules = {
     },
     requiredAutocomplete: (val) => {
         if (typeof val === 'string') {
-            return val.trim().length > 0 || 'El campo es obligatorio';
+            if (/^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val)) {
+                return val.trim().length > 0 || 'El campo es obligatorio';
+            } else {
+                return 'El campo solo debe contener letras y números';
+            }
         } else if (typeof val === 'object' && val !== null) {
             return val;
         } else {

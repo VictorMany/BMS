@@ -368,7 +368,7 @@ export default defineComponent({
       return this.$route.params.id ? true : false
     },
 
-    setModelCategory(val) {
+    async setModelCategory(val) {
       const category = this.categories.find((cat) => cat.categoryName === val)
       this.updateFieldByKeyInAllArrays('CategoryId', {
         model: category ? category : val

@@ -212,9 +212,9 @@ export default defineComponent({
           sortable: true,
         },
         {
-          name: 'date',
-          label: 'fecha de creacion',
-          field: 'date',
+          name: 'nextMaintenanceDate',
+          label: 'Siguiente mantenimiento',
+          field: 'nextMaintenanceDate',
           align: 'center',
           sortable: true,
         },
@@ -311,7 +311,8 @@ export default defineComponent({
           equipment: e.cardTitle,
           model: e.cardLabels[0].info,
           no_serie: e.cardLabels[1].info,
-          date: e.cardDate,
+          // date: e.cardDate,
+          nextMaintenanceDate: e.cardDate,
           status: e.status
         };
       });

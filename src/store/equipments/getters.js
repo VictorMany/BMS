@@ -9,7 +9,7 @@ export function getEquipmentsGetter(state) {
       { label: 'Modelo:', info: equipment.equipmentModel },
       { label: 'No. serie:', info: equipment.serialNumber },
     ],
-    cardDate: formatDate(equipment.createdAt), // CAMBIAR POR NEXTMAINTENANCE DATE
+    cardDate: formatDate(equipment.nextMaintenanceDate), // CAMBIAR POR NEXTMAINTENANCE DATE
 
     // FOR THE DETAILS MAINTENANCE AND REPORT
     label: equipment.categoryName,
