@@ -2,11 +2,10 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Estadísticas'" />
-      <div class="main-container-page card-color main-container-page-medium-dark">
+      <div class="main-container-page card-color h-100">
         <q-scroll-area
-          class="fit h-100"
+          class="fit h-90"
           :thumb-style="{
-            right: '0px',
             borderRadius: '5px',
             background: 'rgba(29, 100, 231, 0.2)',
             width: '5px',
@@ -72,7 +71,7 @@
             <div class="col-12 col-md col-lg">
               <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
                 <div class="card-graphics__title w-100 text-center q-pa-sm">
-                  Atención a reportes por falla
+                  Porcentaje de atención a reportes por falla
                 </div>
                 <div class="container-graph">
                   <doghnut-chart
@@ -100,7 +99,7 @@
             </div>
           </div>
 
-          <div class="q-px-md q-pt-sm not-show-in-mobile row w-100">
+          <div class="q-px-sm q-py-md not-show-in-mobile row w-100">
             <div class="col">
               <div
                 class="card-graphics__title text-start ellipsis"
@@ -121,7 +120,7 @@
             </div>
           </div>
 
-          <div class="q-pa-md not-show-in-mobile">
+          <div class="q-px-xs not-show-in-mobile">
             <general-table
               height="auto"
               class="w-100"
@@ -513,8 +512,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .container-stats {
-  padding: 10px;
   gap: 10px;
+  padding-bottom: 10px;
 }
 
 
