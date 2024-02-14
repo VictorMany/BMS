@@ -18,7 +18,7 @@
     class="row q-pa-sm"
     style="max-width: 1200px"
   >
-    <div class="w-100 q-px-xs q-py-sm">
+    <div class="w-100 q-px-sm q-py-sm">
       <div class="q-pa-sm border-rounded form__label-area bg-accent">
         <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
       </div>
