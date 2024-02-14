@@ -9,7 +9,7 @@
       />
       <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
-          class="h-90"
+          class="h-97"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <details-component
@@ -18,12 +18,6 @@
             type="user"
           />
         </q-scroll-area>
-        <div
-          class="col-12 form__date_container form__date column justify-center q-px-lg"
-          style="height: 6%"
-        >
-          <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
-        </div>
       </div>
     </div>
   </q-page>

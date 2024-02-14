@@ -9,7 +9,7 @@
 
       <div class="main-container-page container-form">
         <q-scroll-area
-          class="h-90"
+          class="h-97"
           :thumb-style="{
             right: '1px',
             borderRadius: '5px',

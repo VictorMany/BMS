@@ -18,6 +18,11 @@
     class="row q-pa-sm"
     style="max-width: 1200px"
   >
+    <div class="w-100 q-px-xs q-py-sm">
+      <div class="q-pa-sm border-rounded form__label-area bg-accent">
+        <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
+      </div>
+    </div>
 
     <div class="col-12 col-lg-5 col-sm-6 q-pb-xs">
       <div class="row">
@@ -161,12 +166,14 @@
         </div>
         <div class="q-pa-sm w-100 h-100 border-line border-rounded">
           <div
-            class="col-12 q-pr-md form__label-area"
+            class="col-12 q-pr-md form__label-area "
             v-html="item.model"
           />
         </div>
       </div>
     </div>
+
+
   </div>
 </template>
 
