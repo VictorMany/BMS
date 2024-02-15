@@ -1,17 +1,48 @@
 <template>
     <q-input
+        v-if="item.innerLabel"
         v-model="localModel"
-        :name="item.key"
         dense
         hide-hint
         bottom-slots
         hide-bottom-space
+        stack-label
+        borderless
+        :label="item.innerLabel"
+        :name="item.key"
         :readonly="item.readonly"
         :type="inputType"
         :rules="item.rules || []"
         :prefix="item.prefix || ''"
+    >
+        <template v-slot:append>
+            <q-icon
+                v-if="item.readonly"
+                name="lock"
+                size="xs"
+            />
+            <q-icon
+                v-if="item.type === 'password' && localModel.trim()"
+                @click="togglePasswordVisibility"
+                :name="visibilityIcon"
+            />
+        </template>
+    </q-input>
+
+    <q-input
+        v-else
+        v-model="localModel"
+        dense
+        hide-hint
+        bottom-slots
+        hide-bottom-space
         stack-label
         borderless
+        :name="item.key"
+        :readonly="item.readonly"
+        :type="inputType"
+        :rules="item.rules || []"
+        :prefix="item.prefix || ''"
     >
         <template v-slot:append>
             <q-icon

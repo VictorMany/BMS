@@ -291,9 +291,12 @@
   &__title {
     font-weight: 300;
     font-size: 13px;
-    border: solid #6a798588;
-    border-width: 0 0 1px 0;
   }
+}
+
+.border-bottom {
+  border-width: 0 0 1px 0 !important;
+  border: solid #6a798588;
 }
 
 .tabs-style {

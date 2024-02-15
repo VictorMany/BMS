@@ -4,7 +4,7 @@
       <header-actions :titlePage="'Estadísticas'" />
       <div class="main-container-page h-90">
         <q-scroll-area
-          class="fit h-100"
+          class="fit h-100 q-px-sm"
           :thumb-style="{
             borderRadius: '5px',
             background: 'rgba(29, 100, 231, 0.2)',
@@ -13,18 +13,6 @@
           }"
         >
           <div class="row container-stats">
-            <!-- <div class="col-12 col-md">
-              <div class="card-graphics h-100 border-rounded">
-                <div class="card-graphics__title text-center q-pa-sm ellipsis">
-                  Atención a reportes por falla
-                </div>
-                <area-chart
-                  :chart-data="chartConfigReports.data"
-                  :chart-options="chartConfigReports.options"
-                />
-              </div>
-            </div> -->
-
             <graph-component
               class="col-12 col-md"
               title-card="Atención a reportes por falla"
@@ -40,36 +28,9 @@
               :payload="chartConfigEquipments"
               :loaded="loaded"
             />
-
-            <!-- <div class="col-12 col-md">
-              <div class="card-graphics h-100 border-rounded">
-                <div class="card-graphics__title text-center q-pa-sm">
-                  Equipos médicos reemplazados por obsolencia o daño
-                </div>
-                <area-chart
-                  :chart-data="chartConfigEquipments.data"
-                  :chart-options="chartConfigEquipments.options"
-                />
-              </div>
-            </div> -->
           </div>
 
           <div class="row container-stats">
-            <!-- <div class="col-12 col-md col-lg">
-              <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
-                <div class="card-graphics__title w-100 text-center q-pa-sm">
-                  Porcentaje de mantenimientos correctivos
-                </div>
-                <div class="container-graph">
-                  <doghnut-chart
-                    :chart-data="correctiveMaintenancePercentage.data"
-                    :chart-options="correctiveMaintenancePercentage.options"
-                    :loaded="loaded"
-                  />
-                </div>
-              </div>
-            </div> -->
-
             <graph-component
               class="col-12 col-md col-lg"
               title-card="Porcentaje de mantenimientos correctivos"
@@ -86,36 +47,6 @@
               :loaded="loaded"
             />
 
-            <!-- <div class="col-12 col-md col-lg">
-              <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
-                <div class="card-graphics__title w-100 text-center q-pa-sm">
-                  Porcentaje de mantenimientos preventivos
-                </div>
-                <div class="container-graph">
-                  <doghnut-chart
-                    :chart-data="preventiveMaintenancePercentage.data"
-                    :chart-options="preventiveMaintenancePercentage.options"
-                    :loaded="loaded"
-                  />
-                </div>
-              </div>
-            </div> -->
-
-            <!-- <div class="col-12 col-md col-lg">
-              <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
-                <div class="card-graphics__title w-100 text-center q-pa-sm">
-                  Porcentaje de atención a reportes por falla
-                </div>
-                <div class="container-graph">
-                  <doghnut-chart
-                    :chart-data="attentionToFailurePercentage.data"
-                    :chart-options="attentionToFailurePercentage.options"
-                    :loaded="loaded"
-                  />
-                </div>
-              </div>
-            </div> -->
-
             <graph-component
               class="col-12 col-md col-lg"
               title-card="Porcentaje de atención a reportes por falla"
@@ -123,21 +54,6 @@
               :payload="attentionToFailurePercentage"
               :loaded="loaded"
             />
-
-            <!-- <div class="col-12 col-md col-lg">
-              <div class="card-graphics h-100 border-rounded q-pb-lg row justify-center">
-                <div class="card-graphics__title w-100 text-center q-pa-sm">
-                  Porcentaje de equipos por falla repentina
-                </div>
-                <div class="container-graph">
-                  <doghnut-chart
-                    :chart-data="suddenFailurePercentage.data"
-                    :chart-options="suddenFailurePercentage.options"
-                    :loaded="loaded"
-                  />
-                </div>
-              </div>
-            </div> -->
 
             <graph-component
               class="col-12 col-md col-lg"
@@ -148,12 +64,33 @@
             />
           </div>
 
-          <div class="q-px-sm q-py-md not-show-in-mobile row w-100">
-            <div class="col">
+          <div class="q-my-md row w-100">
+            <div class="card-graphics__title text-start ellipsis">
+              Indicadores clave
+            </div>
+          </div>
+
+          <div
+            class="q-my-md"
+            v-if="stats.statistics"
+          >
+            <div class="border-rounded bg-accent q-pa-md row">
               <div
-                class="card-graphics__title text-start ellipsis"
-                style="border: none"
+                v-for="(key, index) in Object.keys(stats.statistics)"
+                class="col-6 card-graphics__title q-pa-xs"
+                :key="index"
               >
+                {{ key }} :
+                <span class="text-primary">
+                  {{ stats.statistics[key] }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class=" not-show-in-mobile row w-100">
+            <div class="col">
+              <div class="card-graphics__title text-start ellipsis">
                 Últimos reportes
               </div>
             </div>
@@ -169,9 +106,9 @@
             </div>
           </div>
 
-          <div class="q-px-xs not-show-in-mobile">
+          <div class="q-py-md not-show-in-mobile">
             <general-table
-              height="auto"
+              height="100%"
               class="w-100"
               style="width: 100% !important;"
               :rows="reports"
@@ -369,6 +306,7 @@ export default defineComponent({
           },
         },
       },
+
       attentionToFailurePercentage: {
         data: {
           datasets: [
@@ -398,6 +336,7 @@ export default defineComponent({
           },
         },
       },
+
       suddenFailurePercentage: {
         data: {
           datasets: [
@@ -427,6 +366,7 @@ export default defineComponent({
           },
         },
       },
+
       btnAction: {
         title: 'Ver todos',
         style: {
@@ -503,6 +443,12 @@ export default defineComponent({
         return this.$store.getters['reports/getReportsGetter'];
       },
     },
+
+    stats: {
+      get() {
+        return this.$store.getters['stats/getStatsGetter'];
+      },
+    },
   },
 
   methods: {
@@ -528,12 +474,14 @@ export default defineComponent({
 
 
     async getStats() {
-      const stats = await this.$store.dispatch('stats/getStatsAction');
+      await this.$store.dispatch('stats/getStatsAction');
 
-      const preventiveMaintenances = stats.additionalStatistics.correctiveMaintenancePercentage
-      const attentionToReports = stats.additionalStatistics.attentionToFailurePercentage
-      const replacementForDamage = stats.additionalStatistics.preventiveMaintenancePercentage
-      const suddenFailurePercentage = stats.additionalStatistics.suddenFailurePercentage
+      console.log(this.stats)
+
+      const preventiveMaintenances = this.stats.additionalStatistics.correctiveMaintenancePercentage
+      const attentionToReports = this.stats.additionalStatistics.attentionToFailurePercentage
+      const replacementForDamage = this.stats.additionalStatistics.preventiveMaintenancePercentage
+      const suddenFailurePercentage = this.stats.additionalStatistics.suddenFailurePercentage
 
       await this.getPercentage(preventiveMaintenances, this.correctiveMaintenancePercentage)
       await this.getPercentage(attentionToReports, this.attentionToFailurePercentage)

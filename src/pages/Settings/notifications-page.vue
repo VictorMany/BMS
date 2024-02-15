@@ -57,10 +57,7 @@
             </div>
           </q-list>
           <div class="col-12 q-py-sm container-table-notifications">
-            <div
-              class="card-graphics__title q-mt-sm text-start ellipsis"
-              style="border: none"
-            >
+            <div class="card-graphics__title q-mt-sm text-start ellipsis">
               Historial de notificaciones
             </div>
 

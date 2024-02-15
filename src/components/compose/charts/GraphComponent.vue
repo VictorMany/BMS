@@ -8,17 +8,45 @@
             class="card-graphics h-100 border-rounded q-pb-lg row justify-center"
             style="position: relative;"
         >
-            <div class="card-graphics__title w-100 text-center q-pa-sm">
-                {{ titleCard }}
+            <div class="w-100 text-center q-pa-sm">
+                <input-component
+                    class="bg-accent form__input-small"
+                    :item="titleStat"
+                    :model="titleStat.model"
+                />
             </div>
 
-            <div>
-                <form-component
-                    ref="fieldsComponent"
-                    class="w-100 h-100"
-                    :loading="loading"
-                    :fields="fields"
-                />
+            <div class="q-pa-lg">
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-12 card-graphics__title border-bottom q-pa-sm">
+                                <input-component
+                                    class="form__input-small border-line"
+                                    :item="valor1"
+                                    :model="valor1.model"
+                                />
+                            </div>
+                            <div class="col-12 q-pa-sm">
+                                <input-component
+                                    class="form__input-small border-line"
+                                    :item="valor1"
+                                    :model="valor1.model"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto column justify-center">
+                        <div class="row">
+                            <div class="q-pa-sm">
+                                X
+                            </div>
+                            <div class="q-pa-sm border-rounded border-line">
+                                100
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <q-page-sticky
@@ -45,7 +73,7 @@
             class="card-graphics h-100 border-rounded q-pb-lg row justify-center"
             style="position: relative;"
         >
-            <div class="card-graphics__title w-100 text-center q-pa-sm">
+            <div class="card-graphics__title border-bottom w-100 text-center q-pa-sm">
                 {{ titleCard }}
             </div>
             <div class="container-graph">
@@ -80,7 +108,7 @@
         class="col-12 col-md"
     >
         <div class="card-graphics h-100 border-rounded">
-            <div class="card-graphics__title text-center q-pa-sm">
+            <div class="card-graphics__title border-bottom text-center q-pa-sm">
                 {{ titleCard }}
             </div>
             <area-chart
@@ -94,13 +122,13 @@
   
 <script>
 import { rules } from 'app/utils/utils';
-import FormComponent from '../FormComponent.vue';
 import AreaChart from './AreaChart.vue';
 import DoghnutChart from './DoghnutChart.vue';
+import InputComponent from 'src/components/atomic/Form/InputComponent.vue';
 
 export default {
     name: 'GraphComponent',
-    components: { DoghnutChart, AreaChart, FormComponent },
+    components: { DoghnutChart, AreaChart, InputComponent },
     props: {
         type: {
             type: String,
@@ -143,7 +171,21 @@ export default {
                         model: '',
                         readonly: true
                     }
-                ]
+                ],
+
+
+            },
+
+            titleStat: {
+                innerLabel: 'Nombre de la estadística',
+                type: 'autocomplete',
+                model: ''
+            },
+
+            valor1: {
+                innerLabel: 'Categoría del equipo',
+                type: 'autocomplete',
+                model: ''
             },
         }
     }
