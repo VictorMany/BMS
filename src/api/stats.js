@@ -8,4 +8,11 @@ export default class StatsService {
             params
         });
     }
+
+    static getgetPeriodicStatisticsStats(params) {
+        return api.get(this.endpoint + 'list', {
+            params
+        });
+    }
 }
+
