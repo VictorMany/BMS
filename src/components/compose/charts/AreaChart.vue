@@ -1,5 +1,6 @@
 <template>
   <LineChart
+    v-if="loaded"
     :data="chartData"
     :options="chartOptions"
   />
@@ -38,6 +39,11 @@ export default {
     chartOptions: {
       type: Object,
       default: () => { },
+    },
+    loaded: {
+      type: Boolean,
+      required: false,
+      default: false
     },
   },
 };

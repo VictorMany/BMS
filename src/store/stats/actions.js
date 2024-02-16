@@ -11,10 +11,15 @@ export async function getStatsAction(context, params) {
     })
 }
 
-export async function getPeriodicStatisticsAction(context, params) {
-    return service.getPeriodicStatistics(params).then(async (response) => {
+export async function getPeriodicStatsAction(context, params) {
+    return service.getPeriodicStats(params).then(async (response) => {
         if (response.status == 200) {
-            context.commit('MUTATE_PERIODIC_STATS', response.data.contents)
+            console.log(response.data.contents)
+            if (params.type === 'report')
+                context.commit('MUTATE_PERIODIC_REPORTS', response.data.contents)
+            else {
+                context.commit('MUTATE_PERIODIC_MAINTENANCES', response.data.contents)
+            }
             return response.data.contents;
         } else {
             return response

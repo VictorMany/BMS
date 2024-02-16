@@ -6,7 +6,7 @@
         <div
             v-if="showForm"
             class="card-graphics h-100 border-rounded q-pb-lg row justify-center"
-            style="position: relative;"
+            style="position: relative"
         >
             <div class="w-100 text-center q-pa-sm">
                 <input-component

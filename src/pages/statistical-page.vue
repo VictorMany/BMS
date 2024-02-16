@@ -15,18 +15,18 @@
           <div class="row container-stats">
             <graph-component
               class="col-12 col-md"
-              title-card="Atención a reportes por falla"
+              title-card="Reportes"
               type="area"
               :payload="chartConfigReports"
-              :loaded="loaded"
+              :loaded="loadedReports"
             />
 
             <graph-component
               class="col-12 col-md"
-              title-card="Equipos médicos reemplazados por obsolencia o daño"
+              title-card="Mantenimientos"
               type="area"
-              :payload="chartConfigEquipments"
-              :loaded="loaded"
+              :payload="chartConfigMaintenances"
+              :loaded="loadedMaintenances"
             />
           </div>
 
@@ -36,7 +36,7 @@
               title-card="Porcentaje de mantenimientos correctivos"
               type="doghnut"
               :payload="correctiveMaintenancePercentage"
-              :loaded="loaded"
+              :loaded="loadedStats"
             />
 
             <graph-component
@@ -44,7 +44,7 @@
               title-card="Porcentaje de mantenimientos preventivos"
               type="doghnut"
               :payload="preventiveMaintenancePercentage"
-              :loaded="loaded"
+              :loaded="loadedStats"
             />
 
             <graph-component
@@ -52,7 +52,7 @@
               title-card="Porcentaje de atención a reportes por falla"
               type="doghnut"
               :payload="attentionToFailurePercentage"
-              :loaded="loaded"
+              :loaded="loadedStats"
             />
 
             <graph-component
@@ -60,7 +60,7 @@
               title-card="Porcentaje de atención a reportes por falla"
               type="doghnut"
               :payload="suddenFailurePercentage"
-              :loaded="loaded"
+              :loaded="loadedStats"
             />
           </div>
 
@@ -74,16 +74,28 @@
             class="q-my-md"
             v-if="stats.statistics"
           >
-            <div class="border-rounded bg-accent q-pa-md row">
+            <div class="border-rounded card-graphics row q-pa-sm">
               <div
                 v-for="(key, index) in Object.keys(stats.statistics)"
-                class="col-6 card-graphics__title q-pa-xs"
+                class="col-12 col-sm-6 card-graphics__title q-pa-xs"
                 :key="index"
               >
-                {{ key }} :
-                <span class="text-primary">
-                  {{ stats.statistics[key] }}
-                </span>
+                <div
+                  class="row q-pa-xs border-rounded q-px-sm h-100"
+                  style="background-color:  rgba(16, 108, 144, 0.038)"
+                >
+                  <div
+                    class="col q-pa-xs"
+                    style="overflow-wrap: break-word;"
+                  >
+                    {{ key }}
+                  </div>
+                  <div class="col-auto flex flex-center">
+                    <span class="text-primary text-weight-bolder bg-accent border-rounded q-px-md q-py-xs">
+                      {{ stats.statistics[key] }}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -128,8 +140,6 @@
 <script>
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
-// import AreaChart from 'src/components/compose/charts/AreaChart.vue';
-// import DoghnutChart from 'src/components/compose/charts/DoghnutChart.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
 import GraphComponent from 'src/components/compose/charts/GraphComponent.vue';
@@ -138,8 +148,6 @@ export default defineComponent({
   name: 'StatisticalPage',
   components: {
     HeaderActions,
-    // AreaChart,
-    // DoghnutChart,
     GeneralTable,
     BtnAction,
     GraphComponent
@@ -147,11 +155,13 @@ export default defineComponent({
   data() {
     return {
       loadingReportsTable: true,
-      loaded: true,
+      loadedStats: false,
+      loadedReports: false,
+      loadedMaintenances: false,
 
       chartConfigReports: {
         data: {
-          labels: ['w 1', 'w 2', 'w 3', 'w 4'],
+          labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5'],
           datasets: [
             {
               backgroundColor: '#4FF2734D',
@@ -161,7 +171,7 @@ export default defineComponent({
                 above: '#4FF2734D',
               },
               label: 'Este mes',
-              data: [300, -100, 450, 750],
+              data: [],
             },
             {
               backgroundColor: '#4FF2F24D',
@@ -171,11 +181,10 @@ export default defineComponent({
                 above: '#4FF2F24D',
               },
               label: 'Mes anterior',
-              data: [600, 550, 0, 250],
+              data: [],
             },
           ],
         },
-
         options: {
           elements: {
             line: {
@@ -195,11 +204,22 @@ export default defineComponent({
               },
             },
           },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  const label = context.dataset.additionalInfo[context.dataIndex];
+                  return label;
+                },
+              },
+            }
+          },
         },
       },
-      chartConfigEquipments: {
+
+      chartConfigMaintenances: {
         data: {
-          labels: ['1', '2', '3', '4'],
+          labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5'],
           datasets: [
             {
               backgroundColor: '#B89AEA4D',
@@ -209,7 +229,7 @@ export default defineComponent({
                 above: '#B89AEA4D',
               },
               label: 'Este mes',
-              data: [300, -100, 450, 750, 450],
+              data: [],
             },
             {
               backgroundColor: '#4FAEF24D',
@@ -219,7 +239,7 @@ export default defineComponent({
                 above: '#4FAEF24D',
               },
               label: 'Mes anterior',
-              data: [600, 550, 750, 250, 700],
+              data: [],
             },
           ],
         },
@@ -242,6 +262,16 @@ export default defineComponent({
                 display: false,
               },
             },
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  const label = context.dataset.additionalInfo[context.dataIndex];
+                  return label;
+                },
+              },
+            }
           },
         },
       },
@@ -381,7 +411,7 @@ export default defineComponent({
         size: 'sm',
         icon: '',
       },
-      // Table
+
       columns: [
         {
           name: 'reason',
@@ -420,6 +450,7 @@ export default defineComponent({
           align: 'center',
         },
       ],
+
       actionsTable: [
         {
           icnName: 'read_more',
@@ -428,11 +459,14 @@ export default defineComponent({
           tooltip: 'Detalle de reporte',
         },
       ],
+
       rowSelected: {},
     };
   },
 
   mounted() {
+    this.getPeriodicReportsStats();
+    this.getPeriodicMaintenancesStats();
     this.getReports();
     this.getStats();
   },
@@ -449,6 +483,18 @@ export default defineComponent({
         return this.$store.getters['stats/getStatsGetter'];
       },
     },
+
+    reportsArea: {
+      get() {
+        return JSON.parse(JSON.stringify(this.$store.getters['stats/getPeriodicReportsGetter']));
+      },
+    },
+
+    maintenancesArea: {
+      get() {
+        return JSON.parse(JSON.stringify(this.$store.getters['stats/getPeriodicMaintenancesGetter']));
+      },
+    },
   },
 
   methods: {
@@ -460,7 +506,6 @@ export default defineComponent({
     },
 
     async getPercentage(data, chart) {
-      console.log('LA DATA', data)
       chart.data = {
         datasets: [
           {
@@ -472,11 +517,8 @@ export default defineComponent({
       }
     },
 
-
     async getStats() {
       await this.$store.dispatch('stats/getStatsAction');
-
-      console.log(this.stats)
 
       const preventiveMaintenances = this.stats.additionalStatistics.correctiveMaintenancePercentage
       const attentionToReports = this.stats.additionalStatistics.attentionToFailurePercentage
@@ -488,11 +530,48 @@ export default defineComponent({
       await this.getPercentage(replacementForDamage, this.preventiveMaintenancePercentage)
       await this.getPercentage(suddenFailurePercentage, this.suddenFailurePercentage)
 
-      this.loaded = true
+      this.loadedStats = true
     },
 
+
+    async getPeriodicReportsStats() {
+      await this.$store.dispatch('stats/getPeriodicStatsAction', {
+        type: 'report'
+      });
+
+      // Reiniciamos los datos para evitar duplicados
+      this.chartConfigReports.data.datasets[0].data = [];
+      this.chartConfigReports.data.datasets[1].data = [];
+
+      // Obtenemos los datos y la información adicional
+      this.chartConfigReports.data.datasets[0].data = this.reportsArea.currentMonth;
+      this.chartConfigReports.data.datasets[1].data = this.reportsArea.lastMonth;
+      this.chartConfigReports.data.datasets[0].additionalInfo = this.reportsArea.currentWeeks;
+      this.chartConfigReports.data.datasets[1].additionalInfo = this.reportsArea.lastWeeks;
+
+      this.loadedReports = true
+    },
+
+    async getPeriodicMaintenancesStats() {
+      await this.$store.dispatch('stats/getPeriodicStatsAction', {
+        type: 'maintenance'
+      });
+
+      // Reiniciamos los datos para evitar duplicados
+      this.chartConfigMaintenances.data.datasets[0].data = [];
+      this.chartConfigMaintenances.data.datasets[1].data = [];
+
+      // Obtenemos los datos y la información adicional
+      this.chartConfigMaintenances.data.datasets[0].data = this.maintenancesArea.currentMonth;
+      this.chartConfigMaintenances.data.datasets[1].data = this.maintenancesArea.lastMonth;
+      this.chartConfigMaintenances.data.datasets[0].additionalInfo = this.maintenancesArea.currentWeeks;
+      this.chartConfigMaintenances.data.datasets[1].additionalInfo = this.maintenancesArea.lastWeeks;
+
+      this.loadedMaintenances = true;
+    },
+
+
     goToDetails(payload) {
-      console.log('Ver detalle', payload);
       this.$router.push({ name: 'detail-report', params: { id: payload } });
     },
   },

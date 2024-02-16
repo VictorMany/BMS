@@ -5,6 +5,7 @@
       :data="chartData"
       :options="chartOptions"
     />
+
     <q-tooltip
       class="border-rounded"
       :style="`background-color: ${chartData.datasets[0].borderColor[0]}`"
@@ -15,12 +16,14 @@
     >
       {{ chartData.datasets[0].label }}
     </q-tooltip>
+
     <div
       v-if="chartData.text"
       class="label w-100 flex justify-center"
     >
       {{ chartData.text }}
     </div>
+
   </div>
 </template>
 
