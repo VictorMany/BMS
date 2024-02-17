@@ -229,18 +229,12 @@ export default {
         }
     },
 
-    mounted() {
-        // console.log(this.options)
-    },
-
     watch: {
         options: {
             handler(val) {
                 if (val) {
                     this.localOptions = Object.keys(this.options)
-                    console.log(this.localOptions)
                 }
-                // console.log(val)
             },
             deep: true
         }

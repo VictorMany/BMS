@@ -4,8 +4,6 @@
       ref="myForm"
       class="card-page"
     >
-
-
       <header-actions
         titlePage="Detalles del plan"
         :btn-action="btnAction"
@@ -14,91 +12,93 @@
 
       <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
-          class="h-90 q-pa-md"
+          class="h-97 q-pa-md"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <div
-            v-if="form.planName"
-            class="row items-center"
-          >
-            <div class="form__item-label text-weight-medium">
-              Nombre del plan
-            </div>
-            <div class="col-12 form__item-model text-weight-medium">
-              {{ form.planName }}
+          <div class="w-100 q-mb-sm">
+            <div class="q-pa-sm border-rounded form__label-area bg-accent">
+              <div>Fecha de creación: <strong>{{ form.createdAt }}</strong></div>
             </div>
           </div>
-
-          <div class="row d-flex justify-between">
-            <div class="col-12">
-              <div class="q-py-sm form__item-label text-weight-medium q-py-md">
-                Listado de equipos y fechas programadas de los mantenimientos
+          <div class="q-pa-xs">
+            <div
+              v-if="form.planName"
+              class="row items-center"
+            >
+              <div class="form__item-label text-weight-medium">
+                Nombre del plan
               </div>
-              <div
-                class="row"
-                style="gap: 20px;"
-              >
-                <div class="col-12 col-sm container-table-plans q-mt-sm">
-                  <general-table
-                    style="overflow: scroll;"
-                    class="h-100 w-100"
-                    :rows="rows"
-                    :columns="columns"
-                    v-model:row-selected="rowSelected"
-                    :paginationProp="{
-                      rowsPerPage: null
-                    }"
-                    :show-pagination="false"
-                    :actions-table="actionsTable"
-                  />
-                </div>
+              <div class="col-12 form__item-model text-weight-medium">
+                {{ form.planName }}
+              </div>
+            </div>
 
-                <div class="col-12 col-sm">
-                  <div
-                    v-for="( day, index ) in sortedDates"
-                    :key="index"
-                  >
+            <div class="row d-flex justify-between">
+              <div class="col-12">
+                <div class="q-py-sm form__item-label text-weight-medium q-py-md">
+                  Listado de equipos y fechas programadas de los mantenimientos
+                </div>
+                <div
+                  class="row"
+                  style="gap: 20px;"
+                >
+                  <div class="col-12 col-sm container-table-plans q-mt-sm">
+                    <general-table
+                      style="overflow: scroll;"
+                      class="w-100"
+                      :height="'auto'"
+                      :rows="rows"
+                      :columns="columns"
+                      v-model:row-selected="rowSelected"
+                      :paginationProp="{
+                        rowsPerPage: null
+                      }"
+                      :show-pagination="false"
+                      :actions-table="actionsTable"
+                    />
+                  </div>
+
+                  <div class="col-12 col-sm">
                     <div
-                      class="text-left chip-date border-rounded q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
+                      v-for="( day, index ) in sortedDates"
+                      :key="index"
                     >
-                      {{ calcDate(day) }}
-                    </div>
-                    <div
-                      style="font-size: 10px;"
-                      class="text-primary q-px-sm"
-                    >
-                      {{ index == 0 ? 'Primer día de mantenimientos' : '' }}
+                      <div
+                        class="text-left chip-date border-rounded q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
+                      >
+                        {{ calcDate(day) }}
+                      </div>
+                      <div
+                        style="font-size: 10px;"
+                        class="text-primary q-px-sm"
+                      >
+                        {{ index == 0 ? 'Primer día de mantenimientos' : '' }}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div
-            class="col-12"
-            v-if="form.observations"
-          >
-            <div class="form__item-label text-weight-medium q-py-md">
-              Observaciones
-            </div>
             <div
-              style="height: 80%;"
-              class="q-pa-sm border-line border-rounded"
+              class="col-12"
+              v-if="form.observations"
             >
+              <div class="form__item-label text-weight-medium q-py-md">
+                Observaciones
+              </div>
               <div
-                class="col-12 q-pr-md form__label-area"
-                v-html="form.observations"
-              />
+                style="height: 80%;"
+                class="q-pa-sm border-line border-rounded"
+              >
+                <div
+                  class="col-12 q-pr-md form__label-area"
+                  v-html="form.observations"
+                />
+              </div>
             </div>
           </div>
         </q-scroll-area>
-        <div
-          class="col-12 form__date_container form__date column justify-center q-px-lg"
-          style="height: 6%"
-        >
-          <div>Fecha de creación: <strong>{{ form.createdAt }}</strong></div>
-        </div>
       </div>
     </q-form>
   </q-page>
@@ -121,6 +121,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Editar plan',
+        iconName: 'edit',
         btnWidth: 'auto',
         loader: false,
         tooltip: 'Ir a editar plan de mantenimientos',

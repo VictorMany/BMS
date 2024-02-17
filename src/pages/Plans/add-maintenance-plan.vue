@@ -12,9 +12,26 @@
 
       <div class="main-container-page main-container-page-medium-dark container-form">
         <q-scroll-area
-          class="q-pa-md q-pa-lg-lg h-90"
+          class="q-pa-md q-pa-lg-lg h-97"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
+          <div class="w-100 q-mb-lg">
+            <div class="q-pa-sm border-rounded border-line form__label-area bg-accent">
+              <div>Fecha de creación: <strong>{{ form.createdAt }}</strong></div>
+            </div>
+          </div>
+
+          <div
+            class="form__item-label text-weight-medium q-my-lg q-pa-md border-rounded"
+            style="background-color: #008cff2b;"
+          >
+            1-. Elige un nombre para el plan y los equipos que desees incluir
+          </div>
+
+          <div class="col q-pr-md form__item-label text-weight-thin">
+            Nombre del plan
+          </div>
+
           <q-input
             v-model="form.planName"
             borderless
@@ -25,67 +42,66 @@
               rules.requiredString,
               rules.maxLength(50)
             ]"
-            class="form__input bg-accent"
-            label="Nombre del plan"
+            class="form__input bg-accent q-mb-lg"
           />
 
-          <div class="form__item-label text-weight-medium q-py-lg">
-            1-. Elige los equipos que quieras incluir en el plan
+          <div
+            class="row"
+            style="gap: 20px"
+          >
+            <div class="col-12 col-sm-auto col-md-4 border-line q-pa-sm border-rounded bg-accent">
+              <q-input
+                ref="filterRef"
+                v-model="filter"
+                borderless
+                dense
+                class="form__input q-input-equipments"
+                label="Buscar - Filtrar equipos"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    v-if="filter !== ''"
+                    name="clear"
+                    class="cursor-pointer"
+                    @click="resetFilter"
+                  />
+                </template>
+              </q-input>
+
+              <q-tree
+                v-model:ticked="form.equipmentIds"
+                class="font-tree"
+                no-transition
+                :nodes="localCategories"
+                tick-strategy="leaf"
+                node-key="id"
+                no-nodes-label="No hay equipos para mostrar"
+                label-key="label"
+                :filter="filter"
+                :filter-method="filterEquipments"
+                @lazy-load="getEquipmentsByCategory"
+              />
+            </div>
+
+            <div class="col-12 col-sm container-table-plans">
+              <general-table
+                class="w-100"
+                style="height: auto;"
+                :rows="rows"
+                :columns="columns"
+                :paginationProp="{
+                  rowsPerPage: null
+                }"
+                :show-pagination="false"
+              />
+            </div>
           </div>
 
-          <div>
-            <div
-              class="row"
-              style="gap: 20px"
-            >
-              <div class="col-12 col-sm-auto col-md-4 border-line q-pa-sm border-rounded">
-                <q-input
-                  ref="filterRef"
-                  v-model="filter"
-                  borderless
-                  dense
-                  class="form__input q-input-equipments"
-                  label="Buscar - Filtrar equipos"
-                >
-                  <template v-slot:append>
-                    <q-icon
-                      v-if="filter !== ''"
-                      name="clear"
-                      class="cursor-pointer"
-                      @click="resetFilter"
-                    />
-                  </template>
-                </q-input>
-
-                <q-tree
-                  v-model:ticked="form.equipmentIds"
-                  style="overflow-y: scroll; height: 50vh"
-                  class="font-tree"
-                  no-transition
-                  :nodes="localCategories"
-                  tick-strategy="leaf"
-                  node-key="id"
-                  no-nodes-label="No hay equipos para mostrar"
-                  label-key="label"
-                  :filter="filter"
-                  :filter-method="filterEquipments"
-                  @lazy-load="getEquipmentsByCategory"
-                />
-              </div>
-
-              <div class="col-12 col-sm container-table-plans">
-                <general-table
-                  style="overflow: scroll;"
-                  class="h-100 w-100"
-                  :rows="rows"
-                  :columns="columns"
-                  :paginationProp="{
-                    rowsPerPage: null
-                  }"
-                  :show-pagination="false"
-                />
-              </div>
-            </div>
+          <div
+            class="form__item-label text-weight-medium q-my-lg q-pa-md border-rounded"
+            style="background-color: #008cff2b;"
+          >
+            2-. Selecciona las fechas de los mantenimientos
           </div>
 
           <div
@@ -93,9 +109,6 @@
             style="gap: 20px"
           >
             <div class="col-sm-auto col-12">
-              <div class="form__item-label text-weight-medium q-py-lg">
-                2-. Selecciona las fechas de los mantenimientos
-              </div>
               <div
                 class="row q-mb-md"
                 style="max-width: 418px"
@@ -206,9 +219,13 @@
           </div>
 
           <div>
-            <div class="form__item-label text-weight-medium q-py-lg">
+            <div
+              class="form__item-label text-weight-medium q-my-lg q-pa-md border-rounded"
+              style="background-color: #008cff2b;"
+            >
               3-. Agrega algunas observaciones (opcional)
             </div>
+
             <div class="w-100">
               <q-editor
                 v-model="form.observations"
@@ -240,13 +257,6 @@
             </div>
           </div>
         </q-scroll-area>
-
-        <div
-          class="col-12 form__date_container form__date column justify-center q-px-lg"
-          style="height: 6%"
-        >
-          <div>Fecha de creación: <strong>{{ form.createdAt }}</strong></div>
-        </div>
       </div>
     </q-form>
   </q-page>
