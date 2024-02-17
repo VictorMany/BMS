@@ -10,6 +10,15 @@ export const rules = {
     nonNegative: (val) => parseFloat(val) >= 0 || 'El costo debe ser mayor o igual a 0',
     maxDecimalPlaces: (val) => (val.toString().indexOf('.') === -1 || val.toString().split('.')[1].length <= 2) || 'El campo no debe tener más de dos decimales',
     validYear: (val) => /^\d{4}$/.test(val) || 'Debe ser un año válido (formato: YYYY)',
+    validateYearNotGreaterThanCurrent: (val) => {
+        const currentYear = new Date().getFullYear();
+        return parseInt(val) <= currentYear || 'El año no puede ser mayor al actual';
+    },
+    validateYearNotLessThan100YearsAgo: (val) => {
+        const currentYear = new Date().getFullYear();
+        const minYear = currentYear - 100;
+        return parseInt(val) >= minYear || 'El año no puede ser menor a 100 años antes del actual';
+    },
     validEmail: (val) => /\S+@\S+\.\S+/.test(val) || 'Formato de correo electrónico inválido',
     validPhoneNumber: (val) => /^\d{10}$/.test(val) || 'El número de teléfono debe tener 10 dígitos',
     numeric: (val) => {

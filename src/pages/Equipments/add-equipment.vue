@@ -120,7 +120,11 @@ export default defineComponent({
             label: 'Año del equipo',
             type: 'number',
             readonly: this.isEditing(),
-            rules: [rules.validYear, rules.pastYear],
+            rules: [
+              rules.validYear,
+              rules.validateYearNotGreaterThanCurrent,
+              rules.validateYearNotLessThan100YearsAgo
+            ],
             model: '',
           },
           {
