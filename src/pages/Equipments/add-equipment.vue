@@ -154,7 +154,7 @@ export default defineComponent({
           },
           {
             key: 'warrantyDate',
-            label: 'Fecha de garantía',
+            label: 'Fecha de garantía (opcional)',
             type: 'date',
             model: '',
           },
