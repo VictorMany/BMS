@@ -14,7 +14,6 @@ export async function getStatsAction(context, params) {
 export async function getPeriodicStatsAction(context, params) {
     return service.getPeriodicStats(params).then(async (response) => {
         if (response.status == 200) {
-            console.log(response.data.contents)
             if (params.type === 'report')
                 context.commit('MUTATE_PERIODIC_REPORTS', response.data.contents)
             else {

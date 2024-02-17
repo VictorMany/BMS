@@ -2,7 +2,7 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Estadísticas'" />
-      <div class="main-container-page h-90">
+      <div class="main-container-page container-form">
         <q-scroll-area
           class="fit h-100 q-px-sm"
           :thumb-style="{
@@ -36,6 +36,8 @@
               title-card="Porcentaje de mantenimientos correctivos"
               type="doghnut"
               :payload="correctiveMaintenancePercentage"
+              :options="stats.statistics"
+              :selected-option="selectedOption1"
               :loaded="loadedStats"
             />
 
@@ -44,6 +46,8 @@
               title-card="Porcentaje de mantenimientos preventivos"
               type="doghnut"
               :payload="preventiveMaintenancePercentage"
+              :options="stats.statistics"
+              :selected-option="selectedOption2"
               :loaded="loadedStats"
             />
 
@@ -52,14 +56,18 @@
               title-card="Porcentaje de atención a reportes por falla"
               type="doghnut"
               :payload="attentionToFailurePercentage"
+              :options="stats.statistics"
+              :selected-option="selectedOption3"
               :loaded="loadedStats"
             />
 
             <graph-component
               class="col-12 col-md col-lg"
-              title-card="Porcentaje de atención a reportes por falla"
+              title-card="Porcentaje de equipos con falla repentina"
               type="doghnut"
               :payload="suddenFailurePercentage"
+              :options="stats.statistics"
+              :selected-option="selectedOption4"
               :loaded="loadedStats"
             />
           </div>
@@ -118,17 +126,17 @@
             </div>
           </div>
 
-          <div class="q-py-md not-show-in-mobile">
+          <div class="q-pt-md not-show-in-mobile">
             <general-table
-              height="100%"
-              class="w-100"
-              style="width: 100% !important;"
+              v-model:row-selected="rowSelected"
+              :show-pagination="false"
               :rows="reports"
               :columns="columns"
               :actions-table="actionsTable"
-              v-model:row-selected="rowSelected"
-              :show-pagination="false"
               :loading="loadingReportsTable"
+              height="100%"
+              class="w-100"
+              style="width: 100% !important;"
             />
           </div>
         </q-scroll-area>
@@ -158,6 +166,30 @@ export default defineComponent({
       loadedStats: false,
       loadedReports: false,
       loadedMaintenances: false,
+
+      selectedOption1: {
+        title: 'Porcentaje de mantenimientos correctivos',
+        modelA: 'Mantenimientos correctivos',
+        modelB: 'Total de mantenimientos',
+      },
+
+      selectedOption2: {
+        title: 'Porcentaje de mantenimientos preventivos',
+        modelA: 'Mantenimientos preventivos',
+        modelB: 'Total de mantenimientos',
+      },
+
+      selectedOption3: {
+        title: 'Porcentaje de atención a reportes por falla',
+        modelA: 'Mantenimientos correctivos',
+        modelB: 'Total de reportes',
+      },
+
+      selectedOption4: {
+        title: '',
+        modelA: 'Total de equipos reportados',
+        modelB: 'Total de equipos',
+      },
 
       chartConfigReports: {
         data: {
@@ -280,7 +312,7 @@ export default defineComponent({
         data: {
           datasets: [
             {
-              label: 'Porcentaje de cumplimiento de mantenimientos preventivos programados',
+              label: 'Porcentaje de mantenimientos correctivos',
               data: [],
               backgroundColor: ['#1e65e8', '#1e65e820'],
               borderColor: ['#1e65e8'],
@@ -311,7 +343,7 @@ export default defineComponent({
         data: {
           datasets: [
             {
-              label: 'Porcentaje de equipos reemplazados por obsolencia o daño',
+              label: 'Porcentaje de mantenimientos preventivos',
               data: [],
               backgroundColor: ['#5C59FF', '#5C59FF20'],
               borderColor: ['#5C59FF'],
@@ -341,7 +373,7 @@ export default defineComponent({
         data: {
           datasets: [
             {
-              label: 'Porcentaje de equipos Resueltos por reporte de falla',
+              label: 'Porcentaje de equipos atendidos a reportes por falla',
               data: [],
               backgroundColor: ['#FF5959', '#FF595920'],
               borderColor: ['#FF5959'],
@@ -371,7 +403,7 @@ export default defineComponent({
         data: {
           datasets: [
             {
-              label: 'Porcentaje de equipos por falla repentina',
+              label: 'Porcentaje de equipos con falla repentina',
               data: [],
               backgroundColor: ['#1AD4D4', '#1AD4D420'],
               borderColor: ['#1AD4D4'],

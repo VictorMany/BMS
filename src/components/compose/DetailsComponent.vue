@@ -61,7 +61,10 @@
             v-bind="item"
             :key="i"
           >
-            <div class="row items-center q-px-sm q-py-xs">
+            <div
+              v-if="item.model"
+              class="row items-center q-px-sm q-py-xs"
+            >
               <div
                 v-if="item.type != 'title'"
                 class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-thin"
@@ -69,14 +72,14 @@
                 {{ item.label }}
               </div>
               <div
-                v-if="item.model && item.type !== 'status'"
+                v-if="item.type !== 'status'"
                 class="col-12 col-sm form__item-model"
               >
                 {{ item.affix ? item.affix + item.model : item.model }}
               </div>
 
               <div
-                v-if="item.model && item.type === 'status'"
+                v-if="item.type === 'status'"
                 class="col-12 col-sm form__item-model"
               >
                 <q-chip

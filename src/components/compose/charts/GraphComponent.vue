@@ -21,17 +21,17 @@
                     <div class="col">
                         <div class="row">
                             <div class="col-12 card-graphics__title border-bottom q-pa-sm">
-                                <input-component
+                                <select-component
                                     class="form__input-small border-line"
-                                    :item="valor1"
-                                    :model="valor1.model"
+                                    :item="valueA"
+                                    :model="valueA.model"
                                 />
                             </div>
                             <div class="col-12 q-pa-sm">
-                                <input-component
+                                <select-component
                                     class="form__input-small border-line"
-                                    :item="valor1"
-                                    :model="valor1.model"
+                                    :item="valueB"
+                                    :model="valueB.model"
                                 />
                             </div>
                         </div>
@@ -125,10 +125,11 @@ import { rules } from 'app/utils/utils';
 import AreaChart from './AreaChart.vue';
 import DoghnutChart from './DoghnutChart.vue';
 import InputComponent from 'src/components/atomic/Form/InputComponent.vue';
+import SelectComponent from 'src/components/atomic/Form/SelectComponent.vue';
 
 export default {
     name: 'GraphComponent',
-    components: { DoghnutChart, AreaChart, InputComponent },
+    components: { DoghnutChart, AreaChart, InputComponent, SelectComponent },
     props: {
         type: {
             type: String,
@@ -146,47 +147,102 @@ export default {
             type: String,
             required: true,
         },
+        options: {
+            type: Object,
+            required: false,
+            default: () => { }
+        },
+        selectedOption: {
+            type: Object,
+            required: false,
+            default: () => { }
+        },
     },
 
     data() {
         return {
             showForm: false,
-
-            fields: {
-                top: [],
-                left: [
-                    {
-                        key: 'CategoryId',
-                        label: 'Categoría del equipo',
-                        type: 'autocomplete',
-                        itemFilter: this.filterCategories,
-                        setModel: this.setModelCategory,
-                        options: [],
-                        model: null,
-                        rules: [rules.requiredAutocomplete],
-                    },
-                    {
-                        key: 'categoryName',
-                        label: 'Categoría del equipo',
-                        model: '',
-                        readonly: true
-                    }
-                ],
-
-
-            },
+            localOptions: [],
 
             titleStat: {
                 innerLabel: 'Nombre de la estadística',
-                type: 'autocomplete',
-                model: ''
+                model: this.selectedOption?.title ? this.selectedOption.title : ''
             },
 
-            valor1: {
-                innerLabel: 'Categoría del equipo',
+            valueA: {
+                innerLabel: 'Dividendo',
                 type: 'autocomplete',
-                model: ''
+                options: this.localOptions,
+                itemFilter: this.filterValueA,
+                setModel: this.setModelValueA,
+                model: this.selectedOption?.modelA ? this.selectedOption.modelA : null,
+                rules: [rules.requiredAutocomplete],
             },
+
+            valueB: {
+                innerLabel: 'Divisor',
+                type: 'autocomplete',
+                options: this.localOptions,
+                itemFilter: this.filterValueB,
+                setModel: this.setModelValueB,
+                model: this.selectedOption?.modelB ? this.selectedOption.modelB : null,
+                rules: [rules.requiredAutocomplete],
+            },
+        }
+    },
+
+    methods: {
+        filterValueA(val, update) {
+            if (val === '') {
+                update(() => {
+                    this.valueA.options = this.localOptions
+                })
+                return
+            }
+            update(() => {
+                const needle = val.toLowerCase()
+                this.valueA.options.filter(v => v.toLowerCase().indexOf(needle) > -1)
+            })
+        },
+
+        filterValueB(val, update) {
+            if (val === '') {
+                update(() => {
+                    this.valueB.options = this.localOptions
+                })
+                return
+            }
+            update(() => {
+                const needle = val.toLowerCase()
+                this.valueB.options.filter(v => v.toLowerCase().indexOf(needle) > -1)
+            })
+        },
+
+        setModelValueA(val) {
+            const opt = this.localOptions.find((cat) => cat === val)
+            this.valueA.model = opt ? opt : val
+        },
+
+        setModelValueB(val) {
+            const opt = this.localOptions.find((loc) => loc === val)
+            this.valueB.model = opt ? opt : val
+        }
+    },
+
+    mounted() {
+        // console.log(this.options)
+    },
+
+    watch: {
+        options: {
+            handler(val) {
+                if (val) {
+                    this.localOptions = Object.keys(this.options)
+                    console.log(this.localOptions)
+                }
+                // console.log(val)
+            },
+            deep: true
         }
     }
 };

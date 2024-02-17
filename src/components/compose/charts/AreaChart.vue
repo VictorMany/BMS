@@ -4,6 +4,18 @@
     :data="chartData"
     :options="chartOptions"
   />
+
+  <div
+    v-else
+    class="q-pa-xl q-ma-sm text-center"
+  >
+    <q-spinner-pie
+      color="primary"
+      class="q-mt-lg"
+      size="4em"
+    />
+    <div class="text-primary q-ma-lg">Cargando ...</div>
+  </div>
 </template>
 
 <script>

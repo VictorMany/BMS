@@ -320,6 +320,14 @@ export default defineComponent({
       this.$router.go(-1);
     },
 
+    getDate() {
+      return this.$store.$store.getters['global/getDate']
+    },
+
+    isEditing() {
+      return this.$route.params.id ? true : false
+    },
+
     filterCategories(val, update) {
       if (val === '') {
         update(() => {
@@ -354,15 +362,7 @@ export default defineComponent({
       })
     },
 
-    getDate() {
-      return this.$store.$store.getters['global/getDate']
-    },
-
-    isEditing() {
-      return this.$route.params.id ? true : false
-    },
-
-    async setModelCategory(val) {
+    setModelCategory(val) {
       const category = this.categories.find((cat) => cat.categoryName === val)
       this.updateFieldByKeyInAllArrays('CategoryId', {
         model: category ? category : val

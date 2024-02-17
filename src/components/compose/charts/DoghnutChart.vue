@@ -1,7 +1,9 @@
 <template>
-  <div class="container q-py-sm">
+  <div
+    v-if="loaded"
+    class="container q-py-sm"
+  >
     <Doughnut
-      v-if="loaded"
       :data="chartData"
       :options="chartOptions"
     />
@@ -23,7 +25,18 @@
     >
       {{ chartData.text }}
     </div>
+  </div>
 
+  <div
+    v-else
+    class="q-pa-md border-rounded q-my-md text-center"
+  >
+    <q-spinner-pie
+      color="primary"
+      class="q-mt-lg"
+      size="4em"
+    />
+    <div class="text-primary q-ma-lg">Cargando ...</div>
   </div>
 </template>
 
