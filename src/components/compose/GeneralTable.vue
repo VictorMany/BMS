@@ -1,86 +1,81 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <div
+  <q-table
     :style="`height: ${height}`"
-    class="general-table"
+    :row-key="rowKey"
+    :rows="rows"
+    :columns="columns"
+    :rows-per-page-options="[-1]"
+    :hide-pagination="!showPagination"
+    :loading="loading"
+    :class="{ 'sticky': !loading }"
+    class="table-style font-style my-sticky-header-table q-mt-none bg-white"
   >
-    <!-- v-model:pagination="pagination" -->
-    <q-table
-      :row-key="rowKey"
-      :rows="rows"
-      :columns="columns"
-      :rows-per-page-options="[-1]"
-      :hide-pagination="!showPagination"
-      :loading="loading"
-      :class="{ 'sticky': !loading }"
-      class="table-style font-style my-sticky-header-table q-mt-none bg-white"
-    >
-      <template v-slot:loading>
-        <q-inner-loading
-          showing
+    <template v-slot:loading>
+      <q-inner-loading
+        showing
+        color="primary"
+      >
+        <q-spinner-pie
           color="primary"
+          class="q-mt-lg"
+          size="4em"
+        />
+      </q-inner-loading>
+    </template>
+
+    <template v-slot:header="props">
+
+      <q-tr :props="props">
+        <q-th
+          v-for="col in props.cols"
+          :key="col.name"
+          :props="props"
+          class="column-style"
         >
-          <q-spinner-pie
-            color="primary"
-            class="q-mt-lg"
-            size="4em"
-          />
-        </q-inner-loading>
-      </template>
+          {{ col.label }}
+        </q-th>
+      </q-tr>
+    </template>
 
-      <template v-slot:header="props">
+    <template v-slot:pagination>
+      <div
+        v-if="showPagination"
+        class="row justify-center"
+      >
+        <q-pagination
+          v-model="pagination.page"
+          dense
+          class="q-mt-none pagination-style"
+          :max="pagination.pagesNumber"
+          size="md"
+          @update:model-value="changePagination"
+          direction-links
+        />
+      </div>
+    </template>
 
-        <q-tr :props="props">
-          <q-th
-            v-for="col in props.cols"
-            :key="col.name"
-            :props="props"
-            class="column-style"
-          >
-            {{ col.label }}
-          </q-th>
-        </q-tr>
-      </template>
+    <template v-slot:body-cell-actions="props">
+      <q-td :props="props">
+        <icon-action
+          v-for="(action, i) in actionsTable"
+          :key="i"
+          v-bind="action"
+          @click="rowClicked(props, action.icnAction)"
+        />
+      </q-td>
+    </template>
 
-      <template v-slot:pagination>
-        <div
-          v-if="showPagination"
-          class="row justify-center"
-        >
-          <q-pagination
-            v-model="pagination.page"
-            dense
-            class="q-mt-none pagination-style"
-            :max="pagination.pagesNumber"
-            size="md"
-            @update:model-value="changePagination"
-            direction-links
-          />
-        </div>
-      </template>
-
-      <template v-slot:body-cell-actions="props">
-        <q-td :props="props">
-          <icon-action
-            v-for="(action, i) in actionsTable"
-            :key="i"
-            v-bind="action"
-            @click="rowClicked(props, action.icnAction)"
-          />
-        </q-td>
-      </template>
-
-      <template v-slot:body-cell-status="props">
-        <q-td :props="props">
-          <q-badge
-            class="justify-center border-rounded"
-            :class="checkColor(props.value)"
-            :label="props.value"
-          />
-        </q-td>
-      </template>
-    </q-table>
-  </div>
+    <template v-slot:body-cell-status="props">
+      <q-td :props="props">
+        <q-badge
+          class="justify-center border-rounded"
+          :class="checkColor(props.value)"
+          :label="props.value"
+        />
+      </q-td>
+    </template>
+  </q-table>
 </template>
 
 <script>

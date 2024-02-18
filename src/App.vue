@@ -21,7 +21,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<!-- <style>
 ::-webkit-scrollbar {
   margin-bottom: 0rem;
   /* remove default margin */
@@ -34,4 +34,4 @@ export default defineComponent({
   background: transparent;
   /* Disable scrollbar Chrome/Safari/Webkit */
 }
-</style>
+</style> -->

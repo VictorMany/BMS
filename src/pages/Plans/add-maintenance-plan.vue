@@ -181,12 +181,12 @@
               />
             </div>
 
-            <div class="col-sm col-12 q-pt-md-lg">
+            <div class="col-sm col-12">
               <div
                 v-if="sortedDates.length > 0"
                 class="form__item-label text-weight-thin"
               >
-                Lista de fechas programadas
+                Lista de fechas agendadas
               </div>
 
               <div

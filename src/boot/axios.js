@@ -5,7 +5,7 @@ import { setAuthHeader } from 'src/api/auth';
 import { getTokenFromCookie } from 'app/utils/utils';
 const warning = new URL('../../src/assets/png/warning.png', import.meta.url).href
 
-const api = axios.create({ baseURL: 'https://bmsystemll.com' })
+const api = axios.create({ baseURL: 'https://be.bmsystemll.com' })
 
 setAuthHeader(getTokenFromCookie());
 
