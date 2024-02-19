@@ -15,14 +15,8 @@
           class="q-pa-md q-pa-lg-lg h-97"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <div class="w-100 q-mb-lg">
-            <div class="q-pa-sm border-rounded border-line form__label-area bg-accent">
-              <div>Fecha de creación: <strong>{{ form.createdAt }}</strong></div>
-            </div>
-          </div>
-
           <div
-            class="form__item-label text-weight-medium q-my-lg q-pa-md border-rounded"
+            class="form__item-label text-weight-medium q-mb-lg q-pa-md border-rounded"
             style="background-color: #008cff2b;"
           >
             1-. Elige un nombre para el plan y los equipos que desees incluir
@@ -312,21 +306,6 @@ export default defineComponent({
         maintenanceDates: []
       },
 
-      users: [
-        {
-          label: 'Angel Omar Torres Padilla',
-          value: 1
-        },
-        {
-          label: 'Andres Martínez Sierra',
-          value: 2
-        },
-        {
-          label: 'Víctor Pérez',
-          value: 3
-        }
-      ],
-
       filter: ref(''),
       filterRef: ref(null),
 
@@ -369,14 +348,9 @@ export default defineComponent({
         }
       ],
 
-      localCategories: []
-    };
-  },
-
-  setup() {
-    return {
+      localCategories: [],
       rules
-    }
+    };
   },
 
   created() {
@@ -695,9 +669,6 @@ export default defineComponent({
 .main-container-page {
   background-color: white;
 }
-
-
-
 
 .q-tree__node-header-content {
   font-size: 13px;

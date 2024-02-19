@@ -18,7 +18,7 @@ export async function getEquipmentAction(context, params) {
         if (response.status == 200) {
             // We call the global action to format our payload
             const equipment = response.data.contents.equipment
-            context.commit('MUTATE_EQUIPMENT', equipment)
+            context.commit('MUTATE_EQUIPMENT', { ...equipment, IdEquipment: params.id })
 
             let payload
 

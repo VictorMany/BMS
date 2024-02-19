@@ -249,19 +249,18 @@ export default defineComponent({
     },
 
     async goToMaintenance(payload) {
-      console.log(payload)
-      // Delete from the LOCAL STORAGE IF EXIST
       this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+      this.$store.commit('reports/MUTATE_REPORT', null)
 
-      // const report = JSON.parse(JSON.stringify(this.reports.find(e => e.id == payload)))
-
-      // report.Equipment.categoryName += ` - ${report.Equipment.equipmentModel} - No. serie: ${report.Equipment.serialNumber}`
-
-      // this.$store.commit('reports/MUTATE_REPORT', report)
+      await this.getEquipment(payload)
 
       this.$router.push({
         name: 'add-maintenance'
       });
+    },
+
+    async getEquipment(id) {
+      await this.$store.dispatch('equipments/getEquipmentAction', { id })
     },
 
     getIdToEdit() {

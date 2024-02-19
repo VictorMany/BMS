@@ -684,19 +684,21 @@ export default defineComponent({
   color: $primary;
 }
 
-// /**scrollbar in different browsers */
-// ::-webkit-scrollbar {
-//   margin-bottom: 0rem;
-//   /* remove default margin */
-//   scrollbar-width: none;
-//   /* Also needed to disable scrollbar Firefox */
-//   -ms-overflow-style: none;
-//   /* Disable scrollbar IE 10+ */
-//   overflow-y: scroll;
-//   width: 0px;
-//   background: transparent;
-//   /* Disable scrollbar Chrome/Safari/Webkit */
-// }
+*::-webkit-scrollbar {
+  height: 8px;
+  background: transparent;
+  margin-bottom: 0rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
+  width: 0px;
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(29, 100, 231, 0.2);
+  border-radius: 8px;
+}
 
 .container {
   position: relative;
