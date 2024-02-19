@@ -2,7 +2,7 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions
-        :titlePage="'Calendario'"
+        :titlePage="'Calendario de mantenimientos'"
         :btnAction="btnAction"
       />
       <!-- Main container -->
@@ -53,7 +53,8 @@
         <div class="col-md col-12 q-px-sm h-90">
           <div class="row flex items-center justify-between q-mb-sm">
             <div class="form__item-label text-weight-thin q-px-xs col">
-              Selecciona una fecha resaltada en el calendario y podrás ver los equipos con mantenimientos programados
+              Selecciona una fecha resaltada en el Calendario de mantenimientos y podrás ver los equipos con
+              mantenimientos programados
             </div>
             <btn-switch
               class="col-auto"
@@ -168,12 +169,12 @@ export default defineComponent({
         },
       ],
 
-      btnAction: {
+      btnAction: [{
         show: true,
         tooltip: 'Agregar nuevo plan',
         btnTitle: 'Crear plan de mantenimientos',
         to: 'add-maintenance-plan',
-      },
+      }],
 
       delaySearch: 300,
       searchModel: null,

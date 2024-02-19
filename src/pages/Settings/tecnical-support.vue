@@ -79,11 +79,11 @@ export default defineComponent({
   data() {
     return {
       Equipos: 40,
-      btnAction: {
+      btnAction: [{
         show: true,
         btnWidth: 'auto',
         iconName: 'send',
-      },
+      }],
       newMessage: '',
 
       btnCloseWindow: {

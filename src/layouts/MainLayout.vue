@@ -125,15 +125,15 @@
                   <div class="col-12  form__item-model q-mb-md">
                     {{ equipment?.categoryName }}
                   </div>
-                  <div class="col-12 form__item-label text-weight-thin">
+                  <!-- <div class="col-12 form__item-label text-weight-thin">
                     {{ 'Numero de control' }}
                   </div>
                   <div class="col-12  form__item-model q-mb-md">
                     {{ equipment?.trackingNumber }}
-                  </div>
+                  </div> -->
                 </div>
 
-                <div class="row justify-end">
+                <!-- <div class="row justify-end">
                   <qrcode-vue
                     :value="value"
                     :size="100"
@@ -142,7 +142,7 @@
                     :margin="3"
                     level="L"
                   />
-                </div>
+                </div> -->
               </div>
             </div>
 
@@ -204,7 +204,7 @@
                     {{ getRole.model(user?.userRole) }}
                   </div>
                 </div>
-
+                <!-- 
                 <div class="row justify-end">
                   <qrcode-vue
                     :value="value"
@@ -214,7 +214,7 @@
                     :margin="3"
                     level="L"
                   />
-                </div>
+                </div> -->
               </div>
             </div>
 
@@ -235,7 +235,7 @@
                     v-if="btn == 'divider'"
                     class="q-my-md"
                   />
-                  <div
+                  <!-- <div
                     class="container q-pa-none"
                     v-if="btn == 'qrcode'"
                   >
@@ -251,7 +251,7 @@
                     <div class="text column wrap justify-center items-center content-center q-pa-none border-rounded">
                       <btn-action v-bind="btnExport" />
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div v-if="btnCloseSesion.show">
@@ -275,7 +275,7 @@
 import { defineComponent } from 'vue';
 import BtnMenu from 'src/components/atomic/BtnMenu.vue';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
-import QrcodeVue from 'qrcode.vue';
+// import QrcodeVue from 'qrcode.vue';
 import { setAuthHeader } from 'src/api/auth';
 import { deleteTokenCookie } from 'app/utils/utils';
 
@@ -285,7 +285,7 @@ export default defineComponent({
   components: {
     BtnMenu,
     BtnAction,
-    QrcodeVue,
+    // QrcodeVue,
   },
 
   setup() {
@@ -356,7 +356,7 @@ export default defineComponent({
           background: '#F8F8F8',
         },
         {
-          title: 'Calendario',
+          title: 'Calendario de mantenimientos',
           link: 'calendar', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
@@ -404,7 +404,7 @@ export default defineComponent({
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
-        'divider',
+        // 'divider',
         'qrcode',
       ],
 
@@ -457,7 +457,7 @@ export default defineComponent({
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
-        'divider',
+        // 'divider',
         'qrcode',
       ],
       listSettings: [
@@ -543,7 +543,7 @@ export default defineComponent({
     async setMenu(route) {
       try {
         this.btnCloseSesion.show = false;
-        this.value = 'https://bms-omega.vercel.app' + route.fullPath;
+        this.value = 'www.bmsystemll.com' + route.fullPath;
 
         switch (route.name) {
           case 'reports':

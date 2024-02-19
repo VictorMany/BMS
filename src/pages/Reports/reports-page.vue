@@ -60,13 +60,13 @@ export default defineComponent({
         btnAction: this.goBack
       },
 
-      btnAction: {
+      btnAction: [{
         show: true,
         btnTitle: 'Agregar reporte',
         tooltip: 'Agregar nuevo reporte',
         btnAction: this.goToAddReport,
         btnWidth: 'auto'
-      },
+      }],
 
       actionsTable: [
         {
@@ -200,7 +200,10 @@ export default defineComponent({
 
     goToAddReport() {
       // Delete from the LOCAL STORAGE IF EXIST
-      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+      if (!this.$route.query.equipment) {
+        this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+      }
+
       this.$router.push({
         name: 'add-report'
       })

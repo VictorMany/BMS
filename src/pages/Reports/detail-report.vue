@@ -104,7 +104,7 @@ export default defineComponent({
         ],
       },
 
-      btnAction: {
+      btnAction: [{
         show: true,
         btnTitle: 'Cancelar reporte',
         iconName: 'cancel',
@@ -112,7 +112,7 @@ export default defineComponent({
         btnWidth: 'auto',
         btnAction: this.cancelReport,
         loader: false,
-      },
+      }],
 
       btnCloseWindow: {
         iconName: 'exit_to_app',

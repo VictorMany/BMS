@@ -17,10 +17,21 @@
     </div>
 
     <div
-      v-if="btnAction.show"
+      v-if="btnAction?.length > 0"
       class="col-xs-auto column content-end gt-xs"
     >
-      <btn-action v-bind="btnAction" />
+      <div class="row">
+        <div
+          v-for="(btn, i) in btnAction"
+          :key="i"
+          class="col-auto q-pl-sm"
+        >
+          <btn-action
+            v-if="btn.show"
+            v-bind="btn"
+          />
+        </div>
+      </div>
     </div>
 
     <div
@@ -31,14 +42,22 @@
     </div>
 
     <div
-      v-if="btnAction.show"
+      v-if="btnAction?.lenght > 0"
       class="col-xs-auto column content-end lt-sm"
       :class="{ 'q-ml-auto': !switchContent }"
     >
-      <btn-action
-        v-bind="btnAction"
-        :btn-title="''"
-      />
+      <div class="row">
+        <div
+          v-for="(btn, i) in btnAction"
+          :key="i"
+          class="col-auto q-pl-sm"
+        >
+          <btn-action
+            v-if="btn.show"
+            v-bind="btn"
+          />
+        </div>
+      </div>
     </div>
 
     <div
@@ -90,12 +109,9 @@ export default defineComponent({
       default: '',
     },
     btnAction: {
-      type: Object,
+      type: Array,
       required: false,
-      default: () => ({
-        show: false,
-        btnTitle: 'Agregar equipo',
-      }),
+      default: () => ([]),
     },
     btnCloseWindow: {
       type: Object,

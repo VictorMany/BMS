@@ -48,13 +48,13 @@ export default defineComponent({
 
       localPagination: {},
 
-      btnAction: {
+      btnAction: [{
         show: true,
         btnTitle: 'Agregar mantenimiento',
         tooltip: 'Agregar nuevo mantenimiento',
         btnAction: this.goToAddMaintenance,
         btnWidth: 'auto'
-      },
+      }],
 
       btnCloseWindow: {
         iconName: 'exit_to_app',
@@ -198,8 +198,11 @@ export default defineComponent({
 
     goToAddMaintenance() {
       // Delete from the LOCAL STORAGE IF EXIST
-      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
-      this.$store.commit('reports/MUTATE_REPORT', null)
+      if (!this.$route.query.equipment) {
+        this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+        this.$store.commit('reports/MUTATE_REPORT', null)
+      }
+
       this.$router.push({
         name: 'add-maintenance'
       })

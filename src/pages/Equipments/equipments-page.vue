@@ -131,12 +131,12 @@ export default defineComponent({
         category: '',
       },
 
-      btnAction: {
+      btnAction: [{
         show: true,
         btnTitle: 'Agregar equipo',
         tooltip: 'Agregar nuevo equipo',
         to: 'add-equipment',
-      },
+      }],
 
       inputSearch: {
         show: true,

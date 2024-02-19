@@ -89,14 +89,14 @@ export default defineComponent({
         ],
         bottom: [],
       },
-      btnAction: {
+      btnAction: [{
         show: true,
         btnTitle: 'Editar',
         iconName: 'edit',
         tooltip: 'Ir a editar usuario',
         to: this.getIdToEdit(),
         btnWidth: 'auto',
-      },
+      }],
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',

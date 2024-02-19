@@ -54,13 +54,13 @@ export default defineComponent({
 
       localPagination: {},
 
-      btnAction: {
+      btnAction: [{
         show: true,
         btnTitle: 'Agregar plan de mantenimiento',
         tooltip: 'Agregar nuevo plan',
         to: 'add-maintenance-plan',
         btnWidth: 'auto'
-      },
+      }],
 
       btnCloseWindow: {
         iconName: 'exit_to_app',

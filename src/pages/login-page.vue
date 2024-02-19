@@ -86,7 +86,7 @@ export default defineComponent({
       rules,
       show: true,
 
-      btnAction: {
+      btnAction: [{
         btnTitle: 'Iniciar sesión',
         btnColor: '#FFFFFF',
         btnWidth: '100%',
@@ -94,7 +94,7 @@ export default defineComponent({
         iconName: '',
         btnAction: this.login,
         btnBackground: this.$q.dark.isActive ? '#1e65e820' : '#1e65e8',
-      },
+      }],
     };
   },
   methods: {

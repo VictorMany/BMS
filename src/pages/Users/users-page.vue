@@ -139,12 +139,12 @@ export default defineComponent({
         },
       ],
 
-      btnAction: {
+      btnAction: [{
         show: true,
         tooltip: 'Agregar nuevo usuario',
         btnTitle: 'Agregar usuario',
         to: 'add-user',
-      },
+      }],
 
       columns: [
         {

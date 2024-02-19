@@ -127,14 +127,33 @@ export default defineComponent({
           }
         ],
       },
-      btnAction: {
-        show: true,
-        btnTitle: 'Editar',
-        iconName: 'edit',
-        tooltip: 'Ir a editar equipo',
-        to: this.getIdToEdit(),
-        btnWidth: 'auto'
-      },
+      btnAction: [
+        {
+          show: true,
+          btnTitle: 'Editar',
+          iconName: 'edit',
+          tooltip: 'Ir a editar equipo',
+          to: this.getIdToEdit(),
+          btnWidth: 'auto'
+        },
+        // {
+        //   show: true,
+        //   btnTitle: 'Reportar',
+        //   iconName: 'edit',
+        //   tooltip: 'Ir a editar equipo',
+        //   to: this.getIdToEdit(),
+        //   btnWidth: 'auto'
+        // },
+        // {
+        //   show: true,
+        //   btnTitle: 'Registrar mantenimiento',
+        //   iconName: 'edit',
+        //   tooltip: 'Ir a editar equipo',
+        //   to: this.getIdToEdit(),
+        //   btnWidth: 'auto'
+        // }
+      ],
+
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',

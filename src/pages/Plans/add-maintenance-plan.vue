@@ -277,7 +277,7 @@ export default defineComponent({
       delaySearch: 300,
       timeoutSearch: null,
 
-      btnAction: {
+      btnAction: [{
         show: true,
         btnTitle: 'Guardar',
         iconName: 'save',
@@ -285,7 +285,7 @@ export default defineComponent({
         loader: false,
         tooltip: 'Agregar plan de mantenimientos',
         btnAction: this.createOrEdit,
-      },
+      }],
 
       btnCloseWindow: {
         iconName: 'exit_to_app',
