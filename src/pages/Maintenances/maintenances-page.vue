@@ -48,13 +48,13 @@ export default defineComponent({
 
       localPagination: {},
 
-      btnAction: [{
+      btnAction: {
         show: true,
         btnTitle: 'Agregar mantenimiento',
         tooltip: 'Agregar nuevo mantenimiento',
         btnAction: this.goToAddMaintenance,
         btnWidth: 'auto'
-      }],
+      },
 
       btnCloseWindow: {
         iconName: 'exit_to_app',

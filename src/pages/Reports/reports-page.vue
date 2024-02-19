@@ -60,13 +60,13 @@ export default defineComponent({
         btnAction: this.goBack
       },
 
-      btnAction: [{
+      btnAction: {
         show: true,
         btnTitle: 'Agregar reporte',
         tooltip: 'Agregar nuevo reporte',
         btnAction: this.goToAddReport,
         btnWidth: 'auto'
-      }],
+      },
 
       actionsTable: [
         {

@@ -31,13 +31,12 @@ export default defineComponent({
   },
   data() {
     return {
-      Equipos: 40,
-      btnAction: [{
+      btnAction: {
         show: true,
         btnTitle: 'Guardar',
         to: 'settings',
         btnWidth: 'auto',
-      }],
+      },
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',

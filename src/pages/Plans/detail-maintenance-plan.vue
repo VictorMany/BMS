@@ -118,7 +118,7 @@ export default defineComponent({
   },
   data() {
     return {
-      btnAction: [{
+      btnAction: {
         show: true,
         btnTitle: 'Editar plan',
         iconName: 'edit',
@@ -126,7 +126,7 @@ export default defineComponent({
         loader: false,
         tooltip: 'Ir a editar plan de mantenimientos',
         to: this.getIdToEdit(),
-      }],
+      },
 
       btnCloseWindow: {
         iconName: 'exit_to_app',

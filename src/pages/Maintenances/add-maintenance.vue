@@ -36,7 +36,7 @@ export default defineComponent({
   },
   data() {
     return {
-      btnAction: [{
+      btnAction: {
         show: true,
         btnTitle: 'Guardar',
         iconName: 'save',
@@ -44,7 +44,7 @@ export default defineComponent({
         tooltip: 'Agregar mantenimiento',
         btnAction: this.createMaintenance,
         loader: false,
-      }],
+      },
 
       btnCloseWindow: {
         iconName: 'exit_to_app',

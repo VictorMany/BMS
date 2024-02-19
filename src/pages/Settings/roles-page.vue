@@ -133,13 +133,13 @@ export default defineComponent({
       role: {
         title: '',
       },
-      btnAction: [{
+      btnAction: {
         show: true,
         btnTitle: 'Guardar nuevo rol',
         iconName: 'save',
         to: 'settings',
         btnWidth: 'auto',
-      }],
+      },
     };
   },
   setup() {

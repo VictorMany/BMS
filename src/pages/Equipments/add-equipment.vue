@@ -42,7 +42,7 @@ export default defineComponent({
 
       localCategories: [],
 
-      btnAction: [{
+      btnAction: {
         show: true,
         btnTitle: 'Guardar',
         iconName: 'save',
@@ -50,7 +50,7 @@ export default defineComponent({
         tooltip: 'Guardar equipo',
         btnAction: this.createOrEdit,
         loader: false,
-      }],
+      },
 
       btnCloseWindow: {
         iconName: 'exit_to_app',
@@ -128,32 +128,33 @@ export default defineComponent({
             model: '',
           },
           {
-            key: 'nextMaintenanceDate',
-            label: 'Próximo mantenimiento',
-            type: 'date',
-            model: '',
-            readonly: true,
-            shouldShow: this.isEditing(),
-          },
-
-          {
             key: 'provider',
-            label: 'Proveedor (opcional)',
+            label: 'Proveedor',
             model: '',
+            readonly: this.isEditing(),
             rules: [rules.requiredString, rules.maxLength(50), rules.alphanumeric],
           },
           {
             key: 'price',
-            label: 'Costo (opcional)',
+            label: 'Costo',
             model: '',
             prefix: '$',
             type: 'number',
+            readonly: this.isEditing(),
             rules: [
               rules.requiredNumber,
               rules.numeric,
               rules.nonNegative,
               rules.maxDecimalPlaces
             ],
+          },
+          {
+            key: 'nextMaintenanceDate',
+            label: 'Próximo mantenimiento',
+            type: 'date',
+            model: '',
+            readonly: true,
+            shouldShow: this.isEditing(),
           },
           {
             key: 'warrantyDate',

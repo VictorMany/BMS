@@ -41,7 +41,7 @@ export default defineComponent({
     return {
       loading: false,
 
-      btnAction: [{
+      btnAction: {
         show: true,
         btnTitle: 'Guardar',
         iconName: 'save',
@@ -49,7 +49,7 @@ export default defineComponent({
         tooltip: 'Guardar reporte',
         btnAction: this.createOrEdit,
         loader: false,
-      }],
+      },
 
       btnCloseWindow: {
         iconName: 'exit_to_app',

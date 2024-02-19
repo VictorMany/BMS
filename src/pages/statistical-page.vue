@@ -429,7 +429,7 @@ export default defineComponent({
         },
       },
 
-      btnAction: [{
+      btnAction: {
         title: 'Ver todos',
         style: {
           paddingLeft: '0',
@@ -442,7 +442,7 @@ export default defineComponent({
           'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
         size: 'sm',
         icon: '',
-      }],
+      },
 
       columns: [
         {

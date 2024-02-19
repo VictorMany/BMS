@@ -169,12 +169,12 @@ export default defineComponent({
         },
       ],
 
-      btnAction: [{
+      btnAction: {
         show: true,
         tooltip: 'Agregar nuevo plan',
         btnTitle: 'Crear plan de mantenimientos',
         to: 'add-maintenance-plan',
-      }],
+      },
 
       delaySearch: 300,
       searchModel: null,
