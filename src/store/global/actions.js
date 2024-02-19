@@ -80,13 +80,17 @@ export function addSttingsToLocalStorage(context, newData) {
 }
 
 export function formatDate(date) {
-    const initialDate = new Date(date);
-    if (!isNaN(initialDate)) {
-        // Ajustar la zona horaria a la de España (GMT+1)
-        const fechaLocal = new Date(initialDate.getTime() + initialDate.getTimezoneOffset() * 60000);
-        const optFormat = { day: 'numeric', month: 'long', year: 'numeric' };
-        const fechaFormateada = fechaLocal.toLocaleDateString('es-MX', optFormat);
-        return fechaFormateada;
+    console.log('LA FECHA DE INICIO', date)
+    if (date) {
+        const initialDate = new Date(date);
+
+        if (!isNaN(initialDate)) {
+            // Ajustar la zona horaria a la de España (GMT+1)
+            const fechaLocal = new Date(initialDate.getTime() + initialDate.getTimezoneOffset() * 60000);
+            const optFormat = { day: 'numeric', month: 'long', year: 'numeric' };
+            const fechaFormateada = fechaLocal.toLocaleDateString('es-MX', optFormat);
+            return fechaFormateada;
+        }
     } else {
         return '';
     }

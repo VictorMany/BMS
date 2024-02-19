@@ -97,6 +97,12 @@ export default defineComponent({
           icnAction: 'Edit',
           tooltip: 'Editar plan',
         },
+        {
+          icnName: 'delete',
+          icnSize: 'xs',
+          icnAction: 'Remove',
+          tooltip: 'Eliminar plan',
+        },
       ],
 
       rowSelected: {},
@@ -125,6 +131,8 @@ export default defineComponent({
           this.goToEdit(val.id);
         } else if (val.action === 'Detail') {
           this.goToDetails(val.id);
+        } else if (val.action === 'Remove') {
+          this.removePlan(val.id);
         }
       },
       deep: true,
@@ -157,6 +165,14 @@ export default defineComponent({
       }
 
       this.loading = false
+    },
+
+    async removePlan(paylod) {
+      console.log(paylod)
+      this.localPagination = {
+        ...this.localPagination,
+        ...await this.$store.dispatch('maintenancePlans/getMaintenancePlansAction', this.params)
+      }
     },
 
     goToDetails(payload) {
