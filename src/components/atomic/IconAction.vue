@@ -1,5 +1,6 @@
 <template>
   <q-icon
+    v-if="shouldShow()"
     class="icn-style q-px-xs"
     :name="icnName"
     :unelevated="icnUnelevated"
@@ -35,6 +36,12 @@ export default defineComponent({
       required: false,
     },
 
+    hidden: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+
     icnAction: {
       type: String,
       default: () => '',
@@ -58,7 +65,21 @@ export default defineComponent({
       required: false,
       default: null,
     },
+
+    row: {
+      type: Object,
+      required: false,
+      default: () => ({})
+    }
   },
+
+  methods: {
+    shouldShow() {
+      if (this.hidden && this?.row?.row?.reportStatus != 'Pendiente') {
+        return false
+      } else return true
+    }
+  }
 });
 </script>
 
