@@ -35,7 +35,7 @@
 
             <div class="row d-flex justify-between">
               <div class="col-12">
-                <div class="q-py-sm form__item-label text-weight-medium q-py-md">
+                <div class="form__item-label text-weight-medium q-mt-lg q-mb-xs">
                   Listado de equipos y fechas programadas de los mantenimientos
                 </div>
                 <div
@@ -84,7 +84,7 @@
               class="col-12"
               v-if="form.observations"
             >
-              <div class="form__item-label text-weight-medium q-py-md">
+              <div class="form__item-label text-weight-medium q-mt-lg q-mb-sm">
                 Observaciones
               </div>
               <div
