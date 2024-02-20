@@ -136,6 +136,17 @@ export default defineComponent({
             shouldShow: this.isEditing(),
           },
           {
+            key: 'equipmentStatus',
+            label: 'Estatus*',
+            type: 'select',
+            model: null,
+            shouldShow: this.isEditing(),
+            options: [
+              { label: 'Activo', index: 1, value: 1 },
+              { label: 'Inactivo', index: 2, value: 0 },
+            ],
+          },
+          {
             key: 'provider',
             label: 'Proveedor',
             model: '',
@@ -164,18 +175,7 @@ export default defineComponent({
             label: 'Fecha de adquisición',
             type: 'date',
             model: '',
-          },
-          {
-            key: 'equipmentStatus*',
-            label: 'Estatus',
-            type: 'select',
-            model: null,
-            shouldShow: this.isEditing(),
-            options: [
-              { label: 'Activo', index: 1, value: 1 },
-              { label: 'Inactivo', index: 2, value: 0 },
-            ],
-          },
+          }
         ],
         right: [
           {
