@@ -356,7 +356,7 @@ export default defineComponent({
           background: '#F8F8F8',
         },
         {
-          title: 'Calendario de mantenimientos',
+          title: 'Calendarización',
           link: 'calendar', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
