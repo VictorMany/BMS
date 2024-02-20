@@ -97,7 +97,7 @@ export default defineComponent({
         inputLabel: 'Motivo',
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
-        heightModal: 250,
+        heightModal: 200,
         items: [
           {
             title: 'Motivo',
@@ -124,6 +124,11 @@ export default defineComponent({
             title: 'Encargado',
             filter: 'userName',
             icon: 'supervisor_account'
+          },
+          {
+            title: 'Categoría',
+            filter: 'category',
+            icon: 'badge'
           },
         ],
       },

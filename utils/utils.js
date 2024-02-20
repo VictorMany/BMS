@@ -6,7 +6,12 @@ export const rules = {
     requiredObject: (val) => (typeof val === 'object' && val !== null) || 'El campo es obligatorio',
     requiredNumber: (val) => (val !== undefined && val !== null) || 'El campo es obligatorio',
     alpha: (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/.test(val) || 'El campo solo debe contener letras',
-    alphanumeric: (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números',
+    alphanumeric: (val) => {
+        if (val) {
+            return /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
+        }
+        return true; // Si no hay un valor, no se aplica la regla
+    },
     nonNegative: (val) => {
         if (val) {
             return parseFloat(val) >= 0 || 'El costo debe ser mayor o igual a 0';

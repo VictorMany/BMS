@@ -80,6 +80,7 @@ export default defineComponent({
           icnSize: 'xs',
           icnAction: 'Maintenance',
           tooltip: 'Atender reporte',
+          hidden: true
           // hidden: row => !row.isReported
         },
       ],
