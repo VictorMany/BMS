@@ -469,7 +469,7 @@ export default defineComponent({
           sortable: true,
         },
         {
-          name: 'status',
+          name: 'badge',
           label: 'Estatus',
           field: 'status',
           align: 'center',

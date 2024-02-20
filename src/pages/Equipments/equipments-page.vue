@@ -218,7 +218,7 @@ export default defineComponent({
         //   align: 'center',
         //   sortable: true,
         // },
-        { name: 'status', label: 'Reportes', field: 'status', align: 'center', sortable: true },
+        { name: 'badge', label: 'Reportes', field: 'status', align: 'center', sortable: true },
         {
           name: 'actions',
           label: 'Acciones',
@@ -240,12 +240,6 @@ export default defineComponent({
           icnAction: 'Edit',
           tooltip: 'Editar equipo',
         },
-        {
-          icnName: 'engineering',
-          icnSize: 'xs',
-          icnAction: 'Maintenance',
-          tooltip: 'Realizarle mantenimiento',
-        },
       ],
     };
   },
@@ -261,8 +255,6 @@ export default defineComponent({
           this.goToEdit(val.id);
         } else if (val.action === 'Detail') {
           this.goToDetails(val.id);
-        } else if (val.action === 'Maintenance') {
-          this.goToMaintenance(val.id);
         }
       },
       deep: true,
@@ -332,16 +324,16 @@ export default defineComponent({
       this.loading = false
     },
 
-    async goToMaintenance(payload) {
-      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
-      this.$store.commit('reports/MUTATE_REPORT', null)
+    // async goToMaintenance(payload) {
+    //   this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+    //   this.$store.commit('reports/MUTATE_REPORT', null)
 
-      await this.getEquipment(payload)
+    //   await this.getEquipment(payload)
 
-      this.$router.push({
-        name: 'add-maintenance'
-      });
-    },
+    //   this.$router.push({
+    //     name: 'add-maintenance'
+    //   });
+    // },
 
     async getEquipment(id) {
       await this.$store.dispatch('equipments/getEquipmentAction', { id })

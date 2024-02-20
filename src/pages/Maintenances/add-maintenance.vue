@@ -61,7 +61,7 @@ export default defineComponent({
         top: [
           {
             key: 'idEquipment',
-            label: 'Equipo',
+            label: 'Equipo*',
             type: 'select',
             itemFilter: this.filterEquipments,
             options: [],
@@ -70,7 +70,7 @@ export default defineComponent({
           },
           {
             key: 'reason',
-            label: 'Motivo',
+            label: 'Motivo*',
             model: '',
             rules: [rules.requiredString],
           },
@@ -78,7 +78,7 @@ export default defineComponent({
         left: [
           {
             key: 'maintenanceType',
-            label: 'Tipo',
+            label: 'Tipo*',
             model: '',
             type: 'select',
             options: [
@@ -90,7 +90,7 @@ export default defineComponent({
 
           {
             key: 'cost',
-            label: 'Costo',
+            label: 'Costo*',
             type: 'number',
             prefix: '$',
             model: '',
@@ -101,14 +101,14 @@ export default defineComponent({
           {
             key: 'tools',
             type: 'textarea',
-            label: 'Herramientas',
+            label: 'Herramientas*',
             required: true,
             model: '',
           },
           {
             key: 'materials',
             type: 'textarea',
-            label: 'Materiales',
+            label: 'Materiales*',
             required: true,
             model: '',
           },
@@ -130,7 +130,7 @@ export default defineComponent({
           {
             key: 'observations',
             type: 'textarea',
-            label: 'Actividades y observaciones del mantenimiento (opcional)',
+            label: 'Actividades y observaciones del mantenimiento',
             required: false,
             model: '',
           }

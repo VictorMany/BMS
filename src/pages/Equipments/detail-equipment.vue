@@ -89,8 +89,8 @@ export default defineComponent({
             model: ''
           },
           {
-            key: 'updatedAt',
-            label: 'Fecha de modificación',
+            key: 'acquisitionDate',
+            label: 'Fecha de adquisición',
             type: 'formatedDate',
             model: ''
           },

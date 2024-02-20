@@ -23,7 +23,7 @@
           </div>
 
           <div class="col q-pr-md form__item-label text-weight-thin">
-            Nombre del plan
+            Nombre del plan*
           </div>
 
           <q-input
@@ -79,7 +79,7 @@
 
             <div class="col-12 col-sm container-table-plans">
               <general-table
-                class="w-100"
+                class="w-100 border-rounded"
                 style="height: auto;"
                 :rows="rows"
                 :columns="columns"
@@ -153,7 +153,7 @@
                 >
                   <span style="font-size: 16px; line-height: 1.2; vertical-align: middle;">ⓘ</span>
                   <span style="margin-left: 5px;">Usa la frecuencia para calcular automáticamente las fechas de
-                    mantenimiento a partir de una fecha inicial.</span>
+                    mantenimiento a partir de una fecha inicial en un periodo de 2 años.</span>
                 </div>
               </div>
 
@@ -217,7 +217,7 @@
               class="form__item-label text-weight-medium q-my-lg q-pa-md border-rounded"
               style="background-color: #008cff2b;"
             >
-              3-. Agrega algunas observaciones (opcional)
+              3-. Agrega algunas observaciones
             </div>
 
             <div class="w-100">
@@ -313,7 +313,8 @@ export default defineComponent({
         'Mensual',
         'Bimestral',
         'Trimestral',
-        'Semestral'
+        'Semestral',
+        'Anual'
       ],
 
       columns: [
@@ -553,8 +554,8 @@ export default defineComponent({
       const dates = [new Date(initialDate)];
       dates[0].setDate(dates[0].getDate() + 1);
 
-
       const currentYear = new Date().getFullYear();
+      const maxYear = currentYear + 2; // Ajuste para calcular fechas hasta dos años a partir del año actual
 
       let iterationsInYear;
       switch (frequency) {
@@ -569,6 +570,9 @@ export default defineComponent({
           break;
         case 'Semestral':
           iterationsInYear = 2;
+          break;
+        case 'Anual':
+          iterationsInYear = 1;
           break;
         default:
           console.error('Frecuencia no soportada');
@@ -585,14 +589,13 @@ export default defineComponent({
         return date;
       }
 
-
-      for (let i = 1; i < iterationsInYear; i++) {
+      for (let i = 1; i < iterationsInYear * 2; i++) { // Doble la iteración para calcular dos años
         // Añade un mes sin cambiar el día
         const newDate = addMonths(dates[i - 1], 12 / iterationsInYear);
         moveToDateIfWeekend(newDate);
-        // Añade la fecha solo si pertenece al año actual y no se encuentra ya en el array
+        // Añade la fecha solo si pertenece al rango de dos años y no se encuentra ya en el array
         if (
-          newDate.getFullYear() === currentYear &&
+          newDate.getFullYear() <= maxYear &&
           !dates.some(date => date.getTime() === newDate.getTime())
         ) {
           dates.push(newDate);
@@ -683,6 +686,13 @@ export default defineComponent({
   background-color: rgba($primary, 0.1);
   max-width: 300px;
   color: rgb(147, 150, 156);
+}
+
+.chip-date:hover {
+  transform: scale(1.01);
+  background-color: rgba($primary, 0.2);
+  ;
+  /* Se moverá 1rem (16px) hacia la derecha al hacer hover */
 }
 
 .avatar-item {

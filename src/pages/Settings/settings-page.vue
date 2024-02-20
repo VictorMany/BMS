@@ -89,7 +89,7 @@ export default defineComponent({
           link: 'roles'
         },
         {
-          title: 'Colores',
+          title: 'Tema principal',
           subtitle: 'Color de énfasis, color de tema',
           img: 'color.png',
           link: 'colors'

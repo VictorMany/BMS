@@ -122,6 +122,7 @@ export async function postEquipmentAction(context, equipment) {
         serialNumber: '',
         trackingNumber: '',
         warrantyDate: '',
+        acquisitionDate: '',
         photo: ''
     }
 
@@ -149,6 +150,8 @@ export async function updateEquipmentAction(context, equipment) {
         serialNumber: '',
         trackingNumber: '',
         warrantyDate: '',
+        provider: '',
+        acquisitionDate: '',
         photo: ''
     }
 

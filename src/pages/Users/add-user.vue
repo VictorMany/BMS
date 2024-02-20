@@ -71,7 +71,7 @@ export default defineComponent({
         top: [
           {
             key: 'userName',
-            label: 'Nombre del usuario',
+            label: 'Nombre del usuario*',
             readonly: this.isEditing(),
             rules: [
               rules.requiredString,
@@ -82,7 +82,7 @@ export default defineComponent({
           },
           {
             key: 'email',
-            label: 'Correo',
+            label: 'Correo*',
             type: 'email',
             readonly: this.isEditing(),
             model: '',
@@ -96,21 +96,21 @@ export default defineComponent({
         left: [
           {
             key: 'userPassword',
-            label: 'Contraseña',
+            label: 'Contraseña*',
             type: 'password',
             model: '',
             rules: [rules.requiredString],
           },
           {
             key: 'phone',
-            label: 'Teléfono',
+            label: 'Teléfono*',
             type: 'number',
             model: '',
             rules: [rules.validPhoneNumber, rules.requiredString],
           },
           {
             key: 'userRole',
-            label: 'Rol de usuario',
+            label: 'Rol de usuario*',
             type: 'select',
             model: null,
             options: [
@@ -122,7 +122,7 @@ export default defineComponent({
           },
           {
             key: 'userStatus',
-            label: 'Estatus',
+            label: 'Estatus*',
             type: 'select',
             model: null,
             shouldShow: this.isEditing(),
@@ -135,7 +135,7 @@ export default defineComponent({
           },
           {
             key: 'birthday',
-            label: 'Fecha de nacimiento',
+            label: 'Fecha de nacimiento*',
             type: 'date',
             model: null,
             readonly: this.isEditing(),

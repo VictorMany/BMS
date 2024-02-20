@@ -66,14 +66,14 @@ export default defineComponent({
           {
             key: 'userName',
             type: 'text',
-            label: 'Encargado',
+            label: 'Encargado*',
             model: null,
             readonly: this.isEditing(),
             shouldShow: this.isEditing()
           },
           {
             key: 'idEquipment',
-            label: 'Equipo',
+            label: 'Equipo*',
             type: 'select',
             options: [],
             model: null,
@@ -86,21 +86,21 @@ export default defineComponent({
           },
           {
             key: 'categoryName',
-            label: 'Categoría del equipo',
+            label: 'Categoría del equipo*',
             model: '',
             shouldShow: this.isEditing(),
             readonly: true
           },
           {
             key: 'equipmentModel',
-            label: 'Modelo del equipo',
+            label: 'Modelo del equipo*',
             model: '',
             shouldShow: this.isEditing(),
             readonly: true
           },
           {
             key: 'reason',
-            label: 'Motivo',
+            label: 'Motivo*',
             model: '',
             readonly: this.isEditing(),
             rules: [rules.requiredString],
@@ -109,7 +109,7 @@ export default defineComponent({
         left: [
           {
             key: 'reportUrgency',
-            label: 'Prioridad',
+            label: 'Prioridad*',
             type: 'select',
             readonly: this.isEditing(),
             model: null,
@@ -124,7 +124,7 @@ export default defineComponent({
         right: [
           {
             key: 'serialNumber',
-            label: 'Número de serie',
+            label: 'Número de serie*',
             readonly: true,
             model: '',
           },
@@ -139,7 +139,7 @@ export default defineComponent({
           {
             key: 'report',
             type: 'textarea',
-            label: 'Observaciones del reporte',
+            label: 'Detalles del reporte*',
             required: true,
             readonly: this.isEditing(),
             model: '',

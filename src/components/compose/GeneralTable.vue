@@ -66,10 +66,20 @@
       </q-td>
     </template>
 
-    <template v-slot:body-cell-status="props">
+    <template v-slot:body-cell-badge="props">
       <q-td :props="props">
         <q-badge
           class="justify-center border-rounded"
+          :class="checkColor(props.value)"
+          :label="props.value"
+        />
+      </q-td>
+    </template>
+
+    <template v-slot:body-cell-badge-priority="props">
+      <q-td :props="props">
+        <q-badge
+          class="justify-center border-rounded border-line"
           :class="checkColor(props.value)"
           :label="props.value"
         />
@@ -182,6 +192,16 @@ export default defineComponent({
         case 'Pendiente':
           color = 'badge-pending';
           break;
+        //Priorities 
+        case 'Alta':
+          color = 'badge-high';
+          break;
+        case 'Media':
+          color = 'badge-medium';
+          break;
+        case 'Baja':
+          color = 'badge-low';
+          break;
         default:
           color = 'badge-attended';
       }
@@ -255,7 +275,36 @@ export default defineComponent({
   font-weight: bolder !important;
   color: $positive;
   background-color: rgba($positive, 0.2);
+
 }
+
+.badge-high {
+  width: 85px;
+  height: 25px;
+  font-weight: bolder !important;
+  border-color: rgba(255, 47, 0, 0.3);
+  color: rgb(255, 47, 0);
+  background-color: transparent;
+}
+
+.badge-medium {
+  width: 85px;
+  height: 25px;
+  font-weight: bolder !important;
+  border-color: rgba(255, 94, 0, 0.3);
+  color: rgb(255, 94, 0);
+  background-color: transparent;
+}
+
+.badge-low {
+  width: 85px;
+  height: 25px;
+  font-weight: bolder !important;
+  border-color: rgba(255, 179, 0, 0.3);
+  color: rgb(255, 179, 0);
+  background-color: transparent;
+}
+
 
 .pagination-style {
   color: #ffffff !important;

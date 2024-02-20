@@ -24,6 +24,24 @@
     </div>
 
     <div
+      v-if="btnActions.length > 0"
+      class="col-xs-auto column content-end gt-xs"
+    >
+      <div class="row">
+        <div
+          v-for="(btn, i) in btnActions"
+          :key="i"
+          class="col-auto q-pl-sm"
+        >
+          <btn-action
+            v-if="btn.show"
+            v-bind="btn"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div
       v-if="switchContent"
       class="col-xs-auto q-ml-auto column content-end"
     >
@@ -96,6 +114,11 @@ export default defineComponent({
         show: false,
         btnTitle: 'Agregar equipo',
       }),
+    },
+    btnActions: {
+      type: Array,
+      required: false,
+      default: () => ([]),
     },
     btnCloseWindow: {
       type: Object,

@@ -80,7 +80,6 @@ export function addSttingsToLocalStorage(context, newData) {
 }
 
 export function formatDate(date) {
-    console.log('LA FECHA DE INICIO', date)
     if (date) {
         const initialDate = new Date(date);
 
@@ -152,10 +151,6 @@ function getModelSelected(item, valueFromServer) {
         item.model = valueFromServer ? item.model = 'Si' : item.model = 'Sin reportes'
         return item
     }
-    // else if (item.key == 'price') {
-    //     item.model = '$ ' + valueFromServer
-    //     return item
-    // } 
     else item.model = valueFromServer
     return item
 }

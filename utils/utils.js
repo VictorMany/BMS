@@ -7,7 +7,12 @@ export const rules = {
     requiredNumber: (val) => (val !== undefined && val !== null) || 'El campo es obligatorio',
     alpha: (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/.test(val) || 'El campo solo debe contener letras',
     alphanumeric: (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números',
-    nonNegative: (val) => parseFloat(val) >= 0 || 'El costo debe ser mayor o igual a 0',
+    nonNegative: (val) => {
+        if (val) {
+            return parseFloat(val) >= 0 || 'El costo debe ser mayor o igual a 0';
+        }
+        return true; // Si no hay un valor, no se aplica la regla
+    },
     maxDecimalPlaces: (val) => (val.toString().indexOf('.') === -1 || val.toString().split('.')[1].length <= 2) || 'El campo no debe tener más de dos decimales',
     validYear: (val) => /^\d{4}$/.test(val) || 'Debe ser un año válido (formato: YYYY)',
     validateYearNotGreaterThanCurrent: (val) => {
@@ -31,7 +36,12 @@ export const rules = {
         }
     },
     maxLength(maxLength) {
-        return (val) => (val.length <= maxLength) || `El campo no debe exceder ${maxLength} caracteres`;
+        return (val) => {
+            if (val !== undefined && val !== null) {
+                return (val.length <= maxLength) || `El campo no debe exceder ${maxLength} caracteres`;
+            }
+            return true; // Si no hay un valor, no se aplica la regla
+        };
     },
     adultAge: (val) => {
         const currentDate = new Date();

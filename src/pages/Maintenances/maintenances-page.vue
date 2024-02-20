@@ -65,13 +65,11 @@ export default defineComponent({
       },
 
       columns: [
-
         { name: 'encharged_name', label: 'Nombre del encargado', field: 'encharged_name', align: 'left', sortable: true },
-        { name: 'total_cost', label: 'Costo', field: 'total_cost', align: 'center', sortable: true },
+        { name: 'equipment', label: 'Equipo', field: 'equipment', align: 'left', sortable: true },
         { name: 'date', label: 'Fecha de mantenimiento', field: 'date', align: 'center', sortable: true },
-        // { name: 'status', label: 'Estatus', field: 'status', align: 'center', sortable: true },
         {
-          name: 'status',
+          name: 'badge',
           required: true,
           label: 'Tipo',
           align: 'center',
@@ -127,16 +125,6 @@ export default defineComponent({
             filter: 'userName',
             icon: 'supervisor_account'
           },
-          {
-            title: 'Costo mínimo',
-            filter: 'minCost',
-            icon: 'payments'
-          },
-          {
-            title: 'Costo máximo',
-            filter: 'maxCost',
-            icon: 'payments'
-          }
         ],
       },
 

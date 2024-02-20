@@ -248,6 +248,12 @@
         </div>
       </div>
 
+      <div class="col-12 text-center">
+        <div class="q-mt-sm form__item-label text-weight-medium text-primary">
+          Todos los campos con * son obligatorios
+        </div>
+      </div>
+
       <input
         ref="fileUpload"
         type="file"

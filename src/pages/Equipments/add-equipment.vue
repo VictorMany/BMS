@@ -66,7 +66,7 @@ export default defineComponent({
         top: [
           {
             key: 'CategoryId',
-            label: 'Categoría del equipo',
+            label: 'Categoría del equipo*',
             type: 'autocomplete',
             itemFilter: this.filterCategories,
             setModel: this.setModelCategory,
@@ -77,14 +77,14 @@ export default defineComponent({
           },
           {
             key: 'categoryName',
-            label: 'Categoría del equipo',
+            label: 'Categoría del equipo*',
             model: '',
             shouldShow: this.isEditing(),
             readonly: true
           },
           {
             key: 'LocationId',
-            label: 'Ubicación',
+            label: 'Ubicación*',
             type: 'autocomplete',
             model: null,
             itemFilter: this.filterLocations,
@@ -96,28 +96,28 @@ export default defineComponent({
         left: [
           {
             key: 'equipmentModel',
-            label: 'Modelo del equipo',
+            label: 'Modelo del equipo*',
             model: '',
             readonly: this.isEditing(),
             rules: [rules.requiredString, rules.maxLength(60), rules.alphanumeric],
           },
           {
             key: 'serialNumber',
-            label: 'Número de serie',
+            label: 'Número de serie*',
             model: '',
             readonly: this.isEditing(),
             rules: [rules.requiredString, rules.maxLength(30), rules.alphanumeric],
           },
           {
             key: 'equipmentBrand',
-            label: 'Marca',
+            label: 'Marca*',
             model: '',
             readonly: this.isEditing(),
             rules: [rules.requiredString, rules.maxLength(60), rules.alphanumeric],
           },
           {
             key: 'manufacturingYear',
-            label: 'Año del equipo',
+            label: 'Año del equipo*',
             type: 'number',
             readonly: this.isEditing(),
             rules: [
@@ -128,27 +128,6 @@ export default defineComponent({
             model: '',
           },
           {
-            key: 'provider',
-            label: 'Proveedor',
-            model: '',
-            readonly: this.isEditing(),
-            rules: [rules.requiredString, rules.maxLength(50), rules.alphanumeric],
-          },
-          {
-            key: 'price',
-            label: 'Costo',
-            model: '',
-            prefix: '$',
-            type: 'number',
-            readonly: this.isEditing(),
-            rules: [
-              rules.requiredNumber,
-              rules.numeric,
-              rules.nonNegative,
-              rules.maxDecimalPlaces
-            ],
-          },
-          {
             key: 'nextMaintenanceDate',
             label: 'Próximo mantenimiento',
             type: 'date',
@@ -157,13 +136,37 @@ export default defineComponent({
             shouldShow: this.isEditing(),
           },
           {
+            key: 'provider',
+            label: 'Proveedor',
+            model: '',
+            rules: [rules.maxLength(50), rules.alphanumeric],
+          },
+          {
+            key: 'price',
+            label: 'Costo',
+            model: '',
+            prefix: '$',
+            type: 'number',
+            rules: [
+              rules.numeric,
+              rules.nonNegative,
+              rules.maxDecimalPlaces
+            ],
+          },
+          {
             key: 'warrantyDate',
-            label: 'Fecha de garantía (opcional)',
+            label: 'Fecha de garantía',
             type: 'date',
             model: '',
           },
           {
-            key: 'equipmentStatus',
+            key: 'acquisitionDate',
+            label: 'Fecha de adquisición',
+            type: 'date',
+            model: '',
+          },
+          {
+            key: 'equipmentStatus*',
             label: 'Estatus',
             type: 'select',
             model: null,
@@ -185,7 +188,7 @@ export default defineComponent({
           {
             key: 'observations',
             type: 'textarea',
-            label: 'Observaciones del equipo (opcional)',
+            label: 'Observaciones del equipo',
             required: false,
             model: '',
           }

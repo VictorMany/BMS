@@ -3,7 +3,7 @@
     <div class="card-page">
       <header-actions
         :titlePage="'Detalles de reporte'"
-        :btn-action="btnAction"
+        :btn-actions="btnActions"
         :btn-close-window="btnCloseWindow"
       />
 
@@ -104,15 +104,26 @@ export default defineComponent({
         ],
       },
 
-      btnAction: {
-        show: true,
-        btnTitle: 'Cancelar reporte',
-        iconName: 'cancel',
-        tooltip: 'Cancelar reporte',
-        btnWidth: 'auto',
-        btnAction: this.cancelReport,
-        loader: false,
-      },
+      btnActions: [
+        {
+          show: false,
+          btnTitle: 'Cancelar reporte',
+          iconName: 'cancel',
+          tooltip: 'Cancelar reporte',
+          btnWidth: 'auto',
+          btnAction: this.cancelReport,
+          loader: false,
+        },
+        {
+          show: false,
+          btnTitle: 'Atender reporte',
+          iconName: 'engineering',
+          tooltip: 'Atender reporte',
+          btnWidth: 'auto',
+          btnAction: this.goToMaintenance,
+          loader: false,
+        },
+      ],
 
       btnCloseWindow: {
         iconName: 'exit_to_app',
@@ -125,17 +136,44 @@ export default defineComponent({
   methods: {
     async cancelReport() {
       try {
-        this.btnAction.loader = true
+        this.btnActions[0].loader = true
         const params = {
           id: this.$route.params.id,
         }
         await this.$store.dispatch('reports/cancelReportAction', params)
-        this.btnAction.loader = false
+        this.btnActions[0].loader = false
         showSuccess(this.$q, { title: 'Éxito al cancelar el reporte', msg: 'El reporte se ha cancelado' });
         this.goBack()
       } catch (error) {
-        this.btnAction.loader = false
+        this.btnActions[0].loader = false
         console.log(error)
+      }
+    },
+
+    async goToMaintenance() {
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+
+      this.$router.push({
+        name: 'add-maintenance'
+      });
+    },
+
+    getModelValueByKey(key) {
+      // Busca la clave en todas las secciones del objeto fields
+      for (const sectionKey in this.fields) {
+        if (Object.prototype.hasOwnProperty.call(this.fields, sectionKey)) {
+          const elements = this.fields[sectionKey];
+
+          // Verifica si elements es iterable (un objeto iterable debería tener la propiedad Symbol.iterator)
+          if (elements && typeof elements[Symbol.iterator] === 'function') {
+            // Busca la clave en cada elemento de la sección
+            for (const element of elements) {
+              if (element.key === key) {
+                return element.model
+              }
+            }
+          }
+        }
       }
     },
 
@@ -151,8 +189,11 @@ export default defineComponent({
         }
 
         await this.$store.dispatch('reports/getReportAction', params)
+        this.btnActions[0].show = this.getModelValueByKey('showBtn') ? true : false
 
-        this.btnAction.show = this.fields.extras[0].model
+        if (this.getModelValueByKey('reportStatus') === 'Pendiente') {
+          this.btnActions[1].show = true
+        }
 
         this.loading = false
       } catch (error) {
