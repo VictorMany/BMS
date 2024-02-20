@@ -49,6 +49,26 @@
     </div>
 
     <div
+      v-if="btnActions.length > 0"
+      class="col-xs-auto column content-end lt-sm"
+      :class="{ 'q-ml-auto': !switchContent }"
+    >
+      <div class="row">
+        <div
+          v-for="(btn, i) in btnActions"
+          :key="i"
+          class="col-auto q-pl-sm"
+        >
+          <btn-action
+            v-if="btn.show"
+            v-bind="btn"
+            :btn-title="''"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div
       v-if="btnAction.show"
       class="col-xs-auto column content-end lt-sm"
       :class="{ 'q-ml-auto': !switchContent }"
