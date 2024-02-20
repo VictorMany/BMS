@@ -61,6 +61,7 @@
           v-for="(action, i) in actionsTable"
           :key="i"
           v-bind="action"
+          :row="props"
           @click="rowClicked(props, action.icnAction)"
         />
       </q-td>
