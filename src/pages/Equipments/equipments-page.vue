@@ -211,13 +211,6 @@ export default defineComponent({
           align: 'center',
           sortable: true,
         },
-        // {
-        //   name: 'nextMaintenanceDate',
-        //   label: 'Siguiente mantenimiento',
-        //   field: 'nextMaintenanceDate',
-        //   align: 'center',
-        //   sortable: true,
-        // },
         { name: 'badge', label: 'Reportes', field: 'status', align: 'center', sortable: true },
         {
           name: 'actions',
