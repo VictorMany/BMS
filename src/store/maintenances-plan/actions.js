@@ -57,6 +57,16 @@ export async function postMaintenancePlanAction(context, plan) {
     })
 }
 
+export async function deleteMaintenancePlanAction(context, plan) {
+    return await service.deleteMaintenancePlan(plan).then(async (response) => {
+        if (response.status == 200) {
+            return true
+        } else {
+            return response
+        }
+    })
+}
+
 
 export async function updateMaintenancePlanAction(context, plan) {
     // Those are the keys you need in your payload and find in the fields

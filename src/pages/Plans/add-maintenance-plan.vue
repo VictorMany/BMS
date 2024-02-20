@@ -177,7 +177,7 @@
 
             <div class="col-sm col-12">
               <div
-                v-if="sortedDates.length > 0"
+                v-if="sortedDates?.length > 0"
                 class="form__item-label text-weight-thin"
               >
                 Lista de fechas agendadas
@@ -188,18 +188,24 @@
                 :key="index"
               >
                 <div
-                  class="text-left chip-date border-rounded q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
+                  class="chip-date border-rounded q-mt-sm q-pa-xs q-px-sm"
                   @click="setCalendarTo(day)"
                 >
-                  {{ calcDate(day) }}
-                  <q-avatar
-                    v-if="!form.maintenanceFrequency"
-                    @click="deleteDate(day)"
-                    size="xs"
-                    class="avatar-item "
-                  >
-                    <q-icon name="close" />
-                  </q-avatar>
+                  <div class="row">
+                    <div class="col">
+                      {{ calcDate(day) }}
+                    </div>
+                    <div class="col-auto">
+                      <q-avatar
+                        v-if="!form.maintenanceFrequency"
+                        @click="deleteDate(day)"
+                        size="xs"
+                        class="avatar-item"
+                      >
+                        <q-icon name="close" />
+                      </q-avatar>
+                    </div>
+                  </div>
                 </div>
 
                 <div
@@ -266,7 +272,7 @@ import { rules, showWarning, showSuccess } from 'app/utils/utils';
 
 
 export default defineComponent({
-  name: 'EquipmentsPage',
+  name: 'AddMaintenancePlan',
   components: {
     HeaderActions,
     GeneralTable
@@ -389,7 +395,6 @@ export default defineComponent({
       } else if (this.form.maintenanceDates?.lenght == 0) return []
       else return this.form.maintenanceDates
     },
-
   },
 
   watch: {

@@ -37,6 +37,7 @@ import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import GeneralTable from 'src/components/compose/GeneralTable.vue'
 import BtnAction from 'src/components/atomic/BtnAction.vue';
+import { showSuccess, showWarning } from 'app/utils/utils';
 
 export default defineComponent({
   name: 'MaintenancesPage',
@@ -168,10 +169,21 @@ export default defineComponent({
     },
 
     async removePlan(paylod) {
-      console.log(paylod)
-      this.localPagination = {
-        ...this.localPagination,
-        ...await this.$store.dispatch('maintenancePlans/getMaintenancePlansAction', this.params)
+      // this.btnAction.loader = true;
+      console.log('este es el payload', paylod)
+      try {
+        const res = await this.$store.dispatch(
+          'maintenancePlans/deleteMaintenancePlanAction',
+          paylod
+        );
+        if (res === true) {
+          showSuccess(this.$q, { title: 'Éxito al eliminar el plan', msg: 'El plan de mantenimientos se ha eliminado' });
+          this.getMaintenancePlans()
+        } else {
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+        }
+      } catch (error) {
+        console.log(error)
       }
     },
 

@@ -79,7 +79,7 @@
     <template v-slot:body-cell-badge-priority="props">
       <q-td :props="props">
         <q-badge
-          class="justify-center border-rounded border-line"
+          class="justify-center border-rounded"
           :class="checkColor(props.value)"
           :label="props.value"
         />
@@ -249,7 +249,7 @@ export default defineComponent({
   width: 85px;
   height: 25px;
   font-weight: bolder !important;
-  color: $primary;
+  color: $blue-13;
   background-color: rgba($primary, 0.2);
 }
 
@@ -282,27 +282,24 @@ export default defineComponent({
   width: 85px;
   height: 25px;
   font-weight: bolder !important;
-  border-color: rgba(255, 47, 0, 0.3);
-  color: rgb(255, 47, 0);
-  background-color: transparent;
+  color: $negative;
+  background-color: rgba($negative, 0.2);
 }
 
 .badge-medium {
   width: 85px;
   height: 25px;
   font-weight: bolder !important;
-  border-color: rgba(255, 94, 0, 0.3);
-  color: rgb(255, 94, 0);
-  background-color: transparent;
+  color: $orange;
+  background-color: rgba($orange, 0.2);
 }
 
 .badge-low {
   width: 85px;
   height: 25px;
   font-weight: bolder !important;
-  border-color: rgba(255, 179, 0, 0.3);
-  color: rgb(255, 179, 0);
-  background-color: transparent;
+  color: $warning;
+  background-color: rgba($warning, 0.2);
 }
 
 
