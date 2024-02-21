@@ -8,7 +8,6 @@ export default class MaintenancePlanService {
     }
 
     static deleteMaintenancePlan(payload) {
-        console.log('Esta llegando al endpoint', payload)
         return api.delete(this.endpoint + 'delete/' + payload);
     }
 

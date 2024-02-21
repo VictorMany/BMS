@@ -14,7 +14,6 @@ export default class MaintenanceService {
     }
 
     static postMaintenance(payload) {
-        console.log('EL PAYLOAD EN EL ENDPOINT', payload)
         return api.post(this.endpoint + 'create', payload);
     }
 

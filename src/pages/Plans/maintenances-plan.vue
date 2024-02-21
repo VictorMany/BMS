@@ -169,8 +169,6 @@ export default defineComponent({
     },
 
     async removePlan(paylod) {
-      // this.btnAction.loader = true;
-      console.log('este es el payload', paylod)
       try {
         const res = await this.$store.dispatch(
           'maintenancePlans/deleteMaintenancePlanAction',

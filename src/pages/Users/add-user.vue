@@ -195,13 +195,6 @@ export default defineComponent({
         await this.$store.dispatch('users/getUserAction', params)
         this.userId = this.fields.extras[0].model
 
-        // console.log(this.fields)
-        // console.log(this.role)
-
-        this.updateFieldByKeyInAllArrays('userStatus', {
-          readonly: this.readOnlyStatusAdmin()
-        })
-
         this.loading = false
       } catch (error) {
         this.loading = false
@@ -238,24 +231,6 @@ export default defineComponent({
           this.createUser()
         }
       }
-    },
-
-    readOnlyStatusAdmin() {
-      // const userRole = this.getModelValueByKey('userRole');
-
-      // // console.log(userRole.value, this.role, this.$route.params.id);
-      // // console.log(userRole.value == this.role, 'EL ROLE ES EL MISMO');
-      // // console.log(Number(this.$route.params.id) != 0, 'Existe un ID');
-
-      // // const rolesSonIguales = userRole.value == this.roleFromLogin;
-      // const idExiste = Number(this.$route.params.id) == 0;
-      // const readonly = (this.roleFromLogin === 1 && idExiste);
-
-      // // console.log('ROLES IGUALES', rolesSonIguales)
-      // // console.log('EXISTE ID', idExiste)
-      // // console.log('ES READONLY', readonly)
-
-      // return !readonly;
     },
 
     getModelValueByKey(key) {
