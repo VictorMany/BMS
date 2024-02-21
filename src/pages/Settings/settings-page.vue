@@ -70,12 +70,12 @@ export default defineComponent({
             params: 0
           }
         },
-        {
-          title: 'Notificaciones',
-          subtitle: 'Alertas del sistema',
-          img: 'notification.png',
-          link: 'notifications'
-        },
+        // {
+        //   title: 'Notificaciones',
+        //   subtitle: 'Alertas del sistema',
+        //   img: 'notification.png',
+        //   link: 'notifications'
+        // },
         {
           title: 'Usuarios',
           subtitle: 'Lista de usuarios en el sistema',
@@ -94,12 +94,12 @@ export default defineComponent({
           img: 'color.png',
           link: 'colors'
         },
-        {
-          title: 'Soporte técnico',
-          subtitle: 'Ayuda, reportar error',
-          img: 'tecnical.png',
-          link: 'tecnical-support'
-        },
+        // {
+        //   title: 'Soporte técnico',
+        //   subtitle: 'Ayuda, reportar error',
+        //   img: 'tecnical.png',
+        //   link: 'tecnical-support'
+        // },
         {
           title: 'Acerca de nosotros',
           subtitle: 'Información y contacto',

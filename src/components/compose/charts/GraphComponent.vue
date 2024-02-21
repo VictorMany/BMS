@@ -61,8 +61,9 @@
                     @click="showForm = !showForm"
                 >
                     <q-icon
-                        name="edit"
+                        name="save"
                         color="primary"
+                        @click="saveNewStat()"
                     />
                 </q-btn>
             </q-page-sticky>
@@ -157,6 +158,11 @@ export default {
             required: false,
             default: () => { }
         },
+        position: {
+            type: Number,
+            required: false,
+            default: null
+        },
     },
 
     data() {
@@ -226,6 +232,15 @@ export default {
         setModelValueB(val) {
             const opt = this.localOptions.find((loc) => loc === val)
             this.valueB.model = opt ? opt : val
+        },
+
+        async saveNewStat() {
+            await this.$store.dispatch('stats/addCustomStatsAction', {
+                name: this.titleStat.model,
+                description: this.position.toString(),
+                var1: this.valueA.model,
+                var2: this.valueB.model
+            });
         }
     },
 

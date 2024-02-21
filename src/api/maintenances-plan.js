@@ -26,13 +26,3 @@ export default class MaintenancePlanService {
         return api.put(this.endpoint + 'update/' + id, payload);
     }
 }
-
-// // Generar nuevo equipo
-// static postEquipment(payload) {
-//     return api.post(this.endpoint + 'create', payload);
-// }
-
-// // Actualizar nuevo equipo
-// static updateEquipment(payload, id) {
-//     return api.put(this.endpoint + 'update/' + id, payload);
-// }

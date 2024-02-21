@@ -13,7 +13,7 @@
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <div class="row">
-            <div class="col-12 col-md-10">
+            <div class="col-12">
               <q-list>
                 <div
                   v-for="(item, i) in listRoles"

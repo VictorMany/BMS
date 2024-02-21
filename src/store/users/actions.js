@@ -1,12 +1,5 @@
 import { saveTokenToCookie } from 'app/utils/utils'
 import { setAuthHeader } from 'src/api/auth'
-// import EquipmentService from 'src/api/equipments'
-// import MaintenanceService from 'src/api/maintenances'
-// import MaintenancePlanService from 'src/api/maintenances-plan'
-// import ReportService from 'src/api/reports'
-// import StatsService from 'src/api/stats'
-// import UserService from 'src/api/users'
-
 
 import service from 'src/api/users'
 
@@ -27,7 +20,6 @@ export async function getUserAction(context, params) {
     return service.getUser(params.id).then(async (response) => {
         if (response.status == 200) {
             // We call the global action to format our payload
-            // console.log("")
             const {
                 email,
                 photo,

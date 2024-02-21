@@ -381,27 +381,22 @@ export default defineComponent({
         },
       ],
 
-      btnGeneralEquipment: [
+      menuRole3: [
         {
           title: 'Equipos',
           link: 'equipments',
-          color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
-        },
-        {
-          title: 'Mantenimientos',
-          link: 'maintenances',
-          color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Reportes',
           link: 'reports',
-          color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
-        // 'divider',
-        'qrcode',
+        {
+          title: 'Configuración',
+          link: 'settings', color: 'rgba(122, 122, 122, 1)',
+          background: '#F8F8F8',
+        }
       ],
 
       btnCloseSesion: {
@@ -426,8 +421,16 @@ export default defineComponent({
   },
 
   created() {
-    this.btnLinks = this.btnGeneral;
-    this.setMenu(this.$route);
+    this.verifyUser()
+    if (this.roleFromLogin === 3) {
+      this.btnLinks = this.menuRole3
+      this.$router.replace('equipments')
+      this.setMenu(this.$route);
+    } else {
+      this.btnLinks = this.btnGeneral;
+      this.setMenu(this.$route);
+    }
+
 
     this.$bus.on('open-menu-from-child', () => {
       // do some work
@@ -449,6 +452,12 @@ export default defineComponent({
     user: {
       get() {
         return this.$store.getters['users/getUserGetter'];
+      },
+    },
+
+    roleFromLogin: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
       },
     },
   },
@@ -507,7 +516,11 @@ export default defineComponent({
             this.selected = null;
             break;
           default:
-            this.btnLinks = [...this.btnGeneral];
+            if (this.roleFromLogin === 3) {
+              this.btnLinks = [...this.menuRole3];
+            } else {
+              this.btnLinks = [...this.btnGeneral];
+            }
             if (route.name === 'dashboard') {
               this.selected = 0;
             } else
@@ -519,7 +532,11 @@ export default defineComponent({
         }
       } catch (error) {
         console.log(error);
-        this.btnLinks = this.btnGeneral;
+        if (this.roleFromLogin === 3) {
+          this.btnLinks = [...this.menuRole3];
+        } else {
+          this.btnLinks = [...this.btnGeneral];
+        }
       }
     },
 
@@ -527,6 +544,11 @@ export default defineComponent({
       setAuthHeader(null)
       deleteTokenCookie(null)
       this.$router.replace('/login');
+    },
+
+    verifyUser() {
+      console.log(this.roleFromLogin)
+      console.log(this.user)
     },
 
     changeImage(flag) {

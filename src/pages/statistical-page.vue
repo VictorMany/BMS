@@ -39,6 +39,7 @@
               :options="stats.statistics"
               :selected-option="selectedOption1"
               :loaded="loadedStats"
+              :position="0"
             />
 
             <graph-component
@@ -49,6 +50,7 @@
               :options="stats.statistics"
               :selected-option="selectedOption2"
               :loaded="loadedStats"
+              :position="1"
             />
 
             <graph-component
@@ -59,6 +61,7 @@
               :options="stats.statistics"
               :selected-option="selectedOption3"
               :loaded="loadedStats"
+              :position="2"
             />
 
             <graph-component
@@ -69,6 +72,7 @@
               :options="stats.statistics"
               :selected-option="selectedOption4"
               :loaded="loadedStats"
+              :position="3"
             />
           </div>
 
@@ -89,7 +93,7 @@
                 :key="index"
               >
                 <div
-                  class="row q-pa-xs border-rounded q-px-sm h-100"
+                  class="row q-pa-xs border-rounded h-100"
                   style="background-color:  rgba(16, 108, 144, 0.038)"
                 >
                   <div
@@ -539,7 +543,7 @@ export default defineComponent({
   methods: {
     async getReports() {
       this.loadingReportsTable = true
-      const params = { rowsPerPage: 3 };
+      const params = { rowsPerPage: 3, reportStatus: 'Pendiente' };
       await this.$store.dispatch('reports/getReportsAction', params);
       this.loadingReportsTable = false
     },
