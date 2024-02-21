@@ -1,36 +1,43 @@
 <template>
   <q-card
-    class="my-card cursor-pointer non-selectable border-rounded"
+    class="my-card cursor-pointer non-selectable border-rounded q-pa-xs"
     @click="cardAction(id)"
   >
+    <q-card-section class="q-pa-xs">
+      <div class="row flex align-center ellipsis">
+        <q-tooltip
+          v-if="isReported"
+          :delay="100"
+          transition-show="scale"
+          transition-hide="scale"
+          class="border-rounded tooltip-container"
+        >
+          Equipo reportado
+        </q-tooltip>
+        <div class="card-typography ellipsis col q-my-auto">
+          {{ cardTitle }}
+        </div>
+        <div
+          v-if="isReported"
+          class="is-reported-badge col-auto q-my-auto"
+        />
+      </div>
+    </q-card-section>
+
     <q-card-section
-      class="q-pa-xs q-ma-none"
+      class="q-pa-xs"
       horizontal
     >
       <q-img
         v-if="cardImg"
-        class="col-5 img-style border-rounded"
+        class="col-5 img-style border-rounded q-mr-sm"
         :src="cardImg"
       />
-      <q-card-section class="q-py-sm q-px-sm ellipsis w-100">
-        <div class="row flex align-center q-pb-xs ellipsis">
-          <q-tooltip
-            v-if="isReported"
-            :delay="100"
-            transition-show="scale"
-            transition-hide="scale"
-            class="border-rounded tooltip-container"
-          >
-            Equipo reportado
-          </q-tooltip>
-          <div class="card-typography ellipsis col q-my-auto">
-            {{ cardTitle }}
-          </div>
-          <div
-            v-if="isReported"
-            class="is-reported-badge col-auto q-my-auto"
-          />
-        </div>
+
+      <q-card-section
+        v-if="cardLabels.length > 0"
+        class="q-py-sm q-px-none ellipsis w-100"
+      >
         <div
           v-for="(label, i) in cardLabels"
           :key="i"
@@ -38,28 +45,21 @@
         >
           <div
             v-if="label.label"
-            class="q-pb-xs"
+            class="q-pb-xs col-12"
             :class="label.info === undefined
-              ? 'card-text col-12'
-              : 'card-typography col-6'
+              ? 'card-text'
+              : 'card-typography'
               "
           >
             {{ label.label }}
           </div>
           <div
             v-if="label.info"
-            class="col-6 card-text  q-pb-xs"
+            class="col-12 card-text q-pb-xs"
             :class="label.label === null ? 'col-12' : ''"
           >
             {{ label.info }}
           </div>
-        </div>
-        <q-space />
-        <div
-          class="card-text full-width row justify-end"
-          :class="cardLabels.length == 1 ? 'q-mt-lg' : 'q-mt-xs'"
-        >
-          {{ cardDate }}
         </div>
       </q-card-section>
     </q-card-section>
@@ -112,8 +112,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .my-card {
-  width: 254px;
-  height: 110px !important;
+  width: 230px;
+  height: 100% !important;
+
   background-color: white;
   box-shadow: none;
 }
@@ -130,7 +131,7 @@ export default defineComponent({
 }
 
 .card-typography {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 12px;
   white-space: nowrap;
   /* Evita el salto de línea */
@@ -167,7 +168,7 @@ export default defineComponent({
 
 @media only screen and (min-width: 1000px) {
   .my-card {
-    width: 280px !important;
+    width: 230px !important;
   }
 }
 </style>

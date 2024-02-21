@@ -4,9 +4,9 @@ export function getUsersGetter(state) {
         cardTitle: user.userName,
         cardImg: user.photo,
         cardLabels: [
-            { label: 'Ingeniero biomédico' }
+            { label: 'Rol de usuario', info: roleFormater(user.userRole) }
         ],
-        cardDate: roleFormater(user.userRole),
+        // cardDate: roleFormater(user.userRole),
 
         label: user.userName,
         value: user.UserId,

@@ -71,7 +71,7 @@
 
   .tooltip-container {
     background-color: rgba(80, 76, 76, 0.25) !important;
-    color: rgb(80, 76, 76) !important;
+    color: rgb(231, 231, 231) !important;
   }
 }
 
@@ -354,7 +354,7 @@ ol {
 
 .tooltip-container {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
-  backdrop-filter: blur(2px) !important;
+  backdrop-filter: blur(10px) !important;
   font-weight: 600 !important;
 }
 
