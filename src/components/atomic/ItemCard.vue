@@ -1,6 +1,6 @@
 <template>
   <q-card
-    class="my-card cursor-pointer non-selectable border-rounded q-pa-xs"
+    class="my-card cursor-pointer non-selectable border-rounded q-pa-sm"
     @click="cardAction(id)"
   >
     <q-card-section class="q-pa-xs">
@@ -14,7 +14,7 @@
         >
           Equipo reportado
         </q-tooltip>
-        <div class="card-typography ellipsis col q-my-auto">
+        <div class="card-title ellipsis col q-my-auto">
           {{ cardTitle }}
         </div>
         <div
@@ -114,43 +114,43 @@ export default defineComponent({
 .my-card {
   width: 230px;
   height: 100% !important;
-
-  background-color: white;
+  background-color: rgb(251, 250, 250);
   box-shadow: none;
+  overflow: hidden;
 }
 
 .my-card:hover {
-  background-color: rgb(($primary), 0.07);
+  background-color: rgb(($primary), 0.04);
   transform: scale(1.0001);
 }
 
 .img-style {
   width: 102px;
   height: 102px;
-  border-radius: 10px !important;
 }
 
 .card-typography {
   font-weight: 500;
-  font-size: 12px;
+  font-size: 11px;
   white-space: nowrap;
-  /* Evita el salto de línea */
   overflow: hidden;
-  /* Oculta el contenido que desborda */
   text-overflow: ellipsis;
-  /* Muestra puntos suspensivos (...) cuando hay desbordamiento */
+}
+
+.card-title {
+  font-weight: 500;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-text {
-  font-weight: 300;
-  font-size: 12px;
+  font-size: 11px;
   color: #798d9cda;
   white-space: nowrap;
-  /* Evita el salto de línea */
   overflow: hidden;
-  /* Oculta el contenido que desborda */
   text-overflow: ellipsis;
-  /* Muestra puntos suspensivos (...) cuando hay desbordamiento */
 }
 
 .is-reported-badge {
@@ -168,7 +168,7 @@ export default defineComponent({
 
 @media only screen and (min-width: 1000px) {
   .my-card {
-    width: 230px !important;
+    width: 240px !important;
   }
 }
 </style>

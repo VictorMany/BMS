@@ -6,8 +6,8 @@ export function getEquipmentsGetter(state) {
     cardTitle: equipment.categoryName,
     cardImg: equipment.photo,
     cardLabels: [
-      { label: 'Modelo:', info: equipment.equipmentModel },
-      { label: 'No. serie:', info: equipment.serialNumber },
+      { label: 'Modelo', info: equipment.equipmentModel },
+      { label: 'Número de serie', info: equipment.serialNumber },
     ],
     cardDate: formatDate(equipment.nextMaintenanceDate), // CAMBIAR POR NEXTMAINTENANCE DATE
 

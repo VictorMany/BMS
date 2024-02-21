@@ -3,7 +3,7 @@
     <div class="card-page">
 
       <header-actions
-        :titlePage="'Equipos'"
+        :titlePage="'Activos biomédicos'"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
         v-model:searchModel="searchModel"

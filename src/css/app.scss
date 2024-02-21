@@ -52,8 +52,9 @@
     }
   }
 
-  .card-typography {
-    color: #283438;
+  .card-typography,
+  .card-title {
+    color: #22425e;
   }
 
   .border-line {
@@ -77,11 +78,11 @@
 
 .body--dark {
   .card-page {
-    background: #24292e;
+    background: #adadad13;
   }
 
   .setting-item {
-    background-color: #334c646e;
+    background-color: #1a2230;
 
     &__title {
       color: #91c8ff84;
@@ -100,7 +101,7 @@
   }
 
   .table-style {
-    background-color: #334c646e !important;
+    background-color: #1a2230 !important;
   }
 
   .font-style {
@@ -121,10 +122,14 @@
   }
 
   .my-card {
-    background-color: #334c646e !important;
+    background-color: #1a2230 !important;
   }
 
   .card-typography {
+    color: #91c8ff84;
+  }
+
+  .card-title {
     color: #91c8ff84;
   }
 
@@ -149,7 +154,7 @@
   }
 
   .btn-change-content {
-    background-color: #334c646e !important;
+    background-color: #1a2230 !important;
     color: #51565d !important;
   }
 
@@ -167,11 +172,6 @@
     background-color: rgba(255, 255, 255, 0.091) !important;
     color: #dce1e6;
   }
-
-  // .input-style {
-  //   background-color: rgba(0, 0, 0, 0.109) !important;
-  //   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.5);
-  // }
 }
 
 .btn-style {
