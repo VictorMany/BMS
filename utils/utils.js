@@ -18,7 +18,12 @@ export const rules = {
         }
         return true; // Si no hay un valor, no se aplica la regla
     },
-    maxDecimalPlaces: (val) => (val.toString().indexOf('.') === -1 || val.toString().split('.')[1].length <= 2) || 'El campo no debe tener más de dos decimales',
+    maxDecimalPlaces: (val) => {
+        if (val) {
+            return (val.toString().indexOf('.') === -1 || val.toString().split('.')[1].length <= 2) || 'El campo no debe tener más de dos decimales'
+        }
+        return true; // Si no hay un valor, no se aplica la regla
+    },
     validYear: (val) => /^\d{4}$/.test(val) || 'Debe ser un año válido (formato: YYYY)',
     validateYearNotGreaterThanCurrent: (val) => {
         const currentYear = new Date().getFullYear();

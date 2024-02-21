@@ -9,6 +9,16 @@ export default class StatsService {
         });
     }
 
+    static getCustomStats() {
+        return api.get(this.endpoint + 'listVar');
+    }
+
+    static addCustomStats(params) {
+        return api.post(this.endpoint + 'create', {
+            params
+        });
+    }
+
     static getPeriodicStats(params) {
         return api.get(this.endpoint + 'listRep/', {
             params

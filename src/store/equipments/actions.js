@@ -150,6 +150,7 @@ export async function updateEquipmentAction(context, equipment) {
         serialNumber: '',
         trackingNumber: '',
         warrantyDate: '',
+        price: '',
         provider: '',
         acquisitionDate: '',
         photo: ''

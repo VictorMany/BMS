@@ -186,8 +186,8 @@ export default defineComponent({
       },
 
       selectedOption4: {
-        title: '',
-        modelA: 'Total de equipos reportados',
+        title: 'Porcentaje de equipos con falla repentina',
+        modelA: 'Mantenimientos correctivos',
         modelB: 'Total de equipos',
       },
 
@@ -501,6 +501,7 @@ export default defineComponent({
     this.getPeriodicMaintenancesStats();
     this.getReports();
     this.getStats();
+    this.getCustomStats();
   },
 
   computed: {
@@ -513,6 +514,12 @@ export default defineComponent({
     stats: {
       get() {
         return this.$store.getters['stats/getStatsGetter'];
+      },
+    },
+
+    customStats: {
+      get() {
+        return this.$store.getters['stats/getCustomStatsGetter'];
       },
     },
 
@@ -565,6 +572,9 @@ export default defineComponent({
       this.loadedStats = true
     },
 
+    async getCustomStats() {
+      await this.$store.dispatch('stats/getCustomStatsAction');
+    },
 
     async getPeriodicReportsStats() {
       await this.$store.dispatch('stats/getPeriodicStatsAction', {
@@ -601,7 +611,6 @@ export default defineComponent({
 
       this.loadedMaintenances = true;
     },
-
 
     goToDetails(payload) {
       this.$router.push({ name: 'detail-report', params: { id: payload } });

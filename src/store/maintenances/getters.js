@@ -8,7 +8,7 @@ export function getMaintenancesGetter(state) {
         date: formatDate(maintenance.createdAt),
         total_cost: maintenance.cost,
         status: maintenance.maintenanceType,
-        equipment: maintenance.Equipment.categoryName + ' - ' + maintenance.Equipment.equipmentModel
+        equipment: maintenance?.Equipment?.categoryName + ' - ' + maintenance?.Equipment?.equipmentModel
     }));
     return maintenances
 }
