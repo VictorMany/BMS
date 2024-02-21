@@ -43,37 +43,36 @@ export default defineComponent({
 
     background: {
       type: String,
-    },
+    }
   },
 
   methods: {
     navigateTo() {
-      if (this.link?.id) {
-        this.$router.push({
-          name: this.link.link,
-          params: { id: this.link.id },
-        });
-      } else {
-        if (this.link?.searchByIdEquipment) {
-          this.$router.push({
-            name: this.link?.link,
-            query: {
-              equipment: this.$route.params?.id
-            },
-          });
-
-        } else if (this.link?.searchByIdUser) {
-          this.$router.push({
-            name: this.link?.link,
-            query: {
-              user: this.$route.params?.id
-            },
-          });
-        } else this.$router.push({
-          path: this.link
-        });
+      if (this.onClickFunction) {
+        this.onClickFunction()
       }
-    },
+
+      if (!this.link) {
+        return;
+      }
+
+      if (typeof this.link === 'string') {
+        this.$router.push({ path: this.link });
+        return;
+      }
+
+      const { id, link, searchByIdEquipment, searchByIdUser } = this.link;
+
+      if (id !== undefined) {
+        this.$router.push({ name: link, params: { id } });
+      } else if (searchByIdEquipment) {
+        this.$router.push({ name: link, query: { equipment: this.$route.params?.id } });
+      } else if (searchByIdUser) {
+        this.$router.push({ name: link, query: { user: this.$route.params?.id } });
+      } else {
+        this.$router.push({ path: link });
+      }
+    }
   },
 
   computed: {

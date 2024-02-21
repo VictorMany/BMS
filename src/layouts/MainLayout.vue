@@ -14,63 +14,7 @@
         <div class="side-menu border-rounded">
           <div class="row">
             <div class="title text-center q-pt-lg w-100">BMS</div>
-            <q-page-sticky
-              position="top-right"
-              :offset="[18, 40]"
-            >
-              <q-btn
-                fab
-                padding="xs"
-                outline
-                color="orange"
-              >
-                <q-avatar size="25px">
-                  <img
-                    @mouseover="changeImage(0)"
-                    @mouseleave="changeImage(1)"
-                    :src="getImageUrl(imageNotification)"
-                  />
-                </q-avatar>
-                <q-popup-proxy class="border-rounded">
-                  <q-banner style="width: 400px; height: auto">
-                    <div class="q-pa-sm form__item-label__title">
-                      Notificaciones
-                    </div>
-                    <q-scroll-area
-                      style="height: 490px !important"
-                      class="fit"
-                      :thumb-style="{
-                        right: '1px',
-                        borderRadius: '5px',
-                        background: 'rgba(29, 100, 231, 0.2)',
-                        width: '5px',
-                        opacity: 1,
-                      }"
-                    >
-                      <q-list>
-                        <div
-                          v-for="(item, i) in listSettings"
-                          @click="navigateTo(item.route)"
-                          :key="i"
-                        >
-                          <q-item class="q-mb-sm setting-item border-rounded flex items-center clickable">
-                            <q-item-section>
-                              <q-item-label class="setting-item__title">{{
-                                item.title
-                              }}</q-item-label>
-                              <q-item-label
-                                class="setting-item__subtitle"
-                                caption
-                              >{{ item.subtitle }}</q-item-label>
-                            </q-item-section>
-                          </q-item>
-                        </div>
-                      </q-list>
-                    </q-scroll-area>
-                  </q-banner>
-                </q-popup-proxy>
-              </q-btn>
-            </q-page-sticky>
+            <!-- HERE WERE NOTIFICATIONS-->
           </div>
           <q-scroll-area
             class="q-px-md q-py-sm"
@@ -83,7 +27,6 @@
               opacity: 1,
             }"
           >
-
             <div
               class="q-pa-md border-rounded q-mt-lg"
               style="background-color: rgba(125, 125, 125, 0.085);"
@@ -308,7 +251,7 @@ export default defineComponent({
   },
   data() {
     return {
-      value: 'https://example.com',
+      // value: 'https://example.com',
       leftDrawerOpen: false,
       size: 302,
       btnSelected: 0,
@@ -394,13 +337,13 @@ export default defineComponent({
         'divider',
         {
           title: 'Registrar mantenimiento',
-          link: { link: 'add-maintenance', id: 1 },
+          link: 'add-maintenance',
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
         {
           title: 'Reportar',
-          link: { link: 'add-report', id: 1 },
+          link: 'add-report',
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
@@ -460,23 +403,7 @@ export default defineComponent({
         // 'divider',
         'qrcode',
       ],
-      listSettings: [
-        {
-          title: 'PLAN-0001 Equipos de choque',
-          subtitle: 'Viernes 12, Enero 2023',
-          route: { link: 'detail-maintenance-plan', id: 1 },
-        },
-        {
-          title: 'PLAN-0002 Equipos de urgencias',
-          subtitle: 'Viernes 19, Enero 2023',
-          route: { link: 'detail-maintenance-plan', id: 2 },
-        },
-        {
-          title: 'PLAN-0003 Equipos de primeros auxilios',
-          subtitle: 'Viernes 26, Enero 2023',
-          route: { link: 'detail-maintenance-plan', id: 3 },
-        },
-      ],
+
       btnCloseSesion: {
         show: true,
         btnTitle: 'Cerrar sesión',
@@ -543,7 +470,7 @@ export default defineComponent({
     async setMenu(route) {
       try {
         this.btnCloseSesion.show = false;
-        this.value = 'www.bmsystemll.com' + route.fullPath;
+        // this.value = 'www.bmsystemll.com' + route.fullPath;
 
         switch (route.name) {
           case 'reports':
@@ -600,13 +527,6 @@ export default defineComponent({
       setAuthHeader(null)
       deleteTokenCookie(null)
       this.$router.replace('/login');
-    },
-
-    navigateTo({ link, id }) {
-      this.$router.push({
-        name: link,
-        params: { id },
-      });
     },
 
     changeImage(flag) {

@@ -167,6 +167,9 @@ export default defineComponent({
 
   mounted() {
     this.getEquipment();
+
+    // We delete report from localstorage if exists
+    this.$store.commit('reports/MUTATE_REPORT', null)
   },
 })
 </script>

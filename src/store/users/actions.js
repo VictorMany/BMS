@@ -27,12 +27,28 @@ export async function getUserAction(context, params) {
     return service.getUser(params.id).then(async (response) => {
         if (response.status == 200) {
             // We call the global action to format our payload
-            context.commit('MUTATE_USER', response.data.contents.user)
+            // console.log("")
+            const {
+                email,
+                photo,
+                userName,
+                userRole,
+                userStatus
+            } = response.data.contents.user;
+
+            context.commit('MUTATE_USER', {
+                email,
+                photo,
+                userName,
+                userRole,
+                userStatus
+            })
 
             const payload = await context.dispatch('global/formatDetails', {
                 keys: response.data.contents.user,
                 fields: params.fields
             }, { root: true });
+
             return payload
         } else {
             return response

@@ -31,14 +31,32 @@ export async function getReportsByEquipmentAction(context, params) {
 export async function getReportAction(context, params) {
     return service.getReport(params.id).then(async (response) => {
         if (response.status == 200) {
-            // We call the global action to format our payload
-            context.commit('MUTATE_REPORT', response.data.contents.report)
+            const reportFromRes = response.data.contents.report
+
+            const {
+                ReportId,
+                reason,
+                report,
+                userId,
+                User,
+                Equipment,
+            } = reportFromRes
+
+
+            context.commit('MUTATE_REPORT', {
+                ReportId,
+                reason,
+                report,
+                userId,
+                User,
+                Equipment,
+            })
             // We call the global action to format our payload
             let payload = response
 
             if (params.fields) {
                 payload = await context.dispatch('global/formatDetails', {
-                    keys: response.data.contents.report,
+                    keys: reportFromRes,
                     fields: params.fields
                 }, { root: true });
             }

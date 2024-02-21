@@ -70,7 +70,7 @@ export default defineComponent({
             required: true,
         },
         model: {
-            type: [String, Number],
+            type: [String, Number, null],
             required: true,
         },
     },

@@ -17,9 +17,8 @@ export function MUTATE_EQUIPMENT(state, payload) {
       state.equipment = null;
       return;
     }
-    const equipment = { ...payload, categoryName: `${payload.categoryName} - ${payload.equipmentModel} - No. serie: ${payload.serialNumber}` };
-    state.equipment = equipment;
-    localStorage.setItem('equipment', JSON.stringify(equipment));
+    state.equipment = payload;
+    localStorage.setItem('equipment', JSON.stringify(payload));
   } catch (error) {
     console.log(error)
   }
