@@ -168,7 +168,7 @@ export default defineComponent({
 
   .card-title {
     max-width: 80vw;
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .img-style {

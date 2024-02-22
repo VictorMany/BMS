@@ -591,7 +591,7 @@ export default defineComponent({
   }
 
   .side-menu {
-    background: #adadad13;
+    background: #0000002f;
   }
 
   .container-style {

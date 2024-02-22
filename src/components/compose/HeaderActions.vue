@@ -187,7 +187,7 @@ export default defineComponent({
 
 .body--dark {
   .title-page {
-    color: #91c8ff84;
+    color: $primary;
   }
 }
 </style>

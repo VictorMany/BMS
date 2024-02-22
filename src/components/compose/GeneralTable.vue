@@ -25,7 +25,6 @@
     </template>
 
     <template v-slot:header="props">
-
       <q-tr :props="props">
         <q-th
           v-for="col in props.cols"
@@ -241,9 +240,8 @@ export default defineComponent({
 
 .column-style {
   font-size: 13px;
-  font-weight: 500;
-  color: $primary;
-  background-color: #181b1e;
+  font-weight: 600;
+  color: #8795a0;
 }
 
 .badge-attended {

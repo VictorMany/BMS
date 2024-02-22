@@ -78,11 +78,11 @@ export default defineComponent({
   computed: {
     localBackgroundColor() {
       if (this.index === this.selected) {
-        return '#1e65e820';
+        return '#1e65e825';
       }
 
       if (this.$q.dark.isActive) {
-        return 'rgb(19, 26, 38, .2)'
+        return 'rgb(19, 26, 38, .8)'
       }
 
       return this.background;

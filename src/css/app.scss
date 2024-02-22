@@ -74,11 +74,16 @@
     background-color: rgba(80, 76, 76, 0.25) !important;
     color: rgb(231, 231, 231) !important;
   }
+
+  .column-style {
+    background-color: #e8ebef !important;
+  }
 }
 
 .body--dark {
+
   .card-page {
-    background: #adadad13;
+    background: #0000002f;
   }
 
   .setting-item {
@@ -109,7 +114,7 @@
   }
 
   .card-graphics {
-    background-color: #181b1e;
+    background-color: #1721264f;
 
     &__title {
       color: #6A7985;
@@ -138,11 +143,11 @@
   }
 
   .main-container-page-dark {
-    background-color: #181b1e !important;
+    background-color: #1721264f !important;
   }
 
   .main-container-page-medium-dark {
-    background-color: #181b1e84 !important;
+    background-color: #1721264f !important;
   }
 
   .icn-style {
@@ -171,6 +176,10 @@
   .tooltip-container {
     background-color: rgba(0, 0, 0, 0.5) !important;
     color: #dce1e6;
+  }
+
+  .column-style {
+    background-color: rgb(33, 55, 77) !important;
   }
 }
 
@@ -314,7 +323,7 @@ ol {
 }
 
 .title-page {
-  font-weight: 400;
+  font-weight: 600;
   font-size: 16px;
 }
 

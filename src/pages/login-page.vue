@@ -1,7 +1,7 @@
 <template>
   <q-form
     ref="myForm"
-    class="fullscreen q-pa-md flex flex-center bg-white main-container-page-dark"
+    class="fullscreen q-pa-md flex flex-center main-container-page-dark"
   >
     <div class="card-page login-page">
       <div class="flex flex-center align-center h-100 w-100">
