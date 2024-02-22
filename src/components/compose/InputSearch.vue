@@ -270,7 +270,7 @@ export default defineComponent({
   font-weight: 400;
   font-size: 14px;
   color: v-bind(inputColor);
-  background: rgba($primary, 0.1);
+  background: #6ea1ff21;
 }
 
 .btn-style {
@@ -281,11 +281,6 @@ export default defineComponent({
   border-radius: 50% !important;
   background-color: $primary;
 }
-
-// .item-filter:hover {
-//   background-color: rgb(($primary), 0.07);
-// }
-
 
 .my-menu-link {
   color: black !important;

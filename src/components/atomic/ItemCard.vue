@@ -135,13 +135,13 @@ export default defineComponent({
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
 }
 
 .card-title {
   font-weight: 500;
   font-size: 15px;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -149,7 +149,6 @@ export default defineComponent({
   font-size: 11px;
   color: #798d9cda;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -163,6 +162,10 @@ export default defineComponent({
 @media only screen and (max-width: 599px) {
   .my-card {
     width: 100% !important;
+  }
+
+  .card-title {
+    max-width: 80vw;
   }
 }
 
