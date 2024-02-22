@@ -5,6 +5,8 @@ export function changeMenu(context) {
 
 export function formatPayload(context, { keys, fields }) {
     const fd = new FormData();
+    const updatedObj = {}
+
     for (let k in keys) {
         for (let prop in fields) {
             if (Array.isArray(fields[prop])) {
@@ -16,14 +18,37 @@ export function formatPayload(context, { keys, fields }) {
                                 if (fields[prop][i].type === 'select' || fields[prop][i].type === 'autocomplete') {
                                     if (typeof fields[prop][i].model == 'string') {
                                         fd.append(k, fields[prop][i].model)
-                                    } else
+                                        updatedObj[k] = fields[prop][i].model
+                                    } else {
                                         fd.append(k, fields[prop][i].model?.value);
+                                        updatedObj[k] = fields[prop][i].model?.value
+                                    }
                                 } else {
                                     fd.append(k, fields[prop][i].model);
+                                    updatedObj[k] = fields[prop][i].model
                                 }
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    if (fields.originalObj) {
+        return updatePayload(fields.originalObj, updatedObj, fd)
+    } else {
+        return fd
+    }
+}
+
+function updatePayload(original, toUpdate, fd) {
+    for (const key in toUpdate) {
+        if (Object.prototype.hasOwnProperty.call(toUpdate, key)) {
+            if (Object.prototype.hasOwnProperty.call(original, key)) {
+                if (original[key] == toUpdate[key]) {
+                    delete toUpdate[key];
+                    fd.delete(key);
                 }
             }
         }

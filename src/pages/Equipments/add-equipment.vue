@@ -42,6 +42,8 @@ export default defineComponent({
 
       localCategories: [],
 
+      originalEquipment: null,
+
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
@@ -245,7 +247,8 @@ export default defineComponent({
           id: this.$route.params.id,
           fields: this.fields
         }
-        await this.$store.dispatch('equipments/getEquipmentAction', params)
+        this.originalEquipment = await this.$store.dispatch('equipments/getEquipmentAction', params)
+
         this.loading = false
       } catch (error) {
         console.log(error)
@@ -258,6 +261,9 @@ export default defineComponent({
 
       try {
         this.fields.id = this.$route.params.id
+        // Adding original OBJ
+        this.fields.originalObj = this.originalEquipment
+
         const res = await this.$store.dispatch(
           'equipments/updateEquipmentAction',
           this.fields

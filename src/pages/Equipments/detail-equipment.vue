@@ -56,7 +56,7 @@ export default defineComponent({
             model: ''
           },
           {
-            key: 'locationName',
+            key: 'location',
             label: 'Ubicación',
             model: ''
           },

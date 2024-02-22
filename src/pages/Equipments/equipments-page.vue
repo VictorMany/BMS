@@ -317,17 +317,6 @@ export default defineComponent({
       this.loading = false
     },
 
-    // async goToMaintenance(payload) {
-    //   this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
-    //   this.$store.commit('reports/MUTATE_REPORT', null)
-
-    //   await this.getEquipment(payload)
-
-    //   this.$router.push({
-    //     name: 'add-maintenance'
-    //   });
-    // },
-
     async getEquipment(id) {
       await this.$store.dispatch('equipments/getEquipmentAction', { id })
     },

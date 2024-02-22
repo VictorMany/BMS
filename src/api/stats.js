@@ -14,9 +14,9 @@ export default class StatsService {
     }
 
     static addCustomStats(params) {
-        return api.post(this.endpoint + 'create', {
+        return api.post(this.endpoint + 'create',
             params
-        });
+        );
     }
 
     static getPeriodicStats(params) {

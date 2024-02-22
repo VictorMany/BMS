@@ -40,16 +40,14 @@ export async function getEquipmentAction(context, params) {
                 IdEquipment
             })
 
-            let payload
-
             if (params.fields) {
-                payload = await context.dispatch('global/formatDetails', {
+                await context.dispatch('global/formatDetails', {
                     keys: response.data.contents.equipment,
                     fields: params.fields
                 }, { root: true });
             }
 
-            return payload
+            return equipment
         } else {
             return response
         }
@@ -179,14 +177,19 @@ export async function updateEquipmentAction(context, equipment) {
     // We call the global action to format our payload
     const payload = await context.dispatch('global/formatPayload', {
         keys,
-        fields: equipment
+        fields: equipment,
     }, { root: true });
 
-    return await service.updateEquipment(payload, equipment.id).then(async (response) => {
-        if (response.status == 200) {
-            return true
-        } else {
-            return response
-        }
-    })
+    // If we dont have any changes 
+    if (payload.entries().next().done) {
+        return true
+    } else {
+        return await service.updateEquipment(payload, equipment.id).then(async (response) => {
+            if (response.status == 200) {
+                return true
+            } else {
+                return response
+            }
+        })
+    }
 }
