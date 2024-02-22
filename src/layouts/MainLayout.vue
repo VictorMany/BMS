@@ -49,7 +49,7 @@
               <div class="row">
                 <div class="col-12 q-my-sm">
                   <div class="row">
-                    <div class="col form__item-label text-weight-thin">
+                    <div class="col form__item-label text-weight-medium">
                       Estatus del equipo
                     </div>
                     <q-chip
@@ -62,30 +62,13 @@
                   </div>
                 </div>
                 <div class="col-8">
-                  <div class="col-12 form__item-label text-weight-thin">
-                    {{ 'Categoría del equipo' }}
+                  <div class="col-12 form__item-label text-weight-medium">
+                    Categoría del equipo
                   </div>
                   <div class="col-12  form__item-model q-mb-md">
                     {{ equipment?.categoryName }}
                   </div>
-                  <!-- <div class="col-12 form__item-label text-weight-thin">
-                    {{ 'Numero de control' }}
-                  </div>
-                  <div class="col-12  form__item-model q-mb-md">
-                    {{ equipment?.trackingNumber }}
-                  </div> -->
                 </div>
-
-                <!-- <div class="row justify-end">
-                  <qrcode-vue
-                    :value="value"
-                    :size="100"
-                    foreground="#062841"
-                    background="#F3F3F3"
-                    :margin="3"
-                    level="L"
-                  />
-                </div> -->
               </div>
             </div>
 
@@ -112,7 +95,7 @@
               <div class="row">
                 <div class="col-12 q-my-sm">
                   <div class="row">
-                    <div class="col form__item-label text-weight-thin">
+                    <div class="col form__item-label text-weight-medium">
                       Estatus del usuario
                     </div>
                     <q-chip
@@ -127,20 +110,20 @@
                 <div class="col-8">
                   <div
                     v-if="user?.email"
-                    class="col-12 form__item-label text-weight-thin"
+                    class="col-12 form__item-label text-weight-medium"
                   >
                     {{ 'Correo electrónico' }}
                   </div>
                   <div class="col-12  form__item-model q-mb-md">
                     {{ user?.email }}
                   </div>
-                  <div class="col-12 form__item-label text-weight-thin">
+                  <div class="col-12 form__item-label text-weight-medium">
                     {{ 'Nombre del usuario' }}
                   </div>
                   <div class="col-12  form__item-model q-mb-md">
                     {{ user?.userName }}
                   </div>
-                  <div class="col-12 form__item-label text-weight-thin">
+                  <div class="col-12 form__item-label text-weight-medium">
                     {{ 'Rol' }}
                   </div>
                   <div class="col-12  form__item-model q-mb-md">

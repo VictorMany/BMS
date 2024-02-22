@@ -36,7 +36,7 @@
 
       <q-card-section
         v-if="cardLabels.length > 0"
-        class="q-py-sm q-px-none ellipsis w-100"
+        class="q-pa-none ellipsis w-100"
       >
         <div
           v-for="(label, i) in cardLabels"
@@ -120,13 +120,13 @@ export default defineComponent({
 }
 
 .my-card:hover {
-  background-color: rgb(($primary), 0.04);
+  background-color: rgb(($primary), 0.1);
   transform: scale(1.0001);
 }
 
 .img-style {
-  width: 102px;
-  height: 102px;
+  width: 90px;
+  height: 90px;
 }
 
 .card-typography {
@@ -140,8 +140,9 @@ export default defineComponent({
 
 .card-title {
   font-weight: 500;
-  font-size: 15px;
+  font-size: 14px;
   white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -149,6 +150,7 @@ export default defineComponent({
   font-size: 11px;
   color: #798d9cda;
   white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -166,6 +168,12 @@ export default defineComponent({
 
   .card-title {
     max-width: 80vw;
+    font-size: 13px;
+  }
+
+  .img-style {
+    width: 80px;
+    height: 80px;
   }
 }
 
