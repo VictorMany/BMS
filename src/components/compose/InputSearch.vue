@@ -2,7 +2,7 @@
 <template>
   <q-input
     v-model="modelLocal"
-    class="input-style q-px-sm border-rounded"
+    class="input-style q-px-sm border-rounded border-line"
     borderless
     dense
     :label="inputLabel"
@@ -13,19 +13,17 @@
         name="search"
       />
     </template>
+
     <template v-slot:append>
-      <q-btn
+      <q-avatar
         v-if="items?.length"
-        class="btn-style border-shadow q-pa-none q-pl-md q-pr-xs filter border-rounded"
-        :label="btnFilter.title"
-        :size="'sm'"
-        no-caps
+        square
+        class="btn-style"
       >
-        <div class="no-wrap q-pa-none q-ml-auto">
+        <div class="no-wrap">
           <q-icon
-            right
+            size="xs"
             :name="btnFilter.icon"
-            class="q-ml-md q-ma-xs"
           />
         </div>
         <q-popup-proxy class="border-rounded modal-ios">
@@ -133,7 +131,7 @@
             </q-scroll-area>
           </q-banner>
         </q-popup-proxy>
-      </q-btn>
+      </q-avatar>
     </template>
   </q-input>
 </template>
@@ -248,8 +246,7 @@ export default defineComponent({
         color: '#FFFFFF',
         backgroundGradient:
           'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
-        size: 'sm',
-        icon: 'keyboard_arrow_down',
+        icon: 'tune',
       },
       options: ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'],
       modelLocal: this.model,
@@ -268,13 +265,14 @@ export default defineComponent({
 .input-style {
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 12px !important;
   color: v-bind(inputColor);
-  background: #6ea1ff21;
+  background: $accent;
 }
 
 .btn-style {
   color: white;
+  border-radius: 6px;
 }
 
 .avatar-item {
