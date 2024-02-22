@@ -265,7 +265,7 @@ export default defineComponent({
 .input-style {
   font-style: normal;
   font-weight: 400;
-  font-size: 12px !important;
+  font-size: 12px;
   color: v-bind(inputColor);
   background: $accent;
 }
@@ -285,4 +285,3 @@ export default defineComponent({
   background: #ffdd77 !important
 }
 </style>
-

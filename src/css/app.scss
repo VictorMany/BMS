@@ -367,8 +367,20 @@ ol {
   width: 180px;
 }
 
+.input-style * .q-field__label {
+  font-size: 12px;
+}
+
 // RESPONSIVITY
 @media only screen and (max-width : 1024px) {
+  .input-style * .q-field__label {
+    font-size: 10px;
+  }
+
+  .input-style {
+    font-size: 10px !important;
+  }
+
   .btn-close-order {
     order: 0;
   }
