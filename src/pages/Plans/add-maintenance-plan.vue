@@ -79,7 +79,7 @@
 
             <div class="col-12 col-sm container-table-plans">
               <general-table
-                class="w-100 border-rounded"
+                class="w-100"
                 style="height: auto;"
                 :rows="rows"
                 :columns="columns"

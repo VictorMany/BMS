@@ -101,7 +101,7 @@
 
             <general-table
               v-else-if="switchContent === 2"
-              class="w-100 border-rounded"
+              class="w-100"
               height="60vh"
               v-model:row-selected="rowSelected"
               :rows="rows"

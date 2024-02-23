@@ -9,7 +9,7 @@
     :hide-pagination="!showPagination"
     :loading="loading"
     :class="{ 'sticky': !loading }"
-    class="table-style font-style my-sticky-header-table q-mt-none bg-white"
+    class="table-style font-style my-sticky-header-table q-mt-none bg-white border-rounded"
   >
     <template v-slot:loading>
       <q-inner-loading
