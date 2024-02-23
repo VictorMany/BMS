@@ -1,5 +1,7 @@
 // app global css in SCSS form
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
+$color-inside-input: #7e97aa;
+
 
 .body--light {
   .form {
@@ -96,18 +98,18 @@
     }
 
     &__textarea {
-      color: #b5c3d7;
+      color: $color-inside-input;
     }
   }
 
   // when select an option in input type text autocomplete changes background
   input,
   select {
-    color: #b8cddd !important;
-    -webkit-text-fill-color: #b8cddd !important;
+    color: $color-inside-input !important;
+    -webkit-text-fill-color: $color-inside-input !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
-    caret-color: #b8cddd;
+    caret-color: $color-inside-input;
   }
 }
 
@@ -186,8 +188,12 @@
     object-fit: fill !important;
     width: 100% !important;
     height: 100% !important;
-    min-height: 240px !important;
-    min-width: 240px !important;
+
+    min-height: 200px !important;
+    min-width: 200px !important;
+
+    max-height: 250px;
+    max-width: 250px;
     background-clip: padding-box;
   }
 }

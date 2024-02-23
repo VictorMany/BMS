@@ -57,7 +57,7 @@
                 </template>
               </q-input>
 
-              <label class="login__legend text-weight-thin q-ma-sm">Olvidaste la contraseña</label>
+              <!-- <label class="login__legend text-weight-thin q-ma-sm">Olvidaste la contraseña</label> -->
 
               <div class="col login__submit flex flex-center">
                 <btn-action v-bind="btnAction" />
@@ -146,5 +146,12 @@ export default defineComponent({
   color: #062841 !important;
   font-weight: 200;
   font-size: 15px !important;
+}
+
+
+.body--dark {
+  .main-container-page-dark {
+    background: #020a17 !important;
+  }
 }
 </style>

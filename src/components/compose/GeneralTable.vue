@@ -301,7 +301,6 @@ export default defineComponent({
   background-color: rgba($warning, 0.2);
 }
 
-
 .pagination-style {
   color: #ffffff !important;
 }
@@ -332,5 +331,14 @@ export default defineComponent({
 
 .my-sticky-header-table.q-table--loading thead tr:last-child th {
   top: 48px;
+}
+</style>
+
+<style>
+.q-table--horizontal-separator thead th,
+.q-table--horizontal-separator tbody tr:not(:last-child)>td,
+.q-table--cell-separator thead th,
+.q-table--cell-separator tbody tr:not(:last-child)>td {
+  border-bottom-width: 0px !important;
 }
 </style>

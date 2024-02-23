@@ -25,7 +25,7 @@
 
     <div
       v-if="btnActions.length > 0"
-      class="col-xs-auto column content-end gt-xs"
+      class="col-xs-auto column content-end gt-sm"
     >
       <div class="row">
         <div
@@ -50,7 +50,7 @@
 
     <div
       v-if="btnActions.length > 0"
-      class="col-xs-auto column content-end lt-sm"
+      class="col-xs-auto column content-end lt-md"
       :class="{ 'q-ml-auto': !switchContent }"
     >
       <div class="row">

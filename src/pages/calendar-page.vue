@@ -13,7 +13,7 @@
             today-btn
             color="primary"
             mask="YYYY-MM-DD"
-            class="text-blue-blue-grey-4 border-line border-rounded gt-xs"
+            class="text-blue-blue-grey-4 border-line border-rounded gt-xs form__date_container"
             landscape
             :events="events"
             @update:model-value="getEquipmentsByDate"
@@ -25,29 +25,11 @@
             today-btn
             color="primary"
             mask="YYYY-MM-DD"
-            class="text-blue-blue-grey-4 border-line border-rounded lt-sm w-100"
+            class="text-blue-blue-grey-4 border-line border-rounded lt-sm w-100 form__date_container"
             :events="events"
             @update:model-value="getEquipmentsByDate"
             @navigation="getDatesPerMonth"
           />
-
-          <div class="col q-my-md q-px-sm q-pa-md-none">
-            <div class="container-colorama border-rounded q-pa-xs row">
-              <q-radio
-                v-for="(badge, i) in optionsFilter"
-                :key="i"
-                v-model="selectedFilter"
-                checked-icon="task_alt"
-                unchecked-icon="panorama_fish_eye"
-                class="col-12 q-pa-xs"
-                :val="badge.color"
-                :dense="true"
-                :label="badge.label"
-                :color="badge.color"
-                :class="`text-${badge.color}`"
-              />
-            </div>
-          </div>
         </div>
 
         <div class="col-md col-12 q-px-sm h-90">
@@ -119,7 +101,7 @@
 
             <general-table
               v-else-if="switchContent === 2"
-              class="w-100"
+              class="w-100 border-rounded"
               height="60vh"
               v-model:row-selected="rowSelected"
               :rows="rows"
@@ -160,14 +142,6 @@ export default defineComponent({
       selectedFilter: 'secondary',
 
       events: [],
-
-      optionsFilter: [
-        {
-          color: 'secondary',
-          label: 'Mantenimientos programados',
-          value: 'opt2',
-        },
-      ],
 
       btnAction: {
         show: true,

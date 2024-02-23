@@ -17,7 +17,8 @@
         >
           <div class="w-100 q-mb-sm">
             <div class="q-pa-sm border-rounded form__label-area bg-accent">
-              <div>Fecha de creación: <strong>{{ form.createdAt }}</strong></div>
+              <strong class="q-mr-sm">Fecha de creación: </strong>
+              {{ fields.createdAt }}
             </div>
           </div>
           <div class="q-pa-xs">

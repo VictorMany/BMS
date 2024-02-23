@@ -62,14 +62,14 @@ export default defineComponent({
       color1: this.btnBackground,
       color: this.btnBackground,
       color2: 'white',
-      noSelectedColor: '#181b1e',
+      noSelectedColor: '#0000003c',
     };
   },
 
   created() {
     if (this.$q.dark.isActive) {
       this.color = 'dark';
-      this.noSelectedColor = '#181b1e';
+      this.noSelectedColor = '#0000003c';
     } else {
       this.noSelectedColor = 'white';
     }

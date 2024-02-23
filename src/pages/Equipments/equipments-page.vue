@@ -194,6 +194,7 @@ export default defineComponent({
           name: 'equipment',
           label: 'Equipo',
           align: 'left',
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
           field: 'equipment',
           sortable: true,
         },

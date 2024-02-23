@@ -78,7 +78,7 @@
 
           <div class="q-my-md row w-100">
             <div class="card-graphics__title text-start ellipsis">
-              Indicadores clave
+              Totales para indicadores clave
             </div>
           </div>
 

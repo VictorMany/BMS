@@ -3,7 +3,7 @@
     <div class="card-page">
       <header-actions
         :titlePage="'Detalles del equipo'"
-        :btn-action="btnAction"
+        :btn-actions="btnActions"
         :btn-close-window="btnCloseWindow"
       />
 
@@ -127,14 +127,32 @@ export default defineComponent({
           }
         ],
       },
-      btnAction: {
-        show: true,
-        btnTitle: 'Editar',
-        iconName: 'edit',
-        tooltip: 'Ir a editar equipo',
-        to: this.getIdToEdit(),
-        btnWidth: 'auto'
-      },
+      btnActions: [
+        {
+          show: true,
+          btnTitle: 'Reportar',
+          iconName: 'report',
+          tooltip: 'Ir a editar equipo',
+          to: 'add-report',
+          btnWidth: 'auto'
+        },
+        {
+          show: true,
+          btnTitle: 'Registrar mantenimiento',
+          iconName: 'engineering',
+          tooltip: 'Relizarle un mantenimiento al equipo',
+          to: 'add-maintenance',
+          btnWidth: 'auto'
+        },
+        {
+          show: true,
+          btnTitle: 'Editar',
+          iconName: 'edit',
+          tooltip: 'Ir a editar equipo',
+          to: this.getIdToEdit(),
+          btnWidth: 'auto'
+        },
+      ],
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',

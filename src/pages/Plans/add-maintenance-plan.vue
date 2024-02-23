@@ -161,7 +161,7 @@
                 ref="myDatePicker"
                 v-model="form.maintenanceDates"
                 mask="YYYY-MM-DD"
-                class="text-blue-blue-grey-4 border-line border-rounded w-100 lt-md"
+                class="text-blue-blue-grey-4 border-line border-rounded w-100 lt-md form__date_container"
                 :multiple="!form.hasFrequency"
               />
 
@@ -169,7 +169,7 @@
                 ref="myDatePicker"
                 v-model="form.maintenanceDates"
                 mask="YYYY-MM-DD"
-                class="text-blue-blue-grey-4 border-line border-rounded not-show-in-mobile"
+                class="text-blue-blue-grey-4 border-line border-rounded not-show-in-mobile form__date_container"
                 :multiple="!form.hasFrequency"
                 landscape
               />

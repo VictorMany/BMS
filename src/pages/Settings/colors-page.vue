@@ -59,39 +59,6 @@
               </div>
             </div>
           </div>
-          <!-- <q-item class="q-mb-sm setting-item  border-rounded flex items-center clickable">
-            <q-item-section avatar>
-              <q-avatar class="avatar-item border-rounded">
-                <img :src="getImageUrl('color.png')" />
-              </q-avatar>
-            </q-item-section>
-            <q-item-section class="q-px-none">
-              <div class="row justify-between">
-                <div class="col-auto">
-                  <q-item-label class="setting-item__title">Color de realce</q-item-label>
-                  <q-item-label
-                    class="setting-item__subtitle"
-                    caption
-                  >
-                    Colores de títulos de secciones, textos más importantes
-                  </q-item-label>
-                </div>
-                <div class="col-auto q-pa-none q-pt-xs">
-                  <div class="row">
-                    <q-btn
-                      v-for="(button, index) in buttonColors"
-                      class="q-mx-sm"
-                      unelevated
-                      :style="`background-color: ${button.color}`"
-                      :key="index"
-                      round
-                      size="7px"
-                    />
-                  </div>
-                </div>
-              </div>
-            </q-item-section>
-          </q-item> -->
         </q-scroll-area>
       </div>
     </div>

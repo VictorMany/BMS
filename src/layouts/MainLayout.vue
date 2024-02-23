@@ -32,7 +32,7 @@
               style="background-color: rgba(125, 125, 125, 0.085);"
               v-if="showEquipmentDetails()"
             >
-              <div class="col-12 text-weight-thin text-secondary">
+              <div class="col-12 text-weight-medium text-primary q-pb-sm text-center">
                 Información del equipo
               </div>
               <div
@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-8">
                   <div class="col-12 form__item-label text-weight-medium">
-                    Categoría del equipo
+                    Detalles del equipo
                   </div>
                   <div class="col-12  form__item-model q-mb-md">
                     {{ equipment?.categoryName }}
@@ -76,7 +76,7 @@
               class="q-pa-md bg-accent border-rounded q-mt-lg"
               v-if="showUserDetails()"
             >
-              <div class="col-12 text-weight-thin text-secondary">
+              <div class="col-12 text-weight-medium text-primary q-pb-sm text-center">
                 Información del usuario
               </div>
 
@@ -316,22 +316,7 @@ export default defineComponent({
           },
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
-        },
-        'divider',
-        {
-          title: 'Registrar mantenimiento',
-          link: 'add-maintenance',
-          color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
-        },
-        {
-          title: 'Reportar',
-          link: 'add-report',
-          color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
-        },
-        // 'divider',
-        'qrcode',
+        }
       ],
 
       btnDetailUser: [
@@ -581,6 +566,10 @@ export default defineComponent({
 
   .side-menu {
     background: #fefefe;
+  }
+
+  .container-style {
+    background: rgba(236, 236, 236, 1);
   }
 }
 

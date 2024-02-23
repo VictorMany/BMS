@@ -4,31 +4,23 @@
 @import "form";
 @import "login";
 
+$primary-grey: #6d8598;
+
 .body--light {
   .card-page {
     background: #F8F8F8;
   }
 
   .setting-item {
-    background-color: white;
+    background-color: #FFFFFF;
 
     &__title {
       color: #062841;
     }
   }
 
-  .info {
-    &__title {
-      color: #062841;
-    }
-
-    &__email {
-      color: #06284194;
-    }
-
-    &__detail {
-      color: #858c9384;
-    }
+  .info__detail {
+    color: #858c9384;
   }
 
   .table-style {
@@ -36,7 +28,7 @@
   }
 
   .font-style {
-    color: rgba(122, 122, 122, 1);
+    color: #7a7a7a;
   }
 
   .my-sticky-header-table .q-table__top,
@@ -48,7 +40,7 @@
     background-color: #FFFFFF;
 
     &__title {
-      color: #6d8598;
+      color: $primary-grey;
     }
   }
 
@@ -61,18 +53,10 @@
     border: 1px solid $primary-opacity;
   }
 
-  .container-colorama {
-    background: #06284110;
-  }
-
-  .alert-container {
-    background-color: rgba(0, 0, 0, 0.5) !important;
-    color: #dce1e6;
-  }
-
+  .alert-container,
   .tooltip-container {
-    background-color: rgba(80, 76, 76, 0.25) !important;
-    color: rgb(231, 231, 231) !important;
+    background-color: #00000080 !important;
+    color: #dce1e6;
   }
 
   .column-style {
@@ -81,7 +65,6 @@
 }
 
 .body--dark {
-
   .card-page {
     background: #0000002f;
   }
@@ -90,23 +73,12 @@
     background-color: #1a2230;
 
     &__title {
-      color: #6d8598;
+      color: $primary-grey;
     }
   }
 
-  .info {
-    &__title {
-      color: #6d8598;
-    }
-
-    &__email,
-    &__detail {
-      color: #858c9384;
-    }
-  }
-
-  .table-style {
-    background-color: #1a2230 !important;
+  .info__detail {
+    color: #858c9384;
   }
 
   .font-style {
@@ -114,57 +86,48 @@
   }
 
   .card-graphics {
-    background-color: #1721264f;
+    background-color: #0000003c;
 
     &__title {
-      color: #6d8598;
+      color: $primary-grey;
     }
   }
 
   .item {
     background-color: #181b1e7b !important;
-    color: #6d8598 !important;
+    color: $primary-grey !important;
   }
 
   .my-card {
+    background-color: #1a223084 !important;
+  }
+
+  .table-style,
+  .modal-ios,
+  .btn-change-content {
     background-color: #1a2230 !important;
   }
 
-  .card-typography {
-    color: #6d8598;
-  }
-
+  .card-typography,
   .card-title {
-    color: #6d8598;
+    color: $primary-grey;
   }
 
   .border-line {
-    border: 1px solid #6d8598;
+    border: 1px solid $primary-grey;
   }
 
-  .main-container-page-dark {
-    background-color: #1721264f !important;
-  }
-
+  .main-container-page-dark,
   .main-container-page-medium-dark {
-    background-color: #1721264f !important;
+    background-color: #0000003c !important;
   }
 
   .icn-style {
-    color: #6d8598 !important;
+    color: $primary-grey !important;
   }
 
   .btn-background-dark {
     background-color: $accent !important;
-  }
-
-  .btn-change-content {
-    background-color: #1a2230 !important;
-    color: #51565d !important;
-  }
-
-  .container-colorama {
-    background: #181b1e;
   }
 
   .q-date__calendar-item>button {
@@ -174,16 +137,12 @@
 
   .alert-container,
   .tooltip-container {
-    background-color: rgba(0, 0, 0, 0.5) !important;
+    background-color: #475c7f6b !important;
     color: #dce1e6;
   }
 
   .column-style {
-    background-color: rgb(33, 55, 77) !important;
-  }
-
-  .modal-ios {
-    background-color: #1a2230;
+    background-color: #0e1829 !important;
   }
 }
 
@@ -196,22 +155,9 @@
   padding-bottom: 0.6rem;
 }
 
-.info {
-  &__title {
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 36px;
-  }
-
-  &__email {
-    font-weight: 600;
-    font-size: 13px;
-  }
-
-  &__detail {
-    font-weight: 600;
-    font-size: 13px;
-  }
+.info__detail {
+  font-weight: 600;
+  font-size: 13px;
 }
 
 .setting-item {
@@ -472,16 +418,8 @@ ol {
     padding: 6px;
   }
 
-  .info {
-    &__title {
-      font-size: 20px;
-      line-height: 16px;
-    }
-
-    &__detail,
-    &__email {
-      font-size: 11px;
-    }
+  .info__detail {
+    font-size: 11px;
   }
 
   .setting-item {
@@ -494,14 +432,9 @@ ol {
     }
   }
 
-  .card-graphics {
-    &__title {
-      font-size: 11px;
-    }
-  }
-
   .font-tree,
-  .q-item-label {
+  .q-item-label,
+  .card-graphics__title {
     font-size: 12px !important;
   }
 }
