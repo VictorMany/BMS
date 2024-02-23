@@ -127,7 +127,7 @@
           v-if="item.key != 'photo'"
           class="row justify-end items-center q-px-sm q-py-xs"
         >
-          <div class="q-pr-md form__item-label text-weight-thin">
+          <div class="q-pr-md form__item-label text-weight-medium">
             {{ item.label }}
           </div>
           <div class="form__item-model form__item-chip q-pl-md border-rounded">
