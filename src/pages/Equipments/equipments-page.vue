@@ -35,7 +35,8 @@
                   :status="equipment.isReported ?
                     {
                       tooltip: 'Tiene reporte(s) sin atender',
-                      color: 'secondary'
+                      color: '#FF9900',
+                      label: 'Reportado'
                     } : null"
                   :index="index"
                   :card-action="goToDetails"

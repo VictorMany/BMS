@@ -274,22 +274,14 @@ export default defineComponent({
 
     cards() {
       return this.maintenances.map((e) => {
-        const indicator = this.findIndicator(e.status)
         return {
           id: e.id,
           cardTitle: e.equipment,
-          status: {
-            tooltip: indicator.tooltip,
-            color: indicator.color,
-          },
+          status: this.findIndicator(e.status),
           cardLabels: [
             {
               label: 'Encargado',
               info: e.encharged_name,
-            },
-            {
-              label: 'Prioridad',
-              info: e.status,
             }
           ],
         };
@@ -308,12 +300,14 @@ export default defineComponent({
       if (status === 'Preventivo') {
         return {
           tooltip: 'El mantenimiento es preventivo',
-          color: 'positive'
+          color: '#10D13A',
+          label: 'Preventivo'
         }
       } else {
         return {
           tooltip: 'El mantenimiento es correctivo',
-          color: 'secondary'
+          color: '#d1b410',
+          label: 'Correctivo'
         }
       }
     },

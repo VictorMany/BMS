@@ -28,8 +28,7 @@
               <div
                 v-for="(report, index) in cards"
                 :key="index"
-                style="max-width: 49%;"
-                class="col-xs-6 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
+                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
               >
                 <item-card
                   v-bind="report"
@@ -279,14 +278,11 @@ export default defineComponent({
 
     cards() {
       return this.reports.map((e) => {
-        const indicator = this.findIndicator(e.status)
+        // const indicator = this.findIndicator(e.status)
         return {
           id: e.id,
           cardTitle: e.reason,
-          status: {
-            tooltip: indicator.tooltip,
-            color: indicator.color,
-          },
+          status: this.findIndicator(e.status),
           cardLabels: [
             {
               label: 'Encargado',
@@ -316,17 +312,20 @@ export default defineComponent({
       if (status === 'Pendiente') {
         return {
           tooltip: 'El reporte está pendiente',
-          color: 'secondary'
+          color: '#FF9900',
+          label: 'Pendiente'
         }
       } else if (status === 'Cancelado') {
         return {
           tooltip: 'El reporte ha sido cancelado',
-          color: 'negative'
+          color: '#dc4e5f',
+          label: 'Cancelado'
         }
       } else {
         return {
           tooltip: 'El reporte ha sido resuelto',
-          color: 'primary'
+          color: '#1e65e8',
+          label: 'Resuelto'
         }
       }
     },

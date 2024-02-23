@@ -17,10 +17,11 @@
         <div class="card-title ellipsis col q-my-auto">
           {{ cardTitle }}
         </div>
-        <div
+        <q-chip
           v-if="status"
-          class="is-reported-badge col-auto q-my-auto"
-          :class="`bg-${status.color}`"
+          class="border-rounded"
+          :style="`color: ${status.color}; background-color: ${status.color}26; font-size: 9px`"
+          :label="status.label"
         />
       </div>
     </q-card-section>
@@ -160,9 +161,7 @@ export default defineComponent({
 }
 
 .is-reported-badge {
-  width: 14px;
   height: 14px;
-  border-radius: 50%;
 }
 
 @media only screen and (max-width: 599px) {
