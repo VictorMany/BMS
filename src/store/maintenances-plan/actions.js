@@ -5,6 +5,8 @@ export async function getMaintenancePlansAction(context, params) {
     return service.getMaintenancePlans(params).then(async (response) => {
         if (response.status == 200) {
             context.commit('MUTATE_MAINTENANCES_PLAN', response.data.contents.maintenancePlans)
+            context.commit('MUTATE_DETAILS', response.data.contents)
+
             let obj = response.data.contents;
             obj.rowsNumber = obj.maintenancePlans.length
             delete obj.reports

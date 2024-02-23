@@ -9,3 +9,8 @@ export function getMaintenancePlansGetter(state) {
     }));
     return maintenancePlans
 }
+
+export function getPaginationGetter(state) {
+    return state.pagination
+}
+

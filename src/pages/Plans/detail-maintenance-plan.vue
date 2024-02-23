@@ -6,7 +6,7 @@
     >
       <header-actions
         titlePage="Detalles del plan"
-        :btn-action="btnAction"
+        :btn-actions="btnActions"
         :btn-close-window="btnCloseWindow"
       />
 
@@ -110,6 +110,7 @@
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
+import { showSuccess, showWarning } from 'app/utils/utils';
 
 export default defineComponent({
   name: 'EquipmentsPage',
@@ -119,15 +120,26 @@ export default defineComponent({
   },
   data() {
     return {
-      btnAction: {
-        show: true,
-        btnTitle: 'Editar plan',
-        iconName: 'edit',
-        btnWidth: 'auto',
-        loader: false,
-        tooltip: 'Ir a editar plan de mantenimientos',
-        to: this.getIdToEdit(),
-      },
+      btnActions: [
+        {
+          show: true,
+          btnTitle: 'Editar plan',
+          iconName: 'edit',
+          btnWidth: 'auto',
+          loader: false,
+          tooltip: 'Ir a editar plan de mantenimientos',
+          to: this.getIdToEdit(),
+        },
+        {
+          show: true,
+          btnTitle: 'Eliminar plan',
+          iconName: 'delete',
+          btnWidth: 'auto',
+          loader: false,
+          tooltip: 'Eliminar el plan de mantenimientos',
+          btnAction: this.removePlan,
+        }
+      ],
 
       btnCloseWindow: {
         iconName: 'exit_to_app',
@@ -262,6 +274,23 @@ export default defineComponent({
 
     async getEquipment(id) {
       await this.$store.dispatch('equipments/getEquipmentAction', { id })
+    },
+
+    async removePlan() {
+      try {
+        const res = await this.$store.dispatch(
+          'maintenancePlans/deleteMaintenancePlanAction',
+          this.$route.params.id
+        );
+        if (res === true) {
+          showSuccess(this.$q, { title: 'Éxito al eliminar el plan', msg: 'El plan de mantenimientos se ha eliminado' });
+          this.goBack()
+        } else {
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+        }
+      } catch (error) {
+        console.log(error)
+      }
     },
 
     getIdToEdit() {

@@ -66,12 +66,18 @@
                 >
                   <div
                     class="col-sm-auto q-pa-xs col-xs-12"
-                    v-for="(equipo, index) in equipments"
+                    v-for="(equipment, index) in equipments"
                     :key="index"
                   >
                     <item-card
-                      v-bind="equipo"
+                      v-bind="equipment"
                       :index="index"
+                      :status="equipment.isReported ?
+                        {
+                          tooltip: 'Tiene reporte(s) sin atender',
+                          color: '#FF9900',
+                          label: 'Reportado'
+                        } : null"
                       :card-action="goToDetails"
                     />
                   </div>

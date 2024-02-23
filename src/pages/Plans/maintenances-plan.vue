@@ -1,22 +1,82 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <div
-        v-if="this.$route.query?.equipment || this.$route.query?.user"
-        class="column items-end q-mb-xs"
-      >
-        <btn-action v-bind="btnCloseWindow" />
-      </div>
-
       <header-actions
         :titlePage="'Planes de mantenimientos'"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
         v-model:searchModel="searchModel"
+        v-model:switch-content="switchContent"
       />
-      <!-- Main container -->
-      <div class="main-container-page">
+
+      <div
+        class="main-container-page"
+        :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
+      >
+        <q-scroll-area
+          v-if="switchContent === 1"
+          style="height: 90.5% !important"
+          class="fit"
+          :thumb-style="$store.getters['global/getThumbStyle']"
+        >
+          <div style="max-width: 100%">
+            <div
+              v-if="maintenancePlans.length > 0"
+              class="row container-cards"
+            >
+              <div
+                v-for="(maintenance, index) in cards"
+                :key="index"
+                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
+              >
+                <item-card
+                  v-bind="maintenance"
+                  :index="index"
+                  :card-action="goToDetails"
+                />
+              </div>
+            </div>
+
+            <div
+              v-else-if="loading"
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+            >
+              <q-spinner-pie
+                color="primary"
+                class="q-mt-lg"
+                size="4em"
+              />
+              <div class="text-primary q-ma-lg">Cargando planes de mantenimientos</div>
+            </div>
+
+            <div
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+              v-else-if="loading === false"
+            >
+              No hay planes para mostrar
+              <strong class="text-negative">!</strong>
+            </div>
+          </div>
+        </q-scroll-area>
+
+        <div
+          v-if="switchContent === 1 && maintenancePlans.length > 0"
+          style="height: 6.55%"
+          class="row justify-center q-pt-sm"
+        >
+          <q-pagination
+            v-model="paginationCards.page"
+            dense
+            class="q-mt-none pagination-style"
+            :max="paginationCards.pagesNumber"
+            size="md"
+            direction-links
+            @update:model-value="changePaginationCards"
+          />
+        </div>
+
         <general-table
+          v-else-if="switchContent === 2"
           v-model:row-selected="rowSelected"
           :height="'100%'"
           :rows="maintenancePlans"
@@ -27,7 +87,6 @@
           @change-pagination="changePagination"
         />
       </div>
-      <!-- Main container -->
     </div>
   </q-page>
 </template>
@@ -36,21 +95,22 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import GeneralTable from 'src/components/compose/GeneralTable.vue'
-import BtnAction from 'src/components/atomic/BtnAction.vue';
 import { showSuccess, showWarning } from 'app/utils/utils';
+import ItemCard from 'src/components/atomic/ItemCard.vue';
 
 export default defineComponent({
   name: 'MaintenancesPage',
   components: {
     HeaderActions,
     GeneralTable,
-    BtnAction
+    ItemCard,
   },
   data() {
     return {
       delaySearch: 300,
       searchModel: null,
       timeoutSearch: null,
+      switchContent: 1,
       loading: true,
 
       localPagination: {},
@@ -118,6 +178,12 @@ export default defineComponent({
       params: {
         planName: '',
       },
+
+      paginationCards: {
+        descending: false,
+        rowsPerPage: 12,
+        page: 1,
+      },
     }
   },
 
@@ -146,6 +212,25 @@ export default defineComponent({
         this.getMaintenancePlans();
       }, this.delaySearch);
     },
+
+
+    pagination: {
+      handler(value) {
+        this.paginationCards.rowsPerPage = value.rowsPerPage;
+        this.paginationCards.pagesNumber = value.totalPages;
+        this.paginationCards.rowsNumber = value.rowsNumber;
+      },
+      immediate: true,
+      deep: true,
+    },
+
+    switchContent: {
+      handler(val) {
+        if (val === 1) this.paginationCards.page = this.pagination.page;
+        else this.pagination.page = this.paginationCards.page;
+      },
+      deep: true,
+    },
   },
 
   computed: {
@@ -153,6 +238,27 @@ export default defineComponent({
       get() {
         return this.$store.getters['maintenancePlans/getMaintenancePlansGetter'];
       },
+    },
+
+    pagination: {
+      get() {
+        return this.$store.getters['maintenancePlans/getPaginationGetter'];
+      },
+    },
+
+    cards() {
+      return this.maintenancePlans.map((e) => {
+        return {
+          id: e.id,
+          cardTitle: e.planName,
+          cardLabels: [
+            {
+              label: 'Encargado',
+              info: e.user,
+            }
+          ],
+        };
+      });
     },
   },
 
@@ -198,6 +304,19 @@ export default defineComponent({
         ...this.params, ...{
           page: pagination.page,
           rowsPerPage: pagination.rowsPerPage,
+        }
+      }
+
+      this.getMaintenancePlans();
+    },
+
+    // Changing pagination obj
+    changePaginationCards(page) {
+
+      this.params = {
+        ...this.params, ...{
+          page,
+          rowsPerPage: 12,
         }
       }
 

@@ -9,6 +9,8 @@
         v-model:searchModel="searchModel"
         v-model:switch-content="switchContent"
       />
+
+
       <div
         class="main-container-page"
         :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
