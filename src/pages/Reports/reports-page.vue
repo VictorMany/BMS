@@ -28,7 +28,8 @@
               <div
                 v-for="(report, index) in cards"
                 :key="index"
-                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
+                style="max-width: 49%;"
+                class="col-xs-6 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
               >
                 <item-card
                   v-bind="report"
