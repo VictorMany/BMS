@@ -1,23 +1,83 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <!-- <div
-        v-if="this.$route.query.equipment"
-        class="column items-end q-mb-xs not-show-in-mobile"
-      >
-        <btn-action v-bind="btnCloseWindow" />
-      </div> -->
-
       <header-actions
         titlePage="Reportes"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
         :btn-close-window="showCloseBtn() ? btnCloseWindow : null"
         v-model:searchModel="searchModel"
+        v-model:switch-content="switchContent"
       />
-      <!-- Main container -->
-      <div class="main-container-page">
+
+      <div
+        class="main-container-page"
+        :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
+      >
+        <q-scroll-area
+          v-if="switchContent === 1"
+          style="height: 90.5% !important"
+          class="fit"
+          :thumb-style="$store.getters['global/getThumbStyle']"
+        >
+          <div style="max-width: 100%">
+            <div
+              v-if="reports.length > 0"
+              class="row container-cards"
+            >
+              <div
+                v-for="(report, index) in cards"
+                :key="index"
+                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
+              >
+                <item-card
+                  v-bind="report"
+                  :index="index"
+                  :card-action="goToDetails"
+                />
+              </div>
+            </div>
+
+            <div
+              v-else-if="loading"
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+            >
+              <q-spinner-pie
+                color="primary"
+                class="q-mt-lg"
+                size="4em"
+              />
+              <div class="text-primary q-ma-lg">Cargando reportes</div>
+            </div>
+
+            <div
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+              v-else-if="loading === false"
+            >
+              No hay reportes para mostrar
+              <strong class="text-negative">!</strong>
+            </div>
+          </div>
+        </q-scroll-area>
+
+        <div
+          v-if="switchContent === 1 && reports.length > 0"
+          style="height: 6.55%"
+          class="row justify-center q-pt-sm"
+        >
+          <q-pagination
+            v-model="paginationCards.page"
+            dense
+            class="q-mt-none pagination-style"
+            :max="paginationCards.pagesNumber"
+            size="md"
+            direction-links
+            @update:model-value="changePaginationCards"
+          />
+        </div>
+
         <general-table
+          v-else-if="switchContent === 2"
           v-model:row-selected="rowSelected"
           :height="'100%'"
           :rows="reports"
@@ -28,7 +88,6 @@
           @change-pagination="changePagination"
         />
       </div>
-      <!-- Main container -->
     </div>
   </q-page>
 </template>
@@ -37,12 +96,14 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import GeneralTable from 'src/components/compose/GeneralTable.vue'
+import ItemCard from 'src/components/atomic/ItemCard.vue'
 
 export default defineComponent({
   name: 'ReportsPage',
   components: {
     HeaderActions,
     GeneralTable,
+    ItemCard,
   },
   data() {
     return {
@@ -50,6 +111,7 @@ export default defineComponent({
       searchModel: null,
       timeoutSearch: null,
       loading: true,
+      switchContent: 1,
 
       localPagination: {},
 
@@ -141,7 +203,13 @@ export default defineComponent({
         { name: 'date', label: 'Fecha del reporte', field: 'date', align: 'center', sortable: true },
         { name: 'badge', label: 'Estatus', field: 'status', align: 'center', sortable: true },
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
-      ]
+      ],
+
+      paginationCards: {
+        descending: false,
+        rowsPerPage: 12,
+        page: 1,
+      },
     }
   },
 
@@ -175,6 +243,24 @@ export default defineComponent({
         this.getReports();
       }, this.delaySearch);
     },
+
+    pagination: {
+      handler(value) {
+        this.paginationCards.rowsPerPage = value.rowsPerPage;
+        this.paginationCards.pagesNumber = value.totalPages;
+        this.paginationCards.rowsNumber = value.rowsNumber;
+      },
+      immediate: true,
+      deep: true,
+    },
+
+    switchContent: {
+      handler(val) {
+        if (val === 1) this.paginationCards.page = this.pagination.page;
+        else this.pagination.page = this.paginationCards.page;
+      },
+      deep: true,
+    },
   },
 
   computed: {
@@ -182,6 +268,36 @@ export default defineComponent({
       get() {
         return this.$store.getters['reports/getReportsGetter'];
       },
+    },
+
+    pagination: {
+      get() {
+        return this.$store.getters['reports/getPaginationGetter'];
+      },
+    },
+
+    cards() {
+      return this.reports.map((e) => {
+        const indicator = this.findIndicator(e.status)
+        return {
+          id: e.id,
+          cardTitle: e.reason,
+          status: {
+            tooltip: indicator.tooltip,
+            color: indicator.color,
+          },
+          cardLabels: [
+            {
+              label: 'Encargado',
+              info: e.encharged_name,
+            },
+            {
+              label: 'Prioridad',
+              info: e.reportUrgency,
+            }
+          ],
+        };
+      });
     },
   },
 
@@ -193,6 +309,25 @@ export default defineComponent({
         ...await this.$store.dispatch('reports/getReportsAction', this.params)
       }
       this.loading = false
+    },
+
+    findIndicator(status) {
+      if (status === 'Pendiente') {
+        return {
+          tooltip: 'El reporte está pendiente',
+          color: 'secondary'
+        }
+      } else if (status === 'Cancelado') {
+        return {
+          tooltip: 'El reporte ha sido cancelado',
+          color: 'negative'
+        }
+      } else {
+        return {
+          tooltip: 'El reporte ha sido resuelto',
+          color: 'primary'
+        }
+      }
     },
 
     showCloseBtn() {
@@ -275,7 +410,20 @@ export default defineComponent({
         }
       }
 
-      this.getReports();
+      this.getReports(this.params);
+    },
+
+    // Changing pagination obj
+    changePaginationCards(page) {
+
+      this.params = {
+        ...this.params, ...{
+          page,
+          rowsPerPage: 12,
+        }
+      }
+
+      this.getReports(this.params);
     }
   },
 })

@@ -110,7 +110,6 @@ export default defineComponent({
     return {
       delaySearch: 300,
       searchModel: null,
-      showCards: true,
       switchContent: 1,
       timeoutSearch: null,
       loading: true,

@@ -32,6 +32,11 @@
               >
                 <item-card
                   v-bind="equipment"
+                  :status="equipment.isReported ?
+                    {
+                      tooltip: 'Tiene reporte(s) sin atender',
+                      color: 'secondary'
+                    } : null"
                   :index="index"
                   :card-action="goToDetails"
                 />

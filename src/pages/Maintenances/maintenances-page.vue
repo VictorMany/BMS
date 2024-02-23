@@ -1,18 +1,82 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-
       <header-actions
         titlePage="Mantenimientos"
         :btnAction="btnAction"
         :btn-close-window="showCloseBtn() ? btnCloseWindow : null"
         :inputSearch="inputSearch"
         v-model:searchModel="searchModel"
+        v-model:switch-content="switchContent"
       />
+      <div
+        class="main-container-page"
+        :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
+      >
+        <q-scroll-area
+          v-if="switchContent === 1"
+          style="height: 90.5% !important"
+          class="fit"
+          :thumb-style="$store.getters['global/getThumbStyle']"
+        >
+          <div style="max-width: 100%">
+            <div
+              v-if="maintenances.length > 0"
+              class="row container-cards"
+            >
+              <div
+                v-for="(maintenance, index) in cards"
+                :key="index"
+                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
+              >
+                <item-card
+                  v-bind="maintenance"
+                  :index="index"
+                  :card-action="goToDetails"
+                />
+              </div>
+            </div>
 
-      <!-- Main container -->
-      <div class="main-container-page">
+            <div
+              v-else-if="loading"
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+            >
+              <q-spinner-pie
+                color="primary"
+                class="q-mt-lg"
+                size="4em"
+              />
+              <div class="text-primary q-ma-lg">Cargando mantenimientos</div>
+            </div>
+
+            <div
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+              v-else-if="loading === false"
+            >
+              No hay mantenimientos para mostrar
+              <strong class="text-negative">!</strong>
+            </div>
+          </div>
+        </q-scroll-area>
+
+        <div
+          v-if="switchContent === 1 && maintenances.length > 0"
+          style="height: 6.55%"
+          class="row justify-center q-pt-sm"
+        >
+          <q-pagination
+            v-model="paginationCards.page"
+            dense
+            class="q-mt-none pagination-style"
+            :max="paginationCards.pagesNumber"
+            size="md"
+            direction-links
+            @update:model-value="changePaginationCards"
+          />
+        </div>
+
         <general-table
+          v-else-if="switchContent === 2"
           v-model:row-selected="rowSelected"
           :height="'100%'"
           :rows="maintenances"
@@ -32,12 +96,14 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import GeneralTable from 'src/components/compose/GeneralTable.vue'
+import ItemCard from 'src/components/atomic/ItemCard.vue'
 
 export default defineComponent({
   name: 'MaintenancesPage',
   components: {
     HeaderActions,
     GeneralTable,
+    ItemCard
   },
   data() {
     return {
@@ -45,6 +111,7 @@ export default defineComponent({
       searchModel: null,
       timeoutSearch: null,
       loading: true,
+      switchContent: 1,
 
       localPagination: {},
 
@@ -133,6 +200,12 @@ export default defineComponent({
         ],
       },
 
+      paginationCards: {
+        descending: false,
+        rowsPerPage: 12,
+        page: 1,
+      },
+
       params: {
         reason: '',
       },
@@ -166,6 +239,24 @@ export default defineComponent({
         this.getMaintenances();
       }, this.delaySearch);
     },
+
+    pagination: {
+      handler(value) {
+        this.paginationCards.rowsPerPage = value.rowsPerPage;
+        this.paginationCards.pagesNumber = value.totalPages;
+        this.paginationCards.rowsNumber = value.rowsNumber;
+      },
+      immediate: true,
+      deep: true,
+    },
+
+    switchContent: {
+      handler(val) {
+        if (val === 1) this.paginationCards.page = this.pagination.page;
+        else this.pagination.page = this.paginationCards.page;
+      },
+      deep: true,
+    },
   },
 
   computed: {
@@ -180,6 +271,30 @@ export default defineComponent({
         return this.$store.getters['maintenances/getPaginationGetter'];
       },
     },
+
+    cards() {
+      return this.maintenances.map((e) => {
+        const indicator = this.findIndicator(e.status)
+        return {
+          id: e.id,
+          cardTitle: e.equipment,
+          status: {
+            tooltip: indicator.tooltip,
+            color: indicator.color,
+          },
+          cardLabels: [
+            {
+              label: 'Encargado',
+              info: e.encharged_name,
+            },
+            {
+              label: 'Prioridad',
+              info: e.status,
+            }
+          ],
+        };
+      });
+    },
   },
 
   methods: {
@@ -187,6 +302,20 @@ export default defineComponent({
       this.loading = true
       await this.$store.dispatch('maintenances/getMaintenancesAction', this.params);
       this.loading = false
+    },
+
+    findIndicator(status) {
+      if (status === 'Preventivo') {
+        return {
+          tooltip: 'El mantenimiento es preventivo',
+          color: 'positive'
+        }
+      } else {
+        return {
+          tooltip: 'El mantenimiento es correctivo',
+          color: 'secondary'
+        }
+      }
     },
 
     goToAddMaintenance() {
@@ -248,6 +377,19 @@ export default defineComponent({
       }
 
       this.getMaintenances();
+    },
+
+    // Changing pagination obj
+    changePaginationCards(page) {
+
+      this.params = {
+        ...this.params, ...{
+          page,
+          rowsPerPage: 12,
+        }
+      }
+
+      this.getMaintenances(this.params);
     },
 
     goBack() {

@@ -4,6 +4,7 @@ export async function getReportsAction(context, params) {
     return service.getReports(params).then(async (response) => {
         if (response.status == 200) {
             context.commit('MUTATE_REPORTS', response.data.contents.reports)
+            context.commit('MUTATE_DETAILS', response.data.contents)
 
             let obj = response.data.contents;
             obj.rowsNumber = obj.reports.length

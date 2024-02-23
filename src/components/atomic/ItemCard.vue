@@ -6,20 +6,21 @@
     <q-card-section class="q-pa-xs">
       <div class="row flex align-center ellipsis">
         <q-tooltip
-          v-if="isReported"
+          v-if="status"
           :delay="100"
           transition-show="scale"
           transition-hide="scale"
           class="border-rounded tooltip-container"
         >
-          Equipo reportado
+          {{ status.tooltip }}
         </q-tooltip>
         <div class="card-title ellipsis col q-my-auto">
           {{ cardTitle }}
         </div>
         <div
-          v-if="isReported"
+          v-if="status"
           class="is-reported-badge col-auto q-my-auto"
+          :class="`bg-${status.color}`"
         />
       </div>
     </q-card-section>
@@ -77,11 +78,19 @@ export default defineComponent({
       default: '',
       required: false,
     },
+
     isReported: {
       type: Boolean,
       required: false,
       default: null,
     },
+
+    status: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+
     index: { type: Number },
     id: { type: [Number, String] },
     cardImg: {
@@ -92,10 +101,7 @@ export default defineComponent({
     cardLabels: {
       type: Array,
       required: false,
-      default: () => [
-        { label: 'Marca', info: 'Hisense' },
-        { label: 'Serie', info: 'A7GTHYFRG' },
-      ],
+      default: () => [],
     },
     cardDate: {
       type: String,
@@ -154,9 +160,8 @@ export default defineComponent({
 }
 
 .is-reported-badge {
-  background-color: $secondary;
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
 }
 

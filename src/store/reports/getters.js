@@ -21,6 +21,9 @@ export function getReportsGetter(state) {
     return reports
 }
 
+export function getPaginationGetter(state) {
+    return state.pagination
+}
 
 export function getReportGetter(state) {
     return state.report

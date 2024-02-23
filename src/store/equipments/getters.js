@@ -16,6 +16,7 @@ export function getEquipmentsGetter(state) {
     value: equipment.IdEquipment,
     serialNumber: equipment.serialNumber,
     equipmentModel: equipment.equipmentModel,
+
     isReported: equipment.isReported,
     status: equipment.isReported ? 'Reportado' : 'Sin reportes',
   }));

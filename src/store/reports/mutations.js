@@ -7,3 +7,14 @@ export function MUTATE_REPORT(state, payload) {
 
     localStorage.setItem('report', JSON.stringify(payload))
 }
+
+export function MUTATE_DETAILS(state, payload) {
+    state.pagination = {
+        page: payload.currentPage,
+        totalItems: payload.totalItems,
+        totalPages: payload.totalPages,
+        rowsPerPage: payload.rowsPerPage,
+        rowsNumber: state?.reports?.length > 0 ? state.reports.length : 0
+    }
+    state.message = payload.details
+}
