@@ -20,7 +20,8 @@
   >
     <div class="w-100 q-px-xs q-py-sm">
       <div class="q-pa-sm border-rounded form__label-area bg-accent">
-        <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
+        <strong>Fecha de creación: </strong>
+        {{ fields.createdAt }}
       </div>
     </div>
 
@@ -37,16 +38,13 @@
             :key="i"
           >
             <div class="row items-center q-px-sm q-py-xs">
-              <div
-                v-if="item.type != 'title'"
-                class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-thin"
-              >
+              <div class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-medium">
                 {{ item.label }}
               </div>
 
               <div
                 v-if="item.model && item.type !== 'status'"
-                class="col-12 col-sm form__item-model"
+                class="col-12 col-sm form__item-model text-weight-thin"
               >
                 {{ item.model }}
               </div>
@@ -67,13 +65,14 @@
             >
               <div
                 v-if="item.type != 'title'"
-                class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-thin"
+                class="col-12 col-sm q-pr-lg q-pb-xs form__item-label text-weight-medium"
               >
                 {{ item.label }}
               </div>
+
               <div
                 v-if="item.type !== 'status'"
-                class="col-12 col-sm form__item-model"
+                class="col-12 col-sm form__item-model text-weight-thin"
               >
                 {{ item.affix ? item.affix + item.model : item.model }}
               </div>
@@ -101,7 +100,7 @@
               :key="i"
             >
               <div class="col-12 h-100">
-                <div class="q-mb-sm form__item-label text-weight-thin">
+                <div class="q-mb-sm form__item-label text-weight-medium">
                   {{ item.label }}
                 </div>
                 <div class="q-pa-sm border-line border-rounded">
@@ -141,7 +140,7 @@
           class="q-mx-auto row q-my-lg"
           :style="type === 'user'
             ? 'width: 254px !important; height: 254px; border-radius: 50%'
-            : 'width: 100%; min-height: 100%; max-width: 350px'
+            : 'width: 100%; min-height: 100%; max-width: 250px'
             "
         >
           <q-img
@@ -164,7 +163,7 @@
       class="col-12 q-pa-sm q-my-md"
     >
       <div v-if="item.label && item.model">
-        <div class="col-12 q-pr-md form__item-label text-weight-thin q-mb-xs">
+        <div class="col-12 q-pr-md form__item-label text-weight-medium q-mb-xs">
           {{ item.label }}
         </div>
         <div class="q-pa-sm w-100 h-100 border-line border-rounded">

@@ -65,9 +65,9 @@ export default defineComponent({
       },
 
       columns: [
-        { name: 'encharged_name', label: 'Nombre del encargado', field: 'encharged_name', align: 'left', sortable: true },
+        { name: 'encharged_name', label: 'Encargado', field: 'encharged_name', align: 'left', sortable: true },
         { name: 'equipment', label: 'Equipo', field: 'equipment', align: 'left', sortable: true },
-        { name: 'date', label: 'Fecha de mantenimiento', field: 'date', align: 'center', sortable: true },
+        { name: 'date', label: 'Fecha de mantenimiento', field: 'date', align: 'left', sortable: true },
         {
           name: 'badge',
           required: true,

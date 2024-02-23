@@ -28,7 +28,7 @@
     &__input-12,
     &__textarea,
     &__date {
-      color: #51565d;
+      color: #51565d !important;
     }
 
     &__label-area,
@@ -45,6 +45,11 @@
       background-color: $primary-opacity !important;
     }
   }
+
+  input,
+  select {
+    color: #51565d !important;
+  }
 }
 
 .body--dark {
@@ -53,7 +58,7 @@
       color: #6A7985;
 
       &__title {
-        color: #91c8ff84;
+        color: #6A7985;
       }
     }
 
@@ -68,7 +73,7 @@
     }
 
     &__date {
-      color: #91c8ff84;
+      color: #6A7985;
     }
 
     &__date_container {
@@ -127,7 +132,7 @@
     min-width: 100px !important;
     font-weight: 400;
     font-size: 12px;
-    color: #51565d;
+    color: #51565d !important;
     border-radius: 8px !important;
     padding-left: 0.6rem !important;
     padding-right: 0.6rem !important;
@@ -180,8 +185,9 @@
   &__image64-equipment {
     object-fit: fill !important;
     width: 100% !important;
-    min-height: 240px !important;
     height: 100% !important;
+    min-height: 240px !important;
+    min-width: 240px !important;
     background-clip: padding-box;
   }
 }

@@ -133,7 +133,7 @@ export default defineComponent({
           color: '#1e65e8'
         },
         {
-          color: '#91c8ff84'
+          color: '#6A7985'
         },
         {
           color: '#EC7063'

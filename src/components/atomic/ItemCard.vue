@@ -148,7 +148,7 @@ export default defineComponent({
 
 .card-text {
   font-size: 11px;
-  color: #798d9cda;
+  color: #959494;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

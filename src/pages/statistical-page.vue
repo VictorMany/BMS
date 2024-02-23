@@ -460,7 +460,7 @@ export default defineComponent({
         },
         {
           name: 'encharged_name',
-          label: 'Nombre del encargado',
+          label: 'Encargado',
           field: 'encharged_name',
           align: 'left',
           sortable: true,

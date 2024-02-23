@@ -22,7 +22,7 @@
             1-. Elige un nombre para el plan y los equipos que desees incluir
           </div>
 
-          <div class="col q-pr-md form__item-label text-weight-thin">
+          <div class="col q-pr-md form__item-label text-weight-medium">
             Nombre del plan*
           </div>
 
@@ -178,7 +178,7 @@
             <div class="col-sm col-12">
               <div
                 v-if="sortedDates?.length > 0"
-                class="form__item-label text-weight-thin"
+                class="form__item-label text-weight-medium"
               >
                 Lista de fechas agendadas
               </div>

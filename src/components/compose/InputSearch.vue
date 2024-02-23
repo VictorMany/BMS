@@ -26,9 +26,9 @@
             :name="btnFilter.icon"
           />
         </div>
-        <q-popup-proxy class="border-rounded modal-ios">
+        <q-popup-proxy class="border-rounded">
           <q-banner
-            class="border-shadow q-px-sm border-rounded"
+            class="border-shadow q-px-sm border-rounded modal-ios"
             style="width: 300px; height: auto;"
           >
             <q-scroll-area

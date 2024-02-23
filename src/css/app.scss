@@ -54,7 +54,7 @@
 
   .card-typography,
   .card-title {
-    color: #8c959a;
+    color: #767a7e;
   }
 
   .border-line {
@@ -90,13 +90,13 @@
     background-color: #1a2230;
 
     &__title {
-      color: #91c8ff84;
+      color: #6A7985;
     }
   }
 
   .info {
     &__title {
-      color: #91c8ff84;
+      color: #6A7985;
     }
 
     &__email,
@@ -123,7 +123,7 @@
 
   .item {
     background-color: #181b1e7b !important;
-    color: #91c8ff84 !important;
+    color: #6A7985 !important;
   }
 
   .my-card {
@@ -131,15 +131,15 @@
   }
 
   .card-typography {
-    color: #91c8ff84;
+    color: #6A7985;
   }
 
   .card-title {
-    color: #91c8ff84;
+    color: #6A7985;
   }
 
   .border-line {
-    border: 1px solid #91c8ff84;
+    border: 1px solid #6A7985;
   }
 
   .main-container-page-dark {
@@ -180,6 +180,10 @@
 
   .column-style {
     background-color: rgb(33, 55, 77) !important;
+  }
+
+  .modal-ios {
+    background-color: #1a2230;
   }
 }
 
@@ -222,7 +226,7 @@
   }
 
   &__subtitle {
-    color: #798d9cda !important;
+    color: #959494 !important;
     font-size: 10px;
   }
 }

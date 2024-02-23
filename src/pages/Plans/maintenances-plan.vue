@@ -80,7 +80,7 @@ export default defineComponent({
           format: val => `${val}`,
           sortable: true
         },
-        { name: 'user', label: 'Nombre del encargado', field: 'user', align: 'left', sortable: true },
+        { name: 'user', label: 'Encargado', field: 'user', align: 'left', sortable: true },
         { name: 'date', label: 'Fecha de creación', field: 'date', align: 'center', sortable: true },
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
       ],

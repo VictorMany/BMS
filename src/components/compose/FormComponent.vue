@@ -22,7 +22,8 @@
     >
       <div class="w-100 q-pa-sm q-mb-sm">
         <div class="q-pa-sm border-rounded border-line form__label-area bg-accent">
-          <div>Fecha de creación: <strong>{{ fields.createdAt }}</strong></div>
+          <strong>Fecha de creación: </strong>
+          {{ fields.createdAt }}
         </div>
       </div>
 
@@ -42,7 +43,7 @@
                 v-if="shouldShow(item)"
                 class="row items-center q-px-sm q-py-xs w-100"
               >
-                <div class="col q-pr-md form__item-label text-weight-thin">
+                <div class="col q-pr-md form__item-label text-weight-medium">
                   {{ item.label }}
                 </div>
 
@@ -81,7 +82,7 @@
                   v-if="showItem(item) && shouldShow(item)"
                   class="row w-100 q-px-sm q-pb-sm"
                 >
-                  <div class="col-12 col-md-12 col-lg-5 q-pr-md q-pt-sm form__item-label text-weight-thin">
+                  <div class="col-12 col-md-12 col-lg-5 q-pr-md q-pt-sm form__item-label text-weight-medium">
                     {{ item.label }}
                   </div>
 
@@ -123,7 +124,7 @@
                 :key="i"
               >
                 <div class="col-12">
-                  <div class="q-ma-sm form__item-label text-weight-thin">
+                  <div class="q-ma-sm form__item-label text-weight-medium">
                     {{ item.label }}
                   </div>
 
@@ -152,7 +153,7 @@
             v-if="!item.imageInput && !item.readImage"
             class="row justify-end items-center q-px-sm q-py-xs"
           >
-            <div class="q-pr-md form__item-label text-weight-thin">
+            <div class="q-pr-md form__item-label text-weight-medium">
               {{ item.label }}
             </div>
             <div class="form__item-model form__item-chip border-rounded">
@@ -167,11 +168,11 @@
           >
             <q-btn
               unelevated
-              class="btn-background-dark q-mt-md btn-background-color"
-              :class="{ 'btn-background': ImageBase64 && type === 'user' }"
+              class="btn-background-dark q-mt-md btn-background-color q-pa-md"
+              :class="ImageBase64 && type === 'user' ? 'btn-background' : 'border-rounded'"
               :style="type === 'user'
                 ? 'width: 205px; height: 205px; border-radius: 50%'
-                : 'width: 100%; min-height: 230px; max-width: 340px; border-radius: 12px'
+                : 'width: 100%; max-width: 270px; min-height: 240px; min-width: 240px;'
                 "
               @click="
                 pdfObject.name
@@ -193,7 +194,7 @@
               />
             </q-btn>
 
-            <div class="form__item-label text-weight-thin text-center text-underline q-mt-sm w-100 q-mb-auto">
+            <div class="form__item-label text-weight-medium text-center text-underline q-mt-sm w-100 q-mb-auto">
               <span @click="
                 pdfObject.name
                   ? clearFileInput($refs.fileUpload)
@@ -209,7 +210,7 @@
             class="row q-px-sm q-py-xs q-mx-auto q-mt-lg"
             :style="type === 'user'
               ? 'width: 254px !important; height: 254px; border-radius: 50%'
-              : 'width: 100%; max-width: 350px;'
+              : 'width: 100%; max-width: 250px;'
               "
           >
             <q-img
@@ -235,7 +236,7 @@
           v-if="item.model != undefined"
           class="col-12 q-px-sm"
         >
-          <div class="q-my-sm form__item-label text-weight-thin">
+          <div class="q-my-sm form__item-label text-weight-medium">
             {{ item.label }}
           </div>
 
