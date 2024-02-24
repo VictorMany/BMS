@@ -191,7 +191,7 @@ export default defineComponent({
         await this.$store.dispatch('reports/getReportAction', params)
         this.btnActions[0].show = this.getModelValueByKey('showBtn') ? true : false
 
-        if (this.getModelValueByKey('reportStatus') === 'Pendiente') {
+        if (this.getModelValueByKey('reportStatus') === 'Pendiente' && this.userRole != 3) {
           this.btnActions[1].show = true
         }
 
@@ -200,6 +200,13 @@ export default defineComponent({
         console.log(error)
         this.loading = false
       }
+    },
+  },
+  computed: {
+    userRole: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
+      },
     },
   },
   created() {

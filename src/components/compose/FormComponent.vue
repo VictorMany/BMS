@@ -111,7 +111,7 @@
 
                   <q-btn
                     v-else-if="item.type === 'button'"
-                    class="form__button border-rounded bg-blue-6 col-12 q-my-lg text-weight-medium q-pa-xs"
+                    class="form__button border-rounded bg-blue-7 col-12 q-my-lg text-weight-medium q-pa-sm"
                     no-caps
                     :label="item.model"
                     @click="item.btnAction"
