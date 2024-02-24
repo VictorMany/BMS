@@ -240,7 +240,7 @@ export default defineComponent({
 
     getEquipmentFromReport() {
       this.setModelValueByKey('idEquipment', {
-        value: this.report.idEquipment,
+        value: this.report.Equipment.IdEquipment,
         label: this.report.Equipment.categoryName
       })
       this.setModelValueByKey('maintenanceType', {

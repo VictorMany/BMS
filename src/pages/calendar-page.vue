@@ -33,8 +33,8 @@
         </div>
 
         <div class="col-md col-12 q-px-sm h-90">
-          <div class="row flex items-center justify-between q-mb-sm">
-            <div class="form__item-label text-weight-thin q-px-xs col">
+          <div class="row flex items-center justify-between q-mb-sm q-pa-xs-md">
+            <div class="form__item-label text-weight-thin col">
               Selecciona una fecha resaltada en el Calendario de mantenimientos y podrás ver los equipos con
               mantenimientos programados
             </div>
@@ -46,7 +46,7 @@
 
           <div
             style="overflow: scroll"
-            class="row q-pa-none q-ma-none h-90 w-100"
+            class="row q-pa-none q-px-md-md q-ma-none h-90 w-100"
           >
             <q-scroll-area
               v-if="switchContent === 1"
@@ -234,6 +234,7 @@ export default defineComponent({
   methods: {
     async initInfo() {
       this.calendarModel = this.formatDate();
+
       const currentDate = new Date();
 
       await this.getDatesPerMonth({
@@ -284,8 +285,8 @@ export default defineComponent({
 
     formatDate(date) {
       if (!date) {
-        date = new Date();
-        date.setDate(date.getDate())
+        const currentDate = new Date();
+        date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
       } else {
         date = new Date(date)
       }

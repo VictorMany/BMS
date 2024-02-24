@@ -278,6 +278,7 @@ export default defineComponent({
 
     async removePlan() {
       try {
+        this.btnActions[1].loader = true
         const res = await this.$store.dispatch(
           'maintenancePlans/deleteMaintenancePlanAction',
           this.$route.params.id
@@ -288,8 +289,10 @@ export default defineComponent({
         } else {
           showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
         }
+        this.btnActions[1].loader = false
       } catch (error) {
         console.log(error)
+        this.btnActions[1].loader = false
       }
     },
 

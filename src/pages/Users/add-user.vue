@@ -39,6 +39,7 @@ export default defineComponent({
   data() {
     return {
       loading: false,
+      originalUser: null,
 
       btnAction: {
         show: true,
@@ -126,7 +127,6 @@ export default defineComponent({
             type: 'select',
             model: null,
             shouldShow: this.isEditing(),
-            readonly: true,
             options: [
               { label: 'Activo', status: true, value: true },
               { label: 'Inactivo', status: false, value: false },
@@ -192,7 +192,7 @@ export default defineComponent({
           fields: this.fields
         }
 
-        await this.$store.dispatch('users/getUserAction', params)
+        this.originalUser = await this.$store.dispatch('users/getUserAction', params)
         this.userId = this.fields.extras[0].model
 
         this.loading = false
@@ -207,6 +207,8 @@ export default defineComponent({
 
       try {
         this.fields.id = this.userId
+        this.fields.originalObj = this.originalUser
+
         const res = await this.$store.dispatch(
           'users/updateUserAction',
           this.fields

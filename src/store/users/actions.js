@@ -20,13 +20,15 @@ export async function getUserAction(context, params) {
     return service.getUser(params.id).then(async (response) => {
         if (response.status == 200) {
             // We call the global action to format our payload
+            const user = response.data.contents.user
+
             const {
                 email,
                 photo,
                 userName,
                 userRole,
                 userStatus
-            } = response.data.contents.user;
+            } = user;
 
             context.commit('MUTATE_USER', {
                 email,
@@ -36,12 +38,12 @@ export async function getUserAction(context, params) {
                 userStatus
             })
 
-            const payload = await context.dispatch('global/formatDetails', {
-                keys: response.data.contents.user,
+            await context.dispatch('global/formatDetails', {
+                keys: user,
                 fields: params.fields
             }, { root: true });
 
-            return payload
+            return user
         } else {
             return response
         }
@@ -110,13 +112,19 @@ export async function updateUserAction(context, user) {
         fields: user
     }, { root: true });
 
-    return await service.updateUser(payload, user.id).then(async (response) => {
-        if (response.status == 200) {
-            return true
-        } else {
-            return response
-        }
-    })
+
+    // If we dont have any changes 
+    if (payload.entries().next().done) {
+        return true
+    } else {
+        return await service.updateUser(payload, user.id).then(async (response) => {
+            if (response.status == 200) {
+                return true
+            } else {
+                return response
+            }
+        })
+    }
 }
 
 export function getUserGetter(state) {
