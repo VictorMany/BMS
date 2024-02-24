@@ -134,7 +134,7 @@ function getModelSelected(item, valueFromServer) {
             item.color = '#10D13A'
         } else {
             item.model = 'Inactivo'
-            item.color = '#d1b410'
+            item.color = '#dc4e5f'
         }
         return item
     } else if (item.key == 'reportStatus') {

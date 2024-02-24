@@ -3,6 +3,7 @@ export function getUsersGetter(state) {
         id: user.UserId,
         cardTitle: user.userName,
         cardImg: user.photo,
+        status: user.userStatus,
         cardLabels: [
             { label: 'Rol de usuario', info: roleFormater(user.userRole) }
         ],

@@ -19,11 +19,11 @@
       <q-avatar
         v-if="items?.length"
         square
-        class="btn-style"
       >
         <div class="no-wrap">
           <q-icon
             size="xs"
+            color="primary"
             :name="btnFilter.icon"
           />
         </div>

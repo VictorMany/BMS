@@ -71,7 +71,7 @@
         <q-badge
           class="justify-center border-rounded"
           :class="checkColor(props.value)"
-          :label="props.value"
+          :label="props.value === true ? 'Activo' : props.value === false ? 'Inactivo' : props.value"
         />
       </q-td>
     </template>
@@ -201,6 +201,12 @@ export default defineComponent({
           break;
         case 'Baja':
           color = 'badge-low';
+          break;
+        case true:
+          color = 'badge-positive';
+          break;
+        case false:
+          color = 'badge-cancelled';
           break;
         default:
           color = 'badge-attended';

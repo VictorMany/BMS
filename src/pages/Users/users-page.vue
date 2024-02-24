@@ -34,6 +34,12 @@
                 <item-card
                   v-bind="user"
                   :index="index"
+                  :status="user.status === false ?
+                    {
+                      tooltip: 'El usuario está inactivo',
+                      color: '#dc4e5f',
+                      label: 'Inactivo'
+                    } : null"
                   :card-action="goToDetails"
                 />
               </div>
@@ -169,6 +175,7 @@ export default defineComponent({
           align: 'center',
           sortable: true,
         },
+        { name: 'badge', label: 'Estatus', field: 'status', align: 'center', sortable: true },
         {
           name: 'actions',
           label: 'Acciones',
@@ -309,7 +316,8 @@ export default defineComponent({
           id: e.id,
           user: e.cardTitle,
           carrer: e.cardLabels[0].label,
-          role: e.cardDate,
+          role: e.cardLabels[0].info,
+          status: e.status
         };
       });
     },
