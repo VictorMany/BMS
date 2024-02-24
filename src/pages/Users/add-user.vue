@@ -389,7 +389,6 @@ export default defineComponent({
 
     validatePasswordsMatch() {
       this.formPassword.verifyNewPassword.rules[1] = rules.sameThanOther(this.formPassword.newPassword.model)
-      console.log('RULES', this.formPassword.verifyNewPassword.rules)
     },
 
     showPassword() {
