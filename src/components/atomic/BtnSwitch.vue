@@ -1,29 +1,27 @@
 <template>
-  <q-btn-group
-    class="btn-change-content border-shadow border-rounded"
+  <div
+    class="btn-change-content border-rounded row"
     :unelevated="btnUnelevated"
   >
-    <q-btn
-      style="width: 48px; height: auto"
-      class="btn-left q-pa-sm"
+    <div
+      class="btn-left col-auto q-px-sm column justify-center"
       @click="modelChange(1)"
     >
       <q-img
         no-spinner
         src="~assets/svg/card_svg.svg"
       />
-    </q-btn>
-    <q-btn
-      style="width: 45px; height: auto"
-      class="btn-right q-pa-sm"
+    </div>
+    <div
+      class="btn-right col-auto q-px-sm column justify-center"
       @click="modelChange(2)"
     >
       <q-img
         no-spinner
         src="~assets/svg/table_svg.svg"
       />
-    </q-btn>
-  </q-btn-group>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -114,14 +112,20 @@ export default defineComponent({
 .btn-change-content {
   background-color: v-bind(color);
   color: v-bind(btnColor) !important;
+  height: 33px;
+  overflow: hidden;
 }
 
 .btn-left {
   background-color: v-bind(color1);
+  width: 45px;
+  height: 33px
 }
 
 .btn-right {
   background-color: v-bind(color2);
+  width: 45px;
+  height: 33px
 }
 
 .btn-right:hover {

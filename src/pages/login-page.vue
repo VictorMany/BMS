@@ -93,7 +93,7 @@ export default defineComponent({
         loader: false,
         iconName: '',
         btnAction: this.login,
-        btnBackground: this.$q.dark.isActive ? '#1e65e820' : '#1e65e8',
+        btnBackground: this.$q.dark.isActive ? '#1e65e8' : '#1e65e8',
       },
     };
   },

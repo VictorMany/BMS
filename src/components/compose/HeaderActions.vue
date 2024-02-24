@@ -12,7 +12,7 @@
       />
     </div>
 
-    <div class="col-xs col-sm title-page">
+    <div class="col-xs col-sm title-page text-primary">
       {{ titlePage }}
     </div>
 
@@ -179,20 +179,6 @@ export default defineComponent({
   components: { BtnAction, InputSearch, BtnSwitch },
 });
 </script>
-
-<style scoped lang="scss">
-.body--light {
-  .title-page {
-    color: $primary;
-  }
-}
-
-.body--dark {
-  .title-page {
-    color: $primary;
-  }
-}
-</style>
 
 <style>
 .q-fab--align-left>.q-fab__actions--up,

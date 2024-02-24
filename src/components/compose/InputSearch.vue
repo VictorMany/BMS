@@ -10,6 +10,7 @@
     <template v-slot:prepend>
       <q-icon
         color="primary"
+        size="xs"
         name="search"
       />
     </template>

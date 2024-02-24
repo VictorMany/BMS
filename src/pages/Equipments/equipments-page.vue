@@ -336,6 +336,10 @@ export default defineComponent({
 
     checkPermissions() {
       switch (this.userRole) {
+        case 1:
+        case 2:
+          this.btnAction.show = true
+          break;
         case 3:
           this.btnAction.show = false
           break;

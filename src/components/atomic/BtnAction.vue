@@ -151,6 +151,7 @@ export default defineComponent({
   background: v-bind(btnBackgroundGradient);
   color: v-bind(btnColor) !important;
   font-weight: v-bind(btnWeight) !important;
+  font-size: 13px !important;
 }
 
 .btn-style:hover {

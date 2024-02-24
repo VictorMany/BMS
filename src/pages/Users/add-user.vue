@@ -31,7 +31,7 @@
         style="min-width: 350px"
       >
         <q-card-section>
-          <div class="text-h6">Actualiza tu contraseña</div>
+          <div class="title-page text-primary">Actualiza tu contraseña</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
@@ -253,7 +253,7 @@ export default defineComponent({
             model: 'Actualizar contraseña',
             type: 'button',
             btnAction: this.openChangePassword,
-            shouldShow: this.isEditing()
+            shouldShow: this.isEditing() && this.$route?.params?.id == 0
           },
         ],
         right: [
@@ -382,6 +382,9 @@ export default defineComponent({
 
     closeModalPassword() {
       this.modalPassword = false
+      this.formPassword.currentPassword.model = ''
+      this.formPassword.newPassword.model = ''
+      this.formPassword.verifyNewPassword.model = ''
     },
 
     validatePasswordsMatch() {
