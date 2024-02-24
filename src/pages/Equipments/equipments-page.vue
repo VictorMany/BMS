@@ -138,7 +138,7 @@ export default defineComponent({
       },
 
       btnAction: {
-        show: true,
+        show: false,
         btnTitle: 'Agregar equipo',
         tooltip: 'Agregar nuevo equipo',
         to: 'add-equipment',
@@ -245,6 +245,7 @@ export default defineComponent({
   },
 
   created() {
+    this.checkPermissions()
     this.getEquipments({});
   },
 
@@ -289,7 +290,6 @@ export default defineComponent({
     },
   },
 
-
   computed: {
     equipments() {
       return this.$store.getters['equipments/getEquipmentsGetter'];
@@ -315,6 +315,12 @@ export default defineComponent({
         return this.$store.getters['equipments/getPaginationGetter'];
       },
     },
+
+    userRole: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
+      },
+    },
   },
 
   methods: {
@@ -326,6 +332,14 @@ export default defineComponent({
 
     async getEquipment(id) {
       await this.$store.dispatch('equipments/getEquipmentAction', { id })
+    },
+
+    checkPermissions() {
+      switch (this.userRole) {
+        case 3:
+          this.btnAction.show = false
+          break;
+      }
     },
 
     setSelectedOptionFilter(activeFilters, removedFilter = null) {

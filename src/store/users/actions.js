@@ -127,6 +127,16 @@ export async function updateUserAction(context, user) {
     }
 }
 
+export async function updatePasswordAction(context, payload) {
+    return await service.updatePassword(payload).then(async (response) => {
+        if (response.status == 200) {
+            return true
+        } else {
+            return response
+        }
+    })
+}
+
 export function getUserGetter(state) {
     return state.user
 }

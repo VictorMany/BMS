@@ -244,8 +244,9 @@ export default defineComponent({
             tooltip: {
               callbacks: {
                 label: function (context) {
-                  const label = context.dataset.additionalInfo[context.dataIndex];
-                  return label;
+                  console.log(context)
+                  let info = context.dataset.additionalInfo[context.dataIndex] + ' → ' + context.dataset.label + ': ' + context.formattedValue;
+                  return info;
                 },
               },
             }
@@ -501,11 +502,15 @@ export default defineComponent({
   },
 
   mounted() {
-    this.getPeriodicReportsStats();
-    this.getPeriodicMaintenancesStats();
-    this.getReports();
-    this.getStats();
-    this.getCustomStats();
+    if (this.userRole === 3) {
+      this.$router.replace('equipments')
+    } else {
+      this.getPeriodicReportsStats();
+      this.getPeriodicMaintenancesStats();
+      this.getReports();
+      this.getStats();
+      this.getCustomStats();
+    }
   },
 
   computed: {
@@ -536,6 +541,12 @@ export default defineComponent({
     maintenancesArea: {
       get() {
         return JSON.parse(JSON.stringify(this.$store.getters['stats/getPeriodicMaintenancesGetter']));
+      },
+    },
+
+    userRole: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
       },
     },
   },

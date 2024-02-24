@@ -147,7 +147,7 @@
             <q-list v-else-if="!showEquipmentDetails()">
               <div class="q-pt-none">
                 <div
-                  v-for="(btn, index) in btnLinks"
+                  v-for="(btn, index) in currentMenu"
                   :key="index"
                 >
                   <div v-if="btn.title">
@@ -389,16 +389,13 @@ export default defineComponent({
   },
 
   created() {
-    this.verifyUser()
-    if (this.roleFromLogin === 3) {
+    if (this.userRole === 3) {
       this.btnLinks = this.menuRole3
-      this.$router.replace('equipments')
       this.setMenu(this.$route);
     } else {
       this.btnLinks = this.btnGeneral;
       this.setMenu(this.$route);
     }
-
 
     this.$bus.on('open-menu-from-child', () => {
       // do some work
@@ -423,11 +420,17 @@ export default defineComponent({
       },
     },
 
-    roleFromLogin: {
+    userRole: {
       get() {
         return this.$store.getters['users/getRoleGetter'];
       },
     },
+
+    currentMenu() {
+      if (this.userRole === 3) {
+        return this.menuRole3
+      } else return this.btnLinks
+    }
   },
 
   async beforeRouteUpdate(to, from, next) {
@@ -484,7 +487,7 @@ export default defineComponent({
             this.selected = null;
             break;
           default:
-            if (this.roleFromLogin === 3) {
+            if (this.userRole === 3) {
               this.btnLinks = [...this.menuRole3];
             } else {
               this.btnLinks = [...this.btnGeneral];
@@ -500,7 +503,7 @@ export default defineComponent({
         }
       } catch (error) {
         console.log(error);
-        if (this.roleFromLogin === 3) {
+        if (this.userRole === 3) {
           this.btnLinks = [...this.menuRole3];
         } else {
           this.btnLinks = [...this.btnGeneral];
@@ -512,11 +515,6 @@ export default defineComponent({
       setAuthHeader(null)
       deleteTokenCookie(null)
       this.$router.replace('/login');
-    },
-
-    verifyUser() {
-      console.log(this.roleFromLogin)
-      console.log(this.user)
     },
 
     changeImage(flag) {

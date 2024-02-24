@@ -79,10 +79,13 @@
             >
               <div class="full-width">
                 <div
-                  v-if="showItem(item) && shouldShow(item)"
+                  v-if="shouldShow(item)"
                   class="row w-100 q-px-sm q-pb-sm"
                 >
-                  <div class="col-12 col-md-12 col-lg-5 q-pr-md q-pt-sm form__item-label text-weight-medium">
+                  <div
+                    v-if="item.label"
+                    class="col-12 col-md-12 col-lg-5 q-pr-md q-pt-sm form__item-label text-weight-medium"
+                  >
                     {{ item.label }}
                   </div>
 
@@ -104,6 +107,14 @@
                     class="col-12 col-sm form__input bg-accent"
                     v-model:model="item.model"
                     :item="item"
+                  />
+
+                  <q-btn
+                    v-else-if="item.type === 'button'"
+                    class="form__button border-rounded bg-blue-6 col-12 q-my-lg text-weight-medium q-pa-xs"
+                    no-caps
+                    :label="item.model"
+                    @click="item.btnAction"
                   />
 
                   <input-component
@@ -361,14 +372,6 @@ export default defineComponent({
   },
 
   methods: {
-    showItem(item) {
-      if (this.$route.params.id) {
-        // DO NOT SHOW PASSWORD ITEM WHEN EDIT USER
-        if (item.key == 'userPassword')
-          return false
-      } return true
-    },
-
     shouldShow(item) {
       if (item.shouldShow === false)
         return false

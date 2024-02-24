@@ -162,10 +162,6 @@ export default defineComponent({
     }
   },
   methods: {
-    goBack() {
-      this.$router.go(-1)
-    },
-
     async getEquipment() {
       this.loading = true
 
@@ -181,14 +177,36 @@ export default defineComponent({
     getIdToEdit() {
       return `edit-${this.$route.params.id}-equipment`
     },
+
+    goBack() {
+      this.$router.go(-1)
+    },
+
+    checkPermissions() {
+      switch (this.userRole) {
+        case 3:
+          this.btnActions[1].show = false;
+          this.btnActions[2].show = false;
+          break;
+      }
+    },
   },
 
   mounted() {
+    this.checkPermissions()
     this.getEquipment();
 
     // We delete report from localstorage if exists
     this.$store.commit('reports/MUTATE_REPORT', null)
   },
+
+  computed: {
+    userRole: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
+      },
+    },
+  }
 })
 </script>
 

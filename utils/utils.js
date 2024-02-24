@@ -6,6 +6,9 @@ export const rules = {
     requiredObject: (val) => (typeof val === 'object' && val !== null) || 'El campo es obligatorio',
     requiredNumber: (val) => (val !== undefined && val !== null) || 'El campo es obligatorio',
     alpha: (val) => /^[a-zA-ZáéíóúÁÉÍÓÚ\s]+$/.test(val) || 'El campo solo debe contener letras',
+    validYear: (val) => /^\d{4}$/.test(val) || 'Debe ser un año válido (formato: YYYY)',
+    validEmail: (val) => /\S+@\S+\.\S+/.test(val) || 'Formato de correo electrónico inválido',
+    validPhoneNumber: (val) => /^\d{10}$/.test(val) || 'El número de teléfono debe tener 10 dígitos',
     alphanumeric: (val) => {
         if (val) {
             return /^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val) || 'El campo solo debe contener letras y números'
@@ -24,7 +27,6 @@ export const rules = {
         }
         return true; // Si no hay un valor, no se aplica la regla
     },
-    validYear: (val) => /^\d{4}$/.test(val) || 'Debe ser un año válido (formato: YYYY)',
     validateYearNotGreaterThanCurrent: (val) => {
         const currentYear = new Date().getFullYear();
         return parseInt(val) <= currentYear || 'El año no puede ser mayor al actual';
@@ -34,8 +36,6 @@ export const rules = {
         const minYear = currentYear - 100;
         return parseInt(val) >= minYear || 'El año no puede ser menor a 100 años antes del actual';
     },
-    validEmail: (val) => /\S+@\S+\.\S+/.test(val) || 'Formato de correo electrónico inválido',
-    validPhoneNumber: (val) => /^\d{10}$/.test(val) || 'El número de teléfono debe tener 10 dígitos',
     numeric: (val) => {
         if (isNaN(val)) {
             return 'Ingresa un valor numérico';
@@ -49,6 +49,14 @@ export const rules = {
         return (val) => {
             if (val !== undefined && val !== null) {
                 return (val.length <= maxLength) || `El campo no debe exceder ${maxLength} caracteres`;
+            }
+            return true; // Si no hay un valor, no se aplica la regla
+        };
+    },
+    sameThanOther(other) {
+        return (val) => {
+            if (val !== undefined && val !== null) {
+                return (val === other) || 'Las contraseñas no coinciden';
             }
             return true; // Si no hay un valor, no se aplica la regla
         };

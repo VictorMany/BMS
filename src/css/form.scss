@@ -44,7 +44,7 @@ $color-inside-input: #7e97aa;
     }
 
     &__date_container {
-      background-color: $primary-opacity !important;
+      background-color: white !important;
     }
   }
 
@@ -140,6 +140,15 @@ $color-inside-input: #7e97aa;
     padding-right: 0.6rem !important;
   }
 
+  &__button {
+    color: white !important;
+    min-width: 100px !important;
+    font-size: 12px;
+    border-radius: 8px !important;
+    padding-left: 0.6rem !important;
+    padding-right: 0.6rem !important;
+  }
+
   &__input-12 {
     min-width: 100% !important;
     font-weight: 400;
@@ -212,6 +221,7 @@ select {
     &__label-area,
     &__select,
     &__input,
+    &__button,
     &__date,
     &__item-label,
     &__item-model {

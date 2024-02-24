@@ -31,11 +31,12 @@
         <div
           v-for="(btn, i) in btnActions"
           :key="i"
-          class="col-auto q-pl-sm"
+          class="col-auto"
         >
           <btn-action
             v-if="btn.show"
             v-bind="btn"
+            class="q-ml-sm"
           />
         </div>
       </div>
@@ -57,12 +58,13 @@
         <div
           v-for="(btn, i) in btnActions"
           :key="i"
-          class="col-auto q-pl-sm"
+          class="col-auto"
         >
           <btn-action
             v-if="btn.show"
             v-bind="btn"
             :btn-title="''"
+            class="q-ml-sm"
           />
         </div>
       </div>
@@ -132,7 +134,7 @@ export default defineComponent({
       required: false,
       default: () => ({
         show: false,
-        btnTitle: 'Agregar equipo',
+        btnTitle: '',
       }),
     },
     btnActions: {

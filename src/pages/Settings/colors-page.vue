@@ -7,7 +7,7 @@
         :btn-close-window="btnCloseWindow"
       />
 
-      <div class="main-container-page container-form">
+      <div class="main-container-page container-form main-container-page-dark q-pa-lg">
         <q-scroll-area
           class="h-97"
           :thumb-style="{

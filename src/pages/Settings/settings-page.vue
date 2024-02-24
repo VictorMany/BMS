@@ -21,7 +21,10 @@
                   @click="navigateTo(item.link)"
                   :key="i"
                 >
-                  <q-item class="q-mb-sm setting-item border-rounded flex items-center">
+                  <q-item
+                    v-if="!item.hide"
+                    class="q-mb-sm setting-item border-rounded flex items-center"
+                  >
                     <q-item-section avatar>
                       <q-avatar class="avatar-item border-rounded">
                         <img :src="getImageUrl(item.img)" />
@@ -55,9 +58,11 @@ import HeaderActions from 'src/components/compose/HeaderActions.vue'
 
 export default defineComponent({
   name: 'SettingsPage',
+
   components: {
     HeaderActions
   },
+
   data() {
     return {
       listSettings: [
@@ -70,12 +75,6 @@ export default defineComponent({
             params: 0
           }
         },
-        // {
-        //   title: 'Notificaciones',
-        //   subtitle: 'Alertas del sistema',
-        //   img: 'notification.png',
-        //   link: 'notifications'
-        // },
         {
           title: 'Usuarios',
           subtitle: 'Lista de usuarios en el sistema',
@@ -94,12 +93,6 @@ export default defineComponent({
           img: 'color.png',
           link: 'colors'
         },
-        // {
-        //   title: 'Soporte técnico',
-        //   subtitle: 'Ayuda, reportar error',
-        //   img: 'tecnical.png',
-        //   link: 'tecnical-support'
-        // },
         {
           title: 'Acerca de nosotros',
           subtitle: 'Información y contacto',
@@ -109,6 +102,7 @@ export default defineComponent({
       ]
     }
   },
+
   setup() {
     const getImageUrl = (url) => {
       try {
@@ -122,6 +116,7 @@ export default defineComponent({
       basicToolBar: [['unordered', 'ordered']]
     }
   },
+
   methods: {
     navigateTo(link) {
       if (link.params || link.params === 0) {
@@ -132,7 +127,28 @@ export default defineComponent({
           }
         })
       } else { this.$router.push({ path: link }) }
-    }
+    },
+
+    checkPermissions() {
+      switch (this.userRole) {
+        case 3:
+          this.listSettings[1].hide = true;
+          this.listSettings[2].hide = true;
+          break;
+      }
+    },
+  },
+
+  created() {
+    this.checkPermissions()
+  },
+
+  computed: {
+    userRole: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
+      },
+    },
   }
 })
 </script>

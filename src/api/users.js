@@ -26,6 +26,10 @@ export default class UserService {
         return api.put(this.endpoint + 'update/' + id, payload);
     }
 
+    static updatePassword(payload) {
+        return api.put(this.endpoint + 'updatePsw/userId', payload);
+    }
+
     // Login
     static login(payload) {
         return api.post(this.endpoint + 'login', payload);

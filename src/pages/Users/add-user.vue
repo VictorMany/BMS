@@ -21,6 +21,59 @@
         </q-scroll-area>
       </div>
     </div>
+
+    <q-dialog
+      v-model="modalPassword"
+      persistent
+    >
+      <q-card
+        class="border-shadow q-px-sm border-rounded modal-ios"
+        style="min-width: 350px"
+      >
+        <q-card-section>
+          <div class="text-h6">Actualiza tu contraseña</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-form ref="formPassword">
+            <div class="q-pr-md q-pt-sm form__item-label text-weight-medium">
+              Ingresa tu contraseña actual
+            </div>
+            <input-component
+              :item="formPassword.currentPassword"
+              class="form__input bg-accent col-12 col-sm"
+              v-model:model="formPassword.currentPassword.model"
+            />
+            <div class="q-pr-md q-pt-sm form__item-label text-weight-medium">
+              Ingresa tu contraseña nueva
+            </div>
+            <input-component
+              :item="formPassword.newPassword"
+              class="form__input bg-accent col-12 col-sm"
+              v-model:model="formPassword.newPassword.model"
+            />
+            <div class="q-pr-md q-pt-sm form__item-label text-weight-medium">
+              Confirma tu contraseña nueva
+            </div>
+            <input-component
+              :item="formPassword.verifyNewPassword"
+              class="form__input bg-accent col-12 col-sm"
+              v-model:model="formPassword.verifyNewPassword.model"
+            />
+          </q-form>
+        </q-card-section>
+
+        <q-card-actions
+          align="right"
+          class="q-pa-md q-pb-lg"
+        >
+          <btn-action v-bind="btnCancel" />
+          <btn-action v-bind="btnUpdatePassword" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+
   </q-page>
 </template>
 
@@ -29,17 +82,23 @@ import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormComponent from 'src/components/compose/FormComponent.vue';
 import { rules, showSuccess, showWarning } from 'app/utils/utils';
+import InputComponent from 'src/components/atomic/Form/InputComponent.vue';
+import BtnAction from 'src/components/atomic/BtnAction.vue';
 
 export default defineComponent({
   key: 'UsersPage',
   components: {
     HeaderActions,
     FormComponent,
+    InputComponent,
+    BtnAction
   },
   data() {
     return {
       loading: false,
+      modalPassword: false,
       originalUser: null,
+      errorMsg: '',
 
       btnAction: {
         show: true,
@@ -51,11 +110,60 @@ export default defineComponent({
         loader: false,
       },
 
+      btnCancel: {
+        show: true,
+        btnTitle: 'Cancelar',
+        iconName: 'close',
+        btnWidth: 'auto',
+        size: 'sm',
+        tooltip: 'Cancelar y cerrar',
+        btnAction: this.closeModalPassword,
+        loader: false,
+      },
+
+      btnUpdatePassword: {
+        show: true,
+        btnTitle: 'Actualizar',
+        iconName: 'update',
+        btnWidth: 'auto',
+        tooltip: 'Actualizar nueva contraseña',
+        size: 'sm',
+        btnAction: this.updatePassword,
+        loader: false,
+      },
+
       btnCloseWindow: {
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',
         btnColor: '#FF9900',
         btnAction: this.goBack
+      },
+
+      formPassword: {
+        newPassword: {
+          key: 'newUserPassword',
+          label: 'Contraseña*',
+          type: 'password',
+          shouldShow: !this.isEditing(),
+          model: '',
+          rules: [rules.requiredString],
+        },
+        verifyNewPassword: {
+          key: 'verifyUserPassword',
+          label: 'Contraseña*',
+          type: 'password',
+          shouldShow: !this.isEditing(),
+          model: '',
+          rules: [rules.requiredString],
+        },
+        currentPassword: {
+          key: 'currentUserPassword',
+          label: 'Contraseña*',
+          type: 'password',
+          shouldShow: !this.isEditing(),
+          model: '',
+          rules: [rules.requiredString],
+        }
       },
 
       fields: {
@@ -96,11 +204,13 @@ export default defineComponent({
         ],
         left: [
           {
-            key: 'userPassword',
-            label: 'Contraseña*',
-            type: 'password',
-            model: '',
-            rules: [rules.requiredString],
+            key: 'birthday',
+            label: 'Fecha de nacimiento*',
+            type: 'date',
+            model: null,
+            readonly: this.isEditing(),
+            restrictedMaxDate: this.restrictedMaxDate(),
+            rules: [rules.requiredString, this.errorMsg],
           },
           {
             key: 'phone',
@@ -134,13 +244,18 @@ export default defineComponent({
             rules: [rules.requiredObject],
           },
           {
-            key: 'birthday',
-            label: 'Fecha de nacimiento*',
-            type: 'date',
-            model: null,
-            readonly: this.isEditing(),
-            restrictedMaxDate: this.restrictedMaxDate(),
-            rules: [rules.requiredString, rules.adultAge],
+            key: 'userPassword',
+            label: 'Contraseña*',
+            type: 'password',
+            shouldShow: !this.isEditing(),
+            model: '',
+            rules: [rules.requiredString],
+          },
+          {
+            model: 'Actualizar contraseña',
+            type: 'button',
+            btnAction: this.openChangePassword,
+            shouldShow: this.isEditing()
           },
         ],
         right: [
@@ -235,6 +350,51 @@ export default defineComponent({
       }
     },
 
+    async updatePassword() {
+      const validForm = await this.$refs.formPassword.validate().then(success => { return success })
+      if (validForm === true) {
+        this.btnUpdatePassword.loader = true;
+        try {
+          const payload = {
+            userId: this.userId,
+            currentPassword: this.formPassword.currentPassword.model,
+            userPassword: this.formPassword.newPassword.model,
+          }
+
+          const res = await this.$store.dispatch(
+            'users/updatePasswordAction',
+            payload
+          );
+          if (res === true) {
+            showSuccess(this.$q, { title: 'Éxito al actualizar la contraseña', msg: 'La contraseña se ha actualizado' });
+            this.closeModalPassword()
+          } else {
+            showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+          }
+          this.btnUpdatePassword.loader = false;
+        } catch (error) {
+          this.btnUpdatePassword.loader = false;
+        }
+      }
+    },
+
+    openChangePassword() {
+      this.modalPassword = true
+    },
+
+    closeModalPassword() {
+      this.modalPassword = false
+    },
+
+    validatePasswordsMatch() {
+      this.formPassword.verifyNewPassword.rules[1] = rules.sameThanOther(this.formPassword.newPassword.model)
+      console.log('RULES', this.formPassword.verifyNewPassword.rules)
+    },
+
+    showPassword() {
+      return true
+    },
+
     getModelValueByKey(key) {
       // Busca la clave en todas las secciones del objeto fields
       for (const sectionKey in this.fields) {
@@ -304,13 +464,21 @@ export default defineComponent({
     },
   },
 
-
   computed: {
-    roleFromLogin: {
+    userRole: {
       get() {
         return this.$store.getters['users/getRoleGetter'];
       },
     },
+  },
+
+  watch: {
+    'formPassword.newPassword.model': function () {
+      this.formPassword.verifyNewPassword.model = ''
+    },
+    'formPassword.verifyNewPassword.model': function () {
+      this.validatePasswordsMatch();
+    }
   }
 });
 </script>
