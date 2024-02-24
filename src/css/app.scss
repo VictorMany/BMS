@@ -332,13 +332,6 @@ ol {
 
 // RESPONSIVITY
 @media only screen and (max-width : 1024px) {
-  .input-style * .q-field__label {
-    font-size: 10px;
-  }
-
-  .input-style {
-    font-size: 10px !important;
-  }
 
   .btn-close-order {
     order: 0;
@@ -418,8 +411,10 @@ ol {
     padding: 6px;
   }
 
-  .info__detail {
-    font-size: 11px;
+  .input-style,
+  .info__detail,
+  .input-style * .q-field__label {
+    font-size: 11px !important;
   }
 
   .setting-item {
