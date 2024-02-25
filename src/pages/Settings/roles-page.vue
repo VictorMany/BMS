@@ -17,7 +17,7 @@
               <q-list class="row h-100">
                 <div
                   v-for="(item, i) in listRoles"
-                  class="col-4 q-px-xs h-100"
+                  class="col-12 col-sm-4 q-px-xs h-100"
                   :key="i"
                 >
                   <div class="q-mb-sm q-px-md q-pt-md setting-item border-rounded clickable h-100">
