@@ -20,7 +20,7 @@
                   class="col-4 q-px-xs h-100"
                   :key="i"
                 >
-                  <div class="q-mb-sm q-pa-md setting-item border-rounded clickable h-100">
+                  <div class="q-mb-sm q-px-md q-pt-md setting-item border-rounded clickable h-100">
                     <div class="row">
                       <q-item-section avatar>
                         <q-avatar class="avatar-item">
@@ -41,7 +41,7 @@
                       </q-item-section>
                     </div>
 
-                    <q-item-section class="q-pt-lg q-px-sm">
+                    <q-item-section class="q-pt-md q-px-sm">
                       <div
                         v-for="(permission, j) in item.permissions"
                         :key="j"
