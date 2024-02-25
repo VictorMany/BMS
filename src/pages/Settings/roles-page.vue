@@ -18,7 +18,7 @@
               class="col-12 col-sm-4 q-px-xs"
               :key="i"
             >
-              <div class="q-mb-sm q-px-md q-pt-md setting-item border-rounded clickable">
+              <div class="q-mb-sm q-pa-md setting-item border-rounded clickable">
                 <div class="row">
                   <q-item-section avatar>
                     <q-avatar class="avatar-item">
