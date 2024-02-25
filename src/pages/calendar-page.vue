@@ -228,6 +228,7 @@ export default defineComponent({
   },
 
   created() {
+    this.checkPermissions()
     this.initInfo()
   },
 
@@ -281,6 +282,15 @@ export default defineComponent({
 
     async getEquipment(id) {
       await this.$store.dispatch('equipments/getEquipmentAction', { id })
+    },
+
+    checkPermissions() {
+      switch (this.userRole) {
+        case 2:
+        case 3:
+          this.btnAction.show = false;
+          break;
+      }
     },
 
     formatDate(date) {
@@ -370,6 +380,12 @@ export default defineComponent({
         return this.$store.getters['equipments/getPaginationGetter'];
       },
     },
+
+    userRole: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
+      },
+    }
   }
 });
 </script>

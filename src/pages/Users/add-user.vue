@@ -271,6 +271,7 @@ export default defineComponent({
   },
 
   created() {
+    this.checkPermissions()
     if (this.isEditing()) {
       this.getUser()
     }
@@ -373,6 +374,20 @@ export default defineComponent({
         } catch (error) {
           this.btnUpdatePassword.loader = false;
         }
+      }
+    },
+
+    checkPermissions() {
+      switch (this.userRole) {
+        case 2:
+        case 3:
+          this.updateFieldByKeyInAllArrays('userRole', {
+            readonly: true
+          })
+          this.updateFieldByKeyInAllArrays('userStatus', {
+            readonly: true
+          })
+          break;
       }
     },
 

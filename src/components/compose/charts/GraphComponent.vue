@@ -50,6 +50,7 @@
             </div>
 
             <q-page-sticky
+                v-if="userRole == 1"
                 style="position: absolute;"
                 :offset="[10, 10]"
             >
@@ -85,6 +86,7 @@
                 />
             </div>
             <q-page-sticky
+                v-if="userRole === 1"
                 style="position: absolute;"
                 :offset="[10, 10]"
             >
@@ -253,6 +255,14 @@ export default {
             },
             deep: true
         }
+    },
+
+    computed: {
+        userRole: {
+            get() {
+                return this.$store.getters['users/getRoleGetter'];
+            },
+        },
     }
 };
 </script>

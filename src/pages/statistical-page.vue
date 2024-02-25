@@ -440,6 +440,7 @@ export default defineComponent({
           paddingLeft: '0',
           paddingRight: '1.5rem',
           textAlign: 'center',
+          fontSize: '10px !important'
         },
         color: '#FFFFFF',
         to: 'reports',

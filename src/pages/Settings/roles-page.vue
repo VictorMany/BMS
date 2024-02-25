@@ -3,7 +3,7 @@
     <div class="card-page">
 
       <header-actions
-        :titlePage="'Permisos'"
+        :titlePage="'Roles y permisos'"
         :btn-close-window="btnCloseWindow"
       />
 
@@ -14,29 +14,53 @@
         >
           <div class="row">
             <div class="col-12">
-              <q-list>
+              <q-list class="row h-100">
                 <div
                   v-for="(item, i) in listRoles"
+                  class="col-4 q-px-xs h-100"
                   :key="i"
                 >
-                  <q-item class="q-mb-sm setting-item border-rounded flex items-center clickable">
-                    <q-item-section avatar>
-                      <q-avatar class="avatar-item">
-                        <img :src="getImageUrl(item.img)" />
-                      </q-avatar>
+                  <div class="q-mb-sm q-pa-md setting-item border-rounded clickable h-100">
+                    <div class="row">
+                      <q-item-section avatar>
+                        <q-avatar class="avatar-item">
+                          <img :src="getImageUrl(item.img)" />
+                        </q-avatar>
+                      </q-item-section>
+
+                      <q-item-section>
+                        <q-item-label class="setting-item__title">{{
+                          item.title
+                        }}</q-item-label>
+                        <q-item-label
+                          class="setting-item__subtitle"
+                          caption
+                        >{{
+                          item.subtitle
+                        }}</q-item-label>
+                      </q-item-section>
+                    </div>
+
+                    <q-item-section class="q-pt-lg q-px-sm">
+                      <div
+                        v-for="(permission, j) in item.permissions"
+                        :key="j"
+                        class="setting-item__title"
+                      >
+                        {{ permission.title }}
+                        <ul>
+                          <li
+                            v-for="(obj, k) in permission.list"
+                            :key="k"
+                            class="setting-item__subtitle"
+                          >
+                            {{ obj }}
+                          </li>
+                        </ul>
+                      </div>
                     </q-item-section>
-                    <q-item-section>
-                      <q-item-label class="setting-item__title">{{
-                        item.title
-                      }}</q-item-label>
-                      <q-item-label
-                        class="setting-item__subtitle"
-                        caption
-                      >{{
-                        item.subtitle
-                      }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
+                  </div>
+
                 </div>
               </q-list>
             </div>
@@ -72,17 +96,156 @@ export default defineComponent({
       listRoles: [
         {
           title: 'Administrador',
-          subtitle: 'Rol con todos los permisos dentro del sistema',
+          subtitle: 'Admin del sistema',
+          permissions: [
+            {
+              title: 'Estadísticas',
+              list: [
+                'Ver dashboard',
+                'Personalizar gráficos'
+              ]
+            },
+            {
+              title: 'Equipos',
+              list: [
+                'Ver listado',
+                'Agregar',
+                'Ver detalles',
+                'Actualizar',
+              ]
+            },
+            {
+              title: 'Mantenimientos',
+              list: [
+                'Ver listado',
+                'Agregar',
+                'Ver detalles',
+              ]
+            },
+            {
+              title: 'Planes de mantenimientos',
+              list: [
+                'Ver listado',
+                'Agregar',
+                'Ver detalles',
+                'Actualizar',
+                'Eliminar',
+              ]
+            },
+            {
+              title: 'Ver calendario',
+              list: [
+                'Ver calendario'
+              ]
+            },
+            {
+              title: 'Reportes',
+              list: [
+                'Ver listado',
+                'Agregar',
+                'Atender (Crear mantenimiento)',
+                'Ver detalles',
+                'Actualizar',
+                'Cancelar',
+              ]
+            },
+            {
+              title: 'Configuración',
+              list: [
+                'Actualizar mi cuenta',
+                'Ver listado de usuarios',
+                'Agregar usuarios',
+                'Actualizar usuarios',
+              ]
+            },
+          ],
           img: 'admin.png',
         },
         {
           title: 'Auxiliar',
-          subtitle: 'Rol con permisos customizables por el administrador',
-          img: 'admin.png',
+          subtitle: 'Perfil ayudante o biomédico auxiliar',
+          permissions: [
+            {
+              title: 'Estadísticas',
+              list: [
+                'Ver dashboard',
+              ]
+            },
+            {
+              title: 'Equipos',
+              list: [
+                'Ver listado',
+                'Ver detalles',
+              ]
+            },
+            {
+              title: 'Mantenimientos',
+              list: [
+                'Ver listado',
+                'Agregar',
+                'Ver detalles',
+              ]
+            },
+            {
+              title: 'Planes de mantenimientos',
+              list: [
+                'Ver listado',
+                'Ver detalles'
+              ]
+            },
+            {
+              title: 'Calendario',
+              list: [
+                'Ver calendario'
+              ]
+            },
+            {
+              title: 'Reportes',
+              list: [
+                'Ver listado',
+                'Agregar',
+                'Atender (Crear mantenimiento)',
+                'Ver detalles',
+                'Actualizar',
+                'Cancelar',
+              ]
+            },
+            {
+              title: 'Configuración',
+              list: [
+                'Actualizar mi cuenta'
+              ]
+            },
+          ],
+          img: 'role.png',
         },
         {
-          title: 'Funciones básicas',
-          subtitle: 'Role con permisos customizables por el administrador',
+          title: 'Lector',
+          subtitle: 'Personal del hospital',
+          permissions: [
+            {
+              title: 'Equipos',
+              list: [
+                'Ver listado',
+                'Ver detalles',
+              ]
+            },
+            {
+              title: 'Reportes',
+              list: [
+                'Ver listado',
+                'Agregar',
+                'Ver detalles',
+                'Cancelar'
+              ]
+            },
+            {
+              title: 'Configuración',
+              list: [
+                'Actualizar mi cuenta'
+              ]
+            },
+          ],
           img: 'user.png',
         },
       ],

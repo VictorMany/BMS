@@ -184,6 +184,9 @@ export default defineComponent({
 
     checkPermissions() {
       switch (this.userRole) {
+        case 2:
+          this.btnActions[2].show = false;
+          break;
         case 3:
           this.btnActions[1].show = false;
           this.btnActions[2].show = false;

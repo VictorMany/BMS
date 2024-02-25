@@ -188,6 +188,7 @@ export default defineComponent({
   },
 
   mounted() {
+    this.checkPermissions()
     this.getMaintenancePlans()
   },
 
@@ -260,9 +261,17 @@ export default defineComponent({
         };
       });
     },
+
+    userRole: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
+      },
+    }
   },
 
   methods: {
+
+
     async getMaintenancePlans() {
       this.loading = true
 
@@ -288,6 +297,15 @@ export default defineComponent({
         }
       } catch (error) {
         console.log(error)
+      }
+    },
+
+    checkPermissions() {
+      switch (this.userRole) {
+        case 2:
+        case 3:
+          this.btnAction.show = false;
+          break;
       }
     },
 

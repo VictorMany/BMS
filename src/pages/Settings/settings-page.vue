@@ -135,6 +135,9 @@ export default defineComponent({
           this.listSettings[1].hide = true;
           this.listSettings[2].hide = true;
           break;
+        case 2:
+          this.listSettings[1].hide = true;
+          break;
       }
     },
   },

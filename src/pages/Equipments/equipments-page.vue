@@ -239,6 +239,7 @@ export default defineComponent({
           icnSize: 'xs',
           icnAction: 'Edit',
           tooltip: 'Editar equipo',
+          hidden: true
         },
       ],
     };
@@ -337,9 +338,10 @@ export default defineComponent({
     checkPermissions() {
       switch (this.userRole) {
         case 1:
-        case 2:
           this.btnAction.show = true
+          this.actionsTable[1].hidden = false
           break;
+        case 2:
         case 3:
           this.btnAction.show = false
           break;

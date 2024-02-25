@@ -205,6 +205,7 @@ export default defineComponent({
   },
 
   created() {
+    this.checkPermissions()
     this.getMaintenancePlan()
   },
 
@@ -221,6 +222,12 @@ export default defineComponent({
       } else if (this.form.maintenanceDates?.lenght == 0) return []
       else return this.form.maintenanceDates
     },
+
+    userRole: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
+      },
+    }
   },
 
   watch: {
@@ -293,6 +300,16 @@ export default defineComponent({
       } catch (error) {
         console.log(error)
         this.btnActions[1].loader = false
+      }
+    },
+
+    checkPermissions() {
+      switch (this.userRole) {
+        case 2:
+        case 3:
+          this.btnActions[0].show = false;
+          this.btnActions[1].show = false;
+          break;
       }
     },
 
