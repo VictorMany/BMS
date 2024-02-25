@@ -161,6 +161,7 @@ $primary-grey: #6d8598;
 }
 
 .setting-item {
+  min-height: 70px !important;
 
   &__title {
     font-size: 12px;
