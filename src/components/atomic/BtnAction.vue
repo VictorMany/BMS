@@ -120,7 +120,7 @@ export default defineComponent({
     iconName: {
       type: String,
       required: false,
-      default: 'add_circle',
+      default: 'o_data_saver_on',
     },
 
     btnWidth: {

@@ -47,7 +47,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
-        iconName: 'save',
+        iconName: 'o_save',
         btnWidth: 'auto',
         tooltip: 'Guardar equipo',
         btnAction: this.createOrEdit,

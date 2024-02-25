@@ -26,10 +26,7 @@
       v-model="modalPassword"
       persistent
     >
-      <q-card
-        class="border-shadow q-px-sm border-rounded modal-ios"
-        style="min-width: 350px"
-      >
+      <q-card class="border-shadow q-px-sm border-rounded modal-ios">
         <q-card-section>
           <div class="title-page text-primary">Actualiza tu contraseña</div>
         </q-card-section>
@@ -73,7 +70,6 @@
       </q-card>
     </q-dialog>
 
-
   </q-page>
 </template>
 
@@ -103,7 +99,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
-        iconName: 'save',
+        iconName: 'o_save',
         btnWidth: 'auto',
         tooltip: 'Guardar usuario',
         btnAction: this.createOrEdit,

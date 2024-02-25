@@ -39,7 +39,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
-        iconName: 'save',
+        iconName: 'o_save',
         btnWidth: 'auto',
         tooltip: 'Agregar mantenimiento',
         btnAction: this.createMaintenance,

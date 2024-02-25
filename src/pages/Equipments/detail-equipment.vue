@@ -131,7 +131,7 @@ export default defineComponent({
         {
           show: true,
           btnTitle: 'Reportar',
-          iconName: 'report',
+          iconName: 'o_report',
           tooltip: 'Ir a editar equipo',
           to: 'add-report',
           btnWidth: 'auto'
@@ -139,7 +139,7 @@ export default defineComponent({
         {
           show: true,
           btnTitle: 'Registrar mantenimiento',
-          iconName: 'engineering',
+          iconName: 'o_engineering',
           tooltip: 'Relizarle un mantenimiento al equipo',
           to: 'add-maintenance',
           btnWidth: 'auto'
@@ -147,7 +147,7 @@ export default defineComponent({
         {
           show: true,
           btnTitle: 'Editar',
-          iconName: 'edit',
+          iconName: 'o_edit',
           tooltip: 'Ir a editar equipo',
           to: this.getIdToEdit(),
           btnWidth: 'auto'

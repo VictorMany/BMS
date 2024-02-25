@@ -153,7 +153,7 @@ export default defineComponent({
           tooltip: 'Detalle de plan',
         },
         {
-          icnName: 'edit',
+          icnName: 'o_edit',
           icnSize: 'xs',
           icnAction: 'Edit',
           tooltip: 'Editar plan',

@@ -98,7 +98,7 @@
                     @click="showForm = !showForm"
                 >
                     <q-icon
-                        name="edit"
+                        name="o_edit"
                         color="primary"
                     />
                 </q-btn>

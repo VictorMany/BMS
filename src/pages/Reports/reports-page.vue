@@ -160,17 +160,17 @@ export default defineComponent({
         items: [
           {
             title: 'Buscar por reporte',
-            icon: 'bug_report',
+            icon: 'o_bug_report',
             filter: 'reason'
           },
           {
             title: 'Encargado',
-            icon: 'supervisor_account',
+            icon: 'o_supervisor_account',
             filter: 'userName'
           },
           {
             title: 'Estatus',
-            icon: 'engineering',
+            icon: 'o_engineering',
             options: [
               {
                 title: 'Resuelto',

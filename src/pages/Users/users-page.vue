@@ -137,7 +137,7 @@ export default defineComponent({
           tooltip: 'Detalle de usuario'
         },
         {
-          icnName: 'edit',
+          icnName: 'o_edit',
           icnSize: 'xs',
           icnAction: 'Edit',
           tooltip: 'Editar usuario'
@@ -193,12 +193,12 @@ export default defineComponent({
         items: [
           {
             title: 'Nombre de usuario',
-            icon: 'account_circle',
+            icon: 'o_account_circle',
             filter: 'name',
           },
           {
             title: 'Role',
-            icon: 'low_priority',
+            icon: 'o_low_priority',
             options: [
               {
                 title: 'Administrador',
@@ -219,7 +219,7 @@ export default defineComponent({
           },
           {
             title: 'Estatus',
-            icon: 'supervisor_account',
+            icon: 'o_supervisor_account',
             options: [
               {
                 title: 'Activo',

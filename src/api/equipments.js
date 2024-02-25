@@ -51,6 +51,14 @@ export default class EquipmentService {
         return api.post(this.endpoint + 'create', payload);
     }
 
+    // Generar nuevos equipo desde un excel
+    static postEquipmentsFromExcel(payload) {
+        // console.log('ESTE ES MI PAYLOAD', payload)
+        const formData = new FormData();
+        formData.append('file', payload.file);
+        return api.post(this.endpoint + 'createExl', formData);
+    }
+
     // Actualizar nuevo equipo
     static updateEquipment(payload, id) {
         return api.put(this.endpoint + 'update/' + id, payload);

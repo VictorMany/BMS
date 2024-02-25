@@ -247,7 +247,7 @@ export default defineComponent({
         color: '#FFFFFF',
         backgroundGradient:
           'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
-        icon: 'tune',
+        icon: 'o_filter_alt',
       },
       options: ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'],
       modelLocal: this.model,

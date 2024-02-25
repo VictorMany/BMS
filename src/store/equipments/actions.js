@@ -159,6 +159,16 @@ export async function postEquipmentAction(context, equipment) {
     })
 }
 
+export async function postEquipmentsFromExcelAction(context, excel) {
+    return await service.postEquipmentsFromExcel(excel).then(async (response) => {
+        if (response.status == 201) {
+            return true
+        } else {
+            return response
+        }
+    })
+}
+
 export async function updateEquipmentAction(context, equipment) {
     // Those are the keys you need in your payload and find in the fields
     let keys = {

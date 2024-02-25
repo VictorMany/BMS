@@ -57,7 +57,7 @@ export default defineComponent({
     icnName: {
       type: String,
       required: false,
-      default: 'add_circle',
+      default: 'o_data_saver_on',
     },
 
     tooltip: {

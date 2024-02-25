@@ -18,7 +18,7 @@
               <q-list>
                 <div
                   v-for="(item, i) in listSettings"
-                  @click="navigateTo(item.link)"
+                  @click="item.action ? item.action() : navigateTo(item.link)"
                   :key="i"
                 >
                   <q-item
@@ -49,22 +49,83 @@
         </q-scroll-area>
       </div>
     </div>
+
+    <q-dialog
+      v-model="modalLoadEquipments"
+      persistent
+    >
+      <q-card class="border-shadow q-px-sm border-rounded modal-ios">
+        <q-card-section>
+          <div class="title-page text-primary">Agregar equipos desde archivo excel</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-form ref="formPassword">
+            <div class="q-pr-md q-pt-sm form__item-label text-weight-medium">
+              Ingresa tu contraseña actual
+            </div>
+
+            <input
+              ref="fileUpload"
+              class="q-mt-sm border-rounded border-line q-pr-sm"
+              type="file"
+              accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              @change="uploadFile($event)"
+            />
+
+          </q-form>
+        </q-card-section>
+
+        <q-card-actions
+          align="right"
+          class="q-pa-md q-pb-lg"
+        >
+          <btn-action v-bind="btnCancel" />
+          <btn-action v-bind="btnLoadEquipments" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
+import BtnAction from 'src/components/atomic/BtnAction.vue'
+import { showSuccess, showWarning } from 'app/utils/utils'
 
 export default defineComponent({
   name: 'SettingsPage',
 
   components: {
-    HeaderActions
+    HeaderActions,
+    BtnAction
   },
 
   data() {
     return {
+      modalLoadEquipments: false,
+      excelFile: null,
+
+      btnCancel: {
+        show: true,
+        btnTitle: 'Cancelar',
+        iconName: 'close',
+        btnWidth: 'auto',
+        tooltip: 'Cancelar y cerrar',
+        btnAction: this.closeLoadEquipments,
+      },
+
+      btnLoadEquipments: {
+        show: true,
+        loader: false,
+        btnTitle: 'Cargar equipos',
+        iconName: 'o_upload',
+        btnWidth: 'auto',
+        tooltip: 'Cargar equipos desde fuente de datos excel',
+        btnAction: this.loadEquipmentsToDB,
+      },
+
       listSettings: [
         {
           title: 'Mi cuenta',
@@ -80,6 +141,12 @@ export default defineComponent({
           subtitle: 'Lista de usuarios en el sistema',
           img: 'users.png',
           link: 'users'
+        },
+        {
+          title: 'Cargar equipos desde un archivo excel',
+          subtitle: 'Te permite agregar varios regsitros desde una fuente de datos local (.xlsx)',
+          img: 'excel.png',
+          action: this.openLoadEquipments
         },
         {
           title: 'Roles y permisos',
@@ -113,11 +180,58 @@ export default defineComponent({
     }
     return {
       getImageUrl,
-      basicToolBar: [['unordered', 'ordered']]
+      basicToolBar: [['unordered', 'ordered']],
     }
   },
 
   methods: {
+    openLoadEquipments() {
+      this.modalLoadEquipments = true
+    },
+
+    uploadFile(e) {
+      const file = e.target.files[0];
+
+      try {
+        // Realizar otras operaciones si es necesario
+        if (file !== undefined) {
+          this.excelFile = {
+            name: file.name,
+            file: file
+          };
+
+          console.log('Este es el file que quiero subir', this.excelFile)
+        }
+      } catch (error) {
+        /* Manejar el error si es necesario */
+      }
+    },
+
+    closeLoadEquipments() {
+      this.excelFile = null
+      this.modalLoadEquipments = false
+    },
+
+    async loadEquipmentsToDB() {
+      this.btnLoadEquipments.loader = true;
+      try {
+        const res = await this.$store.dispatch(
+          'equipments/postEquipmentsFromExcelAction',
+          this.excelFile
+        );
+
+        if (res === true) {
+          showSuccess(this.$q, { title: 'Éxito al cargar los equipos', msg: 'Los equipos se agregaron a la base de datos' });
+          this.$router.go(-1);
+        } else {
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+        }
+        this.btnLoadEquipments.loader = false;
+      } catch (error) {
+        this.btnLoadEquipments.loader = false;
+      }
+    },
+
     navigateTo(link) {
       if (link.params || link.params === 0) {
         this.$router.push({
@@ -134,6 +248,7 @@ export default defineComponent({
         case 3:
           this.listSettings[1].hide = true;
           this.listSettings[2].hide = true;
+          this.listSettings[3].hide = true;
           break;
         case 2:
           this.listSettings[1].hide = true;
@@ -155,3 +270,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style>
+.custom-input *** {
+  border: none !important;
+}
+</style>

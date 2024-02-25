@@ -124,7 +124,7 @@ export default defineComponent({
         {
           show: true,
           btnTitle: 'Editar plan',
-          iconName: 'edit',
+          iconName: 'o_edit',
           btnWidth: 'auto',
           loader: false,
           tooltip: 'Ir a editar plan de mantenimientos',
@@ -133,7 +133,7 @@ export default defineComponent({
         {
           show: true,
           btnTitle: 'Eliminar plan',
-          iconName: 'delete',
+          iconName: 'o_delete',
           btnWidth: 'auto',
           loader: false,
           tooltip: 'Eliminar el plan de mantenimientos',

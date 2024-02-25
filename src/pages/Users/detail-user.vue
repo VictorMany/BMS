@@ -92,7 +92,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Editar',
-        iconName: 'edit',
+        iconName: 'o_edit',
         tooltip: 'Ir a editar usuario',
         to: this.getIdToEdit(),
         btnWidth: 'auto',

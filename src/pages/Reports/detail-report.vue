@@ -117,7 +117,7 @@ export default defineComponent({
         {
           show: false,
           btnTitle: 'Atender reporte',
-          iconName: 'engineering',
+          iconName: 'o_engineering',
           tooltip: 'Atender reporte',
           btnWidth: 'auto',
           btnAction: this.goToMaintenance,

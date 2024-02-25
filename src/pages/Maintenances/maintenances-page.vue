@@ -171,11 +171,11 @@ export default defineComponent({
           {
             title: 'Motivo',
             filter: 'reason',
-            icon: 'report'
+            icon: 'o_report'
           },
           {
             title: 'Tipo',
-            icon: 'engineering',
+            icon: 'o_engineering',
             options: [
               {
                 title: 'Correctivo',
@@ -192,12 +192,12 @@ export default defineComponent({
           {
             title: 'Encargado',
             filter: 'userName',
-            icon: 'supervisor_account'
+            icon: 'o_supervisor_account'
           },
           {
             title: 'Categoría',
             filter: 'category',
-            icon: 'badge'
+            icon: 'o_badge'
           },
         ],
       },

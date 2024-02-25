@@ -286,7 +286,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
-        iconName: 'save',
+        iconName: 'o_save',
         btnWidth: 'auto',
         loader: false,
         tooltip: 'Agregar plan de mantenimientos',

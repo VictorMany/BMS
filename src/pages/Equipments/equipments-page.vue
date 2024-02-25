@@ -140,6 +140,7 @@ export default defineComponent({
       btnAction: {
         show: false,
         btnTitle: 'Agregar equipo',
+        iconName: 'o_data_saver_on',
         tooltip: 'Agregar nuevo equipo',
         to: 'add-equipment',
       },
@@ -154,31 +155,31 @@ export default defineComponent({
           {
             title: 'Categoría del equipo',
             filter: 'category',
-            icon: 'badge',
+            icon: 'o_badge',
           },
           {
             title: 'Ubicación',
             filter: 'location',
-            icon: 'explore',
+            icon: 'o_explore',
           },
           {
             title: 'Modelo',
             filter: 'model',
-            icon: 'alt_route',
+            icon: 'o_alt_route',
           },
           {
             title: 'Marca',
             filter: 'brand',
-            icon: 'sell',
+            icon: 'o_sell',
           },
           {
             title: 'Número de serie',
             filter: 'serialNumber',
-            icon: 'fingerprint',
+            icon: 'o_fingerprint',
           },
           {
             title: 'Estatus',
-            icon: 'supervisor_account',
+            icon: 'o_supervisor_account',
             options: [
               {
                 title: 'Activo',
@@ -235,7 +236,7 @@ export default defineComponent({
           tooltip: 'Detalle de equipo',
         },
         {
-          icnName: 'edit',
+          icnName: 'o_edit',
           icnSize: 'xs',
           icnAction: 'Edit',
           tooltip: 'Editar equipo',

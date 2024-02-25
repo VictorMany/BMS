@@ -48,7 +48,10 @@ module.exports = configure(function (ctx) {
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
       'roboto-font', // optional, you are not bound to it
-      'material-icons' // optional, you are not bound to it
+      'material-icons-outlined', // optional, you are not bound to it
+      'material-icons-round', // optional, you are not bound to it
+      'material-icons-sharp', // optional, you are not bound to it
+      'material-icons', // optional, you are not bound to it
     ],
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
@@ -98,7 +101,7 @@ module.exports = configure(function (ctx) {
         }
       },
 
-      // iconSet: 'material-icons', // Quasar icon set
+      iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
 
       // For special cases outside of where the auto-import strategy can have an impact

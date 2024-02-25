@@ -294,7 +294,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar nuevo rol',
-        iconName: 'save',
+        iconName: 'o_save',
         to: 'settings',
         btnWidth: 'auto',
       },

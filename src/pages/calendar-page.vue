@@ -212,7 +212,7 @@ export default defineComponent({
           tooltip: 'Detalle de equipo',
         },
         {
-          icnName: 'edit',
+          icnName: 'o_edit',
           icnSize: 'xs',
           icnAction: 'Edit',
           tooltip: 'Editar equipo',
