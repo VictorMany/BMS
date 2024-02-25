@@ -12,60 +12,55 @@
           class="fit h-100"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <div class="row">
-            <div class="col-12">
-              <q-list class="row h-100">
-                <div
-                  v-for="(item, i) in listRoles"
-                  class="col-12 col-sm-4 q-px-xs h-100"
-                  :key="i"
-                >
-                  <div class="q-mb-sm q-px-md q-pt-md setting-item border-rounded clickable h-100">
-                    <div class="row">
-                      <q-item-section avatar>
-                        <q-avatar class="avatar-item">
-                          <img :src="getImageUrl(item.img)" />
-                        </q-avatar>
-                      </q-item-section>
+          <q-list class="row">
+            <div
+              v-for="(item, i) in listRoles"
+              class="col-12 col-sm-4 q-px-xs"
+              :key="i"
+            >
+              <div class="q-mb-sm q-px-md q-pt-md setting-item border-rounded clickable">
+                <div class="row">
+                  <q-item-section avatar>
+                    <q-avatar class="avatar-item">
+                      <img :src="getImageUrl(item.img)" />
+                    </q-avatar>
+                  </q-item-section>
 
-                      <q-item-section>
-                        <q-item-label class="setting-item__title">{{
-                          item.title
-                        }}</q-item-label>
-                        <q-item-label
-                          class="setting-item__subtitle"
-                          caption
-                        >{{
-                          item.subtitle
-                        }}</q-item-label>
-                      </q-item-section>
-                    </div>
-
-                    <q-item-section class="q-pt-md q-px-sm">
-                      <div
-                        v-for="(permission, j) in item.permissions"
-                        :key="j"
-                        class="setting-item__title"
-                      >
-                        {{ permission.title }}
-                        <ul>
-                          <li
-                            v-for="(obj, k) in permission.list"
-                            :key="k"
-                            class="setting-item__subtitle"
-                          >
-                            {{ obj }}
-                          </li>
-                        </ul>
-                      </div>
-                    </q-item-section>
-                  </div>
-
+                  <q-item-section>
+                    <q-item-label class="setting-item__title">{{
+                      item.title
+                    }}</q-item-label>
+                    <q-item-label
+                      class="setting-item__subtitle"
+                      caption
+                    >{{
+                      item.subtitle
+                    }}</q-item-label>
+                  </q-item-section>
                 </div>
-              </q-list>
-            </div>
-          </div>
 
+                <q-item-section class="q-pt-md q-px-sm">
+                  <div
+                    v-for="(permission, j) in item.permissions"
+                    :key="j"
+                    class="setting-item__title"
+                  >
+                    {{ permission.title }}
+                    <ul>
+                      <li
+                        v-for="(obj, k) in permission.list"
+                        :key="k"
+                        class="setting-item__subtitle"
+                      >
+                        {{ obj }}
+                      </li>
+                    </ul>
+                  </div>
+                </q-item-section>
+              </div>
+
+            </div>
+          </q-list>
         </q-scroll-area>
       </div>
     </div>
@@ -133,7 +128,7 @@ export default defineComponent({
               ]
             },
             {
-              title: 'Ver calendario',
+              title: 'Calendario',
               list: [
                 'Ver calendario'
               ]
