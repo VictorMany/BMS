@@ -67,7 +67,7 @@
 
             <input
               ref="fileUpload"
-              class="q-mt-sm border-rounded border-line q-pr-sm"
+              class="q-mt-sm border-rounded border-line q-pr-sm file-upload"
               type="file"
               accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
               @change="uploadFile($event)"
