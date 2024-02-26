@@ -252,6 +252,7 @@ export default defineComponent({
           break;
         case 2:
           this.listSettings[1].hide = true;
+          this.listSettings[2].hide = true;
           break;
       }
     },

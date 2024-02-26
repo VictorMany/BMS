@@ -340,29 +340,23 @@ export default defineComponent({
         }
       ],
 
-      btnEditGeneral: [
-        {
-          title: 'Todos los equipos',
-          link: 'equipments',
-          color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
-        },
-      ],
-
       menuRole3: [
         {
           title: 'Equipos',
           link: 'equipments',
           background: '#F8F8F8',
+          color: 'rgba(122, 122, 122, 1)',
         },
         {
           title: 'Reportes',
           link: 'reports',
           background: '#F8F8F8',
+          color: 'rgba(122, 122, 122, 1)',
         },
         {
           title: 'Configuración',
-          link: 'settings', color: 'rgba(122, 122, 122, 1)',
+          link: 'settings',
+          color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         }
       ],
@@ -517,18 +511,6 @@ export default defineComponent({
       this.$router.replace('/login');
     },
 
-    changeImage(flag) {
-      if (flag === 0) {
-        this.imageNotification = 'gif/notification.gif';
-      } else {
-        this.imageNotification = 'svg/notifications_.svg';
-      }
-    },
-
-    getParams() {
-      return this.$route.params.id
-    },
-
     showEquipmentDetails() {
       if (this.$route.query.equipment) {
         this.btnCloseSesion.show = false
@@ -542,6 +524,7 @@ export default defineComponent({
       }
       return this.$route.query.user
     },
+
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen;
     },

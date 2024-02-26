@@ -330,11 +330,19 @@ ol {
   font-size: 12px;
 }
 
+.modal-ios {
+  min-width: 380px;
+}
+
 // RESPONSIVITY
 @media only screen and (max-width : 1024px) {
 
   .btn-close-order {
     order: 0;
+  }
+
+  .modal-ios {
+    min-width: auto;
   }
 
   .q-page {
