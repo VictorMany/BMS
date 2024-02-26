@@ -211,9 +211,14 @@ export default defineComponent({
         })
         return
       } else {
-        this.getEquipments({
+        const params = {
           name: val
-        })
+        }
+        if (this.equipments.length >= 12) {
+          params.rowsPerPage = this.paginationEquipments.totalItems
+        }
+
+        this.getEquipments(params)
       }
 
       update(() => {
@@ -316,6 +321,12 @@ export default defineComponent({
     equipment: {
       get() {
         return this.$store.getters['equipments/getEquipmentGetter'];
+      },
+    },
+
+    paginationEquipments: {
+      get() {
+        return this.$store.getters['equipments/getPaginationGetter'];
       },
     },
   },
