@@ -166,7 +166,7 @@ function getModelSelected(item, valueFromServer) {
                 item.model = 'Auxiliar'
                 break;
             case 3:
-                item.model = 'Lector'
+                item.model = 'Expectador'
                 break;
         }
         return item

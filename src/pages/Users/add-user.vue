@@ -221,7 +221,7 @@ export default defineComponent({
             options: [
               { label: 'Administrador', index: 1, value: 1 },
               { label: 'Auxiliar', index: 2, value: 2 },
-              { label: 'Funciones básicas', index: 3, value: 3 },
+              { label: 'Expectador', index: 3, value: 3 },
             ],
             rules: [rules.requiredObject],
           },

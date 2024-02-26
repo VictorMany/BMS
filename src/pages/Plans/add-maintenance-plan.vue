@@ -64,7 +64,7 @@
 
               <q-tree
                 v-model:ticked="form.equipmentIds"
-                class="font-tree"
+                class="font-tree q-pa-xs"
                 no-transition
                 :nodes="localCategories"
                 tick-strategy="leaf"
@@ -107,6 +107,24 @@
                 class="row q-mb-md"
                 style="max-width: 418px"
               >
+                <div
+                  style="font-size: 12px;"
+                  class="text-primary q-pb-sm"
+                >
+                  <span style="font-size: 16px; font-weight: 500;">¿Cuándo activar la
+                    frecuencia?</span>
+                  <ul>
+                    <li>
+                      <div style="margin-left: 5px;">Activar frecuencia si quieres calcular automáticamente las fechas de
+                        mantenimiento a partir de una fecha inicial en un periodo de 2 años.</div>
+                    </li>
+                    <li>
+                      <div style="margin-left: 5px;">No activar frecuencia si solo deseas agregar fechas personalizadas.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
                 <div class="col-auto ">
                   <q-checkbox
                     size="sm"
@@ -147,14 +165,7 @@
                   </q-select>
                 </div>
 
-                <div
-                  style="font-size: 12px;"
-                  class="text-primary q-pa-sm"
-                >
-                  <span style="font-size: 16px; line-height: 1.2; vertical-align: middle;">ⓘ</span>
-                  <span style="margin-left: 5px;">Usa la frecuencia para calcular automáticamente las fechas de
-                    mantenimiento a partir de una fecha inicial en un periodo de 2 años.</span>
-                </div>
+
               </div>
 
               <q-date
@@ -617,7 +628,9 @@ export default defineComponent({
       if (filt === '') {
         return true; // Muestra todos los nodos cuando no hay filtro
       }
-      return node.categoryName && node.categoryName.toLowerCase().indexOf(filt) > -1;
+      const regex = new RegExp(filt.replace(/[^\w\s]/gi, ''), 'i');
+      // Compara las etiquetas de los nodos con la expresión regular
+      return regex.test(node.label.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
     },
 
     resetFilter() {

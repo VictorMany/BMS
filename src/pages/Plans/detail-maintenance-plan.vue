@@ -37,7 +37,7 @@
             <div class="row d-flex justify-between">
               <div class="col-12">
                 <div class="form__item-label text-weight-medium q-mt-lg q-mb-xs">
-                  Listado de equipos y fechas programadas de los mantenimientos
+                  Listado de equipos y fechas agendadas para los mantenimientos
                 </div>
                 <div
                   class="row"

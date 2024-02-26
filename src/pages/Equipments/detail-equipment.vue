@@ -170,7 +170,12 @@ export default defineComponent({
         fields: this.fields
       }
 
-      await this.$store.dispatch('equipments/getEquipmentAction', params)
+      const equipment = await this.$store.dispatch('equipments/getEquipmentAction', params)
+      if (equipment.equipmentStatus === false) {
+        this.btnActions[0].show = false;
+        this.btnActions[1].show = false;
+      }
+
       this.loading = false
     },
 

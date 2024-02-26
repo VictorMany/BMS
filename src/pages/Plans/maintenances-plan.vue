@@ -159,7 +159,7 @@ export default defineComponent({
           tooltip: 'Editar plan',
         },
         {
-          icnName: 'delete',
+          icnName: 'o_delete',
           icnSize: 'xs',
           icnAction: 'Remove',
           tooltip: 'Eliminar plan',

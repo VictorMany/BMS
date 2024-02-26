@@ -290,6 +290,10 @@ export default defineComponent({
       },
       deep: true,
     },
+
+    selectedFilterText() {
+      this.params.page = 1
+    }
   },
 
   computed: {
@@ -358,6 +362,9 @@ export default defineComponent({
       if (removedFilter) {
         delete this.params[removedFilter]
       }
+
+      this.params.page = 1
+
       this.getEquipments(this.params);
     },
 

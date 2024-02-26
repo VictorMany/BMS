@@ -215,7 +215,7 @@ export default defineComponent({
           img: 'role.png',
         },
         {
-          title: 'Lector',
+          title: 'Expectador',
           subtitle: 'Personal del hospital',
           permissions: [
             {

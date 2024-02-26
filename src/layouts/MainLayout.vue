@@ -255,7 +255,7 @@ export default defineComponent({
           switch (item) {
             case 1: return 'Administrador'
             case 2: return 'Auxiliar'
-            case 3: return 'Funciones básicas'
+            case 3: return 'Expectador'
           }
         }
       },
