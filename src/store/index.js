@@ -4,6 +4,7 @@ import equipments from './equipments'
 import maintenances from './maintenances'
 import maintenancePlans from './maintenances-plan'
 import users from './users'
+import storeModule from './store'
 import reports from './reports'
 import stats from './stats'
 import { createStore } from 'vuex'
@@ -17,6 +18,7 @@ export default store(function (/* { ssrContext } */) {
       maintenances,
       maintenancePlans,
       users,
+      storeModule,
       reports,
       stats,
     },

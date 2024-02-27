@@ -98,7 +98,8 @@ $primary-grey: #6d8598;
     color: $primary-grey !important;
   }
 
-  .my-card {
+  .my-card,
+  .my-card-store {
     background-color: #1a223084 !important;
   }
 
@@ -278,7 +279,7 @@ ol {
 }
 
 .container-cards {
-  padding: 10px;
+  padding: 0px;
   gap: 10px;
 }
 
@@ -376,7 +377,7 @@ ol {
   }
 
   .container-cards {
-    padding: 5px;
+    padding: 0px;
     gap: 5px;
   }
 

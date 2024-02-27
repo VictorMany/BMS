@@ -12,12 +12,12 @@
       />
 
       <div
-        class="main-container-page"
+        class="main-container-page q-pa-sm"
         :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
       >
         <q-scroll-area
           v-if="switchContent === 1"
-          style="height: 90.5% !important"
+          style="height: 93% !important"
           class="fit"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
