@@ -11,9 +11,10 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+/* Firefox */
+input[type="number"] {
   -moz-appearance: textfield;
-  appearance: inherit;
+  appearance: textfield;
 }
 
 .no-info {

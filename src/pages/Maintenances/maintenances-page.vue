@@ -164,20 +164,15 @@ export default defineComponent({
 
       rowSelected: {},
 
-      selectedFilterText: 'reason',
+      selectedFilterText: 'userName',
 
       inputSearch: {
         show: true,
-        inputLabel: 'Motivo',
+        inputLabel: 'Encargado',
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
         heightModal: 200,
         items: [
-          {
-            title: 'Motivo',
-            filter: 'reason',
-            icon: 'o_report'
-          },
           {
             title: 'Tipo',
             icon: 'o_engineering',
