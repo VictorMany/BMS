@@ -10,7 +10,7 @@
         hide-selected
         bottom-slots
         stack-label
-        behavior="menu"
+        :behavior="$q.platform.is.ios === true ? 'dialog' : 'menu'"
         :name="item.key"
         :readonly="item.readonly"
         :options="item.options"
@@ -22,7 +22,7 @@
         <template v-slot:no-option>
             <q-item>
                 <q-item-section class="text-grey">
-                    No hay coincidencia, se agregará automáticamente lo que escribas
+                    No se encontró una coincidencia, se agregará como nueva opción
                 </q-item-section>
             </q-item>
         </template>

@@ -353,9 +353,13 @@ export default defineComponent({
       update(() => {
         const needle = val.toLowerCase()
         this.updateFieldByKeyInAllArrays('CategoryId', {
-          options: this.categories.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+          options: this.categories.filter(v => this.removeAccents(v.label.toLowerCase()).includes(this.removeAccents(needle)))
         })
       })
+    },
+
+    removeAccents(str) {
+      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     },
 
     filterLocations(val, update) {
@@ -367,10 +371,11 @@ export default defineComponent({
         })
         return
       }
+
       update(() => {
         const needle = val.toLowerCase()
         this.updateFieldByKeyInAllArrays('LocationId', {
-          options: this.locations.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+          options: this.locations.filter(v => this.removeAccents(v.label.toLowerCase()).includes(this.removeAccents(needle)))
         })
       })
     },

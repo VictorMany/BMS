@@ -195,7 +195,7 @@ export default defineComponent({
       },
 
       columns: [
-        { name: 'reason', required: true, label: 'Reporte', align: 'left', field: row => row.reason, format: val => `${val}`, sortable: true },
+        { name: 'reason', required: true, label: 'Motivo', align: 'left', field: row => row.reason, format: val => `${val}`, sortable: true },
         { name: 'encharged_name', label: 'Encargado', field: 'encharged_name', align: 'left', sortable: true },
         { name: 'badge-priority', label: 'Prioridad', field: 'reportUrgency', align: 'left', sortable: true },
         { name: 'date', label: 'Fecha del reporte', field: 'date', align: 'center', sortable: true },

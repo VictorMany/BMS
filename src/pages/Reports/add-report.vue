@@ -232,7 +232,10 @@ export default defineComponent({
 
     async filterEquipments(val, update) {
       if (val === '') {
-        update(() => {
+        await update(async () => {
+
+          await this.getEquipments()
+
           this.equipments.map(e => {
             e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
           })
@@ -244,7 +247,7 @@ export default defineComponent({
         return
       } else {
         const params = {
-          name: val
+          category: val
         }
         if (this.equipments.length >= 12) {
           params.rowsPerPage = this.paginationEquipments.totalItems
@@ -253,14 +256,13 @@ export default defineComponent({
         await this.getEquipments(params)
       }
 
-      update(() => {
-        const needle = val.toLowerCase()
+      await update(() => {
         this.equipments.map(e => {
           e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
         })
 
         this.updateFieldByKeyInAllArrays('idEquipment', {
-          options: this.equipments.filter(v => v.cardTitle.toLowerCase().indexOf(needle) > -1)
+          options: this.equipments
         })
       })
     },

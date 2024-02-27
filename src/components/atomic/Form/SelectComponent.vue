@@ -10,7 +10,7 @@
         hide-selected
         bottom-slots
         stack-label
-        behavior="menu"
+        :behavior="$q.platform.is.ios === true ? 'dialog' : 'menu'"
         :name="item.key"
         :readonly="item.readonly"
         :options="item.options"
