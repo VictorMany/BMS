@@ -66,13 +66,13 @@
           class="row justify-center q-pt-sm"
         >
           <q-pagination
-            v-model="paginationCards.page"
+            v-model="localPagination.page"
             dense
             class="q-mt-none pagination-style"
-            :max="paginationCards.pagesNumber"
+            :max="localPagination.totalPages"
             size="md"
+            @update:model-value="changePagination"
             direction-links
-            @update:model-value="changePaginationCards"
           />
         </div>
 
@@ -114,7 +114,13 @@ export default defineComponent({
       loading: true,
       switchContent: 1,
 
-      localPagination: {},
+
+      localPagination: {
+        totalPages: 1,
+        descending: false,
+        rowsPerPage: 12,
+        page: 1,
+      },
 
       btnAction: {
         show: true,
@@ -201,12 +207,6 @@ export default defineComponent({
         ],
       },
 
-      paginationCards: {
-        descending: false,
-        rowsPerPage: 12,
-        page: 1,
-      },
-
       params: {
         reason: '',
       },
@@ -240,24 +240,6 @@ export default defineComponent({
       this.timeoutSearch = setTimeout(() => {
         this.getMaintenances();
       }, this.delaySearch);
-    },
-
-    pagination: {
-      handler(value) {
-        this.paginationCards.rowsPerPage = value.rowsPerPage;
-        this.paginationCards.pagesNumber = value.totalPages;
-        this.paginationCards.rowsNumber = value.rowsNumber;
-      },
-      immediate: true,
-      deep: true,
-    },
-
-    switchContent: {
-      handler(val) {
-        if (val === 1) this.paginationCards.page = this.pagination.page;
-        // else this.pagination.page = this.paginationCards.page;
-      },
-      deep: true,
     },
 
     selectedFilterText() {
@@ -305,6 +287,9 @@ export default defineComponent({
     async getMaintenances() {
       this.loading = true
       await this.$store.dispatch('maintenances/getMaintenancesAction', this.params);
+
+      this.localPagination = JSON.parse(JSON.stringify(this.pagination))
+
       this.loading = false
     },
 
@@ -378,27 +363,16 @@ export default defineComponent({
     },
 
     changePagination(pagination) {
+      this.localPagination.page = pagination
+
       this.params = {
         ...this.params, ...{
-          page: pagination.page,
-          rowsPerPage: pagination.rowsPerPage,
+          page: this.localPagination.page,
+          rowsPerPage: this.localPagination.rowsPerPage,
         }
       }
 
       this.getMaintenances();
-    },
-
-    // Changing pagination obj
-    changePaginationCards(page) {
-
-      this.params = {
-        ...this.params, ...{
-          page,
-          rowsPerPage: 12,
-        }
-      }
-
-      this.getMaintenances(this.params);
     },
 
     goBack() {

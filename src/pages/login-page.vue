@@ -118,7 +118,7 @@ export default defineComponent({
   components: { BtnAction },
   computed: {
     visibilityIcon() {
-      return this.model.userPassword.trim() ? (this.show ? 'visibility' : 'visibility_off') : '';
+      return this.model.userPassword.trim() ? (this.show ? 'o_visibility' : 'o_visibility_off') : '';
     },
   },
 });

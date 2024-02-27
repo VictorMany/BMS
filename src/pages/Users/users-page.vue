@@ -73,13 +73,13 @@
           class="row justify-center q-pt-sm"
         >
           <q-pagination
-            v-model="paginationCards.page"
+            v-model="localPagination.page"
             dense
             class="q-mt-none pagination-style"
-            :max="paginationCards.pagesNumber"
+            :max="localPagination.totalPages"
             size="md"
+            @update:model-value="changePagination"
             direction-links
-            @update:model-value="changePaginationCards"
           />
         </div>
 
@@ -127,7 +127,12 @@ export default defineComponent({
         btnAction: this.goBack
       },
 
-      localPagination: {},
+      localPagination: {
+        totalPages: 1,
+        descending: false,
+        rowsPerPage: 12,
+        page: 1,
+      },
 
       actionsTable: [
         {
@@ -242,13 +247,7 @@ export default defineComponent({
 
       rowSelected: {},
 
-      selectedFilterText: 'name',
-
-      paginationCards: {
-        descending: false,
-        rowsPerPage: 12,
-        page: 1,
-      },
+      selectedFilterText: 'name'
     };
   },
 
@@ -276,24 +275,6 @@ export default defineComponent({
       this.timeoutSearch = setTimeout(() => {
         this.getUsers(this.params);
       }, this.delaySearch);
-    },
-
-    pagination: {
-      handler(value) {
-        this.paginationCards.rowsPerPage = value.rowsPerPage;
-        this.paginationCards.pagesNumber = value.totalPages;
-        this.paginationCards.rowsNumber = value.rowsNumber;
-      },
-      immediate: true,
-      deep: true,
-    },
-
-    switchContent: {
-      handler(val) {
-        if (val === 1) this.paginationCards.page = this.pagination.page;
-        else this.pagination.page = this.paginationCards.page;
-      },
-      deep: true,
     },
 
     selectedFilterText() {
@@ -331,6 +312,9 @@ export default defineComponent({
     async getUsers(params) {
       this.loading = true
       await this.$store.dispatch('users/getUsersAction', params);
+
+      this.localPagination = JSON.parse(JSON.stringify(this.pagination))
+
       this.loading = false
     },
 
@@ -380,23 +364,12 @@ export default defineComponent({
     },
 
     changePagination(pagination) {
-      this.params = {
-        ...this.params, ...{
-          page: pagination.page,
-          rowsPerPage: pagination.rowsPerPage,
-        }
-      }
-
-      this.getUsers(this.params);
-    },
-
-    // Changing pagination obj
-    changePaginationCards(page) {
+      this.localPagination.page = pagination
 
       this.params = {
         ...this.params, ...{
-          page,
-          rowsPerPage: 12,
+          page: this.localPagination.page,
+          rowsPerPage: this.localPagination.rowsPerPage,
         }
       }
 

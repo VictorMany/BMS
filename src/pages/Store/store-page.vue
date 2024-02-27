@@ -68,12 +68,12 @@
             class="row justify-center q-pt-sm"
           >
             <q-pagination
-              v-model="paginationCards.page"
+              v-model="localPagination.page"
               dense
               class="q-mt-none pagination-style"
-              :max="paginationCards.pagesNumber"
+              :max="localPagination.totalPages"
               size="md"
-              @update:model-value="changePaginationCards"
+              @update:model-value="changePagination"
               direction-links
             />
           </div>
@@ -140,7 +140,8 @@ export default defineComponent({
 
       cartList: [],
 
-      paginationCards: {
+      localPagination: {
+        totalPages: 1,
         descending: false,
         rowsPerPage: 12,
         page: 1,
@@ -196,8 +197,6 @@ export default defineComponent({
 
   created() {
     this.getEquipments({});
-
-    this.paginationCards.page = this.pagination.page
   },
 
   watch: {
@@ -208,16 +207,6 @@ export default defineComponent({
       this.timeoutSearch = setTimeout(() => {
         this.getEquipments(this.params);
       }, this.delaySearch);
-    },
-
-    pagination: {
-      handler(value) {
-        this.paginationCards.rowsPerPage = value.rowsPerPage;
-        this.paginationCards.pagesNumber = value.totalPages;
-        this.paginationCards.rowsNumber = value.rowsNumber;
-      },
-      immediate: true,
-      deep: true,
     },
 
     selectedFilterText() {
@@ -236,14 +225,6 @@ export default defineComponent({
           { label: 'Modelo', info: equipment.equipmentModel },
           { label: 'Marca', info: 'MARCA' },
         ],
-
-        // FOR THE DETAILS MAINTENANCE AND REPORT
-        // label: equipment.categoryName,
-        // value: equipment.IdEquipment,
-        // serialNumber: equipment.serialNumber,
-        // equipmentModel: equipment.equipmentModel,
-
-        // isReported: equipment.isReported,
         status: 'onSale',
         cartAction: this.addToCart
       }));
@@ -252,7 +233,7 @@ export default defineComponent({
 
     pagination: {
       get() {
-        return this.$store.getters['storeModule/getPaginationGetter'];
+        return this.$store.getters['equipments/getPaginationGetter'];
       },
     },
   },
@@ -261,6 +242,9 @@ export default defineComponent({
     async getEquipments(params) {
       this.loading = true
       await this.$store.dispatch('storeModule/getEquipmentsAction', params)
+
+      this.localPagination = JSON.parse(JSON.stringify(this.pagination))
+
       this.loading = false
     },
 
@@ -315,11 +299,13 @@ export default defineComponent({
       this.$router.push({ name: 'edit-equipment', params: { id: payload } });
     },
 
-    changePaginationCards(page) {
+    changePagination(pagination) {
+      this.localPagination.page = pagination
+
       this.params = {
         ...this.params, ...{
-          page,
-          rowsPerPage: 12,
+          page: this.localPagination.page,
+          rowsPerPage: this.localPagination.rowsPerPage,
         }
       }
 

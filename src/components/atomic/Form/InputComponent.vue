@@ -92,7 +92,7 @@ export default defineComponent({
             return 'text';
         },
         visibilityIcon() {
-            return this.showPassword ? 'visibility_off' : 'visibility';
+            return this.showPassword ? 'o_visibility_off' : 'o_visibility';
         },
     },
     watch: {

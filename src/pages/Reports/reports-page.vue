@@ -66,13 +66,13 @@
           class="row justify-center q-pt-sm"
         >
           <q-pagination
-            v-model="paginationCards.page"
+            v-model="localPagination.page"
             dense
             class="q-mt-none pagination-style"
-            :max="paginationCards.pagesNumber"
+            :max="localPagination.totalPages"
             size="md"
+            @update:model-value="changePagination"
             direction-links
-            @update:model-value="changePaginationCards"
           />
         </div>
 
@@ -112,8 +112,6 @@ export default defineComponent({
       timeoutSearch: null,
       loading: true,
       switchContent: 1,
-
-      localPagination: {},
 
       btnCloseWindow: {
         iconName: 'exit_to_app',
@@ -205,7 +203,8 @@ export default defineComponent({
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
       ],
 
-      paginationCards: {
+      localPagination: {
+        totalPages: 1,
         descending: false,
         rowsPerPage: 12,
         page: 1,
@@ -243,24 +242,6 @@ export default defineComponent({
       this.timeoutSearch = setTimeout(() => {
         this.getReports();
       }, this.delaySearch);
-    },
-
-    pagination: {
-      handler(value) {
-        this.paginationCards.rowsPerPage = value.rowsPerPage;
-        this.paginationCards.pagesNumber = value.totalPages;
-        this.paginationCards.rowsNumber = value.rowsNumber;
-      },
-      immediate: true,
-      deep: true,
-    },
-
-    switchContent: {
-      handler(val) {
-        if (val === 1) this.paginationCards.page = this.pagination.page;
-        else this.pagination.page = this.paginationCards.page;
-      },
-      deep: true,
     },
 
     selectedFilterText() {
@@ -312,10 +293,12 @@ export default defineComponent({
   methods: {
     async getReports() {
       this.loading = true
+
       this.localPagination = {
         ...this.localPagination,
         ...await this.$store.dispatch('reports/getReportsAction', this.params)
       }
+
       this.loading = false
     },
 
@@ -417,23 +400,12 @@ export default defineComponent({
     },
 
     changePagination(pagination) {
-      this.params = {
-        ...this.params, ...{
-          page: pagination.page,
-          rowsPerPage: pagination.rowsPerPage,
-        }
-      }
-
-      this.getReports(this.params);
-    },
-
-    // Changing pagination obj
-    changePaginationCards(page) {
+      this.localPagination.page = pagination
 
       this.params = {
         ...this.params, ...{
-          page,
-          rowsPerPage: 12,
+          page: this.localPagination.page,
+          rowsPerPage: this.localPagination.rowsPerPage,
         }
       }
 

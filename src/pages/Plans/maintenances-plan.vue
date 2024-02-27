@@ -99,7 +99,7 @@ import { showSuccess, showWarning } from 'app/utils/utils';
 import ItemCard from 'src/components/atomic/ItemCard.vue';
 
 export default defineComponent({
-  name: 'MaintenancesPage',
+  name: 'MaintenancesPlan',
   components: {
     HeaderActions,
     GeneralTable,

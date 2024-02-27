@@ -351,7 +351,6 @@ export default defineComponent({
         this.btnUpdatePassword.loader = true;
         try {
           const payload = {
-            userId: this.userId,
             currentPassword: this.formPassword.currentPassword.model,
             userPassword: this.formPassword.newPassword.model,
           }

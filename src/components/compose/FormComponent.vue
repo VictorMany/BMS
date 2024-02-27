@@ -288,7 +288,7 @@ import InputComponent from '../atomic/Form/InputComponent.vue';
 import { showWarning } from 'app/utils/utils';
 
 export default defineComponent({
-  name: 'MaintenancesPage',
+  name: 'FormComponent',
 
   components: {
     AutocompleteComponent,

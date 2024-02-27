@@ -46,7 +46,7 @@
           v-model="pagination.page"
           dense
           class="q-mt-none pagination-style"
-          :max="pagination.pagesNumber"
+          :max="pagination.totalPages"
           size="md"
           @update:model-value="changePagination"
           direction-links
@@ -93,7 +93,7 @@ import { defineComponent, ref } from 'vue';
 import IconAction from 'src/components/atomic/IconAction.vue';
 
 export default defineComponent({
-  name: 'MaintenancesPage',
+  name: 'GeneralTable',
   components: {
     IconAction,
   },
@@ -148,14 +148,14 @@ export default defineComponent({
     const pagination = ref({
       descending: false,
       rowsPerPage: 12,
-      pagesNumber: 1,
+      totalPages: 1,
       page: 1,
       sortBy: 'equipment'
     });
 
     return {
       pagination,
-      pagesNumber: 1,
+      totalPages: 1,
     };
   },
 
@@ -216,23 +216,23 @@ export default defineComponent({
 
     // Changing pagination obj
     changePagination(page) {
-      let pag = {
-        ...this.pagination,
-        page: page,
-      };
-      this.$emit('change-pagination', pag);
+      // let pag = {
+      //   ...this.pagination,
+      //   page: page,
+      // };
+      this.$emit('change-pagination', page);
     },
 
   },
   watch: {
     paginationProp: {
       handler(value) {
-        this.pagination.pagesNumber = value.totalPages;
-        this.pagination.rowsNumber = value.rowsNumber;
-
-        if (value.page) this.pagination.page = value.page;
+        this.pagination.totalPages = value?.totalPages;
+        this.pagination.rowsNumber = value?.rowsNumber;
+        this.pagination.page = value?.page;
       },
       deep: true,
+      immediate: true
     },
   },
 });
