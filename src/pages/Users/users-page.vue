@@ -273,6 +273,9 @@ export default defineComponent({
       clearTimeout(this.timeoutSearch);
 
       this.timeoutSearch = setTimeout(() => {
+
+        this.params.page = 1
+
         this.getUsers(this.params);
       }, this.delaySearch);
     },

@@ -233,13 +233,10 @@ export default defineComponent({
       this.params[this.selectedFilterText] = val
       clearTimeout(this.timeoutSearch);
       this.timeoutSearch = setTimeout(() => {
+        this.params.page = 1
         this.getMaintenances();
       }, this.delaySearch);
     },
-
-    selectedFilterText() {
-      this.params.page = 1
-    }
   },
 
   computed: {

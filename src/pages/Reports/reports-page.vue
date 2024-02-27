@@ -240,6 +240,9 @@ export default defineComponent({
       clearTimeout(this.timeoutSearch);
 
       this.timeoutSearch = setTimeout(() => {
+
+        this.params.page = 1
+
         this.getReports();
       }, this.delaySearch);
     },
