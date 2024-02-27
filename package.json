@@ -3,19 +3,28 @@
   "version": "0.0.1",
   "description": "bms project",
   "productName": "bms",
-  "author": "Victor Manuel Velazquez Fuentes <vvelazquez@bapcorporativo.com>",
+  "author": "Ledgers Legacy",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "build": "quasar build",
+    "deploy": "vercel"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "vuex": "^4.0.1",
+    "@quasar/cli": "^2.0.0",
     "@quasar/extras": "^1.0.0",
+    "axios": "^0.21.4",
+    "chart.js": "^4.2.1",
+    "date-fns": "^3.2.0",
+    "particles.js": "^2.0.0",
+    "particlesjs": "^2.2.3",
+    "qrcode.vue": "^3.4.1",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0"
+    "vue-chartjs": "^5.0.0",
+    "vue-router": "^4.0.0",
+    "vuex": "^4.0.1"
   },
   "devDependencies": {
     "eslint": "^8.10.0",
