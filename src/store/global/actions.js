@@ -109,10 +109,14 @@ export function formatDate(date) {
         const initialDate = new Date(date);
 
         if (!isNaN(initialDate)) {
-            // Ajustar la zona horaria a la de España (GMT+1)
-            const fechaLocal = new Date(initialDate.getTime() + initialDate.getTimezoneOffset() * 60000);
+            // Ajustar la zona horaria a la de México (GMT-6)
+            const mexicoDate = new Date(initialDate.getTime() + (12 * 60 * 60 * 1000)); // 6 horas en milisegundos
+
+            // Convertir la fecha a UTC después de ajustar la zona horaria
+            const utcDate = new Date(Date.UTC(mexicoDate.getFullYear(), mexicoDate.getMonth(), mexicoDate.getDate()));
+
             const optFormat = { day: 'numeric', month: 'long', year: 'numeric' };
-            const fechaFormateada = fechaLocal.toLocaleDateString('es-MX', optFormat);
+            const fechaFormateada = utcDate.toLocaleDateString('es-MX', optFormat);
             return fechaFormateada;
         }
     } else {

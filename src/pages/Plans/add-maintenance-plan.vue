@@ -43,14 +43,14 @@
             class="row"
             style="gap: 20px"
           >
-            <div class="col-12 col-sm-auto col-md-4 border-line q-pa-sm border-rounded bg-accent">
+            <div class="col-12 col-sm-5 col-md-4 border-line q-pa-sm border-rounded bg-accent">
               <q-input
                 ref="filterRef"
                 v-model="filter"
                 borderless
                 dense
                 class="form__input q-input-equipments"
-                label="Buscar - Filtrar equipos"
+                label="Filtrar por categoría"
               >
                 <template v-slot:append>
                   <q-icon
@@ -63,6 +63,7 @@
               </q-input>
 
               <q-tree
+                style="max-height: 400px; overflow: scroll;"
                 v-model:ticked="form.equipmentIds"
                 class="font-tree q-pa-xs"
                 no-transition
@@ -625,9 +626,11 @@ export default defineComponent({
 
     filterEquipments(node, filter) {
       const filt = filter.toLowerCase();
+      // console.log(node)
       if (filt === '') {
         return true; // Muestra todos los nodos cuando no hay filtro
       }
+
       // Normaliza y quita los diacríticos de la cadena de filtro
       const filtNormalized = filt.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       // Crea una expresión regular para el filtro insensible a mayúsculas/minúsculas

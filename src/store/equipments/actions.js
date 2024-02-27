@@ -94,7 +94,10 @@ export async function updateCategories(context, val) {
 export async function getEquipmentsByCategoryAction(context, params) {
     return service.getEquipmentsByCategory(params).then(async (response) => {
         if (response.status == 200) {
-            return response.data.contents.equipments;
+            return response.data.contents.equipments.map(category => ({
+                ...category,
+                label: category.categoryName + ' - ' + category.label
+            }));
         } else {
             return response
         }

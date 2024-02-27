@@ -255,7 +255,7 @@ export default defineComponent({
     switchContent: {
       handler(val) {
         if (val === 1) this.paginationCards.page = this.pagination.page;
-        else this.pagination.page = this.paginationCards.page;
+        // else this.pagination.page = this.paginationCards.page;
       },
       deep: true,
     },
