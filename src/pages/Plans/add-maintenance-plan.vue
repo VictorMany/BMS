@@ -628,9 +628,14 @@ export default defineComponent({
       if (filt === '') {
         return true; // Muestra todos los nodos cuando no hay filtro
       }
-      const regex = new RegExp(filt.replace(/[^\w\s]/gi, ''), 'i');
-      // Compara las etiquetas de los nodos con la expresión regular
-      return regex.test(node.label.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
+      // Normaliza y quita los diacríticos de la cadena de filtro
+      const filtNormalized = filt.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      // Crea una expresión regular para el filtro insensible a mayúsculas/minúsculas
+      const regex = new RegExp(filtNormalized.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+      // Normaliza y quita los diacríticos de la etiqueta del nodo
+      const nodeLabelNormalized = node.label.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      // Compara la etiqueta del nodo con la expresión regular
+      return regex.test(nodeLabelNormalized);
     },
 
     resetFilter() {
