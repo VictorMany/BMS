@@ -11,12 +11,12 @@
       />
 
       <div
-        class="main-container-page"
+        class="main-container-page  q-pa-sm"
         :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
       >
         <q-scroll-area
           v-if="switchContent === 1"
-          style="height: 90.5% !important"
+          style="height: 93% !important"
           class="fit"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
@@ -216,6 +216,7 @@ export default defineComponent({
   mounted() {
     if (this.$route.query.equipment) {
       this.params.IdEquipment = this.$route.query.equipment
+      this.btnAction.show = this.equipment.equipmentStatus
     } else if (this.$route.query.user) {
       this.params.userId = this.$route.query.user
     }
@@ -277,6 +278,12 @@ export default defineComponent({
     pagination: {
       get() {
         return this.$store.getters['reports/getPaginationGetter'];
+      },
+    },
+
+    equipment: {
+      get() {
+        return this.$store.getters['equipments/getEquipmentGetter'];
       },
     },
 

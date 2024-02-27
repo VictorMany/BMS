@@ -24,6 +24,12 @@ const routes = [
         component: () => import('src/pages/Equipments/equipments-page.vue')
       },
       {
+        path: 'store',
+        name: 'store',
+        meta: [auth],
+        component: () => import('src/pages/Store/store-page.vue')
+      },
+      {
         path: 'add-equipment',
         name: 'add-equipment',
         meta: [auth],

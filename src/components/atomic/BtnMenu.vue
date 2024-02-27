@@ -6,7 +6,15 @@
     @click="navigateTo"
   >
     <q-item-section>
-      <q-item-label class="q-item-label">{{ title }}</q-item-label>
+      <div class="row flex-center align-center justify-between">
+        <q-item-label class="q-item-label col-auto">{{ title }}</q-item-label>
+        <q-chip
+          v-if="newItem"
+          class="border-rounded bg-accent text-primary"
+          style="font-size: 9px"
+          label="Nuevo"
+        />
+      </div>
     </q-item-section>
   </q-item>
 </template>
@@ -24,6 +32,12 @@ export default defineComponent({
     title: {
       type: String,
       required: true,
+    },
+
+    newItem: {
+      type: Boolean,
+      required: false,
+      default: false
     },
 
     link: {
