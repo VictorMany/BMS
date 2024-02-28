@@ -61,7 +61,7 @@
 
         <q-card-section class="q-pt-none">
           <q-form>
-            <q-item-section class="q-pt-md">
+            <q-item-section>
               <div class="setting-item__title">
                 Para que la operación sea éxitosa toma en cuenta que:
                 <ol>
