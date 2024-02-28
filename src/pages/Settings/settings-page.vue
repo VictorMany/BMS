@@ -60,18 +60,54 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          <q-form ref="formPassword">
-            <div class="q-pr-md q-pt-sm form__item-label text-weight-medium">
-              Ingresa tu contraseña actual
-            </div>
+          <q-form>
+            <q-item-section class="q-pt-md">
+              <div class="setting-item__title">
+                Para que la operación sea éxitosa toma en cuenta que:
+                <ol>
+                  <li class="setting-item__subtitle">
+                    <a
+                      class="text-blue-6"
+                      download="plantilla.xlsx"
+                      :href="template"
+                    >
+                      Descargar plantilla
+                    </a>
+                  </li>
+                  <li class="setting-item__subtitle">
+                    No modificar las columnas
+                  </li>
+                  <li class="setting-item__subtitle"> La fecha debe estar en formato dia/mes/año ejp. 12/01/2023 </li>
+                  <li class="setting-item__subtitle"> No subir registros con número de serie duplicados </li>
+                  <li class="setting-item__subtitle">
+                    Los datos no deben ser calculados o referenciados a casillas externas
+                  </li>
+                </ol>
+              </div>
+            </q-item-section>
 
             <input
+              style="display: none;"
               ref="fileUpload"
-              class="q-mt-sm border-rounded border-line q-pr-sm file-upload"
               type="file"
               accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
               @change="uploadFile($event)"
             />
+
+            <q-btn
+              unelevated
+              no-caps
+              class="border-rounded q-my-sm"
+              size="sm"
+              color="blue-7"
+              @click="
+                excelFile?.name
+                  ? clearFileInput($refs.fileUpload)
+                  : $refs.fileUpload.click()
+                "
+            >
+              {{ excelFile?.name ? excelFile.name : 'Cargar archivo de excel' }}
+            </q-btn>
 
           </q-form>
         </q-card-section>
@@ -93,6 +129,7 @@ import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import BtnAction from 'src/components/atomic/BtnAction.vue'
 import { showSuccess, showWarning } from 'app/utils/utils'
+const template = new URL('../../../src/assets/template.xlsx', import.meta.url).href
 
 export default defineComponent({
   name: 'SettingsPage',
@@ -105,7 +142,9 @@ export default defineComponent({
   data() {
     return {
       modalLoadEquipments: false,
+      disabledUplaodFile: true,
       excelFile: null,
+      template,
 
       btnCancel: {
         show: true,
@@ -119,12 +158,23 @@ export default defineComponent({
       btnLoadEquipments: {
         show: true,
         loader: false,
+        disabled: true,
         btnTitle: 'Cargar equipos',
         iconName: 'o_upload',
         btnWidth: 'auto',
         tooltip: 'Cargar equipos desde fuente de datos excel',
         btnAction: this.loadEquipmentsToDB,
       },
+
+      columns: [
+        { name: 'Columna1', label: 'Columna 1' },
+        { name: 'Columna2', label: 'Columna 2' },
+        { name: 'Columna3', label: 'Columna 3' }
+      ],
+      tableData: [
+        { Columna1: 'Valor1', Columna2: 'Valor2', Columna3: 'Valor3' },
+        { Columna1: 'Valor4', Columna2: 'Valor5', Columna3: 'Valor6' }
+      ],
 
       listSettings: [
         {
@@ -189,6 +239,17 @@ export default defineComponent({
       this.modalLoadEquipments = true
     },
 
+    // descargarArchivo() {
+    //   // Ruta relativa al archivo Excel en los assets
+    //   // Crear un enlace temporal para la descarga
+    //   const enlaceDescarga = document.createElement('a');
+    //   enlaceDescarga.href = template;
+    //   enlaceDescarga.download = 'archivo_excel.xlsx';
+
+    //   // Simular un clic en el enlace para iniciar la descarga
+    //   enlaceDescarga.click();
+    // },
+
     uploadFile(e) {
       const file = e.target.files[0];
 
@@ -207,6 +268,18 @@ export default defineComponent({
       }
     },
 
+    clearFileInput(ctrl) {
+      try {
+        ctrl.value = null;
+        this.excelFile.name = '';
+        this.excelFile.file = {};
+        this.ImageBase64 = null;
+      } catch (ex) { /* empty */ }
+      if (ctrl.value) {
+        ctrl.parentNode.replaceChild(ctrl.cloneNode(true), ctrl);
+      }
+    },
+
     closeLoadEquipments() {
       this.excelFile = null
       this.modalLoadEquipments = false
@@ -214,6 +287,8 @@ export default defineComponent({
 
     async loadEquipmentsToDB() {
       this.btnLoadEquipments.loader = true;
+      this.btnCancel.disabled = true;
+
       try {
         const res = await this.$store.dispatch(
           'equipments/postEquipmentsFromExcelAction',
@@ -227,8 +302,10 @@ export default defineComponent({
           showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
         }
         this.btnLoadEquipments.loader = false;
+        this.btnCancel.disabled = false;
       } catch (error) {
         this.btnLoadEquipments.loader = false;
+        this.btnCancel.disabled = false;
       }
     },
 
@@ -260,6 +337,19 @@ export default defineComponent({
 
   created() {
     this.checkPermissions()
+  },
+
+  watch: {
+    excelFile: {
+      handler(val) {
+        if (val?.name) {
+          this.btnLoadEquipments.disabled = false
+        } else {
+          this.btnLoadEquipments.disabled = true
+        }
+      },
+      deep: true
+    }
   },
 
   computed: {

@@ -10,7 +10,7 @@
       />
 
       <div class="main-container-page q-pa-sm card-color main-container-page-dark row">
-        <div class="col-9">
+        <div class="col-12 col-sm-9">
           <q-scroll-area
             class="fit"
             style="height: 93% !important"
@@ -79,7 +79,7 @@
           </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-12 col-sm-3">
           <q-scroll-area
             class="fit"
             style="height: 93% !important"

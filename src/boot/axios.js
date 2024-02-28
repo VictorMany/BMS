@@ -14,6 +14,9 @@ export default boot(({ app, router }) => {
   app.config.globalProperties.$api = api
 
   api.interceptors.response.use(function (response) {
+    const { headers } = response;
+
+    console.log(headers)
     return response;
   }, function (error) {
     handleErrorResponse(error, router);

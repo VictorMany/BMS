@@ -2,6 +2,9 @@ import service from 'src/api/equipments'
 
 export async function getEquipmentsAction(context, params) {
     return service.getEquipments(params).then(async (response) => {
+
+        console.log('LA RESPUESTA EN LOS EQUIPOS', response)
+
         if (response.status == 200) {
             context.commit('MUTATE_EQUIPMENTS', response.data.contents.equipments)
             context.commit('MUTATE_DETAILS', response.data.contents)
