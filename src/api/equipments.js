@@ -29,7 +29,7 @@ export default class EquipmentService {
     // Obtiene todos los equipos
     static getEquipmentsByDate(params) {
         let date = params.date;
-        delete params.date
+        // delete params.date
 
         return api.get('/bms/maintenancePlan/listByDate/' + date, {
             params

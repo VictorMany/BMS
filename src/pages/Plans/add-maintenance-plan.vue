@@ -43,7 +43,10 @@
             class="row"
             style="gap: 20px"
           >
-            <div class="col-12 col-sm-5 col-md-4 border-line q-pa-sm border-rounded bg-accent">
+            <div
+              class="col-12 col-sm-5 col-md-4 border-line q-pa-sm border-rounded bg-accent"
+              style="max-height: 450px;"
+            >
               <q-input
                 ref="filterRef"
                 v-model="filter"
@@ -63,7 +66,7 @@
               </q-input>
 
               <q-tree
-                style="max-height: 400px; overflow: scroll;"
+                style="max-height: 390px; overflow: scroll;"
                 v-model:ticked="form.equipmentIds"
                 class="font-tree q-pa-xs"
                 no-transition
@@ -81,7 +84,7 @@
             <div class="col-12 col-sm container-table-plans">
               <general-table
                 class="w-100"
-                style="height: auto;"
+                style="height: auto; max-height: 450px;"
                 :rows="rows"
                 :columns="columns"
                 :paginationProp="{

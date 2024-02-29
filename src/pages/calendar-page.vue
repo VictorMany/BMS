@@ -35,8 +35,7 @@
         <div class="col-md col-12 q-px-sm h-90">
           <div class="row flex items-center justify-between q-mb-sm q-pa-xs-md">
             <div class="form__item-label text-weight-thin col">
-              Selecciona una fecha resaltada en el Calendario de mantenimientos y podrás ver los equipos con
-              mantenimientos programados
+              Selecciona una fecha en el calendario
             </div>
             <btn-switch
               class="col-auto"
@@ -46,11 +45,11 @@
 
           <div
             style="overflow: scroll"
-            class="row q-pa-none q-px-md-md q-ma-none h-90 w-100"
+            class="row q-pa-none q-px-md-md q-ma-none h-100 w-100"
           >
             <q-scroll-area
               v-if="switchContent === 1"
-              class="fit h-100"
+              class="fit h-90"
               :thumb-style="{
                 right: '6px',
                 borderRadius: '5px',
@@ -59,62 +58,78 @@
                 opacity: 1,
               }"
             >
-              <div style="max-width: 100%">
+              <div
+                v-if="equipments && equipments.length > 0"
+                class="row container-cards"
+              >
                 <div
-                  v-if="equipments && equipments.length > 0"
-                  class="row q-pa-none q-ma-none"
+                  class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
+                  v-for="(equipment, index) in equipments"
+                  :key="index"
                 >
-                  <div
-                    class="col-sm-auto q-pa-xs col-xs-12"
-                    v-for="(equipment, index) in equipments"
-                    :key="index"
-                  >
-                    <item-card
-                      v-bind="equipment"
-                      :index="index"
-                      :status="equipment.isReported ?
-                        {
-                          tooltip: 'Tiene reporte(s) sin atender',
-                          color: '#FF9900',
-                          label: 'Reportado'
-                        } : null"
-                      :card-action="goToDetails"
-                    />
-                  </div>
-                </div>
-
-                <div
-                  v-else-if="loading"
-                  class="q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
-                >
-                  <q-spinner-pie
-                    color="primary"
-                    class="q-mt-lg"
-                    size="4em"
+                  <item-card
+                    v-bind="equipment"
+                    :status="equipment.isReported ?
+                      {
+                        tooltip: 'Tiene reporte(s) sin atender',
+                        color: '#FF9900',
+                        label: 'Reportado'
+                      } : null"
+                    :index="index"
+                    :card-action="goToDetails"
                   />
-                  <div class="text-primary q-ma-lg">Cargando equipos</div>
                 </div>
+              </div>
 
-                <div
-                  v-else-if="loading === false"
-                  class="q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
-                >
-                  No hay equipos para mostrar
-                  <strong class="text-negative">!</strong>
-                </div>
+              <div
+                v-else-if="loading"
+                class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+              >
+                <q-spinner-pie
+                  color="primary"
+                  class="q-mt-lg"
+                  size="4em"
+                />
+                <div class="text-primary q-ma-lg">Cargando equipos</div>
+              </div>
+
+              <div
+                v-else-if="loading === false"
+                class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+              >
+                No hay equipos para mostrar
+                <strong class="text-negative">!</strong>
               </div>
             </q-scroll-area>
 
+            <div
+              v-if="switchContent === 1 && equipments.length > 0"
+              class="row justify-center q-pt-sm"
+              style="height: 6.55%"
+            >
+              <q-pagination
+                v-model="localPagination.page"
+                dense
+                class="q-mt-none pagination-style"
+                size="md"
+                direction-links
+                boundary-numbers
+                :max-pages="6"
+                :max="localPagination.totalPages"
+                @update:model-value="changePagination"
+              />
+            </div>
+
             <general-table
               v-else-if="switchContent === 2"
-              class="w-100"
-              height="60vh"
               v-model:row-selected="rowSelected"
+              class="w-100 h-100"
               :rows="rows"
               :columns="columns"
               :actions-table="actionsTable"
-              :showPagination="false"
+              :pagination-prop="pagination"
               :loading="loading"
+              @change-pagination="changePagination"
             />
           </div>
         </div>
@@ -162,7 +177,12 @@ export default defineComponent({
       switchContent: 1,
       timeoutSearch: null,
 
-      localPagination: {},
+      localPagination: {
+        totalPages: 1,
+        descending: false,
+        rowsPerPage: 12,
+        page: 1,
+      },
 
       rowSelected: {},
 
@@ -254,14 +274,17 @@ export default defineComponent({
       }
     },
 
-    async getEquipmentsByDate(date = null) {
+    async getEquipmentsByDate(date = null, changingPagination = false) {
       try {
         let auxDate = date ? date.replace(/-/g, '/') : this.formatDate().replace(/-/g, '/');
         this.loading = true;
-
         if (this.events.includes(auxDate)) {
           this.params.date = this.formatDate(date)
           await this.$store.dispatch('equipments/getEquipmentsByDateAction', this.params);
+          this.localPagination = JSON.parse(JSON.stringify(this.pagination))
+        } else if (this.params.date && changingPagination === true) {
+          await this.$store.dispatch('equipments/getEquipmentsByDateAction', this.params);
+          this.localPagination = JSON.parse(JSON.stringify(this.pagination))
         } else {
           this.$store.commit('equipments/MUTATE_EQUIPMENTS', []);
         }
@@ -319,26 +342,20 @@ export default defineComponent({
     },
 
     changePagination(pagination) {
-      this.params = {
-        ...this.params, ...{
-          page: pagination.page,
-          rowsPerPage: pagination.rowsPerPage,
-        }
-      }
+      this.localPagination.page = pagination
 
-      this.getEquipmentsByDate();
-    },
-
-    changePaginationCards(page) {
+      console.log('ESTOS SON LOS PARAMS ANTES DE MUTAR 1', this.params)
 
       this.params = {
         ...this.params, ...{
-          page,
-          rowsPerPage: 12,
+          page: this.localPagination.page,
+          rowsPerPage: this.localPagination.rowsPerPage,
         }
       }
 
-      this.getEquipmentsByDate();
+      console.log('ESTOS SON LOS PARAMS ANTES DE MUTAR 2', this.params)
+
+      this.getEquipmentsByDate(null, true);
     }
   },
 

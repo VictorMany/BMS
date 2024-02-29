@@ -65,13 +65,15 @@
           class="row justify-center q-pt-sm"
         >
           <q-pagination
-            v-model="paginationCards.page"
+            v-model="localPagination.page"
             dense
             class="q-mt-none pagination-style"
-            :max="paginationCards.pagesNumber"
+            :max="localPagination.totalPages"
             size="md"
             direction-links
-            @update:model-value="changePaginationCards"
+            boundary-numbers
+            :max-pages="6"
+            @update:model-value="changePagination"
           />
         </div>
 
@@ -113,7 +115,12 @@ export default defineComponent({
       switchContent: 1,
       loading: true,
 
-      localPagination: {},
+      localPagination: {
+        totalPages: 1,
+        descending: false,
+        rowsPerPage: 12,
+        page: 1,
+      },
 
       btnAction: {
         show: true,
@@ -177,13 +184,7 @@ export default defineComponent({
 
       params: {
         planName: '',
-      },
-
-      paginationCards: {
-        descending: false,
-        rowsPerPage: 12,
-        page: 1,
-      },
+      }
     }
   },
 
@@ -215,25 +216,6 @@ export default defineComponent({
 
         this.getMaintenancePlans();
       }, this.delaySearch);
-    },
-
-
-    pagination: {
-      handler(value) {
-        this.paginationCards.rowsPerPage = value.rowsPerPage;
-        this.paginationCards.pagesNumber = value.totalPages;
-        this.paginationCards.rowsNumber = value.rowsNumber;
-      },
-      immediate: true,
-      deep: true,
-    },
-
-    switchContent: {
-      handler(val) {
-        if (val === 1) this.paginationCards.page = this.pagination.page;
-        else this.pagination.page = this.paginationCards.page;
-      },
-      deep: true,
     },
   },
 
@@ -321,27 +303,16 @@ export default defineComponent({
     },
 
     changePagination(pagination) {
-      this.params = {
-        ...this.params, ...{
-          page: pagination.page,
-          rowsPerPage: pagination.rowsPerPage,
-        }
-      }
-
-      this.getMaintenancePlans();
-    },
-
-    // Changing pagination obj
-    changePaginationCards(page) {
+      this.localPagination.page = pagination
 
       this.params = {
         ...this.params, ...{
-          page,
-          rowsPerPage: 12,
+          page: this.localPagination.page,
+          rowsPerPage: this.localPagination.rowsPerPage,
         }
       }
 
-      this.getMaintenancePlans();
+      this.getMaintenancePlans(this.params);
     },
 
     goBack() {

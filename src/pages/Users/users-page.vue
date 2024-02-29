@@ -78,8 +78,10 @@
             class="q-mt-none pagination-style"
             :max="localPagination.totalPages"
             size="md"
-            @update:model-value="changePagination"
             direction-links
+            boundary-numbers
+            :max-pages="6"
+            @update:model-value="changePagination"
           />
         </div>
 

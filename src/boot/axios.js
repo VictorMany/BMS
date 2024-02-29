@@ -16,7 +16,7 @@ export default boot(({ app, router }) => {
   api.interceptors.response.use(function (response) {
     const { headers } = response;
 
-    if (headers?.['new-token']) {
+    if (headers?.['new-token'] && headers?.['new-token'] != 'null') {
       setAuthHeader(headers['new-token']);
     }
 

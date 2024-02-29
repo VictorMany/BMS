@@ -59,7 +59,7 @@
                     />
                   </div>
 
-                  <div class="col-12 col-sm">
+                  <div class="col-12 col-sm-4">
                     <div
                       v-for="( day, index ) in sortedDates"
                       :key="index"

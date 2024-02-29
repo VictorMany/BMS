@@ -46,10 +46,12 @@
           v-model="pagination.page"
           dense
           class="q-mt-none pagination-style"
-          :max="pagination.totalPages"
           size="md"
-          @update:model-value="changePagination"
           direction-links
+          :max="pagination.totalPages"
+          :max-pages="6"
+          boundary-numbers
+          @update:model-value="changePagination"
         />
       </div>
     </template>
