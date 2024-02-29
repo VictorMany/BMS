@@ -16,7 +16,10 @@ export default boot(({ app, router }) => {
   api.interceptors.response.use(function (response) {
     const { headers } = response;
 
-    console.log(headers)
+    if (headers?.['new-token']) {
+      setAuthHeader(headers['new-token']);
+    }
+
     return response;
   }, function (error) {
     handleErrorResponse(error, router);

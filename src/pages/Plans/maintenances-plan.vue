@@ -117,7 +117,7 @@ export default defineComponent({
 
       btnAction: {
         show: true,
-        btnTitle: 'Agregar plan de mantenimiento',
+        btnTitle: 'Agregar plan',
         tooltip: 'Agregar nuevo plan',
         to: 'add-maintenance-plan',
         btnWidth: 'auto'

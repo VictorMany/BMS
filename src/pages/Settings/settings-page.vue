@@ -231,7 +231,7 @@ export default defineComponent({
 
     const getExcel = () => {
       try {
-        return new URL('./juan.xlsx',
+        return new URL('./template.xlsx',
           import.meta.url).href
       } catch (error) {
         console.log(error)
