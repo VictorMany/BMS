@@ -60,6 +60,16 @@ module.exports = configure(function (ctx) {
         browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
         node: 'node16'
       },
+      extendWebpack(cfg) {
+        cfg.module.rules.push({
+          test: /\.(xlsx|xls)$/,
+          loader: 'file-loader',
+          options: {
+            name: '[name].[hash:8].[ext]',
+            outputPath: 'assets', // Directorio de salida personalizado
+          },
+        });
+      },
       distDir: ctx.mode.spa ? 'public' : null,
       vueRouterMode: 'history' // available values: 'hash', 'history'
       // vueRouterBase,

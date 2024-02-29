@@ -1,0 +1,1 @@
+var s="/assets/add_img.0eca6d85.svg",_="/assets/colours.60ce2b82.svg",a="/assets/logo_platform.e6733f89.svg",o="/assets/main_account.b6964171.svg",e="/assets/notifications.53cfefce.svg",g="/assets/notifications_.fd8d4f00.svg",t="/assets/roles.a9ebadf5.svg",v="/assets/tecnical_support.e76a12bf.svg";export{s as _,_ as a,a as b,o as c,e as d,g as e,t as f,v as g};

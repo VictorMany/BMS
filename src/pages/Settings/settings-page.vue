@@ -69,7 +69,7 @@
                     <a
                       class="text-blue-6"
                       download="plantilla.xlsx"
-                      :href="template"
+                      :href="getExcel()"
                     >
                       Descargar plantilla
                     </a>
@@ -125,11 +125,11 @@
 </template>
 
 <script>
+
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import BtnAction from 'src/components/atomic/BtnAction.vue'
 import { showSuccess, showWarning } from 'app/utils/utils'
-const template = new URL('../../../src/assets/template.xlsx', import.meta.url).href
 
 export default defineComponent({
   name: 'SettingsPage',
@@ -144,7 +144,7 @@ export default defineComponent({
       modalLoadEquipments: false,
       disabledUplaodFile: true,
       excelFile: null,
-      template,
+      // template,
 
       btnCancel: {
         show: true,
@@ -228,8 +228,19 @@ export default defineComponent({
         // eslint-disable-next-line no-empty
       } catch (error) { }
     }
+
+    const getExcel = () => {
+      try {
+        return new URL('./juan.xlsx',
+          import.meta.url).href
+      } catch (error) {
+        console.log(error)
+      }
+    };
+
     return {
       getImageUrl,
+      getExcel,
       basicToolBar: [['unordered', 'ordered']],
     }
   },
@@ -238,17 +249,6 @@ export default defineComponent({
     openLoadEquipments() {
       this.modalLoadEquipments = true
     },
-
-    // descargarArchivo() {
-    //   // Ruta relativa al archivo Excel en los assets
-    //   // Crear un enlace temporal para la descarga
-    //   const enlaceDescarga = document.createElement('a');
-    //   enlaceDescarga.href = template;
-    //   enlaceDescarga.download = 'archivo_excel.xlsx';
-
-    //   // Simular un clic en el enlace para iniciar la descarga
-    //   enlaceDescarga.click();
-    // },
 
     uploadFile(e) {
       const file = e.target.files[0];
