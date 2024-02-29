@@ -120,7 +120,7 @@ export default defineComponent({
       localPagination: {
         totalPages: 1,
         descending: false,
-        rowsPerPage: 12,
+        rowsPerPage: 20,
         page: 1,
       },
 

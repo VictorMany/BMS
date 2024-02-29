@@ -100,7 +100,7 @@ export async function formatDetails(context, { keys, fields }) {
     return fields;
 }
 
-export function addSttingsToLocalStorage(context, newData) {
+export function addGlobalsToLocalStorage(context, newData) {
     context.commit('UPDATE_LOCAL_STORAGE', newData)
 }
 

@@ -117,7 +117,7 @@ export default defineComponent({
     return {
 
       delaySearch: 300,
-      searchModel: null,
+      searchModel: 'RESONANCIA',
       showCards: true,
       switchContent: 1,
       timeoutSearch: null,
@@ -130,7 +130,7 @@ export default defineComponent({
       localPagination: {
         totalPages: 1,
         descending: false,
-        rowsPerPage: 12,
+        rowsPerPage: 20,
         page: 1,
       },
 
@@ -248,8 +248,18 @@ export default defineComponent({
   },
 
   created() {
+    if (this.localStorage?.paramsEquipmentsPage) {
+      this.params = this.localStorage.paramsEquipmentsPage
+    }
+
+    if (this.localStorage?.search) {
+      this.inputSearch.inputSearch = this.localStorage.search?.inputLabel
+      this.inputSearch.model = this.localStorage.search?.searchModel
+      // this.selectedFilterText = this.localStorage.search?.selectedFilterText
+    }
+
     this.checkPermissions()
-    this.getEquipments({});
+    this.getEquipments(this.params);
   },
 
   watch: {
@@ -265,14 +275,20 @@ export default defineComponent({
     },
 
     searchModel(val) {
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        search: {
+          selectedFilterText: this.selectedFilterText,
+          inputLabel: this.inputSearch.inputLabel,
+          searchModel: val
+        }
+      });
+
       this.params[this.selectedFilterText] = val
 
       clearTimeout(this.timeoutSearch);
 
       this.timeoutSearch = setTimeout(() => {
-
         this.params.page = 1
-
         this.getEquipments(this.params);
       }, this.delaySearch);
     },
@@ -304,6 +320,12 @@ export default defineComponent({
       },
     },
 
+    localStorage: {
+      get() {
+        return JSON.parse(JSON.stringify(this.$store.getters['global/getlocalStorageGetter']));
+      },
+    },
+
     userRole: {
       get() {
         return this.$store.getters['users/getRoleGetter'];
@@ -317,6 +339,8 @@ export default defineComponent({
       await this.$store.dispatch('equipments/getEquipmentsAction', params)
 
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
+
+      console.log('ESTA ES LA OPAGINACION', this.localPagination)
 
       this.loading = false
     },
@@ -366,6 +390,8 @@ export default defineComponent({
       this.selectedFilterText = opt.filter
       this.inputSearch.inputLabel = opt.title;
 
+
+
       if (opt.value && opt.filter) {
         this.params[opt.filter] = this.searchModel
         this.getEquipments(this.params);
@@ -373,10 +399,18 @@ export default defineComponent({
     },
 
     goToDetails(payload) {
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        paramsEquipmentsPage: this.params,
+      });
+
       this.$router.push({ name: 'detail-equipment', params: { id: payload } });
     },
 
     goToEdit(payload) {
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        paramsEquipmentsPage: this.params
+      });
+
       this.$router.push({ name: 'edit-equipment', params: { id: payload } });
     },
 

@@ -91,7 +91,7 @@ export default defineComponent({
         this.$emit('update:switchContent', 2);
       }
 
-      await this.$store.dispatch('global/addSttingsToLocalStorage', {
+      await this.$store.dispatch('global/addGlobalsToLocalStorage', {
         switchContent: model
       });
     },

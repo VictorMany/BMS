@@ -7,7 +7,7 @@ export default function () {
         pagination: {
             page: 1,
             totalItems: 0,
-            rowsPerPage: 12,
+            rowsPerPage: 20,
             totalPages: 1,
         }
     }

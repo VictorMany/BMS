@@ -259,6 +259,9 @@ export default defineComponent({
       this.$emit('update:searchModel', value);
     },
   },
+  created() {
+    console.log(this.searchModel)
+  }
 });
 </script>
 

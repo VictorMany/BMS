@@ -128,13 +128,13 @@ export default defineComponent({
       if (theme === 'dark') {
         this.$q.dark.set(true)
 
-        await this.$store.dispatch('global/addSttingsToLocalStorage', {
+        await this.$store.dispatch('global/addGlobalsToLocalStorage', {
           isDark: true
         });
       } else {
         this.$q.dark.set(false)
 
-        await this.$store.dispatch('global/addSttingsToLocalStorage', {
+        await this.$store.dispatch('global/addGlobalsToLocalStorage', {
           isDark: false
         });
       }

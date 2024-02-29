@@ -149,7 +149,7 @@ export default defineComponent({
   setup() {
     const pagination = ref({
       descending: false,
-      rowsPerPage: 12,
+      rowsPerPage: 20,
       totalPages: 1,
       page: 1,
       sortBy: 'equipment'

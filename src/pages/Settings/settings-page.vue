@@ -77,7 +77,7 @@
                   <li class="setting-item__subtitle">
                     No modificar las columnas
                   </li>
-                  <li class="setting-item__subtitle"> La fecha debe estar en formato dia/mes/año ejp. 12/01/2023 </li>
+                  <li class="setting-item__subtitle"> La fecha debe estar en formato dia/mes/año ejp. 12/01/24 </li>
                   <li class="setting-item__subtitle"> No subir registros con número de serie duplicados </li>
                   <li class="setting-item__subtitle">
                     Los datos no deben ser calculados o referenciados a casillas externas
@@ -99,6 +99,8 @@
               no-caps
               class="border-rounded q-my-sm"
               size="sm"
+              align="left"
+              :icon-right="excelFile?.name ? 'close' : ''"
               color="blue-7"
               @click="
                 excelFile?.name

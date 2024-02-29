@@ -25,6 +25,7 @@ export function MUTATE_EQUIPMENT(state, payload) {
 }
 
 export function MUTATE_DETAILS(state, payload) {
+  console.log('PAYLOAD PARA PAGINACION', payload)
   state.pagination = {
     page: payload.currentPage,
     totalItems: payload.totalItems,

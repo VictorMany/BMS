@@ -249,7 +249,7 @@ export default defineComponent({
         const params = {
           category: val
         }
-        if (this.equipments.length >= 12) {
+        if (this.equipments.length >= 20) {
           params.rowsPerPage = this.paginationEquipments.totalItems
         }
 
