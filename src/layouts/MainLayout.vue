@@ -291,12 +291,12 @@ export default defineComponent({
           link: 'reports', color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
         },
-        {
-          title: 'Tienda',
-          link: 'store', color: 'rgba(122, 122, 122, 1)',
-          newItem: true,
-          background: '#F8F8F8',
-        },
+        // {
+        //   title: 'Tienda',
+        //   link: 'store', color: 'rgba(122, 122, 122, 1)',
+        //   newItem: true,
+        //   background: '#F8F8F8',
+        // },
         {
           title: 'Configuración',
           link: 'settings', color: 'rgba(122, 122, 122, 1)',
