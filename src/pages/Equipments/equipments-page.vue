@@ -73,6 +73,7 @@
         >
           <q-pagination
             v-model="localPagination.page"
+            :disable="loading"
             dense
             class="q-mt-none pagination-style"
             size="md"
@@ -115,13 +116,13 @@ export default defineComponent({
   },
   data() {
     return {
-
       delaySearch: 300,
-      searchModel: 'RESONANCIA',
+      searchModel: null,
       showCards: true,
       switchContent: 1,
       timeoutSearch: null,
       loading: true,
+      paramsFromCreated: false,
 
       rowSelected: {},
 
@@ -151,7 +152,7 @@ export default defineComponent({
         inputLabel: 'Categoría del equipo',
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
-        heightModal: 290,
+        heightModal: 300,
         items: [
           {
             title: 'Categoría del equipo',
@@ -248,18 +249,9 @@ export default defineComponent({
   },
 
   created() {
-    if (this.localStorage?.paramsEquipmentsPage) {
-      this.params = this.localStorage.paramsEquipmentsPage
-    }
-
-    if (this.localStorage?.search) {
-      this.inputSearch.inputSearch = this.localStorage.search?.inputLabel
-      this.inputSearch.model = this.localStorage.search?.searchModel
-      // this.selectedFilterText = this.localStorage.search?.selectedFilterText
-    }
-
+    this.checkParamsFromCreated()
     this.checkPermissions()
-    this.getEquipments(this.params);
+    this.getEquipments();
   },
 
   watch: {
@@ -274,23 +266,18 @@ export default defineComponent({
       deep: true,
     },
 
+
     searchModel(val) {
-      this.$store.dispatch('global/addGlobalsToLocalStorage', {
-        search: {
-          selectedFilterText: this.selectedFilterText,
-          inputLabel: this.inputSearch.inputLabel,
-          searchModel: val
-        }
-      });
+      if (!this.paramsFromCreated) {
+        this.params = { ...this.params, [this.selectedFilterText]: val }
+        clearTimeout(this.timeoutSearch);
+        this.timeoutSearch = setTimeout(() => {
 
-      this.params[this.selectedFilterText] = val
+          this.params.page = 1
 
-      clearTimeout(this.timeoutSearch);
-
-      this.timeoutSearch = setTimeout(() => {
-        this.params.page = 1
-        this.getEquipments(this.params);
-      }, this.delaySearch);
+          this.getEquipments();
+        }, this.delaySearch);
+      }
     },
   },
 
@@ -307,7 +294,6 @@ export default defineComponent({
           equipment: e.cardTitle,
           model: e.cardLabels[0].info,
           no_serie: e.cardLabels[1].info,
-          // date: e.cardDate,
           nextMaintenanceDate: e.cardDate,
           status: e.status
         };
@@ -316,7 +302,7 @@ export default defineComponent({
 
     pagination: {
       get() {
-        return this.$store.getters['equipments/getPaginationGetter'];
+        return JSON.parse(JSON.stringify(this.$store.getters['equipments/getPaginationGetter']));
       },
     },
 
@@ -334,19 +320,41 @@ export default defineComponent({
   },
 
   methods: {
-    async getEquipments(params) {
+    async getEquipments() {
       this.loading = true
-      await this.$store.dispatch('equipments/getEquipmentsAction', params)
+
+      await this.$store.dispatch('equipments/getEquipmentsAction', this.params)
+
+      this.paramsFromCreated = false
 
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
 
-      console.log('ESTA ES LA OPAGINACION', this.localPagination)
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        search: {
+          inputLabel: this.inputSearch.inputLabel,
+          selectedFilterText: this.selectedFilterText,
+          searchModel: this.searchModel
+        },
+        paramsEquipmentsPage: { ...this.params }
+      });
 
       this.loading = false
     },
 
     async getEquipment(id) {
       await this.$store.dispatch('equipments/getEquipmentAction', { id })
+    },
+
+    findItemByFilterAndValue(value) {
+      for (const item of this.inputSearch.items) {
+        if (item.options) {
+          const foundOption = item.options.find(option => option.value === value);
+          if (foundOption) {
+            return foundOption;
+          }
+        }
+      }
+      return null;
     },
 
     checkPermissions() {
@@ -374,43 +382,51 @@ export default defineComponent({
 
       this.params.page = 1
 
-      this.getEquipments(this.params);
+      this.getEquipments();
     },
 
+    checkParamsFromCreated() {
+      if (this.localStorage?.paramsEquipmentsPage) {
+        this.params = { ...this.localStorage.paramsEquipmentsPage };
+
+        if (Object.prototype.hasOwnProperty.call(this.params, 'status')) {
+          this.inputSearch.activeOptions = [this.findItemByFilterAndValue(this.params.status)]
+        }
+      }
+
+      if (this.localStorage?.search) {
+        this.paramsFromCreated = true
+
+        this.inputSearch.inputLabel = this.localStorage.search?.inputLabel
+        this.searchModel = this.localStorage.search?.searchModel
+        this.selectedFilterText = this.localStorage.search?.selectedFilterText
+      }
+    },
 
     setSelectedFilter(opt) {
-      // IF CHANGE THE MODEL SELECTED
       if (this.selectedFilterText) {
         delete this.params[this.selectedFilterText]
         if (this.searchModel) {
-          this.getEquipments(this.params);
+          this.params[opt.filter] = this.searchModel
+          this.getEquipments();
         }
       }
 
       this.selectedFilterText = opt.filter
       this.inputSearch.inputLabel = opt.title;
 
-
-
       if (opt.value && opt.filter) {
         this.params[opt.filter] = this.searchModel
-        this.getEquipments(this.params);
+
+        this.getEquipments();
       }
     },
 
     goToDetails(payload) {
-      this.$store.dispatch('global/addGlobalsToLocalStorage', {
-        paramsEquipmentsPage: this.params,
-      });
-
       this.$router.push({ name: 'detail-equipment', params: { id: payload } });
     },
 
     goToEdit(payload) {
-      this.$store.dispatch('global/addGlobalsToLocalStorage', {
-        paramsEquipmentsPage: this.params
-      });
-
       this.$router.push({ name: 'edit-equipment', params: { id: payload } });
     },
 
@@ -424,7 +440,7 @@ export default defineComponent({
         }
       }
 
-      this.getEquipments(this.params);
+      this.getEquipments();
     }
   },
 });

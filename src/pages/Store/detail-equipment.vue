@@ -138,7 +138,7 @@ export default defineComponent({
         },
         {
           show: true,
-          btnTitle: 'Registrar mantenimiento',
+          btnTitle: 'Agregar mantenimiento',
           iconName: 'o_engineering',
           tooltip: 'Relizarle un mantenimiento al equipo',
           to: 'add-maintenance',

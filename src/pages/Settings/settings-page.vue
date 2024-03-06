@@ -65,7 +65,7 @@
               <div class="setting-item__title">
                 Para que la operación sea éxitosa toma en cuenta que:
                 <ol>
-                  <li class="setting-item__subtitle">
+                  <li class="setting-item__paragraph">
                     <a
                       class="text-blue-6"
                       download="plantilla.xlsx"
@@ -74,12 +74,12 @@
                       Descargar plantilla
                     </a>
                   </li>
-                  <li class="setting-item__subtitle">
+                  <li class="setting-item__paragraph">
                     No modificar las columnas
                   </li>
-                  <li class="setting-item__subtitle"> La fecha debe estar en formato dia/mes/año ejp. 12/01/24 </li>
-                  <li class="setting-item__subtitle"> No subir registros con número de serie duplicados </li>
-                  <li class="setting-item__subtitle">
+                  <li class="setting-item__paragraph"> La fecha debe estar en formato dia/mes/año ejp. 12/01/2024 </li>
+                  <li class="setting-item__paragraph"> No subir registros con número de serie duplicados </li>
+                  <li class="setting-item__paragraph">
                     Los datos no deben ser calculados o referenciados a casillas externas
                   </li>
                 </ol>

@@ -109,6 +109,7 @@
             >
               <q-pagination
                 v-model="localPagination.page"
+                :disable="loading"
                 dense
                 class="q-mt-none pagination-style"
                 size="md"
@@ -249,7 +250,7 @@ export default defineComponent({
 
   created() {
     this.checkPermissions()
-    this.initInfo()
+    this.checkParamsFromCreated()
   },
 
   methods: {
@@ -288,6 +289,11 @@ export default defineComponent({
         } else {
           this.$store.commit('equipments/MUTATE_EQUIPMENTS', []);
         }
+
+        this.$store.dispatch('global/addGlobalsToLocalStorage', {
+          paramsCalendarPage: date
+        });
+
         this.loading = false;
       } catch (error) {
         console.log(error);
@@ -313,6 +319,24 @@ export default defineComponent({
         case 3:
           this.btnAction.show = false;
           break;
+      }
+    },
+
+    async checkParamsFromCreated() {
+      if (this.localStorage?.paramsCalendarPage) {
+
+        let dateLS = new Date(this.localStorage.paramsCalendarPage)
+
+        this.calendarModel = this.formatDate(dateLS);
+
+        await this.getDatesPerMonth({
+          year: dateLS.getFullYear(),
+          month: dateLS.getMonth() + 1,
+        })
+
+        await this.getEquipmentsByDate(this.localStorage.paramsCalendarPage);
+      } else {
+        this.initInfo()
       }
     },
 
@@ -344,16 +368,12 @@ export default defineComponent({
     changePagination(pagination) {
       this.localPagination.page = pagination
 
-      console.log('ESTOS SON LOS PARAMS ANTES DE MUTAR 1', this.params)
-
       this.params = {
         ...this.params, ...{
           page: this.localPagination.page,
           rowsPerPage: this.localPagination.rowsPerPage,
         }
       }
-
-      console.log('ESTOS SON LOS PARAMS ANTES DE MUTAR 2', this.params)
 
       this.getEquipmentsByDate(null, true);
     }
@@ -394,7 +414,13 @@ export default defineComponent({
 
     pagination: {
       get() {
-        return this.$store.getters['equipments/getPaginationGetter'];
+        return JSON.parse(JSON.stringify(this.$store.getters['equipments/getPaginationGetter']));
+      },
+    },
+
+    localStorage: {
+      get() {
+        return JSON.parse(JSON.stringify(this.$store.getters['global/getlocalStorageGetter']));
       },
     },
 

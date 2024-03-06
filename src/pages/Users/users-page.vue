@@ -74,6 +74,7 @@
         >
           <q-pagination
             v-model="localPagination.page"
+            :disable="loading"
             dense
             class="q-mt-none pagination-style"
             :max="localPagination.totalPages"
@@ -121,6 +122,7 @@ export default defineComponent({
       switchContent: 1,
       timeoutSearch: null,
       loading: true,
+      paramsFromCreated: false,
 
       btnCloseWindow: {
         iconName: 'exit_to_app',
@@ -194,6 +196,7 @@ export default defineComponent({
       inputSearch: {
         show: true,
         inputLabel: 'Nombre de usuario',
+        activeOptions: [],
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
         heightModal: 160,
@@ -254,7 +257,8 @@ export default defineComponent({
   },
 
   created() {
-    this.getUsers({});
+    this.checkParamsFromCreated()
+    this.getUsers();
   },
 
   watch: {
@@ -270,16 +274,16 @@ export default defineComponent({
     },
 
     searchModel(val) {
-      this.params[this.selectedFilterText] = val
+      if (!this.paramsFromCreated) {
+        this.params = { ...this.params, [this.selectedFilterText]: val }
+        clearTimeout(this.timeoutSearch);
+        this.timeoutSearch = setTimeout(() => {
 
-      clearTimeout(this.timeoutSearch);
+          this.params.page = 1
 
-      this.timeoutSearch = setTimeout(() => {
-
-        this.params.page = 1
-
-        this.getUsers(this.params);
-      }, this.delaySearch);
+          this.getUsers();
+        }, this.delaySearch);
+      }
     },
 
     selectedFilterText() {
@@ -296,7 +300,13 @@ export default defineComponent({
 
     pagination: {
       get() {
-        return this.$store.getters['users/getPaginationGetter'];
+        return JSON.parse(JSON.stringify(this.$store.getters['users/getPaginationGetter']));
+      },
+    },
+
+    localStorage: {
+      get() {
+        return JSON.parse(JSON.stringify(this.$store.getters['global/getlocalStorageGetter']));
       },
     },
 
@@ -314,13 +324,59 @@ export default defineComponent({
   },
 
   methods: {
-    async getUsers(params) {
+    async getUsers() {
       this.loading = true
-      await this.$store.dispatch('users/getUsersAction', params);
+      await this.$store.dispatch('users/getUsersAction', this.params);
+
+      this.paramsFromCreated = false
 
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
 
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        searchUsers: {
+          inputLabel: this.inputSearch.inputLabel,
+          selectedFilterText: this.selectedFilterText,
+          searchModel: this.searchModel
+        },
+        paramsUsersPage: { ...this.params }
+      });
+
       this.loading = false
+    },
+
+    async checkParamsFromCreated() {
+      if (this.localStorage?.paramsUsersPage) {
+        this.params = { ...this.localStorage.paramsUsersPage };
+
+        if (Object.prototype.hasOwnProperty.call(this.params, 'status')) {
+          this.inputSearch.activeOptions.push(this.findItemByFilterAndValue(this.params.status, 'status'))
+        }
+
+        if (Object.prototype.hasOwnProperty.call(this.params, 'role')) {
+          this.inputSearch.activeOptions.push(this.findItemByFilterAndValue(this.params.role, 'role'))
+        }
+      }
+
+      if (this.localStorage?.searchUsers) {
+        this.paramsFromCreated = true
+
+        this.inputSearch.inputLabel = this.localStorage.searchUsers?.inputLabel
+        this.searchModel = this.localStorage.searchUsers?.searchModel
+        this.selectedFilterText = this.localStorage.searchUsers?.selectedFilterText
+      }
+    },
+
+    findItemByFilterAndValue(value, key) {
+      for (const item of this.inputSearch.items) {
+        if (item.options) {
+          console.log(item.options, key)
+          const foundOption = item.options.find(option => option.value === value && option.filter === key);
+          if (foundOption) {
+            return foundOption;
+          }
+        }
+      }
+      return null;
     },
 
     goBack() {
@@ -340,7 +396,8 @@ export default defineComponent({
       if (this.selectedFilterText) {
         delete this.params[this.selectedFilterText]
         if (this.searchModel) {
-          this.getUsers(this.params);
+          this.params[opt.filter] = this.searchModel
+          this.getUsers();
         }
       }
 
@@ -349,7 +406,7 @@ export default defineComponent({
 
       if (opt.value && opt.filter) {
         this.params[opt.filter] = this.searchModel
-        this.getUsers(this.params);
+        this.getUsers();
       }
     },
 
@@ -365,7 +422,7 @@ export default defineComponent({
 
       this.params.page = 1
 
-      this.getUsers(this.params);
+      this.getUsers();
     },
 
     changePagination(pagination) {
@@ -378,7 +435,7 @@ export default defineComponent({
         }
       }
 
-      this.getUsers(this.params);
+      this.getUsers();
     }
   },
 });

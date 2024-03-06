@@ -67,6 +67,7 @@
         >
           <q-pagination
             v-model="localPagination.page"
+            :disable="loading"
             dense
             class="q-mt-none pagination-style"
             :max="localPagination.totalPages"
@@ -115,7 +116,7 @@ export default defineComponent({
       timeoutSearch: null,
       loading: true,
       switchContent: 1,
-
+      paramsFromCreated: false,
 
       localPagination: {
         totalPages: 1,
@@ -173,7 +174,7 @@ export default defineComponent({
         inputLabel: 'Encargado',
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
-        heightModal: 200,
+        heightModal: 160,
         items: [
           {
             title: 'Tipo',
@@ -218,6 +219,7 @@ export default defineComponent({
       this.params.userId = this.$route.query.user
     }
 
+    this.checkParamsFromCreated()
     this.getMaintenances()
   },
 
@@ -232,12 +234,16 @@ export default defineComponent({
     },
 
     searchModel(val) {
-      this.params[this.selectedFilterText] = val
-      clearTimeout(this.timeoutSearch);
-      this.timeoutSearch = setTimeout(() => {
-        this.params.page = 1
-        this.getMaintenances();
-      }, this.delaySearch);
+      if (!this.paramsFromCreated) {
+        this.params = { ...this.params, [this.selectedFilterText]: val }
+        clearTimeout(this.timeoutSearch);
+        this.timeoutSearch = setTimeout(() => {
+
+          this.params.page = 1
+
+          this.getMaintenances();
+        }, this.delaySearch);
+      }
     },
   },
 
@@ -250,7 +256,13 @@ export default defineComponent({
 
     pagination: {
       get() {
-        return this.$store.getters['maintenances/getPaginationGetter'];
+        return JSON.parse(JSON.stringify(this.$store.getters['maintenances/getPaginationGetter']));
+      },
+    },
+
+    localStorage: {
+      get() {
+        return JSON.parse(JSON.stringify(this.$store.getters['global/getlocalStorageGetter']));
       },
     },
 
@@ -282,9 +294,51 @@ export default defineComponent({
       this.loading = true
       await this.$store.dispatch('maintenances/getMaintenancesAction', this.params);
 
+      this.paramsFromCreated = false
+
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
 
+
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        searchMaintenances: {
+          inputLabel: this.inputSearch.inputLabel,
+          selectedFilterText: this.selectedFilterText,
+          searchModel: this.searchModel
+        },
+        paramsMaintenancesPage: { ...this.params }
+      });
+
       this.loading = false
+    },
+
+    async checkParamsFromCreated() {
+      if (this.localStorage?.paramsMaintenancesPage) {
+        this.params = { ...this.params, ...this.localStorage.paramsMaintenancesPage };
+
+        if (Object.prototype.hasOwnProperty.call(this.params, 'maintenanceType')) {
+          this.inputSearch.activeOptions = [await this.findItemByFilterAndValue(this.params.maintenanceType)]
+        }
+      }
+
+      if (this.localStorage?.searchMaintenances) {
+        this.paramsFromCreated = true
+
+        this.inputSearch.inputLabel = this.localStorage.searchMaintenances?.inputLabel
+        this.searchModel = this.localStorage.searchMaintenances?.searchModel
+        this.selectedFilterText = this.localStorage.searchMaintenances?.selectedFilterText
+      }
+    },
+
+    findItemByFilterAndValue(value) {
+      for (const item of this.inputSearch.items) {
+        if (item.options) {
+          const foundOption = item.options.find(option => option.value === value);
+          if (foundOption) {
+            return foundOption;
+          }
+        }
+      }
+      return null;
     },
 
     findIndicator(status) {
@@ -328,6 +382,7 @@ export default defineComponent({
       if (this.selectedFilterText) {
         delete this.params[this.selectedFilterText]
         if (this.searchModel) {
+          this.params[opt.filter] = this.searchModel
           this.getMaintenances();
         }
       }

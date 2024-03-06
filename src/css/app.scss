@@ -5,6 +5,7 @@
 @import "login";
 
 $primary-grey: #6d8598;
+$primary-white: #FFFFFF;
 
 .body--light {
   .card-page {
@@ -12,7 +13,7 @@ $primary-grey: #6d8598;
   }
 
   .setting-item {
-    background-color: #FFFFFF;
+    background-color: $primary-white;
 
     &__title {
       color: #062841;
@@ -24,7 +25,7 @@ $primary-grey: #6d8598;
   }
 
   .table-style {
-    background-color: #ffffff !important;
+    background-color: $primary-white;
   }
 
   .font-style {
@@ -37,7 +38,7 @@ $primary-grey: #6d8598;
   }
 
   .card-graphics {
-    background-color: #FFFFFF;
+    background-color: $primary-white;
 
     &__title {
       color: $primary-grey;
@@ -176,6 +177,11 @@ $primary-grey: #6d8598;
     color: #959494 !important;
     font-size: 10px;
   }
+
+  &__paragraph {
+    color: #959494 !important;
+    font-size: 12px;
+  }
 }
 
 .setting-item:hover {
@@ -268,7 +274,6 @@ ol {
   padding-left: 1rem;
 }
 
-
 .border-rounded {
   border-radius: 0.6rem !important
 }
@@ -279,7 +284,6 @@ ol {
 }
 
 .container-cards {
-  padding: 0px;
   gap: 10px;
 }
 
@@ -335,8 +339,20 @@ ol {
   min-width: 380px;
 }
 
+.q-pagination__content>.q-btn,
+.q-pagination__content>.q-input,
+.q-pagination__middle>.q-btn {
+  font-size: 13px !important;
+}
+
 // RESPONSIVITY
 @media only screen and (max-width : 1024px) {
+
+  .q-pagination__content>.q-btn,
+  .q-pagination__content>.q-input,
+  .q-pagination__middle>.q-btn {
+    font-size: 10px !important;
+  }
 
   .btn-close-order {
     order: 0;
@@ -377,7 +393,6 @@ ol {
   }
 
   .container-cards {
-    padding: 0px;
     gap: 5px;
   }
 

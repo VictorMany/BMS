@@ -67,9 +67,10 @@
         >
           <q-pagination
             v-model="localPagination.page"
-            dense
-            class="q-mt-none pagination-style"
+            :disable="loading"
             :max="localPagination.totalPages"
+            class="q-mt-none pagination-style"
+            dense
             size="md"
             direction-links
             boundary-numbers
@@ -114,6 +115,7 @@ export default defineComponent({
       timeoutSearch: null,
       loading: true,
       switchContent: 1,
+      paramsFromCreated: false,
 
       btnCloseWindow: {
         iconName: 'exit_to_app',
@@ -221,6 +223,8 @@ export default defineComponent({
     } else if (this.$route.query.user) {
       this.params.userId = this.$route.query.user
     }
+
+    this.checkParamsFromCreated()
     this.getReports()
   },
 
@@ -237,16 +241,16 @@ export default defineComponent({
     },
 
     searchModel(val) {
-      this.params[this.selectedFilterText] = val
+      if (!this.paramsFromCreated) {
+        this.params = { ...this.params, [this.selectedFilterText]: val }
+        clearTimeout(this.timeoutSearch);
+        this.timeoutSearch = setTimeout(() => {
 
-      clearTimeout(this.timeoutSearch);
+          this.params.page = 1
 
-      this.timeoutSearch = setTimeout(() => {
-
-        this.params.page = 1
-
-        this.getReports();
-      }, this.delaySearch);
+          this.getReports();
+        }, this.delaySearch);
+      }
     },
 
     selectedFilterText() {
@@ -263,7 +267,13 @@ export default defineComponent({
 
     pagination: {
       get() {
-        return this.$store.getters['reports/getPaginationGetter'];
+        return JSON.parse(JSON.stringify(this.$store.getters['reports/getPaginationGetter']));
+      },
+    },
+
+    localStorage: {
+      get() {
+        return JSON.parse(JSON.stringify(this.$store.getters['global/getlocalStorageGetter']));
       },
     },
 
@@ -304,7 +314,48 @@ export default defineComponent({
         ...await this.$store.dispatch('reports/getReportsAction', this.params)
       }
 
+      this.paramsFromCreated = false
+
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        searchReports: {
+          inputLabel: this.inputSearch.inputLabel,
+          selectedFilterText: this.selectedFilterText,
+          searchModel: this.searchModel
+        },
+        paramsReportsPage: { ...this.params }
+      });
+
       this.loading = false
+    },
+
+    async checkParamsFromCreated() {
+      if (this.localStorage?.paramsReportsPage) {
+        this.params = { ...this.params, ...this.localStorage.paramsReportsPage };
+
+        if (Object.prototype.hasOwnProperty.call(this.params, 'reportStatus')) {
+          this.inputSearch.activeOptions = [await this.findItemByFilterAndValue(this.params.reportStatus)]
+        }
+      }
+
+      if (this.localStorage?.searchReports) {
+        this.paramsFromCreated = true
+
+        this.inputSearch.inputLabel = this.localStorage.searchReports?.inputLabel
+        this.searchModel = this.localStorage.searchReports?.searchModel
+        this.selectedFilterText = this.localStorage.searchReports?.selectedFilterText
+      }
+    },
+
+    findItemByFilterAndValue(value) {
+      for (const item of this.inputSearch.items) {
+        if (item.options) {
+          const foundOption = item.options.find(option => option.value === value);
+          if (foundOption) {
+            return foundOption;
+          }
+        }
+      }
+      return null;
     },
 
     findIndicator(status) {
@@ -376,6 +427,7 @@ export default defineComponent({
       if (this.selectedFilterText) {
         delete this.params[this.selectedFilterText]
         if (this.searchModel) {
+          this.params[opt.filter] = this.searchModel
           this.getReports();
         }
       }

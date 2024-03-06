@@ -172,6 +172,11 @@ export default defineComponent({
     searchModelLocal(value) {
       this.$emit('update:searchModel', value);
     },
+    searchModel(newValue) {
+      if (newValue !== this.searchModelLocal) {
+        this.searchModelLocal = newValue;
+      }
+    },
     switchContentLocal(value) {
       this.$emit('update:switchContent', value);
     },

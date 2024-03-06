@@ -342,11 +342,16 @@ export default defineComponent({
 }
 </style>
 
-<style>
+<style lang="scss">
 .q-table--horizontal-separator thead th,
 .q-table--horizontal-separator tbody tr:not(:last-child)>td,
 .q-table--cell-separator thead th,
 .q-table--cell-separator tbody tr:not(:last-child)>td {
   border-bottom-width: 0px !important;
+}
+
+/* Estilo para las filas impares */
+.q-table tbody tr:nth-child(even) {
+  background-color: rgba($grey, 0.03);
 }
 </style>

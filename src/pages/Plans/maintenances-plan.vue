@@ -66,6 +66,7 @@
         >
           <q-pagination
             v-model="localPagination.page"
+            :disable="loading"
             dense
             class="q-mt-none pagination-style"
             :max="localPagination.totalPages"
@@ -114,6 +115,7 @@ export default defineComponent({
       timeoutSearch: null,
       switchContent: 1,
       loading: true,
+      paramsFromCreated: false,
 
       localPagination: {
         totalPages: 1,
@@ -190,6 +192,7 @@ export default defineComponent({
 
   mounted() {
     this.checkPermissions()
+    this.checkParamsFromCreated()
     this.getMaintenancePlans()
   },
 
@@ -208,14 +211,16 @@ export default defineComponent({
     },
 
     searchModel(val) {
-      this.params[this.selectedFilterText] = val
-      clearTimeout(this.timeoutSearch);
-      this.timeoutSearch = setTimeout(() => {
+      if (!this.paramsFromCreated) {
+        this.params = { ...this.params, [this.selectedFilterText]: val }
+        clearTimeout(this.timeoutSearch);
+        this.timeoutSearch = setTimeout(() => {
 
-        this.params.page = 1
+          this.params.page = 1
 
-        this.getMaintenancePlans();
-      }, this.delaySearch);
+          this.getMaintenancePlans();
+        }, this.delaySearch);
+      }
     },
   },
 
@@ -228,7 +233,13 @@ export default defineComponent({
 
     pagination: {
       get() {
-        return this.$store.getters['maintenancePlans/getPaginationGetter'];
+        return JSON.parse(JSON.stringify(this.$store.getters['maintenancePlans/getPaginationGetter']));
+      },
+    },
+
+    localStorage: {
+      get() {
+        return JSON.parse(JSON.stringify(this.$store.getters['global/getlocalStorageGetter']));
       },
     },
 
@@ -255,8 +266,6 @@ export default defineComponent({
   },
 
   methods: {
-
-
     async getMaintenancePlans() {
       this.loading = true
 
@@ -265,7 +274,32 @@ export default defineComponent({
         ...await this.$store.dispatch('maintenancePlans/getMaintenancePlansAction', this.params)
       }
 
+      this.paramsFromCreated = false
+
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        searchPlans: {
+          inputLabel: this.inputSearch.inputLabel,
+          selectedFilterText: this.selectedFilterText,
+          searchModel: this.searchModel
+        },
+        paramsPlansPage: { ...this.params }
+      });
+
       this.loading = false
+    },
+
+    async checkParamsFromCreated() {
+      if (this.localStorage?.paramsPlansPage) {
+        this.params = { ...this.params, ...this.localStorage.paramsPlansPage };
+      }
+
+      if (this.localStorage?.searchPlans) {
+        this.paramsFromCreated = true
+
+        this.inputSearch.inputLabel = this.localStorage.searchPlans?.inputLabel
+        this.searchModel = this.localStorage.searchPlans?.searchModel
+        this.selectedFilterText = this.localStorage.searchPlans?.selectedFilterText
+      }
     },
 
     async removePlan(paylod) {

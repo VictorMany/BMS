@@ -16,6 +16,35 @@
     </template>
 
     <template v-slot:append>
+      <q-icon
+        v-if="modelLocal"
+        name="close"
+        size="xs"
+        color="primary"
+        class="cursor-pointer"
+        @click="modelLocal = null"
+      />
+
+      <div
+        v-for="(filter, index) in activeFilters"
+        :key="index"
+      >
+        <q-chip
+          v-if="filter?.title"
+          class="border-rounded bg-secondary q-pr-xs"
+          style="font-size: 10px"
+          :label="filter?.title"
+        >
+          <q-icon
+            name="close"
+            color="white"
+            size="12px"
+            class="cursor-pointer q-ml-xs border-rounded text-weight-bolder"
+            @click="addFilter(filter)"
+          />
+        </q-chip>
+      </div>
+
       <q-avatar
         v-if="items?.length"
         square
@@ -24,12 +53,17 @@
           <q-icon
             size="xs"
             color="primary"
-            :name="btnFilter.icon"
+            class="cursor-pointer"
+            name="o_filter_alt"
+            @click="dialog = true"
           />
         </div>
-        <q-popup-proxy class="border-rounded">
-          <q-banner
-            class="border-shadow q-px-sm border-rounded modal-ios"
+        <q-dialog
+          v-model="dialog"
+          class="border-rounded"
+        >
+          <q-card
+            class="border-shadow q-pa-sm border-rounded modal-ios"
             style="width: 300px; height: auto;"
           >
             <q-scroll-area
@@ -55,7 +89,6 @@
                     class="border-rounded setting-item__title"
                     @update:model-value="updateHeight(item)"
                   >
-                    <!-- @before-hide="resetSelected()" -->
                     <template v-slot:header>
                       <q-item-section avatar>
                         <q-avatar
@@ -92,7 +125,6 @@
                           :active="findActiveFilters(opt)"
                           @click="addFilter(opt)"
                         >
-                          <!-- :active="findActiveFilters(opt, j)" -->
                           <q-item-section>
                             <q-item-label>
                               {{ opt.title }}
@@ -107,7 +139,7 @@
                     v-else
                     class="flex items-center border-rounded"
                     clickable
-                    @click="setSelectedFilter(item)"
+                    @click="setSelectedFilter(item), this.dialog = false"
                   >
                     <q-item-section avatar>
                       <q-avatar
@@ -130,15 +162,15 @@
                 </div>
               </q-list>
             </q-scroll-area>
-          </q-banner>
-        </q-popup-proxy>
+          </q-card>
+        </q-dialog>
       </q-avatar>
     </template>
   </q-input>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'InputSearch',
@@ -147,6 +179,11 @@ export default defineComponent({
       type: String,
       default: 'Buscar por nombre',
       required: false,
+    },
+    activeOptions: {
+      type: Array,
+      required: false,
+      default: () => []
     },
     inputColor: {
       type: String,
@@ -157,11 +194,6 @@ export default defineComponent({
       type: String,
       required: false,
       default: '#FFFFFF',
-    },
-    model: {
-      type: String,
-      required: false,
-      default: '',
     },
     setSelectedFilter: {
       type: Function,
@@ -183,7 +215,7 @@ export default defineComponent({
       default: 390,
     },
     searchModel: {
-      type: String,
+      type: [String, null],
       required: false,
       default: '',
     },
@@ -198,10 +230,10 @@ export default defineComponent({
     };
     return {
       getImageUrl,
-      status: ref(true),
       basicToolBar: [['unordered', 'ordered']]
     };
   },
+
   methods: {
     // Calc height of the modal
     updateHeight(item) {
@@ -233,34 +265,34 @@ export default defineComponent({
     },
 
     findActiveFilters(opt) {
-      // Assuming that 'filter' is a property on the item
       return this.activeFilters.some(filter => filter.filter === opt.filter && filter.value === opt.value);
     },
   },
   data() {
-
     return {
       newFilter: null,
-      activeFilters: [],
-      btnFilter: {
-        title: 'Filtro',
-        color: '#FFFFFF',
-        backgroundGradient:
-          'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
-        icon: 'o_filter_alt',
-      },
-      options: ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'],
-      modelLocal: this.model,
-      heightModalLocal: this.heightModal
+      activeFilters: this.activeOptions,
+      modelLocal: this.searchModel,
+      heightModalLocal: this.heightModal,
+      dialog: false,
     };
   },
   watch: {
     modelLocal(value) {
       this.$emit('update:searchModel', value);
     },
-  },
-  created() {
-    console.log(this.searchModel)
+    searchModel(newValue) {
+      if (newValue !== this.modelLocal) {
+        this.modelLocal = newValue;
+      }
+    },
+    activeOptions: {
+      handler() {
+        this.activeFilters = this.activeOptions
+      },
+      deep: true,
+      immediate: true
+    }
   }
 });
 </script>
