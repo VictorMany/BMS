@@ -242,7 +242,7 @@ export default defineComponent({
           icnSize: 'xs',
           icnAction: 'Edit',
           tooltip: 'Editar equipo',
-          hidden: true
+          shouldHideAction: this.shouldHideAction
         },
       ],
     };
@@ -345,6 +345,12 @@ export default defineComponent({
       await this.$store.dispatch('equipments/getEquipmentAction', { id })
     },
 
+    shouldHideAction() {
+      if (this.userRole != 1) {
+        return false
+      } else return true
+    },
+
     findItemByFilterAndValue(value) {
       for (const item of this.inputSearch.items) {
         if (item.options) {
@@ -361,7 +367,6 @@ export default defineComponent({
       switch (this.userRole) {
         case 1:
           this.btnAction.show = true
-          this.actionsTable[1].hidden = false
           break;
         case 2:
         case 3:

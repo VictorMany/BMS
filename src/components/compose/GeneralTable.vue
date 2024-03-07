@@ -352,6 +352,6 @@ export default defineComponent({
 
 /* Estilo para las filas impares */
 .q-table tbody tr:nth-child(even) {
-  background-color: rgba($grey, 0.03);
+  background-color: rgba(16, 108, 144, 0.02)
 }
 </style>

@@ -204,6 +204,7 @@ import BtnAction from 'src/components/atomic/BtnAction.vue';
 // import QrcodeVue from 'qrcode.vue';
 import { setAuthHeader } from 'src/api/auth';
 import { deleteTokenCookie } from 'app/utils/utils';
+import { deleteLocalStorage } from 'app/utils/utils';
 
 export default defineComponent({
   name: 'newLayout',
@@ -514,6 +515,8 @@ export default defineComponent({
     logout() {
       setAuthHeader(null)
       deleteTokenCookie(null)
+      deleteLocalStorage()
+
       this.$router.replace('/login');
     },
 

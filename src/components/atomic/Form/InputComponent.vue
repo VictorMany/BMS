@@ -10,6 +10,8 @@
         borderless
         :label="item.innerLabel"
         :name="item.key"
+        :mask="item.mask ? item.mask : ''"
+        unmasked-value
         :readonly="item.readonly"
         :type="inputType"
         :rules="item.rules || []"
@@ -41,6 +43,8 @@
         :name="item.key"
         :readonly="item.readonly"
         :type="inputType"
+        :mask="item.mask ? item.mask : ''"
+        unmasked-value
         :rules="item.rules || []"
         :prefix="item.prefix || ''"
     >

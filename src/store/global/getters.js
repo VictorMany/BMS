@@ -18,3 +18,8 @@ export function getDate(state) {
 export function getlocalStorageGetter(state) {
     return state.localStorage;
 }
+
+
+export function getIsDarkGetter(state) {
+    return state.isDark;
+}

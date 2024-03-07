@@ -17,6 +17,7 @@ export default function () {
     date: calcDate(),
 
     localStorage: JSON.parse(localStorage.getItem('configuration')) || null,
+    isDark: JSON.parse(localStorage.getItem('isDark')) || null,
   }
 }
 

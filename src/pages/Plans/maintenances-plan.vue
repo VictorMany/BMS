@@ -166,12 +166,14 @@ export default defineComponent({
           icnSize: 'xs',
           icnAction: 'Edit',
           tooltip: 'Editar plan',
+          shouldHideAction: this.shouldHideAction
         },
         {
           icnName: 'o_delete',
           icnSize: 'xs',
           icnAction: 'Remove',
           tooltip: 'Eliminar plan',
+          shouldHideAction: this.shouldHideAction
         },
       ],
 
@@ -326,6 +328,12 @@ export default defineComponent({
           this.btnAction.show = false;
           break;
       }
+    },
+
+    shouldHideAction() {
+      if (this.userRole != 1) {
+        return false
+      } else return true
     },
 
     goToDetails(payload) {

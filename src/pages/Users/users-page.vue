@@ -207,7 +207,7 @@ export default defineComponent({
             filter: 'name',
           },
           {
-            title: 'Role',
+            title: 'Rol',
             icon: 'o_low_priority',
             options: [
               {

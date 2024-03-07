@@ -144,8 +144,7 @@ export default defineComponent({
           icnSize: 'xs',
           icnAction: 'Maintenance',
           tooltip: 'Atender reporte',
-          hidden: true
-          // hidden: row => !row.isReported
+          shouldHideAction: this.shouldHideAction
         },
       ],
 
@@ -344,6 +343,12 @@ export default defineComponent({
         this.searchModel = this.localStorage.searchReports?.searchModel
         this.selectedFilterText = this.localStorage.searchReports?.selectedFilterText
       }
+    },
+
+    shouldHideAction(row) {
+      if (row?.reportStatus != 'Pendiente') {
+        return false
+      } else return true
     },
 
     findItemByFilterAndValue(value) {

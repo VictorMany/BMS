@@ -104,6 +104,10 @@ export function addGlobalsToLocalStorage(context, newData) {
     context.commit('UPDATE_LOCAL_STORAGE', newData)
 }
 
+export function changeIsDark(context, newData) {
+    context.commit('UPDATE_IS_DARK', newData)
+}
+
 export function formatDate(date) {
     if (date) {
         const initialDate = new Date(date);

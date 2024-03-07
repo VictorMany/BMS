@@ -209,7 +209,7 @@ export default defineComponent({
           {
             key: 'phone',
             label: 'Teléfono*',
-            type: 'number',
+            mask: '(###) ### - ####',
             model: '',
             rules: [rules.validPhoneNumber, rules.requiredString],
           },

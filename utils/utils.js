@@ -124,6 +124,14 @@ export function deleteTokenCookie() {
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 }
 
+export function deleteLocalStorage() {
+    localStorage.removeItem('configuration');
+    localStorage.removeItem('equipment');
+    localStorage.removeItem('role');
+    localStorage.removeItem('user');
+    localStorage.removeItem('report');
+}
+
 // Obtener el token de la cookie
 export function getTokenFromCookie() {
     const cookies = document.cookie.split(';');

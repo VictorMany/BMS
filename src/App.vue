@@ -14,7 +14,7 @@ export default defineComponent({
   computed: {
     isDarkLS: {
       get() {
-        return this.$store.getters['global/getlocalStorageGetter']?.isDark;
+        return this.$store.getters['global/getIsDarkGetter'];
       },
     },
   },
