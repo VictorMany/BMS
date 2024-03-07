@@ -268,6 +268,15 @@ export default defineComponent({
     },
 
     async getDatesPerMonth(date) {
+      let currentDate = new Date();
+      currentDate.setMonth(currentDate.getMonth() + 1); // Add a month to the current date
+      if (
+        currentDate.getMonth() === date.month &&
+        currentDate.getFullYear() === date.year
+      ) {
+        this.calendarModel = new Date();
+      }
+
       if (date) {
         let formattedPayload = date.year + '-' + date.month.toString().padStart(2, '0')
         const events = await this.$store.dispatch('equipments/getDatesPerMonthAction', formattedPayload);
@@ -325,13 +334,13 @@ export default defineComponent({
     async checkParamsFromCreated() {
       if (this.localStorage?.paramsCalendarPage) {
 
-        let dateLS = new Date(this.localStorage.paramsCalendarPage)
+        let dateLS = this.localStorage.paramsCalendarPage
 
         this.calendarModel = this.formatDate(dateLS);
 
         await this.getDatesPerMonth({
-          year: dateLS.getFullYear(),
-          month: dateLS.getMonth() + 1,
+          year: this.calendarModel.split('-')[0],
+          month: this.calendarModel.split('-')[1]
         })
 
         await this.getEquipmentsByDate(this.localStorage.paramsCalendarPage);
@@ -341,16 +350,21 @@ export default defineComponent({
     },
 
     formatDate(date) {
+      // Obtener los componentes de la fecha
+      let year;
+      let month;
+      let day;
+
       if (!date) {
         const currentDate = new Date();
         date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
       } else {
         date = new Date(date)
       }
-      // Obtener los componentes de la fecha
-      const year = date.getUTCFullYear();
-      const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Los meses van de 0 a 11
-      const day = date.getUTCDate().toString().padStart(2, '0');
+
+      day = date.getUTCDate().toString().padStart(2, '0');
+      month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Los meses van de 0 a 11
+      year = date.getUTCFullYear();
       // Formatear la fecha como YYYY-MM-DD
       const fechaFormateada = `${year}-${month}-${day}`;
 

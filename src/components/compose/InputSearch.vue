@@ -31,13 +31,12 @@
       >
         <q-chip
           v-if="filter?.title"
-          class="border-rounded bg-secondary q-pr-xs"
+          class="border-rounded bg-secondary q-pr-xs text-white"
           style="font-size: 10px"
           :label="filter?.title"
         >
           <q-icon
             name="close"
-            color="white"
             size="12px"
             class="cursor-pointer q-ml-xs border-rounded text-weight-bolder"
             @click="addFilter(filter)"
