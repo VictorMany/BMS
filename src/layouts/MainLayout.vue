@@ -556,19 +556,18 @@ export default defineComponent({
       const element = document.querySelector('.container-qr-code');
 
       toPng(element)
-        .then(function (dataUrl) {
+        .then((dataUrl) => {
           const downloadLink = document.createElement('a');
           downloadLink.href = dataUrl;
-          downloadLink.download = 'container-qr-code.png';
+          downloadLink.download = `${this.equipment?.serialNumber}-qr-code.png`;
           downloadLink.click();
           this.btnExport.iconName = 'o_download'
         })
-        .catch(function (error) {
+        .catch((error) => {
           this.btnExport.iconName = 'o_download'
           console.error('Error al convertir el contenido a imagen:', error);
         }).finally(() => {
           this.btnExport.iconName = 'o_download'
-
         });
     }
   },
