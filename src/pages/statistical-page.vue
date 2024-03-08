@@ -35,7 +35,7 @@
               class="col-12 col-md col-lg"
               title-card="Porcentaje de mantenimientos correctivos"
               type="doghnut"
-              :payload="correctiveMaintenancePercentage"
+              :payload="customData1"
               :options="stats.statistics"
               :selected-option="selectedOption1"
               :loaded="loadedStats"
@@ -46,7 +46,7 @@
               class="col-12 col-md col-lg"
               title-card="Porcentaje de mantenimientos preventivos"
               type="doghnut"
-              :payload="preventiveMaintenancePercentage"
+              :payload="customData2"
               :options="stats.statistics"
               :selected-option="selectedOption2"
               :loaded="loadedStats"
@@ -57,7 +57,7 @@
               class="col-12 col-md col-lg"
               title-card="Porcentaje de atención a reportes por falla"
               type="doghnut"
-              :payload="attentionToFailurePercentage"
+              :payload="customData3"
               :options="stats.statistics"
               :selected-option="selectedOption3"
               :loaded="loadedStats"
@@ -68,7 +68,7 @@
               class="col-12 col-md col-lg"
               title-card="Porcentaje de equipos con falla repentina"
               type="doghnut"
-              :payload="suddenFailurePercentage"
+              :payload="customData4"
               :options="stats.statistics"
               :selected-option="selectedOption4"
               :loaded="loadedStats"
@@ -200,21 +200,21 @@ export default defineComponent({
           labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5'],
           datasets: [
             {
-              backgroundColor: '#4FF2734D',
-              borderColor: '#4FF273',
+              backgroundColor: '#2e85ff',
+              borderColor: '#2e85ff',
               fill: {
                 target: 'origin',
-                above: '#4FF2734D',
+                above: '#2e85ff4D',
               },
               label: 'Este mes',
               data: [],
             },
             {
-              backgroundColor: '#4FF2F24D',
-              borderColor: '#4FF2F2',
+              backgroundColor: '#2effb9',
+              borderColor: '#2effb9',
               fill: {
                 target: 'origin',
-                above: '#4FF2F24D',
+                above: '#2effb94D',
               },
               label: 'Mes anterior',
               data: [],
@@ -259,7 +259,7 @@ export default defineComponent({
           labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5'],
           datasets: [
             {
-              backgroundColor: '#B89AEA4D',
+              backgroundColor: '#B89AEA',
               borderColor: '#B89AEA',
               fill: {
                 target: 'origin',
@@ -269,7 +269,7 @@ export default defineComponent({
               data: [],
             },
             {
-              backgroundColor: '#4FAEF24D',
+              backgroundColor: '#4FAEF2',
               borderColor: '#4FAEF2',
               fill: {
                 target: 'origin',
@@ -313,7 +313,7 @@ export default defineComponent({
         },
       },
 
-      correctiveMaintenancePercentage: {
+      customData1: {
         data: {
           datasets: [
             {
@@ -344,7 +344,7 @@ export default defineComponent({
         },
       },
 
-      preventiveMaintenancePercentage: {
+      customData2: {
         data: {
           datasets: [
             {
@@ -374,7 +374,7 @@ export default defineComponent({
         },
       },
 
-      attentionToFailurePercentage: {
+      customData3: {
         data: {
           datasets: [
             {
@@ -404,7 +404,7 @@ export default defineComponent({
         },
       },
 
-      suddenFailurePercentage: {
+      customData4: {
         data: {
           datasets: [
             {
@@ -575,21 +575,23 @@ export default defineComponent({
     async getStats() {
       await this.$store.dispatch('stats/getStatsAction');
 
-      const preventiveMaintenances = this.stats.additionalStatistics.correctiveMaintenancePercentage
+      const correctiveMaintenances = this.stats.additionalStatistics.correctiveMaintenancePercentage
       const attentionToReports = this.stats.additionalStatistics.attentionToFailurePercentage
       const replacementForDamage = this.stats.additionalStatistics.preventiveMaintenancePercentage
       const suddenFailurePercentage = this.stats.additionalStatistics.suddenFailurePercentage
 
-      await this.getPercentage(preventiveMaintenances, this.correctiveMaintenancePercentage)
-      await this.getPercentage(attentionToReports, this.attentionToFailurePercentage)
-      await this.getPercentage(replacementForDamage, this.preventiveMaintenancePercentage)
-      await this.getPercentage(suddenFailurePercentage, this.suddenFailurePercentage)
+      await this.getPercentage(correctiveMaintenances, this.customData1)
+      await this.getPercentage(attentionToReports, this.customData3)
+      await this.getPercentage(replacementForDamage, this.customData2)
+      await this.getPercentage(suddenFailurePercentage, this.customData4)
 
       this.loadedStats = true
     },
 
     async getCustomStats() {
       await this.$store.dispatch('stats/getCustomStatsAction');
+
+      console.log('CUSTOM DATA', this.customStats)
     },
 
     async getPeriodicReportsStats() {
@@ -662,5 +664,9 @@ export default defineComponent({
   .container-stats {
     max-width: 88vw;
   }
+}
+
+.h {
+  color: #2effb9;
 }
 </style>

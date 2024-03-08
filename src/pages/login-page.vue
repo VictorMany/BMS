@@ -104,7 +104,17 @@ export default defineComponent({
         try {
           const res = await this.$store.dispatch('users/loginAction', this.model);
           if (res === true) {
-            this.$router.replace('/');
+            try {
+              if (this.$route.fullPath.includes('equipment')) {
+                let path = this.$route.fullPath.split('/')[2]
+                await this.$router.replace('/equipments');
+                await this.$router.push(path);
+              }
+              else
+                this.$router.replace('/');
+            } catch (error) {
+              this.$router.replace('/');
+            }
           } else {
             showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
           }

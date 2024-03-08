@@ -161,23 +161,32 @@
                     v-if="btn == 'divider'"
                     class="q-my-md"
                   />
-                  <!-- <div
-                    class="container q-pa-none"
+                  <div
+                    class="container container-qr-code border-rounded column content-center q-pt-md"
                     v-if="btn == 'qrcode'"
                   >
                     <qrcode-vue
                       :value="value"
                       :size="size"
                       class="qr-code-style border-rounded"
-                      foreground="#062841"
                       background="#F3F3F3"
-                      :margin="3"
+                      foreground="#062841"
+                      :margin="2"
                       level="L"
                     />
-                    <div class="text column wrap justify-center items-center content-center q-pa-none border-rounded">
-                      <btn-action v-bind="btnExport" />
+                    <div class="row justify-center items-center q-pb-md">
+                      <div
+                        class="text-center text-weight-medium q-pr-md"
+                        style="color: #062841;"
+                      >
+                        No. serie → {{ equipment?.serialNumber }}
+                      </div>
+                      <btn-action
+                        v-show="isDownloading === false"
+                        v-bind="btnExport"
+                      />
                     </div>
-                  </div> -->
+                  </div>
                 </div>
               </div>
               <div v-if="btnCloseSesion.show">
@@ -201,10 +210,14 @@
 import { defineComponent } from 'vue';
 import BtnMenu from 'src/components/atomic/BtnMenu.vue';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
-// import QrcodeVue from 'qrcode.vue';
+import QrcodeVue from 'qrcode.vue';
 import { setAuthHeader } from 'src/api/auth';
 import { deleteTokenCookie } from 'app/utils/utils';
 import { deleteLocalStorage } from 'app/utils/utils';
+import { toPng } from 'html-to-image';
+// import * as htmlToImage from 'html-to-image';
+// import { toPng } from 'html-to-image';
+
 
 export default defineComponent({
   name: 'newLayout',
@@ -212,7 +225,7 @@ export default defineComponent({
   components: {
     BtnMenu,
     BtnAction,
-    // QrcodeVue,
+    QrcodeVue,
   },
 
   setup() {
@@ -235,9 +248,9 @@ export default defineComponent({
   },
   data() {
     return {
-      // value: 'https://example.com',
+      value: '',
       leftDrawerOpen: false,
-      size: 302,
+      size: 500,
       btnSelected: 0,
       imageNotification: 'svg/notifications_.svg',
       btnLinks: [],
@@ -323,7 +336,9 @@ export default defineComponent({
           },
           color: 'rgba(122, 122, 122, 1)',
           background: '#F8F8F8',
-        }
+        },
+        'divider',
+        'qrcode',
       ],
 
       btnDetailUser: [
@@ -379,13 +394,11 @@ export default defineComponent({
           'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
       },
       btnExport: {
-        btnTitle: 'Descargar QR',
-        btnColor: '#FFFFFF',
-        btnAction: this.logout,
-        btnWidth: 'auto',
-        iconName: 'download',
-        btnBackground: 'black',
+        btnAction: this.downloadQR,
+        iconName: 'o_download',
       },
+
+      isDownloading: false
     };
   },
 
@@ -451,7 +464,7 @@ export default defineComponent({
     async setMenu(route) {
       try {
         this.btnCloseSesion.show = false;
-        // this.value = 'www.bmsystemll.com' + route.fullPath;
+        this.value = 'www.bmsystemll.com/login' + route.fullPath;
 
         switch (route.name) {
           case 'reports':
@@ -537,6 +550,27 @@ export default defineComponent({
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen;
     },
+
+    downloadQR() {
+      this.btnExport.iconName = 'qr_code_scanner'
+      const element = document.querySelector('.container-qr-code');
+
+      toPng(element)
+        .then(function (dataUrl) {
+          const downloadLink = document.createElement('a');
+          downloadLink.href = dataUrl;
+          downloadLink.download = 'container-qr-code.png';
+          downloadLink.click();
+          this.btnExport.iconName = 'o_download'
+        })
+        .catch(function (error) {
+          this.btnExport.iconName = 'o_download'
+          console.error('Error al convertir el contenido a imagen:', error);
+        }).finally(() => {
+          this.btnExport.iconName = 'o_download'
+
+        });
+    }
   },
 });
 </script>
@@ -610,21 +644,24 @@ export default defineComponent({
   height: auto;
 }
 
-.text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 98%;
-  opacity: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-  transition: opacity 0.3s ease;
-}
+// .text {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   opacity: 0;
+//   background-color: rgba(0, 0, 0, 0.3);
+//   color: #fff;
+//   text-align: center;
+//   transition: opacity 0.3s ease;
+// }
 
-.container:hover .text {
-  opacity: 1;
+// .container:hover .text {
+//   opacity: 1;
+// }
+
+.container-qr-code {
+  background: #F3F3F3;
 }
 </style>
