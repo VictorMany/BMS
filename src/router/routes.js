@@ -1,4 +1,4 @@
-import { auth } from './middlewareAuth'
+import { auth, verifyAuthForDetailEquipment } from './middlewareAuth'
 
 const routes = [
   {
@@ -49,7 +49,7 @@ const routes = [
       {
         path: 'detail-:id-equipment',
         name: 'detail-equipment',
-        meta: [auth],
+        meta: [verifyAuthForDetailEquipment, auth],
         component: () => import('src/pages/Equipments/detail-equipment.vue')
       },
       // Users
