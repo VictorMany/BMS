@@ -212,8 +212,10 @@ export default defineComponent({
   },
 
   mounted() {
-    if (this.$route.query.equipment) {
-      this.params.IdEquipment = this.$route.query.equipment
+    const equipment = this.$route.query.equipment
+    if (equipment) {
+      this.params.IdEquipment = equipment
+      this.params.page = 1
       this.btnAction.show = this.equipment.equipmentStatus
     } else if (this.$route.query.user) {
       this.params.userId = this.$route.query.user
@@ -298,15 +300,15 @@ export default defineComponent({
 
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
 
-
-      this.$store.dispatch('global/addGlobalsToLocalStorage', {
-        searchMaintenances: {
-          inputLabel: this.inputSearch.inputLabel,
-          selectedFilterText: this.selectedFilterText,
-          searchModel: this.searchModel
-        },
-        paramsMaintenancesPage: { ...this.params }
-      });
+      if (!this.$route.query.equipment)
+        this.$store.dispatch('global/addGlobalsToLocalStorage', {
+          searchMaintenances: {
+            inputLabel: this.inputSearch.inputLabel,
+            selectedFilterText: this.selectedFilterText,
+            searchModel: this.searchModel
+          },
+          paramsMaintenancesPage: { ...this.params }
+        });
 
       this.loading = false
     },
