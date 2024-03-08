@@ -184,7 +184,12 @@ export default defineComponent({
     },
 
     goBack() {
-      this.$router.go(-1)
+      if (this.$router?.options?.history?.state?.back)
+        this.$router.go(-1);
+      else
+        this.$router.push({ name: 'equipments' });
+
+      // console.log('this.$route.meta', this.$router?.options?.history?.state?.back)
     },
 
     checkPermissions() {
