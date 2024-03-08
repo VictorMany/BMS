@@ -464,7 +464,7 @@ export default defineComponent({
     async setMenu(route) {
       try {
         this.btnCloseSesion.show = false;
-        this.value = 'www.bmsystemll.com/login' + route.fullPath;
+        this.value = 'www.bmsystemll.com' + route.fullPath;
 
         switch (route.name) {
           case 'reports':
