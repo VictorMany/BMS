@@ -41,7 +41,8 @@
               <ul>
                 <li class="setting-item__paragraph"> Si el equipo pertenece a un plan de mantenimientos, ya no podrás
                   verlo en el plan </li>
-                <li class="setting-item__paragraph"> El equipo seguirá en el el listado de equipos filtrando por inactivos
+                <li class="setting-item__paragraph"> El equipo seguirá en el el listado de equipos, pero solo lo podrás
+                  ver filtrando por inactivos
                 </li>
               </ul>
             </div>
