@@ -281,7 +281,8 @@ export default defineComponent({
           model: {
             value: this.equipment.IdEquipment,
             label: this.equipment.categoryName
-          }
+          },
+          readonly: true
         })
       }
       if (this.equipment.photo && this.fields.right[1].model === null) {

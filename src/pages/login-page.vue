@@ -106,9 +106,8 @@ export default defineComponent({
           if (res === true) {
             try {
               if (this.$route.fullPath.includes('equipment')) {
-                let path = this.$route.fullPath.split('/')[2]
-                await this.$router.replace('/equipments');
-                await this.$router.push(path);
+                let path = '/' + this.$route.fullPath.split('/')[2]
+                await this.$router.replace(path);
               }
               else
                 this.$router.replace('/');
@@ -140,7 +139,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .form {
   &__input-login {
-    border-radius: 50px !important;
+    border-radius: 40px !important;
     width: 100% !important;
     padding-inline: 28px !important;
     padding-block: 5px !important;

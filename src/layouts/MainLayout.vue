@@ -278,43 +278,43 @@ export default defineComponent({
         {
           title: 'Dashboard',
           link: '/', color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         },
         {
           title: 'Equipos',
           link: 'equipments', color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         },
         {
           title: 'Mantenimientos',
           link: 'maintenances', color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         },
         {
           title: 'Planes de mantenimientos',
           link: 'maintenances-plan', color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         },
         {
           title: 'Calendarización',
           link: 'calendar', color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         },
         {
           title: 'Reportes',
           link: 'reports', color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         },
         // {
         //   title: 'Tienda',
         //   link: 'store', color: 'rgba(122, 122, 122, 1)',
         //   newItem: true,
-        //   background: '#F8F8F8',
+        //   background: '#f3f3f3ff',
         // },
         {
           title: 'Configuración',
           link: 'settings', color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         },
       ],
 
@@ -326,7 +326,7 @@ export default defineComponent({
             searchByIdEquipment: true
           },
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         },
         {
           title: 'Reportes',
@@ -335,7 +335,7 @@ export default defineComponent({
             searchByIdEquipment: true
           },
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         },
         'divider',
         'qrcode',
@@ -349,7 +349,7 @@ export default defineComponent({
             searchByIdUser: true
           },
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         },
         {
           title: 'Reportes',
@@ -358,7 +358,7 @@ export default defineComponent({
             searchByIdUser: true
           },
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         }
       ],
 
@@ -366,20 +366,20 @@ export default defineComponent({
         {
           title: 'Equipos',
           link: 'equipments',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
           color: 'rgba(122, 122, 122, 1)',
         },
         {
           title: 'Reportes',
           link: 'reports',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
           color: 'rgba(122, 122, 122, 1)',
         },
         {
           title: 'Configuración',
           link: 'settings',
           color: 'rgba(122, 122, 122, 1)',
-          background: '#F8F8F8',
+          background: '#f3f3f3ff',
         }
       ],
 
@@ -584,15 +584,15 @@ export default defineComponent({
 
 .body--light {
   .main-menu {
-    background-color: rgba(236, 236, 236, 1) !important;
+    background-color: #ececec !important;
   }
 
   .side-menu {
-    background: #fefefe;
+    background: #f8fafc;
   }
 
   .container-style {
-    background: rgba(236, 236, 236, 1);
+    background: #ececec;
   }
 }
 
@@ -661,6 +661,6 @@ export default defineComponent({
 // }
 
 .container-qr-code {
-  background: #F3F3F3;
+  background: #f3f3f3;
 }
 </style>

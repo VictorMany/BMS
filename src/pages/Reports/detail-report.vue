@@ -19,6 +19,60 @@
         </q-scroll-area>
       </div>
     </div>
+
+    <q-dialog
+      v-model="openConfirmCancelReport"
+      class="border-rounded"
+    >
+      <q-card
+        class="border-shadow q-pa-sm border-rounded modal-ios"
+        style="width: 300px; height: auto;"
+      >
+        <q-card-section>
+          <div class="title-page text-primary">Confirma para cancelar reporte</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-item-section>
+            <div class="setting-item__title">
+              ¿ Estás seguro de cancelar este reporte ?
+              <ul>
+                <li class="setting-item__paragraph"> Esta acción no se puede deshacer </li>
+                <li class="setting-item__paragraph"> El reporte seguirá apareciendo en el listado general de
+                  reportes con el estatus de cancelado </li>
+              </ul>
+            </div>
+          </q-item-section>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            unelevated
+            v-close-popup
+            no-caps
+            class="border-rounded q-my-sm"
+            size="sm"
+            outline
+            align="left"
+            color="blue-7"
+          >
+            Regresar
+          </q-btn>
+          <q-btn
+            unelevated
+            no-caps
+            class="border-rounded q-my-sm"
+            size="sm"
+            align="left"
+            color="blue-7"
+            @click="cancelReport"
+          >
+            Confirmar
+          </q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </q-page>
 </template>
 
@@ -37,6 +91,7 @@ export default defineComponent({
   data() {
     return {
       loading: true,
+      openConfirmCancelReport: false,
 
       fields: {
         createdAt: '',
@@ -111,7 +166,7 @@ export default defineComponent({
           iconName: 'cancel',
           tooltip: 'Cancelar reporte',
           btnWidth: 'auto',
-          btnAction: this.cancelReport,
+          btnAction: this.confirmCancelReport,
           loader: false,
         },
         {
@@ -134,6 +189,10 @@ export default defineComponent({
     };
   },
   methods: {
+    confirmCancelReport() {
+      this.openConfirmCancelReport = true
+    },
+
     async cancelReport() {
       try {
         this.btnActions[0].loader = true

@@ -87,7 +87,7 @@
           :columns="columns"
           :loading="loading"
           :actions-table="actionsTable"
-          :pagination-prop="localPagination"
+          :pagination-prop="pagination"
           @change-pagination="changePagination"
         />
       </div>
@@ -216,15 +216,15 @@ export default defineComponent({
   },
 
   mounted() {
+    this.checkParamsFromCreated()
+
     if (this.$route.query.equipment) {
       this.params.IdEquipment = this.$route.query.equipment
-      this.params.page = 1
       this.btnAction.show = this.equipment.equipmentStatus
+      this.params.page = 1
     } else if (this.$route.query.user) {
       this.params.userId = this.$route.query.user
     }
-
-    this.checkParamsFromCreated()
     this.getReports()
   },
 
@@ -309,22 +309,26 @@ export default defineComponent({
     async getReports() {
       this.loading = true
 
-      this.localPagination = {
-        ...this.localPagination,
-        ...await this.$store.dispatch('reports/getReportsAction', this.params)
-      }
+      await this.$store.dispatch('reports/getReportsAction', this.params)
 
       this.paramsFromCreated = false
 
-      if (!this.$route.query.equipment)
-        this.$store.dispatch('global/addGlobalsToLocalStorage', {
-          searchReports: {
-            inputLabel: this.inputSearch.inputLabel,
-            selectedFilterText: this.selectedFilterText,
-            searchModel: this.searchModel
-          },
-          paramsReportsPage: { ...this.params }
-        });
+      this.localPagination = JSON.parse(JSON.stringify(this.pagination))
+
+      const paramsForReports = { ...this.params }
+
+      if (this.$route.query.equipment) {
+        delete paramsForReports.IdEquipment
+      }
+
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        searchReports: {
+          inputLabel: this.inputSearch.inputLabel,
+          selectedFilterText: this.selectedFilterText,
+          searchModel: this.searchModel
+        },
+        paramsReportsPage: paramsForReports
+      });
 
       this.loading = false
     },
@@ -473,7 +477,7 @@ export default defineComponent({
         }
       }
 
-      this.getReports(this.params);
+      this.getReports();
     }
   },
 })

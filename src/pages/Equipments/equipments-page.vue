@@ -92,8 +92,8 @@
           :rows="rows"
           :columns="columns"
           :actions-table="actionsTable"
-          :pagination-prop="pagination"
           :loading="loading"
+          :pagination-prop="pagination"
           @change-pagination="changePagination"
         />
       </div>

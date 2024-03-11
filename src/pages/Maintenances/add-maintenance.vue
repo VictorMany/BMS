@@ -236,19 +236,27 @@ export default defineComponent({
     },
 
     getEquipmentDefault() {
-      this.setModelValueByKey('idEquipment', {
-        value: this.equipment.IdEquipment,
-        label: this.equipment.categoryName
+      this.updateFieldByKeyInAllArrays('idEquipment', {
+        model: {
+          value: this.equipment.IdEquipment,
+          label: this.equipment.categoryName
+        },
+        readonly: true
       })
+
       this.setModelValueByKey('photo', this.equipment.photo)
       this.setModelValueByKey('serialNumber', this.equipment.serialNumber)
     },
 
     getEquipmentFromReport() {
-      this.setModelValueByKey('idEquipment', {
-        value: this.report.Equipment.IdEquipment,
-        label: this.report.Equipment.categoryName
+      this.updateFieldByKeyInAllArrays('idEquipment', {
+        model: {
+          value: this.report.Equipment.IdEquipment,
+          label: this.report.Equipment.categoryName
+        },
+        readonly: true
       })
+
       this.setModelValueByKey('maintenanceType', {
         value: 'Correctivo',
         label: 'Correctivo'

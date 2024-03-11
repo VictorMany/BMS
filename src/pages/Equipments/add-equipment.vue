@@ -21,6 +21,60 @@
         </q-scroll-area>
       </div>
     </div>
+
+    <q-dialog
+      v-model="openConfirmInactivateEquipment"
+      class="border-rounded"
+    >
+      <q-card
+        class="border-shadow q-pa-sm border-rounded modal-ios"
+        style="width: 300px; height: auto;"
+      >
+        <q-card-section>
+          <div class="title-page text-primary">Confirma para inactivar el equipo</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-item-section>
+            <div class="setting-item__title">
+              ¿ Estás seguro de inactivar este equipo ?
+              <ul>
+                <li class="setting-item__paragraph"> Si el equipo pertenece a un plan de mantenimientos, ya no podrás
+                  verlo en el plan </li>
+                <li class="setting-item__paragraph"> El equipo seguirá en el el listado de equipos filtrando por inactivos
+                </li>
+              </ul>
+            </div>
+          </q-item-section>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            unelevated
+            v-close-popup
+            no-caps
+            class="border-rounded q-my-sm"
+            size="sm"
+            outline
+            align="left"
+            color="blue-7"
+          >
+            Regresar
+          </q-btn>
+          <q-btn
+            unelevated
+            no-caps
+            class="border-rounded q-my-sm"
+            size="sm"
+            align="left"
+            color="blue-7"
+            @click="editEquipment"
+          >
+            Confirmar
+          </q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -39,6 +93,7 @@ export default defineComponent({
   data() {
     return {
       loading: false,
+      openConfirmInactivateEquipment: false,
 
       localCategories: [],
 
@@ -214,7 +269,7 @@ export default defineComponent({
     async createOrEdit() {
       if (await this.$refs.fieldsComponent.validate()) {
         if (this.isEditing()) {
-          this.editEquipment()
+          this.openConfirmAction()
         } else {
           this.createEquipment()
         }
@@ -268,12 +323,14 @@ export default defineComponent({
           'equipments/updateEquipmentAction',
           this.fields
         );
+
         if (res === true) {
           showSuccess(this.$q, { title: 'Éxito al editar el equipo', msg: 'El equipo se ha actualizado' });
           this.$router.go(-1);
         } else {
           showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
         }
+
         this.btnAction.loader = false;
       } catch (error) {
         this.btnAction.loader = false;
@@ -299,6 +356,30 @@ export default defineComponent({
         })
       } catch (error) {
         console.log(error)
+      }
+    },
+
+    openConfirmAction() {
+      const editedValue = this.getModelValueByKey('equipmentStatus').value ? true : false
+      if (this.originalEquipment.equipmentStatus !== editedValue && !editedValue) {
+        this.openConfirmInactivateEquipment = true
+      } else {
+        this.editEquipment()
+      }
+    },
+
+    getModelValueByKey(key) {
+      for (const sectionKey in this.fields) {
+        if (Object.prototype.hasOwnProperty.call(this.fields, sectionKey)) {
+          const elements = this.fields[sectionKey];
+          if (elements && typeof elements[Symbol.iterator] === 'function') {
+            for (const element of elements) {
+              if (element.key === key) {
+                return element.model
+              }
+            }
+          }
+        }
       }
     },
 

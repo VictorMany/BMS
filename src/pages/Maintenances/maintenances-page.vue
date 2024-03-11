@@ -212,6 +212,8 @@ export default defineComponent({
   },
 
   mounted() {
+    this.checkParamsFromCreated()
+
     const equipment = this.$route.query.equipment
     if (equipment) {
       this.params.IdEquipment = equipment
@@ -221,7 +223,6 @@ export default defineComponent({
       this.params.userId = this.$route.query.user
     }
 
-    this.checkParamsFromCreated()
     this.getMaintenances()
   },
 
@@ -300,15 +301,20 @@ export default defineComponent({
 
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
 
-      if (!this.$route.query.equipment)
-        this.$store.dispatch('global/addGlobalsToLocalStorage', {
-          searchMaintenances: {
-            inputLabel: this.inputSearch.inputLabel,
-            selectedFilterText: this.selectedFilterText,
-            searchModel: this.searchModel
-          },
-          paramsMaintenancesPage: { ...this.params }
-        });
+      const paramsForMaintenances = { ...this.params }
+
+      if (this.$route.query.equipment) {
+        delete paramsForMaintenances.IdEquipment
+      }
+
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        searchMaintenances: {
+          inputLabel: this.inputSearch.inputLabel,
+          selectedFilterText: this.selectedFilterText,
+          searchModel: this.searchModel
+        },
+        paramsMaintenancesPage: paramsForMaintenances
+      });
 
       this.loading = false
     },
