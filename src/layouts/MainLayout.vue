@@ -20,12 +20,12 @@
             class="q-px-md q-py-sm"
             style="height: 85%"
             :thumb-style="{
-              right: '4px',
-              borderRadius: '5px',
-              background: 'rgba(29, 100, 231, 0.2)',
-              width: '5px',
-              opacity: 1,
-            }"
+        right: '4px',
+        borderRadius: '5px',
+        background: 'rgba(29, 100, 231, 0.2)',
+        width: '5px',
+        opacity: 1,
+      }"
           >
             <div
               class="q-pa-md border-rounded q-mt-lg"
@@ -529,6 +529,8 @@ export default defineComponent({
       setAuthHeader(null)
       deleteTokenCookie(null)
       deleteLocalStorage()
+
+      this.$store.commit('global/RESET_LOCAL_STORAGE')
 
       this.$router.replace('/login');
     },

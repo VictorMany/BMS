@@ -15,3 +15,7 @@ export function UPDATE_IS_DARK(state, newData) {
     // También actualizamos el localStorage
     localStorage.setItem('isDark', JSON.stringify(state.isDark));
 }
+
+export function RESET_LOCAL_STORAGE(state) {
+    state.localStorage = null
+}
