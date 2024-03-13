@@ -85,7 +85,7 @@
                     :loaded="loaded"
                 />
             </div>
-            <q-page-sticky
+            <!-- <q-page-sticky
                 v-if="userRole === 1"
                 style="position: absolute;"
                 :offset="[10, 10]"
@@ -102,7 +102,7 @@
                         color="primary"
                     />
                 </q-btn>
-            </q-page-sticky>
+            </q-page-sticky> -->
         </div>
     </div>
 
@@ -122,7 +122,7 @@
         </div>
     </div>
 </template>
-  
+
 <script>
 import { rules } from 'app/utils/utils';
 import AreaChart from './AreaChart.vue';
@@ -266,4 +266,3 @@ export default {
     }
 };
 </script>
-  
