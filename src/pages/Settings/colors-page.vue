@@ -7,52 +7,65 @@
         :btn-close-window="btnCloseWindow"
       />
 
-      <div class="main-container-page container-form main-container-page-dark q-pa-lg">
+      <div class="main-container-page container-form main-container-page-dark q-pa-md">
         <q-scroll-area
           class="h-97"
           :thumb-style="{
-            right: '1px',
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 1,
-          }"
+          right: '1px',
+          borderRadius: '5px',
+          background: 'rgba(29, 100, 231, 0.2)',
+          width: '5px',
+          opacity: 1,
+        }"
         >
           <div class="row">
-            <div class="info__detail w-100">Elige el tema principal para las interfaces del sistema</div>
-            <div class="col-12 col-md-5 col-lg-4 q-pa-md">
+            <div class="info__detail w-100 q-mb-sm">Elige el tema principal para las interfaces del sistema</div>
+            <div class="col-12 col-md-5 col-lg-4 q-pt-sm">
+              <div class="info__detail w-100 q-pb-md text-center">Modo obscuro</div>
               <div
                 class="container-theme border-rounded"
                 @click="changeTheme('dark')"
               >
-                <div class="flex justify-center">
+                <div class="flex justify-center items-center">
                   <q-img
                     no-spinner
                     class="image-style-parent"
+                    :width="widthParent"
+                    :height="heightParent"
                     :src="getImageUrl(laptop)"
                   />
                   <q-img
                     spinner-size="10px"
                     class="image-style-child"
+                    :class="desktopClass"
+                    :width="widthChild"
+                    :height="heightChild"
                     :src="getImageUrl(darkPic)"
                   />
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-5 col-lg-4 q-pa-md">
+            <div class="col-12 col-md-5 col-lg-4 q-pt-sm">
+              <div class="info__detail w-100 q-pb-md text-center">Modo claro</div>
               <div
                 class="container-theme border-rounded"
                 @click="changeTheme('light')"
               >
-                <div class="flex justify-center">
+
+                <div class="flex justify-center items-center">
                   <q-img
                     no-spinner
                     class="image-style-parent"
+                    :width="widthParent"
+                    :height="heightParent"
                     :src="getImageUrl(laptop)"
                   />
                   <q-img
                     spinner-size="10px"
                     class="image-style-child"
+                    :class="desktopClass"
+                    :width="widthChild"
+                    :height="heightChild"
                     :src="getImageUrl(lightPic)"
                   />
                 </div>
@@ -68,6 +81,7 @@
 <script>
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
+import { Platform } from 'quasar'
 
 export default defineComponent({
   name: 'SettingsPage',
@@ -83,7 +97,11 @@ export default defineComponent({
         btnColor: '#FF9900',
         btnAction: this.goBack
       },
-
+      heightParent: '180px',
+      widthParent: '300px',
+      heightChild: '143px',
+      widthChild: '220px',
+      desktopClass: 'q-mb-sm no-border-rounded'
     }
   },
   setup() {
@@ -120,6 +138,21 @@ export default defineComponent({
       lightPic: 'light.png'
     }
   },
+
+  created() {
+    console.log('EL TIPO DE PLATAFORMA', Platform.is.android)
+    if (Platform.is?.android) {
+      this.laptop = 'phone.png'
+      this.lightPic = 'phone-light.png'
+      this.darkPic = 'phone-dark.png'
+      this.heightParent = '239px'
+      this.widthParent = '119px'
+      this.heightChild = '229px'
+      this.widthChild = '107px'
+      this.desktopClass = ''
+    }
+  },
+
   methods: {
     navigateTo(link) {
       this.$router.push({ path: link })
@@ -142,7 +175,10 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="scss">
+<style
+  scoped
+  lang="scss"
+>
 .body--light {
   .card-page {
     background: white;
@@ -151,20 +187,16 @@ export default defineComponent({
 
 
 .image-style-parent {
-  width: 300px;
   position: absolute;
 }
 
 .image-style-child {
-  width: 220px;
-  margin-top: 0.97rem;
+  border-radius: 12px;
 }
 
 .container-theme {
-  height: 200px;
-  padding-top: 0.5rem;
+  height: 240px;
 }
-
 
 .container-theme:hover {
   transform: scale(1.03);
