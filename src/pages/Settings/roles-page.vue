@@ -12,55 +12,154 @@
           class="fit h-100"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
-          <q-list class="row">
-            <div
-              v-for="(item, i) in listRoles"
-              class="col-12 col-sm-4 q-px-xs"
-              :key="i"
-            >
-              <div class="q-mb-sm q-pa-md setting-item border-rounded clickable">
-                <div class="row">
-                  <q-item-section avatar>
-                    <q-avatar class="avatar-item">
-                      <img :src="getImageUrl(item.img)" />
-                    </q-avatar>
-                  </q-item-section>
-
-                  <q-item-section>
-                    <q-item-label class="setting-item__title">{{
-                      item.title
-                    }}</q-item-label>
-                    <q-item-label
-                      class="setting-item__subtitle"
-                      caption
-                    >{{
-                      item.subtitle
-                    }}</q-item-label>
-                  </q-item-section>
-                </div>
-
-                <q-item-section class="q-pt-md q-px-sm">
-                  <div
-                    v-for="(permission, j) in item.permissions"
-                    :key="j"
-                    class="setting-item__title"
-                  >
-                    {{ permission.title }}
-                    <ul>
-                      <li
-                        v-for="(obj, k) in permission.list"
-                        :key="k"
-                        class="setting-item__subtitle"
-                      >
-                        {{ obj }}
-                      </li>
-                    </ul>
-                  </div>
-                </q-item-section>
+          <div>
+            <div class="setting-item__title text-weight-medium q-pb-sm">
+              Administrador
+            </div>
+            <div class="setting-item__subtitle">
+              Los Administradores tienen acceso privilegiado para gestionar el sistema. Sus permisos incluyen:
+              <div class="text-weight-bold">
+                Permisos
               </div>
+              <ul>
+                <li>
+                  Gestionar Equipos: Poseen la capacidad de administrar los equipos del sistema, incluyendo su
+                  creación y modificación según sea necesario.
+                </li>
+                <li>
+                  Realizar Mantenimientos: Tienen la facultad de programar y ejecutar mantenimientos en los
+                  equipos registrados en el sistema, así como acceder a los detalles pertinentes.
+                </li>
+                <li>
+                  Administrar Planes de Mantenimientos: Disponen del poder para crear y gestionar planes de
+                  mantenimientos preventivos.
+                </li>
+                <li>
+                  Acceder al Calendario: Tienen autorización para visualizar y gestionar el calendario de
+                  actividades del sistema.
+                </li>
+                <li>
+                  Generar Reportes: Poseen la facultad de generar informes sobre diferentes aspectos del
+                  sistema.
+                </li>
+                <li>
+                  Configurar el sistema: Tienen acceso a la configuración del sistema para ajustar parámetros
+                  según las necesidades del negocio.
+                </li>
+              </ul>
+              <div class="text-weight-bold">
+                Restricciones
+              </div>
+              <ul>
+                <li>
+                  No pueden cancelar reportes generados por otros usuarios.
+                </li>
+                <li>
+                  No pueden eliminar registros de equipos, mantenimientos y reportes.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <div class="setting-item__title text-weight-medium q-pb-sm q-pt-sm">
+              Auxiliar
+            </div>
+            <div class="setting-item__subtitle">
+              Los Auxiliares tienen un conjunto específico de permisos para asistir en tareas operativas. Sus
+              permisos incluyen:
+
+              <div class="text-weight-bold">
+                Permisos
+              </div>
+              <ul>
+                <li>
+                  Acceder al Dashboard: Tienen acceso al tablero de control principal del sistema.
+                </li>
+                <li>
+                  Crear y visualizar Mantenimientos: Pueden crear mantenimientos y visualizar ciertos detalles
+                  de los mismos.
+                </li>
+                <li>
+                  Generar, visualizar y atender Reportes: Disponen de la capacidad de generar, visualizar y
+                  atender reportes, incluyendo la creación de mantenimientos asociados.
+                </li>
+                <li>
+                  Visualizar Equipos: Pueden visualizar los equipos registrados en el sistema y acceder a
+                  ciertos detalles.
+                </li>
+                <li>
+                  Visualizar Planes de Mantenimientos: Tienen autorización para visualizar los planes de
+                  mantenimientos existentes y acceder a sus detalles.
+                </li>
+                <li>
+                  Consultar el Calendario: Disponen de acceso al calendario de actividades del sistema.
+                </li>
+              </ul>
+              <div class="text-weight-bold">
+                Restricciones
+              </div>
+              <ul>
+                <li>
+                  No pueden crear Planes de Mantenimientos.
+                </li>
+                <li>
+                  No pueden crear o editar Equipos.
+                </li>
+                <li>
+                  No tienen acceso a la gestión de usuarios.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div class="setting-item__title text-weight-medium q-pb-sm q-pt-sm">
+              Lector
+            </div>
+            <div class="setting-item__subtitle">
+              Los Lectores tienen acceso limitado y están enfocados principalmente en la visualización de
+              información. Sus permisos incluyen:
+
+              <div class="text-weight-bold">
+                Permisos
+              </div>
+              <ul>
+                <li>
+                  Crear, visualizar y cancelar sus propios Reportes: Tienen la capacidad de generar, visualizar
+                  y cancelar los reportes que ellos mismos hayan creado.
+                </li>
+                <li>
+                  Visualizar Equipos: Pueden visualizar los equipos registrados en el sistema y acceder a
+                  ciertos detalles.
+                </li>
+              </ul>
+
+              <div class="text-weight-bold">
+                Restricciones
+              </div>
+              <ul>
+                <li>
+                  No pueden acceder al Dashboard.
+                </li>
+                <li>
+                  No pueden realizar acciones relacionadas con Mantenimientos o Planes de Mantenimientos.
+                </li>
+                <li>
+                  No pueden acceder al Calendario.
+                </li>
+                <li>
+                  No pueden crear o editar Equipos.
+                </li>
+                <li>
+                  No tienen acceso a la gestión de usuarios.
+                </li>
+                <li>
+                  No pueden acceder a la configuración de permisos.
+                </li>
+              </ul>
 
             </div>
-          </q-list>
+          </div>
         </q-scroll-area>
       </div>
     </div>

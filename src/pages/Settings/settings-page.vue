@@ -6,12 +6,12 @@
         <q-scroll-area
           class="fit h-100"
           :thumb-style="{
-            right: '1px',
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 1,
-          }"
+        right: '1px',
+        borderRadius: '5px',
+        background: 'rgba(29, 100, 231, 0.2)',
+        width: '5px',
+        opacity: 1,
+      }"
         >
           <div class="row">
             <div class="col-12">
@@ -32,14 +32,14 @@
                     </q-item-section>
                     <q-item-section>
                       <q-item-label class="setting-item__title">{{
-                        item.title
-                      }}</q-item-label>
+        item.title
+      }}</q-item-label>
                       <q-item-label
                         class="setting-item__subtitle"
                         caption
                       >{{
-                        item.subtitle
-                      }}</q-item-label>
+          item.subtitle
+        }}</q-item-label>
                     </q-item-section>
                   </q-item>
                 </div>
@@ -103,10 +103,10 @@
               :icon-right="excelFile?.name ? 'close' : ''"
               color="blue-7"
               @click="
-                excelFile?.name
-                  ? clearFileInput($refs.fileUpload)
-                  : $refs.fileUpload.click()
-                "
+        excelFile?.name
+          ? clearFileInput($refs.fileUpload)
+          : $refs.fileUpload.click()
+        "
             >
               {{ excelFile?.name ? excelFile.name : 'Cargar archivo de excel' }}
             </q-btn>
@@ -202,7 +202,7 @@ export default defineComponent({
         },
         {
           title: 'Roles y permisos',
-          subtitle: 'Accesos y permisos dinámicos dentro del sistema',
+          subtitle: 'Conoce los permisos que tiene cada rol dentro del sistema',
           img: 'role.png',
           link: 'roles'
         },
