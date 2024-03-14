@@ -218,11 +218,11 @@ export default defineComponent({
   mounted() {
     this.checkParamsFromCreated()
 
-    if (this.$route.query.equipment) {
+    if (this.$route?.query?.equipment) {
       this.params.IdEquipment = this.$route.query.equipment
-      this.btnAction.show = this.equipment.equipmentStatus
+      this.btnAction.show = this.equipment?.equipmentStatus
       this.params.page = 1
-    } else if (this.$route.query.user) {
+    } else if (this.$route?.query?.user) {
       this.params.userId = this.$route.query.user
     }
     this.getReports()
