@@ -15,7 +15,7 @@
                 class="form__input-login q-px-md q-my-lg"
                 borderless
                 dense
-                type="mail"
+                type="email"
                 hide-hint
                 bottom-slots
                 hide-bottom-space
@@ -136,7 +136,10 @@ export default defineComponent({
 </script>
 
 
-<style lang="scss" scoped>
+<style
+  lang="scss"
+  scoped
+>
 .form {
   &__input-login {
     border-radius: 40px !important;
