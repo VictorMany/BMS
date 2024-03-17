@@ -285,11 +285,15 @@ export default defineComponent({
         return {
           id: e.id,
           cardTitle: e.equipment,
-          status: this.findIndicator(e.status),
+          bottomStatus: this.findIndicator(e.status),
           cardLabels: [
             {
               label: 'Encargado',
               info: e.encharged_name,
+            },
+            {
+              label: 'Fecha',
+              info: e.date,
             }
           ],
         };

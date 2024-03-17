@@ -299,7 +299,7 @@ export default defineComponent({
         return {
           id: e.id,
           cardTitle: e.reason,
-          status: this.findIndicator(e.status),
+          bottomStatus: this.findIndicator(e.status),
           cardLabels: [
             {
               label: 'Encargado',

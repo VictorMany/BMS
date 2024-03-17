@@ -49,9 +49,9 @@
             v-if="label.label"
             class="q-pb-xs col-12"
             :class="label.info === undefined
-              ? 'card-text'
-              : 'card-typography'
-              "
+      ? 'card-text'
+      : 'card-typography'
+      "
           >
             {{ label.label }}
           </div>
@@ -64,6 +64,23 @@
           </div>
         </div>
       </q-card-section>
+
+      <q-chip
+        v-if="bottomStatus"
+        class="q-mt-auto border-rounded"
+        :style="`color: ${bottomStatus.color}; background-color: ${bottomStatus.color}26; font-size: 9px`"
+        :label="bottomStatus.label"
+      >
+        <q-tooltip
+          :delay="100"
+          transition-show="scale"
+          transition-hide="scale"
+          class="border-rounded tooltip-container"
+        >
+          {{ bottomStatus.tooltip }}
+        </q-tooltip>
+      </q-chip>
+
     </q-card-section>
   </q-card>
 </template>
@@ -87,6 +104,12 @@ export default defineComponent({
     },
 
     status: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+
+    bottomStatus: {
       type: Object,
       required: false,
       default: null,
@@ -117,7 +140,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style
+  lang="scss"
+  scoped
+>
 .my-card {
   width: 230px;
   height: 100% !important;
@@ -158,10 +184,6 @@ export default defineComponent({
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.is-reported-badge {
-  height: 14px;
 }
 
 @media only screen and (max-width: 599px) {
