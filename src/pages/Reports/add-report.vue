@@ -8,7 +8,7 @@
         :btn-close-window="btnCloseWindow"
       />
 
-      <div class="main-container-page main-container-page-medium-dark container-form">
+      <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
           class="h-97 q-pa-xs-none q-pa-lg-sm"
           :thumb-style="$store.getters['global/getThumbStyle']"

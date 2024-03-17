@@ -28,8 +28,7 @@
       }"
           >
             <div
-              class="q-pa-md border-rounded q-mt-lg"
-              style="background-color: #0000003c"
+              class="q-pa-md border-rounded q-mt-lg card-info"
               v-if="showEquipmentDetails()"
             >
               <div class="col-12 text-weight-medium text-primary q-pb-sm text-center">
@@ -73,8 +72,7 @@
             </div>
 
             <div
-              class="q-pa-md border-rounded q-mt-lg"
-              style="background-color: #0000003c"
+              class="q-pa-md border-rounded q-mt-lg card-info"
               v-if="showUserDetails()"
             >
               <div class="col-12 text-weight-medium text-primary q-pb-sm text-center">

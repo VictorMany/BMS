@@ -7,7 +7,7 @@
         :btn-close-window="btnCloseWindow"
       />
 
-      <div class="main-container-page main-container-page-medium-dark container-form">
+      <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
           class="h-90 q-pa-xs-none q-pa-lg-sm"
           :thumb-style="$store.getters['global/getThumbStyle']"
@@ -124,7 +124,10 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style
+  scoped
+  lang="scss"
+>
 .main-container-page {
   background-color: white;
 }

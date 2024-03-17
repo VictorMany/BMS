@@ -10,7 +10,7 @@
         :btn-close-window="btnCloseWindow"
       />
 
-      <div class="main-container-page main-container-page-medium-dark container-form">
+      <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
           class="q-pa-md q-pa-lg-lg h-97"
           :thumb-style="$store.getters['global/getThumbStyle']"
@@ -33,9 +33,9 @@
             hide-hint
             hide-bottom-space
             :rules="[
-              rules.requiredString,
-              rules.maxLength(50)
-            ]"
+          rules.requiredString,
+          rules.maxLength(50)
+        ]"
             class="form__input bg-accent q-mb-lg"
           />
 
@@ -88,8 +88,8 @@
                 :rows="rows"
                 :columns="columns"
                 :paginationProp="{
-                  rowsPerPage: null
-                }"
+          rowsPerPage: null
+        }"
                 :show-pagination="false"
               />
             </div>
@@ -119,7 +119,8 @@
                     frecuencia?</span>
                   <ul>
                     <li>
-                      <div style="margin-left: 5px;">Activar frecuencia si quieres calcular automáticamente las fechas de
+                      <div style="margin-left: 5px;">Activar frecuencia si quieres calcular automáticamente las fechas
+                        de
                         mantenimiento a partir de una fecha inicial en un periodo de 2 años.</div>
                     </li>
                     <li>
@@ -162,7 +163,7 @@
                       >
                         <q-item-section>
                           <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label
-                          }}</q-item-label>
+                            }}</q-item-label>
                         </q-item-section>
                       </q-item>
                     </template>
@@ -247,27 +248,27 @@
                 :placeholder="'Escribe aquí las notas del plan de mantenimientos'"
                 class="form__textarea bg-accent border-rounded"
                 :toolbar="[
-                  [
-                    {
-                      label: $q.lang.editor.fontSize,
-                      icon: $q.iconSet.editor.fontSize,
-                      fixedLabel: true,
-                      fixedIcon: true,
-                      list: 'no-icons',
-                      options: [
-                        'size-1',
-                        'size-2',
-                        'size-3',
-                        'size-4',
-                      ],
-                    },
-                    'bold',
-                    'italic',
-                    'strike',
-                    'underline',
-                  ],
-                  ['unordered', 'ordered'],
-                ]"
+          [
+            {
+              label: $q.lang.editor.fontSize,
+              icon: $q.iconSet.editor.fontSize,
+              fixedLabel: true,
+              fixedIcon: true,
+              list: 'no-icons',
+              options: [
+                'size-1',
+                'size-2',
+                'size-3',
+                'size-4',
+              ],
+            },
+            'bold',
+            'italic',
+            'strike',
+            'underline',
+          ],
+          ['unordered', 'ordered'],
+        ]"
               />
             </div>
           </div>
@@ -697,7 +698,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style
+  lang="scss"
+  scoped
+>
 .main-container-page {
   background-color: white;
 }

@@ -6,7 +6,7 @@
         :btnAction="btnAction"
       />
       <!-- Main container -->
-      <div class="main-container-page main-container-page-medium-dark bg-grey-3 row h-90 q-pa-md-md">
+      <div class="main-container-page main-container-page-dark bg-grey-3 row h-90 q-pa-md-md">
         <div class="col-xs-12 col-md-auto">
           <q-date
             v-model="calendarModel"
@@ -51,12 +51,12 @@
               v-if="switchContent === 1"
               class="fit h-90"
               :thumb-style="{
-                right: '6px',
-                borderRadius: '5px',
-                background: 'rgba(29, 100, 231, 0.2)',
-                width: '5px',
-                opacity: 1,
-              }"
+          right: '6px',
+          borderRadius: '5px',
+          background: 'rgba(29, 100, 231, 0.2)',
+          width: '5px',
+          opacity: 1,
+        }"
             >
               <div
                 v-if="equipments && equipments.length > 0"
@@ -70,11 +70,11 @@
                   <item-card
                     v-bind="equipment"
                     :status="equipment.isReported ?
-                      {
-                        tooltip: 'Tiene reporte(s) sin atender',
-                        color: '#FF9900',
-                        label: 'Reportado'
-                      } : null"
+          {
+            tooltip: 'Tiene reporte(s) sin atender',
+            color: '#FF9900',
+            label: 'Reportado'
+          } : null"
                     :index="index"
                     :card-action="goToDetails"
                   />
@@ -447,7 +447,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style
+  lang="scss"
+  scoped
+>
 .container-colorama {
   max-width: 420px !important;
 }

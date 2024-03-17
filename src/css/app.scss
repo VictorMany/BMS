@@ -10,8 +10,8 @@ $tertiary-grey: #7a7a7a;
 $primary-white: #FFFFFF;
 $secondary-white: #dce1e6;
 
-
 .body--light {
+
   .card-page {
     background: #f8fafc;
   }
@@ -120,8 +120,8 @@ $secondary-white: #dce1e6;
     border: 1px solid $primary-grey;
   }
 
-  .main-container-page-dark,
-  .main-container-page-medium-dark {
+  .card-info,
+  .main-container-page-dark {
     background-color: #0000003c !important;
   }
 
@@ -249,7 +249,8 @@ $secondary-white: #dce1e6;
   line-height: 22px;
 }
 
-.card-color {
+.card-color,
+.card-info {
   background-color: #00000009 !important;
 }
 

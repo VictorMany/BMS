@@ -10,7 +10,7 @@
         :btn-close-window="btnCloseWindow"
       />
 
-      <div class="main-container-page main-container-page-medium-dark container-form">
+      <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
           class="h-97 q-pa-md"
           :thumb-style="$store.getters['global/getThumbStyle']"
@@ -52,8 +52,8 @@
                       :columns="columns"
                       v-model:row-selected="rowSelected"
                       :paginationProp="{
-                        rowsPerPage: null
-                      }"
+          rowsPerPage: null
+        }"
                       :show-pagination="false"
                       :actions-table="actionsTable"
                     />
@@ -331,7 +331,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style
+  lang="scss"
+  scoped
+>
 .main-container-page {
   background-color: white;
 }
