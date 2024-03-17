@@ -117,6 +117,7 @@ export default defineComponent({
       loading: true,
       switchContent: 1,
       paramsFromCreated: false,
+      subtitle: '',
 
       btnCloseWindow: {
         iconName: 'exit_to_app',
@@ -263,34 +264,20 @@ export default defineComponent({
   },
 
   computed: {
-    reports: {
-      get() {
-        return this.$store.getters['reports/getReportsGetter'];
-      },
+    reports() {
+      return this.$store.getters['reports/getReportsGetter'];
     },
-
-    pagination: {
-      get() {
-        return JSON.parse(JSON.stringify(this.$store.getters['reports/getPaginationGetter']));
-      },
+    pagination() {
+      return JSON.parse(JSON.stringify(this.$store.getters['reports/getPaginationGetter']));
     },
-
-    localStorage: {
-      get() {
-        return JSON.parse(JSON.stringify(this.$store.getters['global/getlocalStorageGetter']));
-      },
+    localStorage() {
+      return JSON.parse(JSON.stringify(this.$store.getters['global/getlocalStorageGetter']));
     },
-
-    equipment: {
-      get() {
-        return this.$store.getters['equipments/getEquipmentGetter'];
-      },
+    equipment() {
+      return this.$store.getters['equipments/getEquipmentGetter'];
     },
-
-    user: {
-      get() {
-        return this.$store.getters['users/getUserGetter'];
-      },
+    user() {
+      return this.$store.getters['users/getUserGetter'];
     },
 
     cards() {

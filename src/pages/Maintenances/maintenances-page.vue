@@ -118,6 +118,7 @@ export default defineComponent({
       loading: true,
       switchContent: 1,
       paramsFromCreated: false,
+      subtitle: '',
 
       localPagination: {
         totalPages: 1,

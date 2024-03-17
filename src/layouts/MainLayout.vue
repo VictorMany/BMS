@@ -29,7 +29,7 @@
           >
             <div
               class="q-pa-md border-rounded q-mt-lg"
-              style="background-color: rgba(125, 125, 125, 0.085);"
+              style="background-color: #0000003c"
               v-if="showEquipmentDetails()"
             >
               <div class="col-12 text-weight-medium text-primary q-pb-sm text-center">
@@ -74,7 +74,7 @@
 
             <div
               class="q-pa-md border-rounded q-mt-lg"
-              style="background-color: rgba(125, 125, 125, 0.085);"
+              style="background-color: #0000003c"
               v-if="showUserDetails()"
             >
               <div class="col-12 text-weight-medium text-primary q-pb-sm text-center">

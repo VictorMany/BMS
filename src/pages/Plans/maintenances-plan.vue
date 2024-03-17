@@ -254,6 +254,10 @@ export default defineComponent({
             {
               label: 'Encargado',
               info: e.user,
+            },
+            {
+              label: 'Fecha',
+              info: e.date,
             }
           ],
         };
