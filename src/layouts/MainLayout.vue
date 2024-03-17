@@ -73,7 +73,8 @@
             </div>
 
             <div
-              class="q-pa-md bg-accent border-rounded q-mt-lg"
+              class="q-pa-md border-rounded q-mt-lg"
+              style="background-color: rgba(125, 125, 125, 0.085);"
               v-if="showUserDetails()"
             >
               <div class="col-12 text-weight-medium text-primary q-pb-sm text-center">
@@ -354,7 +355,7 @@ export default defineComponent({
         {
           title: 'Reportes',
           link: {
-            link: 'maintenances',
+            link: 'reports',
             searchByIdUser: true
           },
           color: 'rgba(122, 122, 122, 1)',
