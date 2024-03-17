@@ -13,7 +13,12 @@
     </div>
 
     <div class="col-xs col-sm title-page text-primary">
-      {{ titlePage }}
+      <div class="row">
+        {{ titlePage }}
+      </div>
+      <div class="row text-weight-light setting__title">
+        {{ subtitlePage }}
+      </div>
     </div>
 
     <div
@@ -115,6 +120,11 @@ export default defineComponent({
   name: '<header-actions>',
   props: {
     titlePage: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    subtitlePage: {
       type: String,
       required: false,
       default: '',

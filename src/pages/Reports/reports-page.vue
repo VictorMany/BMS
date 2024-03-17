@@ -2,7 +2,8 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions
-        titlePage="Reportes"
+        title-page="Reportes"
+        :subtitle-page="subtitle"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
         :btn-close-window="showCloseBtn() ? btnCloseWindow : null"
@@ -219,10 +220,13 @@ export default defineComponent({
     this.checkParamsFromCreated()
 
     if (this.$route?.query?.equipment) {
+      this.subtitle = this.equipment.categoryName
       this.params.IdEquipment = this.$route.query.equipment
       this.btnAction.show = this.equipment?.equipmentStatus
+
       this.params.page = 1
     } else if (this.$route?.query?.user) {
+      this.subtitle = this.user?.userName
       this.params.userId = this.$route.query.user
     }
     this.getReports()
@@ -283,6 +287,12 @@ export default defineComponent({
       },
     },
 
+    user: {
+      get() {
+        return this.$store.getters['users/getUserGetter'];
+      },
+    },
+
     cards() {
       return this.reports.map((e) => {
         // const indicator = this.findIndicator(e.status)
@@ -317,8 +327,12 @@ export default defineComponent({
 
       const paramsForReports = { ...this.params }
 
-      if (this.$route.query.equipment) {
+      if (paramsForReports?.IdEquipment) {
         delete paramsForReports.IdEquipment
+      }
+
+      if (paramsForReports?.userId) {
+        delete paramsForReports.userId
       }
 
       this.$store.dispatch('global/addGlobalsToLocalStorage', {

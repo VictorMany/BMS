@@ -69,11 +69,11 @@
               :style="`height: ${heightModalLocal}px !important`"
               class="fit"
               :thumb-style="{
-                borderRadius: '5px',
-                background: 'rgba(29, 100, 231, 0.2)',
-                width: '0px',
-                opacity: 1,
-              }"
+      borderRadius: '5px',
+      background: 'rgba(29, 100, 231, 0.2)',
+      width: '0px',
+      opacity: 1,
+    }"
             >
               <q-list class="q-px-none border-rounded">
                 <div
@@ -85,7 +85,7 @@
                     v-if="item.options"
                     v-model="item.isExpanded"
                     :class="{ 'bg-accent q-mb-sm': item.isExpanded }"
-                    class="border-rounded setting-item__title"
+                    class="border-rounded setting__title"
                     @update:model-value="updateHeight(item)"
                   >
                     <template v-slot:header>
@@ -103,7 +103,7 @@
                       </q-item-section>
 
                       <q-item-section>
-                        <q-item-label class="setting-item__title">
+                        <q-item-label class="setting__title">
                           {{ item.title }}
                         </q-item-label>
                       </q-item-section>
@@ -153,7 +153,7 @@
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label class="setting-item__title">
+                      <q-item-label class="setting__title">
                         {{ item.title }}
                       </q-item-label>
                     </q-item-section>
@@ -296,7 +296,10 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style
+  scoped
+  lang="scss"
+>
 .input-style {
   font-style: normal;
   font-weight: 400;

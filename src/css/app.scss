@@ -5,14 +5,18 @@
 @import "login";
 
 $primary-grey: #6d8598;
+$secondary-grey: #858c9384;
+$tertiary-grey: #7a7a7a;
 $primary-white: #FFFFFF;
+$secondary-white: #dce1e6;
+
 
 .body--light {
   .card-page {
     background: #f8fafc;
   }
 
-  .setting-item {
+  .setting {
     background-color: $primary-white;
 
     &__title {
@@ -21,15 +25,11 @@ $primary-white: #FFFFFF;
   }
 
   .info__detail {
-    color: #858c9384;
+    color: $secondary-grey;
   }
 
   .table-style {
     background-color: $primary-white;
-  }
-
-  .font-style {
-    color: #7a7a7a;
   }
 
   .my-sticky-header-table .q-table__top,
@@ -46,8 +46,9 @@ $primary-white: #FFFFFF;
   }
 
   .card-typography,
+  .font-style,
   .card-title {
-    color: #767a7e;
+    color: $tertiary-grey;
   }
 
   .border-line {
@@ -57,7 +58,7 @@ $primary-white: #FFFFFF;
   .alert-container,
   .tooltip-container {
     background-color: #00000080 !important;
-    color: #dce1e6;
+    color: $secondary-white;
   }
 
   .column-style {
@@ -70,7 +71,7 @@ $primary-white: #FFFFFF;
     background: #0000002f;
   }
 
-  .setting-item {
+  .setting {
     background-color: #1a2230;
 
     &__title {
@@ -79,11 +80,11 @@ $primary-white: #FFFFFF;
   }
 
   .info__detail {
-    color: #858c9384;
+    color: $secondary-grey;
   }
 
   .font-style {
-    color: #dce1e6;
+    color: $secondary-white;
   }
 
   .card-graphics {
@@ -140,7 +141,7 @@ $primary-white: #FFFFFF;
   .alert-container,
   .tooltip-container {
     background-color: #475c7f6b !important;
-    color: #dce1e6;
+    color: $secondary-white;
   }
 
   .column-style {
@@ -162,7 +163,7 @@ $primary-white: #FFFFFF;
   font-size: 13px;
 }
 
-.setting-item {
+.setting {
   min-height: 70px !important;
 
   &__title {
@@ -184,7 +185,7 @@ $primary-white: #FFFFFF;
   }
 }
 
-.setting-item:hover {
+.setting:hover {
   background-color: $accent;
   transform: scale(1);
 }
@@ -445,7 +446,7 @@ ol {
     font-size: 11px !important;
   }
 
-  .setting-item {
+  .setting {
     &__title {
       font-size: 10px;
     }

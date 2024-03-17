@@ -240,7 +240,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style
+  lang="scss"
+  scoped
+>
 .font-style {
   font-size: 13px;
   font-weight: 200;

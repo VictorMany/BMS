@@ -23,7 +23,7 @@
                 >
                   <q-item
                     v-if="!item.hide"
-                    class="q-mb-sm setting-item border-rounded flex items-center"
+                    class="q-mb-sm setting border-rounded flex items-center"
                   >
                     <q-item-section avatar>
                       <q-avatar class="avatar-item border-rounded">
@@ -31,11 +31,11 @@
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label class="setting-item__title">{{
+                      <q-item-label class="setting__title">{{
         item.title
       }}</q-item-label>
                       <q-item-label
-                        class="setting-item__subtitle"
+                        class="setting__subtitle"
                         caption
                       >{{
           item.subtitle
@@ -62,10 +62,10 @@
         <q-card-section class="q-pt-none">
           <q-form>
             <q-item-section>
-              <div class="setting-item__title">
+              <div class="setting__title">
                 Para que la operación sea éxitosa toma en cuenta que:
                 <ol>
-                  <li class="setting-item__paragraph">
+                  <li class="setting__paragraph">
                     <a
                       class="text-blue-6"
                       download="plantilla.xlsx"
@@ -74,12 +74,12 @@
                       Descargar plantilla
                     </a>
                   </li>
-                  <li class="setting-item__paragraph">
+                  <li class="setting__paragraph">
                     No modificar las columnas
                   </li>
-                  <li class="setting-item__paragraph"> La fecha debe estar en formato dia/mes/año ejp. 12/01/2024 </li>
-                  <li class="setting-item__paragraph"> No subir registros con número de serie duplicados </li>
-                  <li class="setting-item__paragraph">
+                  <li class="setting__paragraph"> La fecha debe estar en formato dia/mes/año ejp. 12/01/2024 </li>
+                  <li class="setting__paragraph"> No subir registros con número de serie duplicados </li>
+                  <li class="setting__paragraph">
                     Los datos no deben ser calculados o referenciados a casillas externas
                   </li>
                 </ol>

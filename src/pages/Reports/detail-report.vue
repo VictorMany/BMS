@@ -34,11 +34,11 @@
 
         <q-card-section class="q-pt-none">
           <q-item-section>
-            <div class="setting-item__title">
+            <div class="setting__title">
               ¿ Estás seguro de cancelar este reporte ?
               <ul>
-                <li class="setting-item__paragraph"> Esta acción no se puede deshacer </li>
-                <li class="setting-item__paragraph"> El reporte seguirá apareciendo en el listado general de
+                <li class="setting__paragraph"> Esta acción no se puede deshacer </li>
+                <li class="setting__paragraph"> El reporte seguirá apareciendo en el listado general de
                   reportes con el estatus de cancelado </li>
               </ul>
             </div>

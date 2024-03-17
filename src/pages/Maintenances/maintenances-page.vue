@@ -3,6 +3,7 @@
     <div class="card-page">
       <header-actions
         titlePage="Mantenimientos"
+        :subtitle-page="subtitle"
         :btnAction="btnAction"
         :btn-close-window="showCloseBtn() ? btnCloseWindow : null"
         :inputSearch="inputSearch"
@@ -216,10 +217,14 @@ export default defineComponent({
 
     const equipment = this.$route?.query?.equipment
     if (equipment) {
+      this.subtitle = this.equipment?.categoryName
+
       this.params.IdEquipment = equipment
       this.params.page = 1
       this.btnAction.show = this.equipment?.equipmentStatus
     } else if (this.$route?.query?.user) {
+      this.subtitle = this.user?.userName
+
       this.params.userId = this.$route.query.user
     }
 
@@ -254,6 +259,12 @@ export default defineComponent({
     maintenances: {
       get() {
         return this.$store.getters['maintenances/getMaintenancesGetter'];
+      },
+    },
+
+    user: {
+      get() {
+        return this.$store.getters['users/getUserGetter'];
       },
     },
 
@@ -303,8 +314,12 @@ export default defineComponent({
 
       const paramsForMaintenances = { ...this.params }
 
-      if (this.$route.query.equipment) {
+      if (paramsForMaintenances?.IdEquipment) {
         delete paramsForMaintenances.IdEquipment
+      }
+
+      if (paramsForMaintenances?.userId) {
+        delete paramsForMaintenances.userId
       }
 
       this.$store.dispatch('global/addGlobalsToLocalStorage', {

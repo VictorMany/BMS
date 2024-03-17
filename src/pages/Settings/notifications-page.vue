@@ -12,19 +12,19 @@
         <q-scroll-area
           class="h-100"
           :thumb-style="{
-            right: '0px',
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 0,
-          }"
+          right: '0px',
+          borderRadius: '5px',
+          background: 'rgba(29, 100, 231, 0.2)',
+          width: '5px',
+          opacity: 0,
+        }"
         >
           <q-list>
             <div
               v-for="(item, i) in listNotifications"
               :key="i"
             >
-              <q-item class="q-mb-sm setting-item border-rounded flex items-center clickable">
+              <q-item class="q-mb-sm setting border-rounded flex items-center clickable">
                 <q-item-section avatar>
                   <q-avatar class="avatar-item">
                     <img :src="getImageUrl(item.img)" />
@@ -33,15 +33,15 @@
                 <q-item-section class="q-px-none">
                   <div class="row">
                     <div class="col">
-                      <q-item-label class="setting-item__title">{{
-                        item.title
-                      }}</q-item-label>
+                      <q-item-label class="setting__title">{{
+          item.title
+        }}</q-item-label>
                       <q-item-label
-                        class="setting-item__subtitle"
+                        class="setting__subtitle"
                         caption
                       >{{
-                        item.subtitle
-                      }}</q-item-label>
+            item.subtitle
+          }}</q-item-label>
                     </div>
                     <div class="col-auto">
                       <q-toggle
@@ -302,7 +302,10 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style
+  scoped
+  lang="scss"
+>
 .body--light {
   .card-page {
     background: white;

@@ -36,12 +36,12 @@
 
         <q-card-section class="q-pt-none">
           <q-item-section>
-            <div class="setting-item__title">
+            <div class="setting__title">
               ¿ Estás seguro de inactivar este equipo ?
               <ul>
-                <li class="setting-item__paragraph"> Si el equipo pertenece a un plan de mantenimientos, ya no podrás
+                <li class="setting__paragraph"> Si el equipo pertenece a un plan de mantenimientos, ya no podrás
                   verlo en el plan </li>
-                <li class="setting-item__paragraph"> El equipo seguirá en el el listado de equipos, pero solo lo podrás
+                <li class="setting__paragraph"> El equipo seguirá en el el listado de equipos, pero solo lo podrás
                   ver filtrando por inactivos
                 </li>
               </ul>

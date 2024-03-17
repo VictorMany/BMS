@@ -13,10 +13,10 @@
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
           <div>
-            <div class="setting-item__title text-weight-medium q-pb-sm">
+            <div class="setting__title text-weight-medium q-pb-sm">
               Administrador
             </div>
-            <div class="setting-item__subtitle">
+            <div class="setting__subtitle">
               Los Administradores tienen acceso privilegiado para gestionar el sistema. Sus permisos incluyen:
               <div class="text-weight-bold">
                 Permisos
@@ -62,10 +62,10 @@
           </div>
 
           <div>
-            <div class="setting-item__title text-weight-medium q-pb-sm q-pt-sm">
+            <div class="setting__title text-weight-medium q-pb-sm q-pt-sm">
               Auxiliar
             </div>
-            <div class="setting-item__subtitle">
+            <div class="setting__subtitle">
               Los Auxiliares tienen un conjunto específico de permisos para asistir en tareas operativas. Sus
               permisos incluyen:
 
@@ -113,10 +113,10 @@
             </div>
           </div>
           <div>
-            <div class="setting-item__title text-weight-medium q-pb-sm q-pt-sm">
+            <div class="setting__title text-weight-medium q-pb-sm q-pt-sm">
               Lector
             </div>
-            <div class="setting-item__subtitle">
+            <div class="setting__subtitle">
               Los Lectores tienen acceso limitado y están enfocados principalmente en la visualización de
               información. Sus permisos incluyen:
 
