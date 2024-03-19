@@ -126,7 +126,7 @@ export default defineComponent({
             model: 'Activo',
             startDate: '29 de Febrero de 2024',
             endDate: '29 de Marzo de 2025',
-            contact: '4741034817',
+            name: 'Contrato de servicio con Mendray Systems',
             color: '#10D13A'
           },
           {

@@ -168,6 +168,12 @@
         </div>
 
         <div class="row border-rounded q-pa-md bg-accent">
+          <div class="col-12 q-my-xs form__item-model">
+            <span class="form__item-label text-weight-medium">
+              Nombre del contrato:
+            </span> {{ item.name }}
+          </div>
+
           <div class="col-auto q-my-xs form__item-model q-mr-md">
             <span class="form__item-label text-weight-medium">
               Fecha de inicio:
@@ -179,12 +185,6 @@
             <span class="form__item-label text-weight-medium">
               Fecha de fin:
             </span> {{ item.endDate }}
-          </div>
-
-          <div class="col-12 q-my-xs form__item-model">
-            <span class="form__item-label text-weight-medium">
-              Contacto:
-            </span> {{ item.contact }}
           </div>
 
           <div class="col-12 q-my-xs q-ml-auto form__item-model">
