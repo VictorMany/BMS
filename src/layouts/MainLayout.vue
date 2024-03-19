@@ -28,7 +28,7 @@
       }"
           >
             <div
-              class="q-pa-md border-rounded q-mt-lg card-info"
+              class="q-pa-md border-rounded card-info"
               v-if="showEquipmentDetails()"
             >
               <div class="col-12 text-weight-medium text-primary q-pb-sm text-center">
@@ -72,7 +72,7 @@
             </div>
 
             <div
-              class="q-pa-md border-rounded q-mt-lg card-info"
+              class="q-pa-md border-rounded card-info"
               v-if="showUserDetails()"
             >
               <div class="col-12 text-weight-medium text-primary q-pb-sm text-center">
@@ -214,9 +214,6 @@ import { setAuthHeader } from 'src/api/auth';
 import { deleteTokenCookie } from 'app/utils/utils';
 import { deleteLocalStorage } from 'app/utils/utils';
 import { toPng } from 'html-to-image';
-// import * as htmlToImage from 'html-to-image';
-// import { toPng } from 'html-to-image';
-
 
 export default defineComponent({
   name: 'newLayout',
@@ -295,7 +292,7 @@ export default defineComponent({
           background: '#f3f3f3ff',
         },
         {
-          title: 'Calendarización',
+          title: 'Calendario',
           link: 'calendar', color: 'rgba(122, 122, 122, 1)',
           background: '#f3f3f3ff',
         },
@@ -310,6 +307,11 @@ export default defineComponent({
         //   newItem: true,
         //   background: '#f3f3f3ff',
         // },
+        {
+          title: 'Contratos de servicio',
+          link: 'service-contracts', color: 'rgba(122, 122, 122, 1)',
+          background: '#f3f3f3ff',
+        },
         {
           title: 'Configuración',
           link: 'settings', color: 'rgba(122, 122, 122, 1)',

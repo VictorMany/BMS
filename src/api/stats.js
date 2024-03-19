@@ -19,6 +19,12 @@ export default class StatsService {
         );
     }
 
+    static updateCustomStats(params) {
+        return api.put(this.endpoint + 'update/' + params.StatisticId,
+            params
+        );
+    }
+
     static getPeriodicStats(params) {
         return api.get(this.endpoint + 'listRep/', {
             params

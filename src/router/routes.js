@@ -208,6 +208,31 @@ const routes = [
         name: 'detail-maintenance-plan',
         meta: [auth],
         component: () => import('src/pages/Plans/detail-maintenance-plan.vue')
+      },
+      // Service contract
+      {
+        path: 'service-contracts',
+        name: 'service-contracts',
+        meta: [auth],
+        component: () => import('src/pages/Contracts/contracts-page.vue')
+      },
+      {
+        path: 'add-service-contract',
+        name: 'add-service-contract',
+        meta: [auth],
+        component: () => import('src/pages/Contracts/add-contract.vue')
+      },
+      {
+        path: 'edit-:id-service-contract',
+        name: 'edit-service-contract',
+        meta: [auth],
+        component: () => import('src/pages/Contracts/add-contract.vue')
+      },
+      {
+        path: 'detail-:id-service-contract',
+        name: 'detail-service-contract',
+        meta: [auth],
+        component: () => import('src/pages/Contracts/detail-contract.vue')
       }
     ]
   },

@@ -139,14 +139,14 @@
           v-if="item.key === 'photo' && item.model"
           class="q-mx-auto row q-my-lg"
           :style="type === 'user'
-            ? 'width: 254px !important; height: 254px; border-radius: 50%'
-            : 'width: 100%; min-height: 100%; max-width: 250px'
-            "
+      ? 'width: 254px !important; height: 254px; border-radius: 50%'
+      : 'width: 100%; min-height: 100%; max-width: 250px'
+      "
         >
           <q-img
             :class="[
-              type === 'user' ? 'form__image64' : 'form__image64-equipment border-rounded',
-            ]"
+      type === 'user' ? 'form__image64' : 'form__image64-equipment border-rounded',
+    ]"
             no-spinner
             class="q-mx-auto q-my-auto"
             :src="item.model"
@@ -160,9 +160,48 @@
       v-for="(item, i) in fields.bottom"
       v-bind="item"
       :key="i"
-      class="col-12 q-pa-sm q-my-md"
+      class="col-12 q-pa-sm q-my-sm"
     >
-      <div v-if="item.label && item.model">
+      <div v-if="item.key === 'contract'">
+        <div class="col-12 form__item-label q-mb-xs text-weight-medium">
+          {{ item.label }}
+        </div>
+
+        <div class="row border-rounded q-pa-md bg-accent">
+          <div class="col-auto q-my-xs form__item-model q-mr-md">
+            <span class="form__item-label text-weight-medium">
+              Fecha de inicio:
+            </span>
+            {{ item.startDate }}
+          </div>
+
+          <div class="col-auto q-my-xs form__item-model">
+            <span class="form__item-label text-weight-medium">
+              Fecha de fin:
+            </span> {{ item.endDate }}
+          </div>
+
+          <div class="col-12 q-my-xs form__item-model">
+            <span class="form__item-label text-weight-medium">
+              Contacto:
+            </span> {{ item.contact }}
+          </div>
+
+          <div class="col-12 q-my-xs q-ml-auto form__item-model">
+            <span class="form__item-label text-weight-medium">
+              Estatus del contrato:
+            </span>
+            <q-chip
+              class="q-ma-none border-rounded"
+              dark
+              :style="`color: ${item.color}; background-color: ${item.color}26; font-size: 12px`"
+            >
+              {{ item.model }}
+            </q-chip>
+          </div>
+        </div>
+      </div>
+      <div v-else-if="item.label && item.model">
         <div class="col-12 q-pr-md form__item-label text-weight-medium q-mb-xs">
           {{ item.label }}
         </div>
@@ -174,8 +213,6 @@
         </div>
       </div>
     </div>
-
-
   </div>
 </template>
 
@@ -205,4 +242,3 @@ export default defineComponent({
   },
 });
 </script>
-

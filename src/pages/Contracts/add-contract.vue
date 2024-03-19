@@ -19,15 +19,15 @@
             class="form__item-label text-weight-medium q-mb-lg q-pa-md border-rounded"
             style="background-color: #008cff2b;"
           >
-            1-. Elige un nombre para el plan y los equipos que desees incluir
+            1-. Elige un nombre para el contrato y los equipos que desees incluir
           </div>
 
           <div class="col q-pr-md form__item-label text-weight-medium">
-            Nombre del plan*
+            Nombre del contrato*
           </div>
 
           <q-input
-            v-model="form.planName"
+            v-model="form.contractName"
             borderless
             dense
             hide-hint
@@ -87,9 +87,7 @@
                 style="height: auto; max-height: 450px;"
                 :rows="rows"
                 :columns="columns"
-                :pagination-prop="{
-          rowsPerPage: null
-        }"
+                :pagination-prop="paginationProp"
                 :show-pagination="false"
               />
             </div>
@@ -99,7 +97,7 @@
             class="form__item-label text-weight-medium q-my-lg q-pa-md border-rounded"
             style="background-color: #008cff2b;"
           >
-            2-. Selecciona las fechas de los mantenimientos
+            2-. Selecciona el tipo de contrato
           </div>
 
           <div
@@ -115,122 +113,46 @@
                   style="font-size: 12px;"
                   class="text-primary q-pb-sm"
                 >
-                  <span style="font-size: 16px; font-weight: 500;">¿Cuándo activar la
-                    frecuencia?</span>
-                  <ul>
-                    <li>
-                      <div style="margin-left: 5px;">Activar frecuencia si quieres calcular automáticamente las fechas
-                        de
-                        mantenimiento a partir de una fecha inicial en un periodo de 2 años.</div>
-                    </li>
-                    <li>
-                      <div style="margin-left: 5px;">No activar frecuencia si solo deseas agregar fechas personalizadas.
-                      </div>
-                    </li>
-                  </ul>
+                  <span style="font-size: 16px; font-weight: 500;">¿El tipo de contrato es COMODATO?</span>
                 </div>
 
                 <div class="col-auto ">
                   <q-checkbox
                     size="sm"
-                    v-model="form.hasFrequency"
-                    label="Frecuencia"
+                    v-model="form.hasComodato"
+                    label="Comodato"
                     class="form__checkbox q-mr-md q-pa-sm border-rounded"
                     dense
                   />
                 </div>
-
-                <div
-                  class="col"
-                  v-if="form.hasFrequency"
-                >
-                  <q-select
-                    v-model="form.maintenanceFrequency"
-                    :options="options"
-                    dense
-                    hide-hint
-                    :disable="!form.hasFrequency"
-                    hide-bottom-space
-                    bottom-slots
-                    stack-label
-                    class="form__select bg-accent"
-                    borderless
-                  >
-                    <template v-slot:option="scope">
-                      <q-item
-                        v-bind="scope.itemProps"
-                        dense
-                      >
-                        <q-item-section>
-                          <q-item-label :class="scope.selected ? 'primary' : 'text-grey'">{{ scope.label
-                            }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
-                    </template>
-                  </q-select>
-                </div>
-
-
               </div>
+            </div>
+          </div>
 
-              <q-date
-                ref="myDatePicker"
-                v-model="form.maintenanceDates"
-                mask="YYYY-MM-DD"
-                class="text-blue-blue-grey-4 border-line border-rounded w-100 lt-md form__date_container"
-                :multiple="!form.hasFrequency"
-              />
-
-              <q-date
-                ref="myDatePicker"
-                v-model="form.maintenanceDates"
-                mask="YYYY-MM-DD"
-                class="text-blue-blue-grey-4 border-line border-rounded not-show-in-mobile form__date_container"
-                :multiple="!form.hasFrequency"
-                landscape
+          <div
+            class="row"
+            style="gap: 20px"
+          >
+            <div class="col-12 col-sm">
+              <div class="form__item-label text-weight-medium">
+                Fecha inicial del contrato
+              </div>
+              <date-component
+                class="form__input bg-accent"
+                v-model:model="startDate.model"
+                :item="startDate"
               />
             </div>
 
-            <div class="col-sm col-12">
-              <div
-                v-if="sortedDates?.length > 0"
-                class="form__item-label text-weight-medium"
-              >
-                Lista de fechas agendadas
+            <div class="col-12 col-sm">
+              <div class="form__item-label text-weight-medium">
+                Fecha final del contrato
               </div>
-
-              <div
-                v-for="( day, index ) in sortedDates"
-                :key="index"
-              >
-                <div
-                  class="chip-date border-rounded q-mt-sm q-pa-xs q-px-sm"
-                  @click="setCalendarTo(day)"
-                >
-                  <div class="row">
-                    <div class="col">
-                      {{ calcDate(day) }}
-                    </div>
-                    <div class="col-auto">
-                      <q-avatar
-                        v-if="!form.maintenanceFrequency"
-                        @click="deleteDate(day)"
-                        size="xs"
-                        class="avatar-item"
-                      >
-                        <q-icon name="close" />
-                      </q-avatar>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  style="font-size: 10px;"
-                  class="text-primary q-px-sm"
-                >
-                  {{ index == 0 ? 'Primer día de mantenimientos' : '' }}
-                </div>
-              </div>
+              <date-component
+                class="col-12 col-sm form__input bg-accent"
+                v-model:model="endDate.model"
+                :item="endDate"
+              />
             </div>
           </div>
 
@@ -245,7 +167,7 @@
             <div class="w-100">
               <q-editor
                 v-model="form.observations"
-                :placeholder="'Escribe aquí las notas del plan de mantenimientos'"
+                :placeholder="'Escribe aquí las notas del contrato'"
                 class="form__textarea bg-accent border-rounded"
                 :toolbar="[
           [
@@ -283,21 +205,25 @@
 import { ref, defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
-import { addMonths, format } from 'date-fns';
 import { rules, showWarning, showSuccess } from 'app/utils/utils';
+import DateComponent from 'src/components/atomic/Form/DateComponent.vue';
 
 
 export default defineComponent({
-  name: 'AddMaintenancePlan',
+  name: 'AddContract',
   components: {
     HeaderActions,
-    GeneralTable
+    GeneralTable,
+    DateComponent
   },
 
   data() {
     return {
       delaySearch: 300,
       timeoutSearch: null,
+      paginationProp: {
+        rowsPerPage: null
+      },
 
       btnAction: {
         show: true,
@@ -305,7 +231,7 @@ export default defineComponent({
         iconName: 'o_save',
         btnWidth: 'auto',
         loader: false,
-        tooltip: 'Agregar plan de mantenimientos',
+        tooltip: 'Agregar contrato',
         btnAction: this.createOrEdit,
       },
 
@@ -317,27 +243,18 @@ export default defineComponent({
       },
 
       form: {
-        id: null,
-        planName: '',
+        ContractId: null,
+        contractName: '',
         observations: '',
         createdAt: this.getCreatedAt(),
-        userId: '',
         equipmentIds: [],
-        hasFrequency: false,
-        maintenanceFrequency: null,
-        maintenanceDates: []
+        comodato: false,
+        contractStatus: false,
+        hasComodato: false,
       },
 
       filter: ref(''),
       filterRef: ref(null),
-
-      options: [
-        'Mensual',
-        'Bimestral',
-        'Trimestral',
-        'Semestral',
-        'Anual'
-      ],
 
       columns: [
         {
@@ -372,8 +289,20 @@ export default defineComponent({
       ],
 
       localCategories: [],
+
+      endDate: {
+        type: 'date',
+        model: '',
+      },
+
+      startDate: {
+        type: 'date',
+        model: '',
+      },
+
       rules
     };
+
   },
 
   created() {
@@ -396,59 +325,18 @@ export default defineComponent({
 
       return children
     },
-
-    dateItems() {
-      if (this.form.maintenanceDates?.length >= 1 && this.form.maintenanceFrequency) {
-        return this.calculateRemainingDates(this.form.maintenanceDates[0], this.form.maintenanceFrequency);
-      } else return this.form.maintenanceDates
-    },
-
-    sortedDates() {
-      if (this.form?.maintenanceDates?.length >= 1) {
-        const unsortedDates = [...this.form.maintenanceDates];
-        const sortedDates = unsortedDates.sort((a, b) => new Date(a) - new Date(b));
-        return sortedDates
-      } else if (this.form.maintenanceDates?.lenght == 0) return []
-      else return this.form.maintenanceDates
-    },
-  },
-
-  watch: {
-    'form.maintenanceDates': {
-      handler(val, oldVal) {
-        if (val && val != oldVal) {
-          this.form.maintenanceDates = Array.isArray(val) ? val : [val];
-        }
-      },
-      immediate: true, // Para manejar el caso cuando el componente se carga inicialmente
-    },
-
-    dateItems: {
-      handler(val) {
-        if (val?.length != 1 && val?.toString() != this.form?.maintenanceDates?.toString()) {
-          this.form.maintenanceDates = val
-        }
-      },
-      deep: true
-    },
-
-    'form.hasFrequency'(val) {
-      if (!val) {
-        this.form.maintenanceFrequency = null
-      }
-    }
   },
 
   methods: {
-    async createMaintenancePlan() {
+    async createContract() {
       this.btnAction.loader = true;
       try {
         const res = await this.$store.dispatch(
-          'maintenancePlans/postMaintenancePlanAction',
+          'contracts/postContractAction',
           this.form
         );
         if (res === true) {
-          showSuccess(this.$q, { title: 'Éxito al crear el plan', msg: 'El plan de mantenimientos se ha agregado' });
+          showSuccess(this.$q, { title: 'Éxito al crear el contrato', msg: 'El contrato se ha agregado' });
           this.$router.go(-1);
         } else {
           showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
@@ -459,28 +347,28 @@ export default defineComponent({
       }
     },
 
-    async getMaintenancePlan() {
+    async getContract() {
       try {
         const params = {
           id: this.$route.params.id
         }
-        this.form = { ...this.form, ...await this.$store.dispatch('maintenancePlans/getMaintenancePlanAction', params) }
+        this.form = { ...this.form, ...await this.$store.dispatch('contracts/getContractAction', params) }
       } catch (error) {
         console.log(error)
       }
     },
 
-    async editMaintenancePlan() {
+    async editContract() {
       this.btnAction.loader = true;
       try {
         this.form.id = this.$route.params.id
 
         const res = await this.$store.dispatch(
-          'maintenancePlans/updateMaintenancePlanAction',
+          'contracts/updateContractAction',
           this.form
         );
         if (res === true) {
-          showSuccess(this.$q, { title: 'Éxito al editar el plan de mantenimientos', msg: 'El plan de mantenimientos se ha actualizado' });
+          showSuccess(this.$q, { title: 'Éxito al editar el contrato', msg: 'El contrato se ha actualizado' });
           this.$router.go(-1);
         } else {
           showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
@@ -495,9 +383,9 @@ export default defineComponent({
       this.$refs.myForm.validate().then(success => {
         if (success && this.validatePayload()) {
           if (this.isEditing()) {
-            this.editMaintenancePlan()
+            this.editContract()
           } else {
-            this.createMaintenancePlan()
+            this.createContract()
           }
         } else {
           return false
@@ -511,7 +399,7 @@ export default defineComponent({
         this.localCategories = JSON.parse(JSON.stringify(this.categories));
 
         if (this.isEditing()) {
-          await this.getMaintenancePlan()
+          await this.getContract()
           if (this.form && this.form?.equipments) {
 
             this.form.equipments.forEach((cat) => {
@@ -548,9 +436,9 @@ export default defineComponent({
 
     getTitle() {
       if (this.isEditing()) {
-        return 'Editar plan'
+        return 'Editar contrato'
       }
-      else return 'Nuevo plan'
+      else return 'Nuevo contrato de servicio'
     },
 
     getCreatedAt() {
@@ -562,70 +450,6 @@ export default defineComponent({
 
     isEditing() {
       return this.$route.params.id ? true : false
-    },
-
-    calcDate(date) {
-      const initialDate = new Date(date);
-      initialDate.setDate(initialDate.getDate() + 1);
-      const optFormat = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-      return initialDate.toLocaleDateString('es-MX', optFormat);
-    },
-
-    calculateRemainingDates(initialDate, frequency) {
-      const dates = [new Date(initialDate)];
-      dates[0].setDate(dates[0].getDate() + 1);
-
-      const currentYear = new Date().getFullYear();
-      const maxYear = currentYear + 2; // Ajuste para calcular fechas hasta dos años a partir del año actual
-
-      let iterationsInYear;
-      switch (frequency) {
-        case 'Mensual':
-          iterationsInYear = 12;
-          break;
-        case 'Bimestral':
-          iterationsInYear = 6;
-          break;
-        case 'Trimestral':
-          iterationsInYear = 4;
-          break;
-        case 'Semestral':
-          iterationsInYear = 2;
-          break;
-        case 'Anual':
-          iterationsInYear = 1;
-          break;
-        default:
-          console.error('Frecuencia no soportada');
-          return [];
-      }
-
-      function moveToDateIfWeekend(date) {
-        const dayOfWeek = date.getDay();
-        if (dayOfWeek === 0) { // Es domingo
-          date.setDate(date.getDate() + 1); // Mover al lunes
-        } else if (dayOfWeek === 6) { // Es sábado
-          date.setDate(date.getDate() + 2); // Mover al lunes
-        }
-        return date;
-      }
-
-      for (let i = 1; i < iterationsInYear * 2; i++) { // Doble la iteración para calcular dos años
-        // Añade un mes sin cambiar el día
-        const newDate = addMonths(dates[i - 1], 12 / iterationsInYear);
-        moveToDateIfWeekend(newDate);
-        // Añade la fecha solo si pertenece al rango de dos años y no se encuentra ya en el array
-        if (
-          newDate.getFullYear() <= maxYear &&
-          !dates.some(date => date.getTime() === newDate.getTime())
-        ) {
-          dates.push(newDate);
-        }
-      }
-      // Formatea las fechas en un formato más sencillo
-      const formattedDates = dates.map(date => format(date, 'yyyy-MM-dd'));
-
-      return formattedDates;
     },
 
     filterEquipments(node, filter) {
@@ -656,32 +480,8 @@ export default defineComponent({
       this.$router.go(-1);
     },
 
-    deleteDate(day) {
-      const index = this.form.maintenanceDates.indexOf(day);
-      if (index !== -1) {
-        this.form.maintenanceDates.splice(index, 1);
-      }
-    },
-
-    setCalendarTo(date) {
-      const initialDate = new Date(date);
-      initialDate.setDate(initialDate.getDate() + 1);
-      this.$refs.myDatePicker.setCalendarTo(initialDate.getFullYear(), initialDate.getMonth() + 1);
-    },
-
     validatePayload() {
-      return (this.validateEquipments() && this.validateDates())
-    },
-
-    validateDates() {
-      let dates = this.form.maintenanceDates.length > 0
-      if (!dates) {
-        showWarning(this.$q, {
-          title: 'Mínimo debe contener una fecha',
-          msg: 'El plan de mantenimientos al menos debe de contener una fecha'
-        })
-      }
-      return dates
+      return (this.validateEquipments())
     },
 
     validateEquipments() {
@@ -689,7 +489,7 @@ export default defineComponent({
       if (!equipments) {
         showWarning(this.$q, {
           title: 'Mínimo debe de incluir un equipo',
-          msg: 'El plan de mantenimientos al menos debe de incluir un equipo'
+          msg: 'El contrato al menos debe de incluir un equipo'
         })
       }
       return equipments
@@ -713,26 +513,6 @@ export default defineComponent({
 
 .q-field__label {
   padding-bottom: 0.5rem !important;
-}
-
-.chip-date {
-  background-color: rgba($primary, 0.1);
-  max-width: 300px;
-  color: rgb(147, 150, 156);
-}
-
-.chip-date:hover {
-  transform: scale(1.01);
-  background-color: rgba($primary, 0.2);
-  ;
-  /* Se moverá 1rem (16px) hacia la derecha al hacer hover */
-}
-
-.avatar-item {
-  border-radius: 50% !important;
-  background-color: #ea463d2b;
-  color: #ea463d;
-  cursor: pointer;
 }
 
 .q-input-equipments {

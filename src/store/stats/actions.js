@@ -32,6 +32,16 @@ export async function addCustomStatsAction(context, params) {
     })
 }
 
+export async function updateCustomStatsAction(context, params) {
+    return service.updateCustomStats(params).then(async (response) => {
+        if (response.status == 200) {
+            return response.data.contents;
+        } else {
+            return response
+        }
+    })
+}
+
 export async function getPeriodicStatsAction(context, params) {
     return service.getPeriodicStats(params).then(async (response) => {
         if (response.status == 200) {

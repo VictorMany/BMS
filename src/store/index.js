@@ -3,6 +3,7 @@ import global from './global'
 import equipments from './equipments'
 import maintenances from './maintenances'
 import maintenancePlans from './maintenances-plan'
+import contracts from './contracts'
 import users from './users'
 import storeModule from './store'
 import reports from './reports'
@@ -17,6 +18,7 @@ export default store(function (/* { ssrContext } */) {
       equipments,
       maintenances,
       maintenancePlans,
+      contracts,
       users,
       storeModule,
       reports,

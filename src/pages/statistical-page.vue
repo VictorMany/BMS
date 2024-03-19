@@ -6,11 +6,11 @@
         <q-scroll-area
           class="fit h-100 q-px-sm"
           :thumb-style="{
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 1,
-          }"
+        borderRadius: '5px',
+        background: 'rgba(29, 100, 231, 0.2)',
+        width: '5px',
+        opacity: 1,
+      }"
         >
           <div class="row container-stats">
             <graph-component
@@ -38,7 +38,8 @@
               :payload="customData1"
               :options="stats.statistics"
               :selected-option="selectedOption1"
-              :loaded="loadedStats"
+              :loaded="loadedCustomStats"
+              :reload-custom-stats="getCustomStats"
               :position="0"
             />
 
@@ -49,7 +50,8 @@
               :payload="customData2"
               :options="stats.statistics"
               :selected-option="selectedOption2"
-              :loaded="loadedStats"
+              :loaded="loadedCustomStats"
+              :reload-custom-stats="getCustomStats"
               :position="1"
             />
 
@@ -60,7 +62,8 @@
               :payload="customData3"
               :options="stats.statistics"
               :selected-option="selectedOption3"
-              :loaded="loadedStats"
+              :loaded="loadedCustomStats"
+              :reload-custom-stats="getCustomStats"
               :position="2"
             />
 
@@ -71,7 +74,8 @@
               :payload="customData4"
               :options="stats.statistics"
               :selected-option="selectedOption4"
-              :loaded="loadedStats"
+              :loaded="loadedCustomStats"
+              :reload-custom-stats="getCustomStats"
               :position="3"
             />
           </div>
@@ -148,8 +152,9 @@
     </div>
   </q-page>
 </template>
-
+<!-- eslint-disable no-case-declarations -->
 <script>
+
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
@@ -167,32 +172,32 @@ export default defineComponent({
   data() {
     return {
       loadingReportsTable: true,
-      loadedStats: false,
+      loadedCustomStats: false,
       loadedReports: false,
       loadedMaintenances: false,
 
       selectedOption1: {
-        title: 'Porcentaje de mantenimientos correctivos',
-        modelA: 'Mantenimientos correctivos',
-        modelB: 'Total de mantenimientos',
+        name: 'Porcentaje de mantenimientos correctivos',
+        var1: 'Mantenimientos correctivos',
+        var2: 'Total de mantenimientos',
       },
 
       selectedOption2: {
-        title: 'Porcentaje de mantenimientos preventivos',
-        modelA: 'Mantenimientos preventivos',
-        modelB: 'Total de mantenimientos',
+        name: 'Porcentaje de mantenimientos preventivos',
+        var1: 'Mantenimientos preventivos',
+        var2: 'Total de mantenimientos',
       },
 
       selectedOption3: {
-        title: 'Porcentaje de atención a reportes por falla',
-        modelA: 'Mantenimientos correctivos',
-        modelB: 'Total de reportes',
+        name: 'Porcentaje de atención a reportes por falla',
+        var1: 'Mantenimientos correctivos',
+        var2: 'Total de reportes',
       },
 
       selectedOption4: {
-        title: 'Porcentaje de equipos con falla repentina',
-        modelA: 'Mantenimientos correctivos',
-        modelB: 'Total de equipos',
+        name: 'Porcentaje de equipos con falla repentina',
+        var1: 'Mantenimientos correctivos',
+        var2: 'Total de equipos',
       },
 
       chartConfigReports: {
@@ -244,7 +249,6 @@ export default defineComponent({
             tooltip: {
               callbacks: {
                 label: function (context) {
-                  console.log(context)
                   let info = context.dataset.additionalInfo[context.dataIndex] + ' → ' + context.dataset.label + ': ' + context.formattedValue;
                   return info;
                 },
@@ -510,45 +514,32 @@ export default defineComponent({
       this.getPeriodicMaintenancesStats();
       this.getReports();
       this.getStats();
-      this.getCustomStats();
     }
   },
 
   computed: {
-    reports: {
-      get() {
-        return this.$store.getters['reports/getReportsGetter'];
-      },
+    reports() {
+      return this.$store.getters['reports/getReportsGetter'];
     },
 
-    stats: {
-      get() {
-        return this.$store.getters['stats/getStatsGetter'];
-      },
+    stats() {
+      return this.$store.getters['stats/getStatsGetter'];
     },
 
-    customStats: {
-      get() {
-        return this.$store.getters['stats/getCustomStatsGetter'];
-      },
+    customStats() {
+      return this.$store.getters['stats/getCustomStatsGetter'];
     },
 
-    reportsArea: {
-      get() {
-        return JSON.parse(JSON.stringify(this.$store.getters['stats/getPeriodicReportsGetter']));
-      },
+    reportsArea() {
+      return JSON.parse(JSON.stringify(this.$store.getters['stats/getPeriodicReportsGetter']));
     },
 
-    maintenancesArea: {
-      get() {
-        return JSON.parse(JSON.stringify(this.$store.getters['stats/getPeriodicMaintenancesGetter']));
-      },
+    maintenancesArea() {
+      return JSON.parse(JSON.stringify(this.$store.getters['stats/getPeriodicMaintenancesGetter']));
     },
 
-    userRole: {
-      get() {
-        return this.$store.getters['users/getRoleGetter'];
-      },
+    userRole() {
+      return this.$store.getters['users/getRoleGetter'];
     },
   },
 
@@ -561,15 +552,22 @@ export default defineComponent({
     },
 
     async getPercentage(data, chart) {
+      let value;
+      if (typeof data === 'number' && Number.isFinite(data)) {
+        value = data;
+      } else {
+        value = 0;
+      }
+
       chart.data = {
         datasets: [
           {
             ...chart.data.datasets[0],
-            data: [data, (100 - data)]
+            data: [value, (100 - value)]
           }
         ],
-        text: data ? data.toFixed(1) + '%' : '0%'
-      }
+        text: value ? value.toFixed(1) + '%' : '0%'
+      };
     },
 
     async getStats() {
@@ -584,14 +582,57 @@ export default defineComponent({
       await this.getPercentage(attentionToReports, this.customData3)
       await this.getPercentage(replacementForDamage, this.customData2)
       await this.getPercentage(suddenFailurePercentage, this.customData4)
-
-      this.loadedStats = true
+      await this.getCustomStats();
     },
 
     async getCustomStats() {
+
       await this.$store.dispatch('stats/getCustomStatsAction');
 
-      console.log('CUSTOM DATA', this.customStats)
+      if (this.customStats?.length > 0) {
+        await this.customStats.forEach(stat => {
+          const totals = Object.entries(this.stats.statistics)
+
+          switch (stat.StatisticId) {
+            case 1:
+              this.customData1.data.datasets[0].label = stat.name
+              this.selectedOption1 = stat
+
+              this.getPercentage(this.getChartValue(totals, stat), this.customData1)
+
+              break;
+            case 2:
+              this.customData2.data.datasets[0].label = stat.name
+              this.selectedOption2 = stat
+
+              this.getPercentage(this.getChartValue(totals, stat), this.customData2)
+
+              break;
+            case 3:
+              this.customData3.data.datasets[0].label = stat.name
+              this.selectedOption3 = stat
+
+              this.getPercentage(this.getChartValue(totals, stat), this.customData3)
+              break;
+            case 4:
+              this.customData4.data.datasets[0].label = stat.name
+              this.selectedOption4 = stat
+
+
+              this.getPercentage(this.getChartValue(totals, stat), this.customData4)
+              break;
+          }
+        });
+      }
+
+      this.loadedCustomStats = true
+    },
+
+    getChartValue(totals, stat) {
+      const customVar1 = totals.find((e) => e[0] === stat.var1)?.[1];
+      const customVar2 = totals.find((e) => e[0] === stat.var2)?.[1];
+
+      return (customVar1 / customVar2) * 100
     },
 
     async getPeriodicReportsStats() {
@@ -647,7 +688,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style
+  lang="scss"
+  scoped
+>
 .container-stats {
   gap: 10px;
   padding-bottom: 10px;

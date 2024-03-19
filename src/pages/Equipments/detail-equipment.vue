@@ -119,6 +119,16 @@ export default defineComponent({
           }
         ],
         bottom: [
+          // PREGUNTAR SI LOS CONTRATOS DE SERVICIO INCLUYEN MUCHOS EQUIPOS O SERIA MEJOR MANEJARLO ESPECIFICAMENTE POR EQUIPO
+          {
+            key: 'contract',
+            label: 'Contrato de servicio',
+            model: 'Activo',
+            startDate: '29 de Febrero de 2024',
+            endDate: '29 de Marzo de 2025',
+            contact: '4741034817',
+            color: '#10D13A'
+          },
           {
             key: 'observations',
             type: 'textarea',
@@ -132,7 +142,7 @@ export default defineComponent({
           show: true,
           btnTitle: 'Reportar',
           iconName: 'o_report',
-          tooltip: 'Ir a editar equipo',
+          tooltip: 'Ir a reportar equipo',
           to: 'add-report',
           btnWidth: 'auto'
         },

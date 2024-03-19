@@ -11,27 +11,27 @@
             <div class="w-100 text-center q-pa-sm">
                 <input-component
                     class="bg-accent form__input-small"
-                    :item="titleStat"
-                    :model="titleStat.model"
+                    :item="name"
+                    v-model:model="name.model"
                 />
             </div>
 
-            <div class="q-pa-lg">
+            <div class="q-pa-md">
                 <div class="row">
                     <div class="col">
                         <div class="row">
                             <div class="col-12 card-graphics__title border-bottom q-pa-sm">
                                 <select-component
                                     class="form__input-small border-line"
-                                    :item="valueA"
-                                    :model="valueA.model"
+                                    :item="var1"
+                                    v-model:model="var1.model"
                                 />
                             </div>
                             <div class="col-12 q-pa-sm">
                                 <select-component
                                     class="form__input-small border-line"
-                                    :item="valueB"
-                                    :model="valueB.model"
+                                    :item="var2"
+                                    v-model:model="var2.model"
                                 />
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                     <q-icon
                         name="save"
                         color="primary"
-                        @click="saveNewStat()"
+                        @click="saveStat()"
                     />
                 </q-btn>
             </q-page-sticky>
@@ -76,8 +76,9 @@
             style="position: relative;"
         >
             <div class="card-graphics__title border-bottom w-100 text-center q-pa-sm">
-                {{ titleCard }}
+                {{ name.model }}
             </div>
+
             <div class="container-graph">
                 <doghnut-chart
                     :chart-data="payload.data"
@@ -85,7 +86,8 @@
                     :loaded="loaded"
                 />
             </div>
-            <!-- <q-page-sticky
+
+            <q-page-sticky
                 v-if="userRole === 1"
                 style="position: absolute;"
                 :offset="[10, 10]"
@@ -102,7 +104,7 @@
                         color="primary"
                     />
                 </q-btn>
-            </q-page-sticky> -->
+            </q-page-sticky>
         </div>
     </div>
 
@@ -150,21 +152,30 @@ export default {
             type: String,
             required: true,
         },
+
         options: {
             type: Object,
             required: false,
             default: () => { }
         },
+
         selectedOption: {
             type: Object,
             required: false,
             default: () => { }
         },
+
         position: {
             type: Number,
             required: false,
             default: null
         },
+
+        reloadCustomStats: {
+            type: Function,
+            required: false,
+            default: () => { }
+        }
     },
 
     data() {
@@ -172,76 +183,52 @@ export default {
             showForm: false,
             localOptions: [],
 
-            titleStat: {
+            name: {
                 innerLabel: 'Nombre de la estadística',
-                model: this.selectedOption?.title ? this.selectedOption.title : ''
+                model: this.selectedOption?.name
             },
 
-            valueA: {
+            var1: {
                 innerLabel: 'Dividendo',
                 type: 'autocomplete',
-                options: this.localOptions,
-                itemFilter: this.filterValueA,
-                setModel: this.setModelValueA,
-                model: this.selectedOption?.modelA ? this.selectedOption.modelA : null,
+                options: this?.localOptions,
+                model: this.selectedOption?.var1,
                 rules: [rules.requiredAutocomplete],
             },
 
-            valueB: {
+            var2: {
                 innerLabel: 'Divisor',
                 type: 'autocomplete',
-                options: this.localOptions,
-                itemFilter: this.filterValueB,
-                setModel: this.setModelValueB,
-                model: this.selectedOption?.modelB ? this.selectedOption.modelB : null,
+                options: this?.localOptions,
+                model: this.selectedOption?.var2,
                 rules: [rules.requiredAutocomplete],
             },
         }
     },
 
     methods: {
-        filterValueA(val, update) {
-            if (val === '') {
-                update(() => {
-                    this.valueA.options = this.localOptions
-                })
-                return
+        async saveStat() {
+            if (this.selectedOption.StatisticId) {
+                await this.updateStat()
+            } else {
+                await this.$store.dispatch('stats/addCustomStatsAction', {
+                    name: this.name?.model,
+                    description: this.position.toString(),
+                    var1: this.var1?.model,
+                    var2: this.var2?.model
+                });
             }
-            update(() => {
-                const needle = val.toLowerCase()
-                this.valueA.options.filter(v => v.toLowerCase().indexOf(needle) > -1)
-            })
+
+            this.reloadCustomStats()
         },
 
-        filterValueB(val, update) {
-            if (val === '') {
-                update(() => {
-                    this.valueB.options = this.localOptions
-                })
-                return
-            }
-            update(() => {
-                const needle = val.toLowerCase()
-                this.valueB.options.filter(v => v.toLowerCase().indexOf(needle) > -1)
-            })
-        },
-
-        setModelValueA(val) {
-            const opt = this.localOptions.find((cat) => cat === val)
-            this.valueA.model = opt ? opt : val
-        },
-
-        setModelValueB(val) {
-            const opt = this.localOptions.find((loc) => loc === val)
-            this.valueB.model = opt ? opt : val
-        },
-
-        async saveNewStat() {
-            await this.$store.dispatch('stats/addCustomStatsAction', {
-                name: this.titleStat.model,
+        async updateStat() {
+            await this.$store.dispatch('stats/updateCustomStatsAction', {
+                StatisticId: this.selectedOption.StatisticId,
+                name: this.name?.model,
                 description: this.position.toString(),
-                var1: this.valueA.model,
-                var2: this.valueB.model
+                var1: this.var1?.model,
+                var2: this.var2?.model
             });
         }
     },
@@ -250,8 +237,19 @@ export default {
         options: {
             handler(val) {
                 if (val) {
-                    this.localOptions = Object.keys(this.options)
+                    this.localOptions = Object.keys(val)
                 }
+            },
+            deep: true
+        },
+
+        selectedOption: {
+            handler(val) {
+                this.name.model = val?.name
+                this.var1.model = val?.var1
+                this.var2.model = val?.var2
+                this.var1.options = this.localOptions
+                this.var2.options = this.localOptions
             },
             deep: true
         }
