@@ -128,7 +128,7 @@ export default defineComponent({
         show: true,
         btnTitle: 'Agregar contrato',
         tooltip: 'Agregar nuevo contrato',
-        to: 'add-service-contract',
+        to: 'add-contract',
         btnWidth: 'auto'
       },
 
@@ -341,11 +341,11 @@ export default defineComponent({
     },
 
     goToDetails(payload) {
-      this.$router.push({ name: 'detail-service-contract', params: { id: payload } });
+      this.$router.push({ name: 'detail-contract', params: { id: payload } });
     },
 
     goToEdit(payload) {
-      this.$router.push({ name: 'edit-service-contract', params: { id: payload } });
+      this.$router.push({ name: 'edit-contract', params: { id: payload } });
     },
 
     changePagination(pagination) {

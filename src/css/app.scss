@@ -233,6 +233,12 @@ $secondary-white: #dce1e6;
   box-shadow: none !important;
 }
 
+.text-link {
+  border: $primary solid;
+  color: $primary;
+  border-width: 0 0 2px 0;
+}
+
 .border-radius {
   border-radius: 8px !important;
 }

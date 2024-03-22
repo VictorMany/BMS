@@ -113,13 +113,14 @@
                   style="font-size: 12px;"
                   class="text-primary q-pb-sm"
                 >
-                  <span style="font-size: 16px; font-weight: 500;">¿El tipo de contrato es COMODATO?</span>
+                  <span style="font-size: 16px; font-weight: 500;">¿El tipo de contrato es <strong>comodato</strong>
+                    ?</span>
                 </div>
 
-                <div class="col-auto ">
+                <div class="col-12">
                   <q-checkbox
                     size="sm"
-                    v-model="form.hasComodato"
+                    v-model="form.comodato"
                     label="Comodato"
                     class="form__checkbox q-mr-md q-pa-sm border-rounded"
                     dense
@@ -130,10 +131,11 @@
           </div>
 
           <div
+            v-if="!form.comodato"
             class="row"
             style="gap: 20px"
           >
-            <div class="col-12 col-sm">
+            <div class="col-12 col-sm-3">
               <div class="form__item-label text-weight-medium">
                 Fecha inicial del contrato
               </div>
@@ -144,12 +146,12 @@
               />
             </div>
 
-            <div class="col-12 col-sm">
+            <div class="col-12 col-sm-3">
               <div class="form__item-label text-weight-medium">
                 Fecha final del contrato
               </div>
               <date-component
-                class="col-12 col-sm form__input bg-accent"
+                class="form__input bg-accent"
                 v-model:model="endDate.model"
                 :item="endDate"
               />
@@ -249,8 +251,6 @@ export default defineComponent({
         createdAt: this.getCreatedAt(),
         equipmentIds: [],
         comodato: false,
-        contractStatus: false,
-        hasComodato: false,
       },
 
       filter: ref(''),
@@ -291,18 +291,35 @@ export default defineComponent({
       localCategories: [],
 
       endDate: {
-        type: 'date',
         model: '',
       },
 
       startDate: {
-        type: 'date',
         model: '',
       },
 
       rules
     };
 
+  },
+
+  watch: {
+    'form.comodato'() {
+      this.startDate.model = ''
+      this.endDate.model = ''
+    },
+    'startDate.model'() {
+      this.endDate.model = ''; // Reinicia la fecha final
+      this.endDate.rules = [
+        () => {
+          // Validación para asegurar que la fecha final no sea menor que la fecha inicial
+          if (this.startDate.model && this.endDate.model) {
+            return this.endDate.model >= this.startDate.model || 'La fecha final no puede ser anterior a la fecha inicial';
+          }
+          return true;
+        }
+      ];
+    }
   },
 
   created() {
@@ -331,10 +348,14 @@ export default defineComponent({
     async createContract() {
       this.btnAction.loader = true;
       try {
+        this.form.startDate = this.startDate.model
+        this.form.endDate = this.startDate.model
+
         const res = await this.$store.dispatch(
           'contracts/postContractAction',
           this.form
         );
+
         if (res === true) {
           showSuccess(this.$q, { title: 'Éxito al crear el contrato', msg: 'El contrato se ha agregado' });
           this.$router.go(-1);
@@ -395,7 +416,9 @@ export default defineComponent({
 
     async getCategories() {
       try {
-        await this.$store.dispatch('equipments/getCategoriesAction')
+        await this.$store.dispatch('equipments/getCategoriesAction', {
+          filterContracts: true,
+        })
         this.localCategories = JSON.parse(JSON.stringify(this.categories));
 
         if (this.isEditing()) {
@@ -422,7 +445,8 @@ export default defineComponent({
         const equipments = [
           ...node.children,
           ...await this.$store.dispatch('equipments/getEquipmentsByCategoryAction', {
-            categoryId: key
+            categoryId: key,
+            filterContracts: true
           })]
 
 
@@ -493,7 +517,7 @@ export default defineComponent({
         })
       }
       return equipments
-    },
+    }
   },
 });
 </script>

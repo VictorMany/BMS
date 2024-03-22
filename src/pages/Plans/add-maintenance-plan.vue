@@ -507,7 +507,9 @@ export default defineComponent({
 
     async getCategories() {
       try {
-        await this.$store.dispatch('equipments/getCategoriesAction')
+        await this.$store.dispatch('equipments/getCategoriesAction', {
+          filterContracts: false,
+        })
         this.localCategories = JSON.parse(JSON.stringify(this.categories));
 
         if (this.isEditing()) {
@@ -534,7 +536,8 @@ export default defineComponent({
         const equipments = [
           ...node.children,
           ...await this.$store.dispatch('equipments/getEquipmentsByCategoryAction', {
-            categoryId: key
+            categoryId: key,
+            filterContracts: false,
           })]
 
 

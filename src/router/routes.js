@@ -211,26 +211,26 @@ const routes = [
       },
       // Service contract
       {
-        path: 'service-contracts',
-        name: 'service-contracts',
+        path: 'contracts',
+        name: 'contracts',
         meta: [auth],
         component: () => import('src/pages/Contracts/contracts-page.vue')
       },
       {
-        path: 'add-service-contract',
-        name: 'add-service-contract',
+        path: 'add-contract',
+        name: 'add-contract',
         meta: [auth],
         component: () => import('src/pages/Contracts/add-contract.vue')
       },
       {
-        path: 'edit-:id-service-contract',
-        name: 'edit-service-contract',
+        path: 'edit-:id-contract',
+        name: 'edit-contract',
         meta: [auth],
         component: () => import('src/pages/Contracts/add-contract.vue')
       },
       {
-        path: 'detail-:id-service-contract',
-        name: 'detail-service-contract',
+        path: 'detail-:id-contract',
+        name: 'detail-contract',
         meta: [auth],
         component: () => import('src/pages/Contracts/detail-contract.vue')
       }

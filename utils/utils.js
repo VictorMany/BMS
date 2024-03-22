@@ -92,7 +92,7 @@ export const rules = {
     futureDate: (val) => {
         const selectedDate = new Date(val);
         const currentDate = new Date();
-        return selectedDate >= currentDate || 'La fecha de garantía no puede ser anterior a la fecha actual';
+        return selectedDate >= currentDate || 'La fecha no puede ser anterior a esta fecha actual';
     }
 };
 

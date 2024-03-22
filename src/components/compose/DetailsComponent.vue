@@ -73,8 +73,11 @@
               <div
                 v-if="item.type !== 'status'"
                 class="col-12 col-sm form__item-model text-weight-thin"
+                :class="{ 'text-link': item.link }"
               >
-                {{ item.affix ? item.affix + item.model : item.model }}
+                <span @click="item.link ? navigateTo(item.link) : () => { }">
+                  {{ item.affix ? item.affix + item.model : item.model }}
+                </span>
               </div>
 
               <div
@@ -162,26 +165,39 @@
       :key="i"
       class="col-12 q-pa-sm q-my-sm"
     >
-      <div v-if="item.key === 'contract'">
+      <div v-if="item.key === 'contract' && item.model">
         <div class="col-12 form__item-label q-mb-xs text-weight-medium">
           {{ item.label }}
         </div>
 
         <div class="row border-rounded q-pa-md bg-accent">
-          <div class="col-12 q-my-xs form__item-model">
+          <div
+            v-if="item.name"
+            class="col-12 q-my-xs form__item-model"
+          >
             <span class="form__item-label text-weight-medium">
               Nombre del contrato:
-            </span> {{ item.name }}
+            </span>
+            <span
+              @click="item.link ? navigateTo(item.link) : () => { }"
+              class="text-link"
+            >{{ item.name }} </span>
           </div>
 
-          <div class="col-auto q-my-xs form__item-model q-mr-md">
+          <div
+            v-if="item.startDate"
+            class="col-auto q-my-xs form__item-model q-mr-md"
+          >
             <span class="form__item-label text-weight-medium">
               Fecha de inicio:
             </span>
             {{ item.startDate }}
           </div>
 
-          <div class="col-auto q-my-xs form__item-model">
+          <div
+            v-if="item.endDate"
+            class="col-auto q-my-xs form__item-model"
+          >
             <span class="form__item-label text-weight-medium">
               Fecha de fin:
             </span> {{ item.endDate }}
@@ -198,6 +214,15 @@
             >
               {{ item.model }}
             </q-chip>
+          </div>
+
+          <div
+            v-if="item.comodato"
+            class="col-auto q-my-xs form__item-model"
+          >
+            <span class="form__item-label text-weight-bold">
+              Comodato
+            </span>
           </div>
         </div>
       </div>
@@ -240,5 +265,10 @@ export default defineComponent({
       default: false,
     }
   },
+  methods: {
+    navigateTo(link) {
+      this.$router.push(link)
+    }
+  }
 });
 </script>

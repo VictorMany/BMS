@@ -54,8 +54,8 @@ export async function getEquipmentAction(context, params) {
     })
 }
 
-export async function getCategoriesAction(context) {
-    return service.getCategories().then(async (response) => {
+export async function getCategoriesAction(context, params) {
+    return service.getCategories(params).then(async (response) => {
         if (response.status == 200) {
             context.commit('MUTATE_CATEGORIES', response.data.contents.categories);
             return true

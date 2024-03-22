@@ -122,12 +122,13 @@ export default defineComponent({
           // PREGUNTAR SI LOS CONTRATOS DE SERVICIO INCLUYEN MUCHOS EQUIPOS O SERIA MEJOR MANEJARLO ESPECIFICAMENTE POR EQUIPO
           {
             key: 'contract',
-            label: 'Contrato de servicio',
-            model: 'Activo',
-            startDate: '29 de Febrero de 2024',
-            endDate: '29 de Marzo de 2025',
-            name: 'Contrato de servicio con Mendray Systems',
-            color: '#10D13A'
+            label: '',
+            model: '',
+            startDate: '',
+            endDate: '',
+            comodato: false,
+            name: '',
+            color: ''
           },
           {
             key: 'observations',
@@ -181,10 +182,23 @@ export default defineComponent({
       }
 
       const equipment = await this.$store.dispatch('equipments/getEquipmentAction', params)
+
       if (equipment.equipmentStatus === false) {
         this.btnActions[0].show = false;
         this.btnActions[1].show = false;
       }
+
+      if (equipment.ContractId)
+        this.updateFieldByKeyInAllArrays('contract', {
+          label: 'Contrato de servicio',
+          model: equipment.contractStatus ? 'Activo' : 'Inactivo',
+          startDate: equipment.startDate,
+          comodato: equipment.comodato,
+          endDate: equipment.endDate,
+          name: equipment.contractName,
+          link: `detail-${equipment.ContractId}-contract`,
+          color: equipment.contractStatus ? '#10D13A' : '#dc4e5f'
+        })
 
       this.loading = false
     },
@@ -212,6 +226,20 @@ export default defineComponent({
           this.btnActions[2].show = false;
           break;
       }
+    },
+
+
+    updateFieldByKeyInAllArrays(key, updates) {
+      for (const arrayKey in this.fields) {
+        if (Array.isArray(this.fields[arrayKey])) {
+          const fieldEntry = this.fields[arrayKey].find(entry => entry.key === key);
+          if (fieldEntry) {
+            Object.assign(fieldEntry, updates);
+            return; // Termina la iteración después de encontrar la primera coincidencia
+          }
+        }
+      }
+      console.error(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
     },
   },
 

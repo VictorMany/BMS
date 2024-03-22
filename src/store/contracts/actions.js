@@ -26,7 +26,7 @@ export async function getContractAction(context, params) {
             const payload = {
                 observations: res.observations,
                 contractName: res.contractName,
-                maintenanceDates: res.ServiceContractDates,
+                // maintenanceDates: res.ServiceContractDates,
                 equipments: res.Equipment,
                 equipmentIds: res.equipmentIds,
                 createdAt: formatDate(res.createdAt),
@@ -44,14 +44,16 @@ export async function postContractAction(context, contract) {
     const payload = {
         contractName: contract.contractName,
         observations: contract.observations,
-        userId: 1,
         equipmentIds: contract.equipmentIds,
+        comodato: contract.comodato,
+        contractStatus: true,
+        startDate: contract.startDate,
+        endDate: contract.endDate,
         maintenanceDates: contract.maintenanceDates
     }
 
     return await service.postContract(payload).then(async (response) => {
-        if (response.status == 200) {
-            // context.commit('ADD_MAINTENANCE', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
+        if (response.status == 201) {
             return true
         } else {
             return response
