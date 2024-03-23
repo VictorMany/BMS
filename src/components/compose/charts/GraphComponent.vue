@@ -238,6 +238,8 @@ export default {
             handler(val) {
                 if (val) {
                     this.localOptions = Object.keys(val)
+                    this.var1.options = this.localOptions
+                    this.var2.options = this.localOptions
                 }
             },
             deep: true

@@ -579,9 +579,10 @@ export default defineComponent({
       const suddenFailurePercentage = this.stats.additionalStatistics.suddenFailurePercentage
 
       await this.getPercentage(correctiveMaintenances, this.customData1)
-      await this.getPercentage(attentionToReports, this.customData3)
       await this.getPercentage(replacementForDamage, this.customData2)
+      await this.getPercentage(attentionToReports, this.customData3)
       await this.getPercentage(suddenFailurePercentage, this.customData4)
+
       await this.getCustomStats();
     },
 
@@ -597,28 +598,21 @@ export default defineComponent({
             case 1:
               this.customData1.data.datasets[0].label = stat.name
               this.selectedOption1 = stat
-
               this.getPercentage(this.getChartValue(totals, stat), this.customData1)
-
               break;
             case 2:
               this.customData2.data.datasets[0].label = stat.name
               this.selectedOption2 = stat
-
               this.getPercentage(this.getChartValue(totals, stat), this.customData2)
-
               break;
             case 3:
               this.customData3.data.datasets[0].label = stat.name
               this.selectedOption3 = stat
-
               this.getPercentage(this.getChartValue(totals, stat), this.customData3)
               break;
             case 4:
               this.customData4.data.datasets[0].label = stat.name
               this.selectedOption4 = stat
-
-
               this.getPercentage(this.getChartValue(totals, stat), this.customData4)
               break;
           }
