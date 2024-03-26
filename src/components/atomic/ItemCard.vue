@@ -5,6 +5,7 @@
   >
     <q-card-section class="q-pa-xs">
       <div class="row flex align-center ellipsis">
+
         <q-tooltip
           v-if="status"
           :delay="100"
@@ -14,15 +15,18 @@
         >
           {{ status.tooltip }}
         </q-tooltip>
+
         <div class="card-title ellipsis col q-my-auto">
           {{ cardTitle }}
         </div>
+
         <q-chip
           v-if="status"
           class="border-rounded"
           :style="`color: ${status.color}; background-color: ${status.color}26; font-size: 9px`"
           :label="status.label"
         />
+
       </div>
     </q-card-section>
 
@@ -47,11 +51,7 @@
         >
           <div
             v-if="label.label"
-            class="q-pb-xs col-12"
-            :class="label.info === undefined
-      ? 'card-text'
-      : 'card-typography'
-      "
+            class="q-pb-xs col-12 card-typography"
           >
             {{ label.label }}
           </div>

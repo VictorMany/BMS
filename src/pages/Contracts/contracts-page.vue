@@ -36,7 +36,6 @@
                 />
               </div>
             </div>
-
             <div
               v-else-if="loading"
               class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
@@ -150,7 +149,7 @@ export default defineComponent({
           sortable: true
         },
         { name: 'user', label: 'Encargado', field: 'user', align: 'left', sortable: true },
-        { name: 'date', label: 'Fecha de creación', field: 'date', align: 'center', sortable: true },
+        { name: 'dates', label: 'Fecha de contrato', field: 'dates', align: 'center', sortable: true },
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
       ],
 
@@ -256,9 +255,9 @@ export default defineComponent({
               info: e.user,
             },
             {
-              label: 'Fecha',
-              info: e.date,
-            }
+              label: e.comodato ? 'Contrato comodato' : 'Fecha de contrato',
+              info: e.comodato ? '' : e.dates,
+            },
           ],
         };
       });

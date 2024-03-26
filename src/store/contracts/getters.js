@@ -5,7 +5,8 @@ export function getContractsGetter(state) {
         id: contract.ContractId,
         contractName: contract.contractName,
         user: contract.User?.userName,
-        date: formatDate(contract.createdAt),
+        dates: contract.comodato ? 'Contrato comodato' : formatDate(contract.startDate) + ' - ' + formatDate(contract.endDate),
+        comodato: contract.comodato
     }));
     return serviceContract
 }
