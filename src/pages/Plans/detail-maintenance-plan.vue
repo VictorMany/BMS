@@ -21,10 +21,11 @@
               {{ form.createdAt }}
             </div>
           </div>
+
           <div class="q-pa-xs">
             <div
               v-if="form.planName"
-              class="row items-center"
+              class="row items-center q-my-md"
             >
               <div class="form__item-label text-weight-medium">
                 Nombre del plan
@@ -34,48 +35,46 @@
               </div>
             </div>
 
-            <div class="row d-flex justify-between">
-              <div class="col-12">
-                <div class="form__item-label text-weight-medium q-mt-lg q-mb-xs">
-                  Listado de equipos y fechas agendadas para los mantenimientos
-                </div>
-                <div
-                  class="row"
-                  style="gap: 20px;"
-                >
-                  <div class="col-12 col-sm container-table-plans q-mt-sm">
-                    <general-table
-                      style="overflow: scroll;"
-                      class="w-100"
-                      :height="'auto'"
-                      :rows="rows"
-                      :columns="columns"
-                      v-model:row-selected="rowSelected"
-                      :pagination-prop="{
+            <div class="col-12 q-my-lg">
+              <div class="form__item-label text-weight-medium q-mb-xs">
+                Listado de equipos
+              </div>
+              <div class="col-12 col-sm container-table-plans q-mt-sm">
+                <general-table
+                  style="overflow: scroll;"
+                  class="w-100"
+                  :height="'auto'"
+                  :rows="rows"
+                  :columns="columns"
+                  v-model:row-selected="rowSelected"
+                  :pagination-prop="{
           rowsPerPage: null
         }"
-                      :show-pagination="false"
-                      :actions-table="actionsTable"
-                    />
-                  </div>
+                  :show-pagination="false"
+                  :actions-table="actionsTable"
+                />
+              </div>
+            </div>
 
-                  <div class="col-12 col-sm-4">
-                    <div
-                      v-for="( day, index ) in sortedDates"
-                      :key="index"
-                    >
-                      <div
-                        class="text-left chip-date border-rounded q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
-                      >
-                        {{ calcDate(day) }}
-                      </div>
-                      <div
-                        style="font-size: 10px;"
-                        class="text-primary q-px-sm"
-                      >
-                        {{ index == 0 ? 'Primer día de mantenimientos' : '' }}
-                      </div>
-                    </div>
+            <div class="col-12 q-my-lg">
+              <div class="form__item-label text-weight-medium q-mb-xs">
+                Listado de fechas agendadas para los mantenimientos
+              </div>
+              <div class="col-12 col-sm-4">
+                <div
+                  v-for="( day, index ) in sortedDates"
+                  :key="index"
+                >
+                  <div
+                    class="text-left chip-date border-rounded q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
+                  >
+                    {{ calcDate(day) }}
+                  </div>
+                  <div
+                    style="font-size: 10px;"
+                    class="text-primary q-px-sm"
+                  >
+                    {{ index == 0 ? 'Primer día de mantenimientos' : '' }}
                   </div>
                 </div>
               </div>

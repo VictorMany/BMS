@@ -307,11 +307,11 @@ export default defineComponent({
         //   newItem: true,
         //   background: '#f3f3f3ff',
         // },
-        // {
-        //   title: 'Contratos de servicio',
-        //   link: 'contracts', color: 'rgba(122, 122, 122, 1)',
-        //   background: '#f3f3f3ff',
-        // },
+        {
+          title: 'Contratos de servicio',
+          link: 'contracts', color: 'rgba(122, 122, 122, 1)',
+          background: '#f3f3f3ff',
+        },
         {
           title: 'Configuración',
           link: 'settings', color: 'rgba(122, 122, 122, 1)',

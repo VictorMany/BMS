@@ -347,6 +347,7 @@ export default defineComponent({
   methods: {
     async createContract() {
       this.btnAction.loader = true;
+
       try {
         this.form.startDate = this.startDate.model
         this.form.endDate = this.startDate.model
@@ -374,6 +375,8 @@ export default defineComponent({
           id: this.$route.params.id
         }
         this.form = { ...this.form, ...await this.$store.dispatch('contracts/getContractAction', params) }
+        this.startDate.model = await this.form?.startDate
+        this.endDate.model = await this.form?.endDate
       } catch (error) {
         console.log(error)
       }
@@ -383,6 +386,9 @@ export default defineComponent({
       this.btnAction.loader = true;
       try {
         this.form.id = this.$route.params.id
+
+        this.form.startDate = this.startDate?.model
+        this.form.endDate = this.startDate?.model
 
         const res = await this.$store.dispatch(
           'contracts/updateContractAction',
@@ -505,7 +511,7 @@ export default defineComponent({
     },
 
     validatePayload() {
-      return (this.validateEquipments())
+      return (this.validateEquipments() && this.validateDates())
     },
 
     validateEquipments() {
@@ -517,6 +523,18 @@ export default defineComponent({
         })
       }
       return equipments
+    },
+
+    validateDates() {
+      if (!this.form.comodato && (!this.startDate.model || !this.endDate.model)) {
+        showWarning(this.$q, {
+          title: 'Campos requeridos',
+          msg: 'Debe ingresar una fecha de inicio y fin del contrato o activar comodato'
+        });
+        return false; // Devolver false ya que las fechas son requeridas
+      }
+
+      return true; // Devolver true si la validación pasa
     }
   },
 });

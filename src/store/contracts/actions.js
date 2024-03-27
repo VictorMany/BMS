@@ -22,14 +22,18 @@ export async function getContractAction(context, params) {
     return service.getContract(params.id).then(async (response) => {
         if (response.status == 200) {
             // We call the global action to format our payload
-            let res = response.data.contents.serviceContract
+            let res = response.data.contents.contract
+
             const payload = {
                 observations: res.observations,
                 contractName: res.contractName,
-                // maintenanceDates: res.ServiceContractDates,
                 equipments: res.Equipment,
                 equipmentIds: res.equipmentIds,
                 createdAt: formatDate(res.createdAt),
+                startDate: res.startDate,
+                endDate: res.endDate,
+                comodato: res.comodato,
+                contractStatus: res.contractStatus,
                 id: res.ContractId
             }
             return payload

@@ -159,84 +159,105 @@
     </div>
 
     <!-- BOTTOM AREA -->
-    <div
-      v-for="(item, i) in fields.bottom"
-      v-bind="item"
-      :key="i"
-      class="col-12 q-pa-sm q-my-sm"
-    >
-      <div v-if="item.key === 'contract' && item.model">
-        <div class="col-12 form__item-label q-mb-xs text-weight-medium">
-          {{ item.label }}
-        </div>
 
-        <div class="row border-rounded q-pa-md bg-accent">
-          <div
-            v-if="item.name"
-            class="col-12 q-my-xs form__item-model"
-          >
-            <span class="form__item-label text-weight-medium">
-              Nombre del contrato:
-            </span>
-            <span
-              @click="item.link ? navigateTo(item.link) : () => { }"
-              class="text-link"
-            >{{ item.name }} </span>
+    <div class="col-12 q-pa-sm q-my-sm">
+      <div
+        v-for="(item, i) in fields.bottom"
+        v-bind="item"
+        :key="i"
+      >
+        <div v-if="item.key === 'contract' && item.model">
+          <div class="col-12 form__item-label q-mb-xs text-weight-medium">
+            {{ item.label }}
           </div>
 
-          <div
-            v-if="item.startDate"
-            class="col-auto q-my-xs form__item-model q-mr-md"
-          >
-            <span class="form__item-label text-weight-medium">
-              Fecha de inicio:
-            </span>
-            {{ item.startDate }}
-          </div>
-
-          <div
-            v-if="item.endDate"
-            class="col-auto q-my-xs form__item-model"
-          >
-            <span class="form__item-label text-weight-medium">
-              Fecha de fin:
-            </span> {{ item.endDate }}
-          </div>
-
-          <div class="col-12 q-my-xs q-ml-auto form__item-model">
-            <span class="form__item-label text-weight-medium">
-              Estatus del contrato:
-            </span>
-            <q-chip
-              class="q-ma-none border-rounded"
-              dark
-              :style="`color: ${item.color}; background-color: ${item.color}26; font-size: 12px`"
+          <div class="row border-rounded q-pa-md bg-accent">
+            <div
+              v-if="item.name"
+              class="col-12 q-my-xs form__item-model"
             >
-              {{ item.model }}
-            </q-chip>
-          </div>
+              <span class="form__item-label text-weight-medium">
+                Nombre del contrato:
+              </span>
+              <span
+                @click="item.link ? navigateTo(item.link) : () => { }"
+                class="text-link"
+              >{{ item.name }} </span>
+            </div>
 
-          <div
-            v-if="item.comodato"
-            class="col-auto q-my-xs form__item-model"
-          >
-            <span class="form__item-label text-weight-bold">
-              Comodato
-            </span>
+            <div
+              v-if="item.startDate"
+              class="col-auto q-my-xs form__item-model q-mr-md"
+            >
+              <span class="form__item-label text-weight-medium">
+                Fecha de inicio:
+              </span>
+              {{ item.startDate }}
+            </div>
+
+            <div
+              v-if="item.endDate"
+              class="col-auto q-my-xs form__item-model"
+            >
+              <span class="form__item-label text-weight-medium">
+                Fecha de fin:
+              </span> {{ item.endDate }}
+            </div>
+
+            <div class="col-12 q-my-xs q-ml-auto form__item-model">
+              <span class="form__item-label text-weight-medium">
+                Estatus del contrato:
+              </span>
+              <q-chip
+                class="q-ma-none border-rounded"
+                dark
+                :style="`color: ${item.color}; background-color: ${item.color}26; font-size: 12px`"
+              >
+                {{ item.model }}
+              </q-chip>
+            </div>
+
+            <div
+              v-if="item.comodato"
+              class="col-auto q-my-xs form__item-model"
+            >
+              <span class="form__item-label text-weight-bold">
+                Comodato
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div v-else-if="item.label && item.model">
+          <div class="col-12 q-pr-md form__item-label text-weight-medium q-mb-xs">
+            {{ item.label }}
+          </div>
+          <div class="q-pa-sm w-100 h-100 border-line border-rounded">
+            <div
+              class="col-12 q-pr-md form__label-area"
+              v-html="item.model"
+            />
           </div>
         </div>
       </div>
-      <div v-else-if="item.label && item.model">
-        <div class="col-12 q-pr-md form__item-label text-weight-medium q-mb-xs">
-          {{ item.label }}
+
+      <!-- <div
+        v-if="detailActions?.length > 0"
+        class="form__item-model row q-py-lg"
+      >
+        <div
+          v-for="(action, index) in detailActions"
+          :key="index"
+          class="col-auto q-mr-lg"
+        >
+          <span
+            @click="action.link ? navigateTo(action.link) : () => { }"
+            class="text-link"
+          >
+            ➤{{ action.name }}
+          </span>
         </div>
-        <div class="q-pa-sm w-100 h-100 border-line border-rounded">
-          <div
-            class="col-12 q-pr-md form__label-area"
-            v-html="item.model"
-          />
-        </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -257,6 +278,12 @@ export default defineComponent({
       type: Object,
       required: true,
       default: () => { },
+    },
+
+    detailActions: {
+      type: Array,
+      required: true,
+      default: () => ([]),
     },
 
     loading: {

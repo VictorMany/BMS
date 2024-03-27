@@ -5,7 +5,7 @@
       class="card-page"
     >
       <header-actions
-        titlePage="Detalles del plan"
+        titlePage="Detalles del contrato"
         :btn-actions="btnActions"
         :btn-close-window="btnCloseWindow"
       />
@@ -21,60 +21,109 @@
               {{ form.createdAt }}
             </div>
           </div>
+
           <div class="q-pa-xs">
             <div
-              v-if="form.planName"
-              class="row items-center"
+              v-if="form.contractName"
+              class="row items-center q-my-md"
             >
               <div class="form__item-label text-weight-medium">
-                Nombre del plan
+                Nombre del contrato
               </div>
               <div class="col-12 form__item-model text-weight-medium">
-                {{ form.planName }}
+                {{ form.contractName }}
               </div>
             </div>
 
-            <div class="row d-flex justify-between">
-              <div class="col-12">
-                <div class="form__item-label text-weight-medium q-mt-lg q-mb-xs">
-                  Listado de equipos y fechas agendadas para los mantenimientos
+            <div class="col-12 q-my-lg">
+              <div class="form__item-label text-weight-medium q-mb-xs">
+                Listado de equipos
+              </div>
+              <div
+                class="row"
+                style="gap: 20px;"
+              >
+                <div class="col-12 col-sm container-table-plans q-mt-sm">
+                  <general-table
+                    style="overflow: scroll;"
+                    class="w-100"
+                    :height="'auto'"
+                    :rows="rows"
+                    :columns="columns"
+                    v-model:row-selected="rowSelected"
+                    :pagination-prop="rowsPerPage"
+                    :show-pagination="false"
+                    :actions-table="actionsTable"
+                  />
                 </div>
+              </div>
+            </div>
+
+            <div class="row form__item-model">
+              <div class="form__item-label text-weight-medium q-mb-xs">
+                Características del contrato
+              </div>
+              <div class="col-12">
                 <div
-                  class="row"
-                  style="gap: 20px;"
+                  class="row bg-accent border-rounded q-pa-md"
+                  style="gap:20px"
                 >
-                  <div class="col-12 col-sm container-table-plans q-mt-sm">
-                    <general-table
-                      style="overflow: scroll;"
-                      class="w-100"
-                      :height="'auto'"
-                      :rows="rows"
-                      :columns="columns"
-                      v-model:row-selected="rowSelected"
-                      :pagination-prop="{
-          rowsPerPage: null
-        }"
-                      :show-pagination="false"
-                      :actions-table="actionsTable"
-                    />
+                  <div
+                    v-if="form.startDate"
+                    class="col-12 col-sm-3"
+                  >
+                    <div class="q-pb-xs form__item-label text-weight-medium">
+                      Fecha de inicio de contrato
+                    </div>
+
+                    <div class="form__item-model text-weight-thin">
+                      {{ form.startDate }}
+                    </div>
                   </div>
 
-                  <div class="col-12 col-sm-4">
-                    <div
-                      v-for="( day, index ) in sortedDates"
-                      :key="index"
-                    >
-                      <div
-                        class="text-left chip-date border-rounded q-mt-sm q-pa-xs q-px-sm flex flex-center align-center justify-between"
-                      >
-                        {{ calcDate(day) }}
+                  <div
+                    v-if="form.endDate"
+                    class="col-12 col-sm-3"
+                  >
+                    <div class="q-pb-xs form__item-label text-weight-medium">
+                      Fecha de fin de contrato
+                    </div>
+
+                    <div class="form__item-model text-weight-thin">
+                      {{ form.endDate }}
+                    </div>
+                  </div>
+
+                  <div
+                    v-if="form.comodato"
+                    class="col-12 col-sm-3"
+                  >
+                    <div class="form__item-model">
+                      <div class="q-pb-xs form__item-label text-weight-medium">
+                        Tipo de contrato
                       </div>
-                      <div
-                        style="font-size: 10px;"
-                        class="text-primary q-px-sm"
+                      <q-chip
+                        class="q-ma-none border-rounded"
+                        dark
+                        :style="`color: #1e65e8; background-color: #1e65e826; font-size: 12px`"
                       >
-                        {{ index == 0 ? 'Primer día de mantenimientos' : '' }}
+                        Comodato
+                      </q-chip>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-sm-3">
+                    <div class="form__item-model">
+                      <div class="q-pb-xs form__item-label text-weight-medium">
+                        Estatus del contrato
                       </div>
+                      <q-chip
+                        class="q-ma-none border-rounded"
+                        dark
+                        :style="getStyleContract"
+                      >
+                        {{ getStatusContract }}
+                      </q-chip>
                     </div>
                   </div>
                 </div>
@@ -120,24 +169,28 @@ export default defineComponent({
   },
   data() {
     return {
+      rowsPerPage: {
+        rowsPerPage: null
+      },
+
       btnActions: [
         {
           show: true,
-          btnTitle: 'Editar plan',
+          btnTitle: 'Editar contrato',
           iconName: 'o_edit',
           btnWidth: 'auto',
           loader: false,
-          tooltip: 'Ir a editar plan de mantenimientos',
+          tooltip: 'Ir a editar contrato de servicio',
           to: this.getIdToEdit(),
         },
         {
           show: true,
-          btnTitle: 'Eliminar plan',
+          btnTitle: 'Eliminar contrato',
           iconName: 'o_delete',
           btnWidth: 'auto',
           loader: false,
-          tooltip: 'Eliminar el plan de mantenimientos',
-          btnAction: this.removePlan,
+          tooltip: 'Eliminar el contrato de servicio',
+          btnAction: this.removeContract,
         }
       ],
 
@@ -154,10 +207,13 @@ export default defineComponent({
 
       form: {
         id: null,
-        planName: '',
+        contractName: '',
         observations: '',
         createdAt: '',
-        maintenanceDates: [],
+        comodato: false,
+        startDate: '',
+        contractStatus: '',
+        endDate: ''
       },
 
       columns: [
@@ -195,10 +251,10 @@ export default defineComponent({
 
       actionsTable: [
         {
-          icnName: 'engineering',
-          icnSize: 'xs',
-          icnAction: 'Maintenance',
-          tooltip: 'Realizarle mantenimiento'
+          icnName: 'read_more',
+          icnSize: 'sm',
+          icnAction: 'Detail',
+          tooltip: 'Detalle de equipo',
         },
       ],
     };
@@ -206,47 +262,34 @@ export default defineComponent({
 
   created() {
     this.checkPermissions()
-    this.getMaintenancePlan()
+    this.getContract()
   },
 
   computed: {
-    categories() {
-      return this.$store.getters['equipments/getCategoriesGetter'];
-    },
-
-    sortedDates() {
-      if (this.form?.maintenanceDates?.length >= 1) {
-        const unsortedDates = [...this.form.maintenanceDates];
-        const sortedDates = unsortedDates.sort((a, b) => new Date(a) - new Date(b));
-        return sortedDates
-      } else if (this.form.maintenanceDates?.lenght == 0) return []
-      else return this.form.maintenanceDates
-    },
-
     userRole: {
       get() {
         return this.$store.getters['users/getRoleGetter'];
       },
+    },
+    getStyleContract() {
+      if ((this.form?.contractStatus))
+        return 'color: #10D13A; background-color: #10D13A26; font-size: 12px'
+      else
+        return 'color: #dc4e5f; background-color: #dc4e5f26; font-size: 12px'
+    },
+    getStatusContract() {
+      if ((this.form?.contractStatus))
+        return 'Activo'
+      else
+        return 'Inactivo'
     }
   },
 
   watch: {
-    'form.maintenanceDates': {
-      handler(val, oldVal) {
-        if (val && val != oldVal) {
-          this.form.maintenanceDates = Array.isArray(val) ? val : [val];
-        }
-      },
-      immediate: true, // Para manejar el caso cuando el componente se carga inicialmente
-    },
-
     rowSelected: {
       handler(val) {
-        console.log(val.id)
-
-        if (val.action === 'Maintenance') {
-          console.log(val.id)
-          this.goToMaintenance(val.id);
+        if (val.action === 'Detail') {
+          this.goToDetails(val.id);
         }
       },
       deep: true,
@@ -254,12 +297,12 @@ export default defineComponent({
   },
 
   methods: {
-    async getMaintenancePlan() {
+    async getContract() {
       const params = {
         id: this.$route.params.id
       }
 
-      this.form = { ...this.form, ...await this.$store.dispatch('maintenancePlans/getMaintenancePlanAction', params) }
+      this.form = { ...this.form, ...await this.$store.dispatch('contracts/getContractAction', params) }
 
       this.rows = []
 
@@ -268,30 +311,15 @@ export default defineComponent({
       }))
     },
 
-    async goToMaintenance(payload) {
-      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
-      this.$store.commit('reports/MUTATE_REPORT', null)
-
-      await this.getEquipment(payload)
-
-      this.$router.push({
-        name: 'add-maintenance'
-      });
-    },
-
-    async getEquipment(id) {
-      await this.$store.dispatch('equipments/getEquipmentAction', { id })
-    },
-
-    async removePlan() {
+    async removeContract() {
       try {
         this.btnActions[1].loader = true
         const res = await this.$store.dispatch(
-          'maintenancePlans/deleteMaintenancePlanAction',
+          'contracts/deleteContractAction',
           this.$route.params.id
         );
         if (res === true) {
-          showSuccess(this.$q, { title: 'Éxito al eliminar el plan', msg: 'El plan de mantenimientos se ha eliminado' });
+          showSuccess(this.$q, { title: 'Éxito al eliminar el contrato', msg: 'El contrato de mantenimientos se ha eliminado' });
           this.goBack()
         } else {
           showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
@@ -313,15 +341,12 @@ export default defineComponent({
       }
     },
 
-    getIdToEdit() {
-      return `edit-${this.$route.params.id}-maintenance-plan`
+    goToDetails(payload) {
+      this.$router.push({ name: 'detail-equipment', params: { id: payload } });
     },
 
-    calcDate(date) {
-      const initialDate = new Date(date);
-      initialDate.setDate(initialDate.getDate() + 1);
-      const optFormat = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-      return initialDate.toLocaleDateString('es-MX', optFormat);
+    getIdToEdit() {
+      return `edit-${this.$route.params.id}-contract`
     },
 
     goBack() {

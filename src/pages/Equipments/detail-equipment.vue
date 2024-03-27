@@ -15,6 +15,7 @@
           <details-component
             :fields="fields"
             :loading="loading"
+            :detail-actions="detailActions"
           />
         </q-scroll-area>
       </div>
@@ -138,6 +139,9 @@ export default defineComponent({
           }
         ],
       },
+
+      detailActions: [],
+
       btnActions: [
         {
           show: true,
@@ -188,17 +192,34 @@ export default defineComponent({
         this.btnActions[1].show = false;
       }
 
-      // if (equipment.ContractId)
-      //   this.updateFieldByKeyInAllArrays('contract', {
-      //     label: 'Contrato de servicio',
-      //     model: equipment.contractStatus ? 'Activo' : 'Inactivo',
-      //     startDate: equipment.startDate,
-      //     comodato: equipment.comodato,
-      //     endDate: equipment.endDate,
-      //     name: equipment.contractName,
-      //     link: `detail-${equipment.ContractId}-contract`,
-      //     color: equipment.contractStatus ? '#10D13A' : '#dc4e5f'
-      //   })
+      if (equipment.ContractId)
+        this.updateFieldByKeyInAllArrays('contract', {
+          label: 'Contrato de servicio',
+          model: equipment.contractStatus ? 'Activo' : 'Inactivo',
+          startDate: equipment.startDate,
+          comodato: equipment.comodato,
+          endDate: equipment.endDate,
+          name: equipment.contractName,
+          link: `detail-${equipment.ContractId}-contract`,
+          color: equipment.contractStatus ? '#10D13A' : '#dc4e5f'
+        })
+      else {
+        this.detailActions.push(
+          {
+            name: 'Añadir contrato de servicio',
+            link: 'add-contract'
+          }
+        )
+      }
+
+      if (!equipment.PlanId) {
+        this.detailActions.push(
+          {
+            name: 'Añadir plan de mantenimientos',
+            link: 'add-maintenance-plan'
+          }
+        )
+      }
 
       this.loading = false
     },
@@ -227,7 +248,6 @@ export default defineComponent({
           break;
       }
     },
-
 
     updateFieldByKeyInAllArrays(key, updates) {
       for (const arrayKey in this.fields) {
