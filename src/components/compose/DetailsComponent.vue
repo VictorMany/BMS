@@ -228,7 +228,10 @@
           </div>
         </div>
 
-        <div v-else-if="item.label && item.model">
+        <div
+          v-else-if="item.label && item.model"
+          class="q-my-md"
+        >
           <div class="col-12 q-pr-md form__item-label text-weight-medium q-mb-xs">
             {{ item.label }}
           </div>
