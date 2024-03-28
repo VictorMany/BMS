@@ -47,6 +47,11 @@ export default defineComponent({
             model: '',
           },
           {
+            key: 'equipmentName',
+            label: 'Nombre del equipo',
+            model: '',
+          },
+          {
             key: 'equipmentBrand',
             label: 'Marca',
             model: ''
@@ -59,6 +64,11 @@ export default defineComponent({
           {
             key: 'location',
             label: 'Ubicación',
+            model: ''
+          },
+          {
+            key: 'department',
+            label: 'Departamento',
             model: ''
           },
           {

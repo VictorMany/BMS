@@ -33,11 +33,11 @@
                 <item-card
                   v-bind="equipment"
                   :status="equipment.isReported ?
-                    {
-                      tooltip: 'Tiene reporte(s) sin atender',
-                      color: '#FF9900',
-                      label: 'Reportado'
-                    } : null"
+          {
+            tooltip: 'Tiene reporte(s) sin atender',
+            color: '#FF9900',
+            label: 'Reportado'
+          } : null"
                   :index="index"
                   :card-action="goToDetails"
                 />
@@ -200,11 +200,19 @@ export default defineComponent({
 
       columns: [
         {
-          name: 'equipment',
+          name: 'categoryName',
+          label: 'Categoría',
+          align: 'left',
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
+          field: 'categoryName',
+          sortable: true,
+        },
+        {
+          name: 'equipmentName',
           label: 'Equipo',
           align: 'left',
           style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
-          field: 'equipment',
+          field: 'equipmentName',
           sortable: true,
         },
         {
@@ -291,9 +299,14 @@ export default defineComponent({
       return this.equipments.map((e) => {
         return {
           id: e.id,
-          equipment: e.cardTitle,
-          model: e.cardLabels[0].info,
+          equipmentName: e.equipmentName,
+          categoryName: e.categoryName,
+          model: e.equipmentModel,
+
+          // model: e.cardLabels[0].info,
+
           no_serie: e.cardLabels[1].info,
+
           nextMaintenanceDate: e.cardDate,
           status: e.status
         };

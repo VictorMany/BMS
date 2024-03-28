@@ -3,6 +3,7 @@ export default function () {
     equipments: [],
     categories: [],
     locations: [],
+    departments: [],
     equipment: JSON.parse(localStorage.getItem('equipment')) || null,
     message: '',
     pagination: {

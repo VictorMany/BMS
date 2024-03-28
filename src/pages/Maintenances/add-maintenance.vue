@@ -205,7 +205,7 @@ export default defineComponent({
           await this.getEquipments()
 
           this.equipments.map(e => {
-            e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
+            e.label = `${e.cardTitle} - ${e.equipmentName} - No. serie: ${e.serialNumber}`
           })
 
           this.updateFieldByKeyInAllArrays('idEquipment', {
@@ -226,7 +226,7 @@ export default defineComponent({
 
       await update(() => {
         this.equipments.map(e => {
-          e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
+          e.label = `${e.cardTitle} - ${e.equipmentName} - No. serie: ${e.serialNumber}`
         })
 
         this.updateFieldByKeyInAllArrays('idEquipment', {
@@ -249,10 +249,12 @@ export default defineComponent({
     },
 
     getEquipmentFromReport() {
+      const label = `${this.report.Equipment.categoryName} - ${this.report.Equipment.equipmentName} - No. serie: ${this.report.Equipment.serialNumber}`
+
       this.updateFieldByKeyInAllArrays('idEquipment', {
         model: {
           value: this.report.Equipment.IdEquipment,
-          label: this.report.Equipment.categoryName
+          label: label
         },
         readonly: true
       })
@@ -261,6 +263,7 @@ export default defineComponent({
         value: 'Correctivo',
         label: 'Correctivo'
       })
+
       this.setModelValueByKey('photo', this.report.Equipment.photo)
       this.setModelValueByKey('serialNumber', this.report.Equipment.serialNumber)
       this.setModelValueByKey('observations', 'Mantenimiento a causa de un reporte por: ' + this.report.reason)

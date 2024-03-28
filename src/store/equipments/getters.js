@@ -6,7 +6,8 @@ export function getEquipmentsGetter(state) {
     cardTitle: equipment.categoryName,
     cardImg: equipment.photo,
     cardLabels: [
-      { label: 'Modelo', info: equipment.equipmentModel },
+      // { label: 'Nombre del equipo' },
+      { label: 'Nombre del equipo', info: equipment.equipmentName },
       { label: 'Número de serie', info: equipment.serialNumber },
     ],
     cardDate: formatDate(equipment.nextMaintenanceDate), // CAMBIAR POR NEXTMAINTENANCE DATE
@@ -16,6 +17,9 @@ export function getEquipmentsGetter(state) {
     value: equipment.IdEquipment,
     serialNumber: equipment.serialNumber,
     equipmentModel: equipment.equipmentModel,
+
+    equipmentName: equipment.equipmentName,
+    categoryName: equipment.categoryName,
 
     isReported: equipment.isReported,
     status: equipment.isReported ? 'Reportado' : 'Sin reportes',
@@ -45,6 +49,15 @@ export function getLocationsGetter(state) {
     ...location,
     value: location.LocationId,
     label: location.locationName
+  }));
+  return locations
+}
+
+export function getDepartmentsGetter(state) {
+  let locations = state.departments.map(department => ({
+    ...department,
+    value: department.DepartmentId,
+    label: department.departmentName
   }));
   return locations
 }

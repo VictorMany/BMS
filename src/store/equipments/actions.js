@@ -19,7 +19,7 @@ export async function getEquipmentAction(context, params) {
             // We call the global action to format our payload
             const equipment = response.data.contents.equipment
 
-            const categoryName = `${equipment.categoryName} - ${equipment.equipmentModel} - No. serie: ${equipment.serialNumber}`
+            const categoryName = `${equipment.categoryName} - ${equipment.equipmentName} - No. serie: ${equipment.serialNumber}`
             const IdEquipment = params.id
 
             const {
@@ -27,6 +27,8 @@ export async function getEquipmentAction(context, params) {
                 equipmentModel,
                 equipmentBrand,
                 equipmentStatus,
+                equipmentName,
+                // department,
                 photo
             } = equipment
 
@@ -37,6 +39,8 @@ export async function getEquipmentAction(context, params) {
                 equipmentStatus,
                 photo,
                 categoryName,
+                // department,
+                equipmentName,
                 IdEquipment
             })
 
@@ -80,6 +84,17 @@ export async function getAllLocationsAction(context) {
     return service.getAllLocations().then(async (response) => {
         if (response.status == 200) {
             context.commit('MUTATE_LOCATIONS', response.data.contents.locations);
+            return true
+        } else {
+            return response
+        }
+    })
+}
+
+export async function getAllDepartmentsAction(context) {
+    return service.getAllDepartments().then(async (response) => {
+        if (response.status == 200) {
+            context.commit('MUTATE_DEPARTMENTS', response.data.contents.departments);
             return true
         } else {
             return response
@@ -131,10 +146,13 @@ export async function getDatesPerMonthAction(context, params) {
 export async function postEquipmentAction(context, equipment) {
     // Those are the keys you need in your payload and find in the fields
     let keys = {
+        department: '',
+        equipmentName: '',
         equipmentBrand: '',
         equipmentModel: '',
         CategoryId: '',
         LocationId: '',
+        DepartmentId: '',
         location: '',
         manufacturingYear: '',
         observations: '',
@@ -177,6 +195,7 @@ export async function updateEquipmentAction(context, equipment) {
     let keys = {
         equipmentStatus: '',
         LocationId: '',
+        DepartmentId: '',
         observations: '',
         serialNumber: '',
         trackingNumber: '',

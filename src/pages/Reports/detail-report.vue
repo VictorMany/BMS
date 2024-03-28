@@ -109,6 +109,11 @@ export default defineComponent({
             model: ''
           },
           {
+            key: 'equipmentName',
+            label: 'Nombre del equipo',
+            model: ''
+          },
+          {
             key: 'equipmentModel',
             label: 'Modelo del equipo',
             model: ''

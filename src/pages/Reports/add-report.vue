@@ -237,7 +237,7 @@ export default defineComponent({
           await this.getEquipments()
 
           this.equipments.map(e => {
-            e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
+            e.label = `${e.cardTitle} - ${e.equipmentName} - No. serie: ${e.serialNumber}`
           })
 
           this.updateFieldByKeyInAllArrays('idEquipment', {
@@ -258,7 +258,7 @@ export default defineComponent({
 
       await update(() => {
         this.equipments.map(e => {
-          e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
+          e.label = `${e.cardTitle} - ${e.equipmentName} - No. serie: ${e.serialNumber}`
         })
 
         this.updateFieldByKeyInAllArrays('idEquipment', {

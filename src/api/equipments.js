@@ -22,6 +22,10 @@ export default class EquipmentService {
         return api.get(this.endpoint + 'listLoc');
     }
 
+    static getAllDepartments() {
+        return api.get(this.endpoint + 'listDep');
+    }
+
     static getEquipmentsByCategory(params) {
         return api.get(this.endpoint + 'listCatGetEq', { params });
     }

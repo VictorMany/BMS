@@ -10,6 +10,10 @@ export function MUTATE_LOCATIONS(state, payload) {
   state.locations = payload;
 }
 
+export function MUTATE_DEPARTMENTS(state, payload) {
+  state.departments = payload;
+}
+
 export function MUTATE_EQUIPMENT(state, payload) {
   try {
     if (payload === null) {

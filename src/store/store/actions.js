@@ -19,12 +19,13 @@ export async function getEquipmentAction(context, params) {
             // We call the global action to format our payload
             const equipment = response.data.contents.equipment
 
-            const categoryName = `${equipment.categoryName} - ${equipment.equipmentModel} - No. serie: ${equipment.serialNumber}`
+            const categoryName = `${equipment.categoryName} - ${equipment.equipmentName} - No. serie: ${equipment.serialNumber}`
             const IdEquipment = params.id
 
             const {
                 serialNumber,
                 equipmentModel,
+                equipmentName,
                 equipmentBrand,
                 equipmentStatus,
                 photo
@@ -33,6 +34,7 @@ export async function getEquipmentAction(context, params) {
             context.commit('MUTATE_EQUIPMENT', {
                 serialNumber,
                 equipmentModel,
+                equipmentName,
                 equipmentBrand,
                 equipmentStatus,
                 photo,

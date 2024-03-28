@@ -141,6 +141,12 @@ export default defineComponent({
             readonly: true
           },
           {
+            key: 'equipmentName',
+            label: 'Nombre del equipo*',
+            model: '',
+            readonly: this.isEditing(),
+          },
+          {
             key: 'LocationId',
             label: 'Ubicación*',
             type: 'autocomplete',
@@ -149,6 +155,15 @@ export default defineComponent({
             setModel: this.setModelLocation,
             options: [],
             rules: [rules.requiredAutocomplete],
+          },
+          {
+            key: 'DepartmentId',
+            label: 'Departamento',
+            type: 'autocomplete',
+            model: null,
+            itemFilter: this.filterDepartments,
+            setModel: this.setModelDepartment,
+            options: [],
           },
         ],
         left: [
@@ -258,6 +273,7 @@ export default defineComponent({
     async initInfo() {
       this.loading = true
       await this.getLocations()
+      await this.getDepartments()
 
       if (this.isEditing()) {
         await this.getEquipment()
@@ -354,6 +370,17 @@ export default defineComponent({
         await this.$store.dispatch('equipments/getAllLocationsAction')
         this.updateFieldByKeyInAllArrays('LocationId', {
           options: JSON.parse(JSON.stringify(this.locations))
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    async getDepartments() {
+      try {
+        await this.$store.dispatch('equipments/getAllDepartmentsAction')
+        this.updateFieldByKeyInAllArrays('DepartmentId', {
+          options: JSON.parse(JSON.stringify(this.departments))
         })
       } catch (error) {
         console.log(error)
@@ -462,6 +489,24 @@ export default defineComponent({
       })
     },
 
+    filterDepartments(val, update) {
+      if (val === '') {
+        update(() => {
+          this.updateFieldByKeyInAllArrays('DepartmentId', {
+            options: this.departments
+          })
+        })
+        return
+      }
+
+      update(() => {
+        const needle = val.toLowerCase()
+        this.updateFieldByKeyInAllArrays('DepartmentId', {
+          options: this.departments.filter(v => this.removeAccents(v.label.toLowerCase()).includes(this.removeAccents(needle)))
+        })
+      })
+    },
+
     setModelCategory(val) {
       const category = this.categories.find((cat) => cat.categoryName === val)
       this.updateFieldByKeyInAllArrays('CategoryId', {
@@ -473,6 +518,13 @@ export default defineComponent({
       const location = this.locations.find((loc) => loc.locationName === val)
       this.updateFieldByKeyInAllArrays('LocationId', {
         model: location ? location : val
+      })
+    },
+
+    setModelDepartment(val) {
+      const department = this.departments.find((dep) => dep.departmentName === val)
+      this.updateFieldByKeyInAllArrays('DepartmentId', {
+        model: department ? department : val
       })
     }
   },
@@ -488,6 +540,10 @@ export default defineComponent({
 
     locations() {
       return this.$store.getters['equipments/getLocationsGetter'];
+    },
+
+    departments() {
+      return this.$store.getters['equipments/getDepartmentsGetter'];
     },
   },
 
