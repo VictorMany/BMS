@@ -40,6 +40,7 @@
         hide-bottom-space
         stack-label
         borderless
+        :label="item?.innerLabel"
         :name="item.key"
         :readonly="item.readonly"
         :type="inputType"
@@ -62,7 +63,7 @@
         </template>
     </q-input>
 </template>
-  
+
 <script>
 import { defineComponent } from 'vue';
 
@@ -118,4 +119,3 @@ export default defineComponent({
     },
 });
 </script>
-  

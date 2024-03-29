@@ -41,6 +41,7 @@ export async function getReportAction(context, params) {
                 userId,
                 User,
                 Equipment,
+                timeToResolve,
             } = reportFromRes
 
 
@@ -51,6 +52,7 @@ export async function getReportAction(context, params) {
                 userId,
                 User,
                 Equipment,
+                timeToResolve
             })
             // We call the global action to format our payload
             let payload = response

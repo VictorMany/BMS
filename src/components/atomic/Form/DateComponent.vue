@@ -9,6 +9,7 @@
         bottom-slots
         readonly
         stack-label
+        :label="item?.innerLabel"
         :rules="item.rules"
         @click="item.readonly ? () => { } : $refs.proxy.show()"
     >
@@ -45,7 +46,7 @@
         </template>
     </q-input>
 </template>
-  
+
 <script>
 import { defineComponent } from 'vue';
 
@@ -85,4 +86,3 @@ export default defineComponent({
     }
 });
 </script>
-  

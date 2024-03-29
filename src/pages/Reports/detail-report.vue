@@ -129,6 +129,13 @@ export default defineComponent({
             model: ''
           },
           {
+            key: 'timeToResolve',
+            label: 'Tiempo de resolución',
+            model: '',
+            suffix: 'hh:mm:ss'
+
+          },
+          {
             key: 'reportUrgency',
             label: 'Prioridad',
             model: ''
