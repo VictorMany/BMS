@@ -114,21 +114,35 @@ export function changeIsDark(context, newData) {
     context.commit('UPDATE_IS_DARK', newData)
 }
 
-export function formatDate(date) {
-    if (date) {
-        const dateToFormat = new Date(date)
+export function formatDate(dateString) {
+    if (dateString) {
+        const date = new Date(dateString);
 
-        const day = dateToFormat.getUTCDate().toString().padStart(2, '0');
-        const month = (dateToFormat.getUTCMonth()).toString().padStart(2, '0'); // Los meses van de 0 a 11
-        const year = dateToFormat.getUTCFullYear();
+        if (isNaN(date.getTime())) {
+            // Si la conversión a fecha falla, retorna una cadena vacía
+            return '';
+        }
 
-        setDefaultOptions({ locale: es })
-        const result = format(new Date(year, month, day), 'PPPP')
-        return result;
+        const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const monthsOfYear = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+        const dayOfWeek = daysOfWeek[date.getDay()];
+        const dayOfMonth = date.getDate();
+        const month = monthsOfYear[date.getMonth()];
+        const year = date.getFullYear();
+
+        let hour = date.getHours();
+        const minute = date.getMinutes();
+        const ampm = hour >= 12 ? 'pm' : 'am';
+        hour = hour % 12;
+        hour = hour ? hour : 12; // Convertir 0 a 12 en formato de 12 horas
+
+        const formattedDate = `${dayOfWeek} ${dayOfMonth} de ${month} del ${year} a las ${hour}:${minute.toString().padStart(2, '0')} ${ampm}`;
+
+        return formattedDate;
     } else {
         return '';
     }
-
 }
 
 function getModelSelected(item, valueFromServer) {
