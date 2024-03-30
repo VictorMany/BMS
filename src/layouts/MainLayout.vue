@@ -167,15 +167,16 @@
                     <qrcode-vue
                       :value="value"
                       :size="size"
-                      class="qr-code-style border-rounded"
+                      class="border-rounded q-mx-auto qr-code-style "
                       background="#F3F3F3"
                       foreground="#062841"
                       :margin="2"
                       level="L"
                     />
+
                     <div class="row justify-center items-center q-pb-md">
                       <div
-                        class="text-center text-weight-medium q-pr-md"
+                        class="text-center q-px-lg"
                         style="color: #062841;"
                       >
                         No. serie → {{ equipment?.serialNumber }}
