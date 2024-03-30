@@ -105,33 +105,27 @@ export default defineComponent({
         try {
           const res = await this.$store.dispatch('users/loginAction', this.model);
           if (res === true) {
-            try {
-              if (this.userRole == 3) {
-                if (this.$route?.params?.id) {
-                  await this.getEquipment()
-                  await this.$router.replace({ name: 'add-report' });
-                } else {
-                  showWarning(this.$q, { title: 'No se ha escaneado un código QR', msg: 'Debes de escanear un código QR de un equipo para poder iniciar sesión con este usuario' });
-
-                  setAuthHeader(null)
-                  deleteTokenCookie(null)
-                  deleteLocalStorage()
-
-                  this.$store.commit('global/RESET_LOCAL_STORAGE')
-
-                  this.$router.replace('/login');
-                }
-              } else
+            if (this.$route?.params?.id) {
+              await this.getEquipment();
+              await this.$router.replace({ name: 'add-report' });
+            } else {
+              if (this.userRole === 3) {
+                showWarning(this.$q, { title: 'No se ha escaneado un código QR', msg: 'Debes de escanear un código QR de un equipo para poder iniciar sesión con este usuario' });
+                setAuthHeader(null);
+                deleteTokenCookie(null);
+                deleteLocalStorage();
+                this.$store.commit('global/RESET_LOCAL_STORAGE');
+                this.$router.replace('/login');
+              } else if (this.userRole === 1 || this.userRole === 2) {
                 this.$router.replace('/');
-            } catch (error) {
-              // this.$router.replace('/');
-              showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+              }
             }
           } else {
             showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
           }
-          this.btnAction.loader = false;
         } catch (error) {
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+        } finally {
           this.btnAction.loader = false;
         }
       }
