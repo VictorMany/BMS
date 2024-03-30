@@ -2,7 +2,7 @@ import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 import { Notify } from 'quasar';
 import { setAuthHeader } from 'src/api/auth';
-import { getTokenFromCookie } from 'app/utils/utils';
+import { deleteLocalStorage, deleteTokenCookie, getTokenFromCookie, showWarning } from 'app/utils/utils';
 const warning = new URL('../../src/assets/png/warning.png', import.meta.url).href
 
 const api = axios.create({ baseURL: 'https://be.bmsystemll.com' })
@@ -23,6 +23,7 @@ export default boot(({ app, router }) => {
 
     return response;
   }, function (error) {
+
     handleErrorResponse(error, router);
     return Promise.reject(error);
   });
@@ -31,6 +32,15 @@ export default boot(({ app, router }) => {
 function handleErrorResponse(error, router) {
   const message = getErrorMessage(error);
   const caption = getErrorCaption(error);
+
+  console.log(message, 'Este es el mensaje')
+
+  if (message === 'Token inválido o expirado') {
+    setAuthHeader(null);
+    deleteTokenCookie(null);
+    deleteLocalStorage();
+    this.$store.commit('global/RESET_LOCAL_STORAGE');
+  }
 
   Notify.create({
     message,
