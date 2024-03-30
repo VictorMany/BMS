@@ -225,3 +225,43 @@ export async function updateEquipmentAction(context, equipment) {
         })
     }
 }
+
+export async function updateEquipmentsAction(context, payload) {
+    // We call the global action to format our payload
+    const idEquipments = payload.equipments
+
+    const equipmentData = Object.assign({},
+        payload.form.DepartmentId?.model?.value !== '' && {
+            DepartmentId: (typeof payload.form.DepartmentId?.model === 'string') ? payload.form.DepartmentId.model : payload.form.DepartmentId?.model?.value
+        },
+        payload.form.LocationId?.model?.value !== '' && {
+            LocationId: (typeof payload.form.LocationId?.model === 'string') ? payload.form.LocationId.model : payload.form.LocationId?.model?.value
+        },
+        payload.form.equipmentStatus?.model?.value !== '' && { equipmentStatus: payload.form.equipmentStatus?.model?.value },
+        payload.form.observations?.model && { observations: payload.form.observations?.model },
+        payload.form.warrantyDate?.model && { warrantyDate: payload.form.warrantyDate?.model },
+        payload.form.price?.model && { price: payload.form.price?.model },
+        payload.form.provider?.model && { provider: payload.form.provider?.model },
+        payload.form.acquisitionDate?.model && { acquisitionDate: payload.form.acquisitionDate?.model }
+    );
+
+    console.log(idEquipments, equipmentData, 'EL FORM en el update')
+
+    return await service.updateEquipments({ idEquipments, equipmentData }).then(async (response) => {
+        if (response.status == 200) {
+            return true
+        } else {
+            return response
+        }
+    })
+}
+
+export async function deleteEquipmentsAction(context, equipment) {
+    return await service.deleteEquipments(equipment).then(async (response) => {
+        if (response.status == 200) {
+            return true
+        } else {
+            return response
+        }
+    })
+}

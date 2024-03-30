@@ -4,7 +4,7 @@
 
       <header-actions
         :titlePage="'Activos biomédicos'"
-        :btnAction="btnAction"
+        :btn-actions="btnActions"
         :inputSearch="inputSearch"
         v-model:searchModel="searchModel"
         v-model:switch-content="switchContent"
@@ -86,6 +86,7 @@
         </div>
 
         <general-table
+          ref="generalTable"
           v-else-if="switchContent === 2"
           v-model:row-selected="rowSelected"
           :height="'100%'"
@@ -94,10 +95,171 @@
           :actions-table="actionsTable"
           :loading="loading"
           :pagination-prop="pagination"
+          :change-selection="changeSelection"
           @change-pagination="changePagination"
         />
       </div>
     </div>
+
+    <q-dialog
+      v-model="modalUpdates"
+      persistent
+      class="border-rounded"
+    >
+      <q-card
+        class="border-shadow q-pa-sm border-rounded modal-ios"
+        style="width: 450px; height: 100%;"
+      >
+        <q-card-section>
+          <div class="title-page text-primary">Modificación de equipos</div>
+        </q-card-section>
+
+        <q-card-section>
+          <div class="setting__title text-weight-medium">
+            Los campos que no modifiques nos se verán afectados
+          </div>
+        </q-card-section>
+
+        <q-card-section
+          class="q-pt-none row"
+          style="gap: 10px"
+        >
+          <select-component
+            class="form__input-12 bg-accent"
+            v-model:model="form.equipmentStatus.model"
+            :item="form.equipmentStatus"
+          />
+
+          <autocomplete-component
+            class="form__input-12 bg-accent"
+            :item="form.LocationId"
+          />
+
+          <autocomplete-component
+            class="form__input-12 bg-accent"
+            :item="form.DepartmentId"
+          />
+
+          <input-component
+            class="bg-accent form__input-12"
+            :item="form.provider"
+            v-model:model="form.provider.model"
+          />
+
+          <input-component
+            class="bg-accent form__input-12"
+            :item="form.price"
+            v-model:model="form.price.model"
+          />
+
+          <date-component
+            class="form__input-12 bg-accent"
+            v-model:model="form.warrantyDate.model"
+            :item="form.warrantyDate"
+          />
+
+          <date-component
+            class="form__input-12 bg-accent"
+            v-model:model="form.acquisitionDate.model"
+            :item="form.acquisitionDate"
+          />
+
+          <div class="q-pt-sm form__item-label text-weight-medium">
+            Observaciones del equipo
+          </div>
+
+          <editor-component
+            v-model:model="form.observations.model"
+            :item="form.observations"
+            class="form__textarea bg-accent w-100 border-rounded"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            unelevated
+            v-close-popup
+            no-caps
+            class="border-rounded q-my-sm"
+            size="sm"
+            outline
+            align="left"
+            color="blue-7"
+          >
+            Regresar
+          </q-btn>
+          <q-btn
+            unelevated
+            no-caps
+            class="border-rounded q-my-sm"
+            size="sm"
+            align="left"
+            color="blue-7"
+            @click="editEquipments"
+          >
+            Modificar equipos
+          </q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog
+      v-model="modalConfirm"
+      persistent
+      class="border-rounded"
+    >
+      <q-card
+        class="border-shadow q-pa-sm border-rounded modal-ios"
+        style="width: 400px; height: auto;"
+      >
+        <q-card-section>
+          <div class="title-page text-primary">Eliminar equipo</div>
+        </q-card-section>
+
+        <q-card-section
+          class="q-pt-none row"
+          style="gap: 10px"
+        >
+          <div class="setting__title text-weight-medium">
+          </div>
+          <div class="setting__title">
+            ¿Estás seguro de que quieres eliminar este/estos equipo(s)?
+            <ul>
+              <li class="setting__paragraph">
+                La acción no se puede completar si alguno de los equipos tiene reportes o mantenimientos
+              </li>
+            </ul>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            unelevated
+            v-close-popup
+            no-caps
+            class="border-rounded q-my-sm"
+            size="sm"
+            outline
+            align="left"
+            color="blue-7"
+          >
+            Regresar
+          </q-btn>
+          <q-btn
+            unelevated
+            no-caps
+            class="border-rounded q-my-sm"
+            size="sm"
+            align="left"
+            color="blue-7"
+            @click="deleteEquipments"
+          >
+            Confirmar
+          </q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </q-page>
 </template>
 
@@ -106,6 +268,12 @@ import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import ItemCard from 'src/components/atomic/ItemCard.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
+import InputComponent from 'src/components/atomic/Form/InputComponent.vue';
+import SelectComponent from 'src/components/atomic/Form/SelectComponent.vue';
+import { rules, showSuccess, showWarning } from 'app/utils/utils';
+import AutocompleteComponent from 'src/components/atomic/Form/AutocompleteComponent.vue';
+import DateComponent from 'src/components/atomic/Form/DateComponent.vue';
+import EditorComponent from 'src/components/atomic/Form/EditorComponent.vue';
 
 export default defineComponent({
   name: 'EquipmentsPage',
@@ -113,6 +281,11 @@ export default defineComponent({
     GeneralTable,
     HeaderActions,
     ItemCard,
+    InputComponent,
+    SelectComponent,
+    AutocompleteComponent,
+    DateComponent,
+    EditorComponent
   },
   data() {
     return {
@@ -123,6 +296,11 @@ export default defineComponent({
       timeoutSearch: null,
       loading: true,
       paramsFromCreated: false,
+      modalUpdates: false,
+      modalConfirm: false,
+      selectedRows: [],
+
+      form: {},
 
       rowSelected: {},
 
@@ -139,20 +317,36 @@ export default defineComponent({
         category: '',
       },
 
-      btnAction: {
-        show: false,
-        btnTitle: 'Agregar equipo',
-        iconName: 'o_data_saver_on',
-        tooltip: 'Agregar nuevo equipo',
-        to: 'add-equipment',
-      },
+      btnActions: [
+        {
+          show: false,
+          btnTitle: 'Agregar equipo',
+          iconName: 'o_data_saver_on',
+          tooltip: 'Agregar nuevo equipo',
+          to: 'add-equipment',
+        },
+        {
+          show: false,
+          btnTitle: 'Actualizar equipos',
+          iconName: 'o_edit',
+          tooltip: 'Actualizar un conjunto de equipos',
+          btnAction: this.openModalUpdatesAction
+        },
+        {
+          show: false,
+          btnTitle: 'Eliminar equipos',
+          iconName: 'o_delete',
+          tooltip: 'Eliminar un conjunto de equipos',
+          btnAction: this.openDeleteEquipments
+        }
+      ],
 
       inputSearch: {
         show: true,
         inputLabel: 'Categoría del equipo',
         setSelectedFilter: this.setSelectedFilter,
         setSelectedOptionFilter: this.setSelectedOptionFilter,
-        heightModal: 300,
+        heightModal: 350,
         items: [
           {
             title: 'Categoría del equipo',
@@ -163,6 +357,11 @@ export default defineComponent({
             title: 'Ubicación',
             filter: 'location',
             icon: 'o_explore',
+          },
+          {
+            title: 'Departamento',
+            filter: 'department',
+            icon: 'o_webhook',
           },
           {
             title: 'Modelo',
@@ -218,6 +417,7 @@ export default defineComponent({
         {
           name: 'model',
           label: 'Modelo',
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
           field: 'model',
           align: 'left',
           sortable: true,
@@ -251,7 +451,7 @@ export default defineComponent({
           icnAction: 'Edit',
           tooltip: 'Editar equipo',
           shouldHideAction: this.shouldHideAction
-        },
+        }
       ],
     };
   },
@@ -260,6 +460,7 @@ export default defineComponent({
     this.checkParamsFromCreated()
     this.checkPermissions()
     this.getEquipments();
+    this.initForm()
   },
 
   watch: {
@@ -294,6 +495,14 @@ export default defineComponent({
       return this.$store.getters['equipments/getEquipmentsGetter'];
     },
 
+    locations() {
+      return this.$store.getters['equipments/getLocationsGetter'];
+    },
+
+    departments() {
+      return this.$store.getters['equipments/getDepartmentsGetter'];
+    },
+
     rows() {
       // Mapea la información de equipos a las filas requeridas por la tabla
       return this.equipments.map((e) => {
@@ -302,8 +511,6 @@ export default defineComponent({
           equipmentName: e.equipmentName,
           categoryName: e.categoryName,
           model: e.equipmentModel,
-
-          // model: e.cardLabels[0].info,
 
           no_serie: e.cardLabels[1].info,
 
@@ -358,6 +565,218 @@ export default defineComponent({
       await this.$store.dispatch('equipments/getEquipmentAction', { id })
     },
 
+    openDeleteEquipments() {
+      this.modalConfirm = true
+    },
+
+    async deleteEquipments() {
+      const equipmentIds = await this.selectedIdsToUpdate()
+      try {
+        const res = await this.$store.dispatch(
+          'equipments/deleteEquipmentsAction',
+          equipmentIds
+        );
+        if (res === true) {
+          showSuccess(this.$q, { title: 'Éxito al eliminar equipo(s)', msg: 'Se ha(n) eliminado correctamente' });
+          this.getEquipments()
+          // Close modal
+          this.modalConfirm = false
+          // Hide the actions
+          this.btnActions[1].show = false
+          this.btnActions[2].show = false
+          this.btnActions[0].show = true
+        } else {
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    async changeSelection(selected) {
+      if (selected.length > 0) {
+        this.selectedRows = selected
+        this.btnActions[1].show = true
+        this.btnActions[2].show = true
+        this.btnActions[0].show = false
+      }
+      else {
+        this.selectedRows = selected
+        this.btnActions[1].show = false
+        this.btnActions[2].show = false
+        this.btnActions[0].show = true
+      }
+    },
+
+    async getLocations() {
+      try {
+        await this.$store.dispatch('equipments/getAllLocationsAction')
+        this.form.LocationId.options = JSON.parse(JSON.stringify(this.locations))
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    async getDepartments() {
+      try {
+        await this.$store.dispatch('equipments/getAllDepartmentsAction')
+        this.form.DepartmentId.options = JSON.parse(JSON.stringify(this.departments))
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    async editEquipments() {
+      this.btnActions[1].loader = true;
+      try {
+        const res = await this.$store.dispatch(
+          'equipments/updateEquipmentsAction',
+          {
+            form: this.form,
+            equipments: this.selectedIdsToUpdate()
+          }
+        );
+
+        if (res === true) {
+          showSuccess(this.$q, { title: 'Éxito al modificar los equipos', msg: 'Los equipos se han actualizado' });
+          this.getEquipments()
+          this.modalUpdates = false
+          this.$refs.generalTable.localSelected = []
+
+          this.btnActions[1].show = false
+          this.btnActions[2].show = false
+          this.btnActions[0].show = true
+
+          this.initForm()
+        } else {
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+        }
+
+        this.btnActions[1].loader = false;
+      } catch (error) {
+        this.btnActions[1].loader = false;
+        console.log('error', error)
+      }
+    },
+
+    initForm() {
+      this.form = {
+        equipmentStatus: {
+          innerLabel: 'Estatus*',
+          model: null,
+          options: [
+            { label: 'Activo', index: 1, value: 1 },
+            { label: 'Inactivo', index: 2, value: 0 },
+          ],
+        },
+
+        LocationId: {
+          innerLabel: 'Ubicación*',
+          model: null,
+          itemFilter: this.filterLocations,
+          setModel: this.setModelLocation,
+          options: [],
+        },
+
+        DepartmentId: {
+          innerLabel: 'Departamento',
+          model: null,
+          itemFilter: this.filterDepartments,
+          setModel: this.setModelDepartment,
+          options: [],
+        },
+
+        provider: {
+          innerLabel: 'Proveedor',
+          model: '',
+          rules: [rules.maxLength(50), rules.alphanumeric],
+        },
+
+        price: {
+          innerLabel: 'Costo',
+          model: '',
+          prefix: '$',
+          type: 'number',
+          rules: [
+            rules.numeric,
+            rules.nonNegative,
+            rules.maxDecimalPlaces
+          ],
+        },
+
+        warrantyDate: {
+          key: 'warrantyDate',
+          innerLabel: 'Fecha de garantía',
+          model: '',
+        },
+
+        acquisitionDate: {
+          key: 'acquisitionDate',
+          innerLabel: 'Fecha de adquisición',
+          model: '',
+        },
+
+        observations: {
+          required: false,
+          type: 'textarea',
+          label: 'Observaciones del equipo',
+          model: '',
+        },
+      }
+    },
+
+    selectedIdsToUpdate() {
+      return this.selectedRows.map(e => e.id);
+    },
+
+    filterLocations(val, update) {
+      if (val === '') {
+        update(() => {
+          this.form.LocationId.options = this.locations
+        })
+        return
+      }
+
+      update(() => {
+        const needle = val.toLowerCase()
+
+        this.form.LocationId.options = this.locations.filter(v => this.removeAccents(v.label.toLowerCase()).includes(this.removeAccents(needle)))
+      })
+    },
+
+    filterDepartments(val, update) {
+      if (val === '') {
+        update(() => {
+          this.form.DepartmentId.options = this.departments
+        })
+        return
+      }
+
+      update(() => {
+        const needle = val.toLowerCase()
+        this.form.DepartmentId.options = this.departments.filter(v => this.removeAccents(v.label.toLowerCase()).includes(this.removeAccents(needle)))
+      })
+    },
+
+    setModelLocation(val) {
+      const location = this.locations.find((loc) => loc.locationName === val)
+      this.form.LocationId.model = location ? location : val
+    },
+
+    setModelDepartment(val) {
+      const department = this.departments.find((dep) => dep.departmentName === val)
+      this.form.DepartmentId.model = department ? department : val
+    },
+
+
+    removeAccents(str) {
+      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    },
+
+    openModalUpdatesAction() {
+      this.modalUpdates = true
+    },
+
     shouldHideAction() {
       if (this.userRole != 1) {
         return false
@@ -379,11 +798,14 @@ export default defineComponent({
     checkPermissions() {
       switch (this.userRole) {
         case 1:
-          this.btnAction.show = true
+          this.btnActions[0].show = true
+          this.getLocations()
+          this.getDepartments()
           break;
         case 2:
         case 3:
-          this.btnAction.show = false
+          this.btnActions[0].show = false
+          this.changeSelection = null
           break;
       }
     },

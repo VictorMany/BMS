@@ -8,8 +8,12 @@
     :rows-per-page-options="[-1]"
     :hide-pagination="!showPagination"
     :loading="loading"
-    :class="{ 'sticky': !loading }"
-    class="table-style font-style my-sticky-header-table q-mt-none bg-white border-rounded"
+    :class="{ 'sticky': !loading, 'show-selection': changeSelection }"
+    :selected-rows-label="getSelectedString"
+    selection="multiple"
+    v-model:selected="localSelected"
+    class="table-style font-style my-sticky-header-table q-mt-none bg-white border-rounded hide-selection"
+    @selection="changeSelectionLocal"
   >
     <template v-slot:loading>
       <q-inner-loading
@@ -22,19 +26,6 @@
           size="4em"
         />
       </q-inner-loading>
-    </template>
-
-    <template v-slot:header="props">
-      <q-tr :props="props">
-        <q-th
-          v-for="col in props.cols"
-          :key="col.name"
-          :props="props"
-          class="column-style"
-        >
-          {{ col.label }}
-        </q-th>
-      </q-tr>
     </template>
 
     <template v-slot:pagination>
@@ -144,6 +135,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: 'id'
+    },
+    changeSelection: {
+      type: Function,
+      required: false,
+      default: null,
     }
   },
   setup() {
@@ -161,7 +157,23 @@ export default defineComponent({
     };
   },
 
+  data() {
+    return {
+      localSelected: []
+    }
+  },
+
   methods: {
+    getSelectedString() {
+      return this.localSelected.length === 0 ? '' : `${this.localSelected.length} registro${this.localSelected.length > 1 ? 's' : ''} seleccionados de ${this.rows.length}`
+    },
+
+    changeSelectionLocal() {
+      this.$nextTick(() => {
+        this.changeSelection(this.localSelected)
+      });
+    },
+
     rowClicked(props, action) {
       this.$emit('update:rowSelected', {
         id: props.row.id,
@@ -218,10 +230,6 @@ export default defineComponent({
 
     // Changing pagination obj
     changePagination(page) {
-      // let pag = {
-      //   ...this.pagination,
-      //   page: page,
-      // };
       this.$emit('change-pagination', page);
     },
 
@@ -235,7 +243,7 @@ export default defineComponent({
       },
       deep: true,
       immediate: true
-    },
+    }
   },
 });
 </script>
@@ -328,13 +336,13 @@ export default defineComponent({
   }
 }
 
-.my-sticky-header-table thead tr th {
+/* .my-sticky-header-table thead tr th {
   z-index: 1;
-}
+} */
 
-.sticky thead tr th {
+/* .sticky thead tr th {
   position: sticky !important;
-}
+} */
 
 .my-sticky-header-table thead tr:first-child th {
   top: 0;
@@ -356,5 +364,25 @@ export default defineComponent({
 /* Estilo para las filas impares */
 .q-table tbody tr:nth-child(even) {
   background-color: rgba(16, 108, 144, 0.02)
+}
+
+.q-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Opcional: Cambiar el estilo de los bordes del encabezado */
+.q-table thead th {
+  border-bottom: 1px solid #ccc;
+  /* Cambia el color y el grosor del borde según tus preferencias */
+}
+
+.show-selection * .q-table--col-auto-width {
+  display: table-cell !important;
+}
+
+.q-table--col-auto-width {
+  display: none !important;
 }
 </style>

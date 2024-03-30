@@ -71,7 +71,8 @@
 </template>
 
 <script>
-import { rules, showWarning } from 'app/utils/utils';
+import { deleteLocalStorage, deleteTokenCookie, rules, showWarning } from 'app/utils/utils';
+import { setAuthHeader } from 'src/api/auth';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
 import { defineComponent } from 'vue';
 
@@ -104,23 +105,40 @@ export default defineComponent({
         try {
           const res = await this.$store.dispatch('users/loginAction', this.model);
           if (res === true) {
-            try {
-              if (this.$route.fullPath.includes('equipment')) {
-                let path = '/' + this.$route.fullPath.split('/')[2]
-                await this.$router.replace(path);
-              }
-              else
+            if (this.$route?.params?.id) {
+              await this.getEquipment();
+              await this.$router.replace({ name: 'add-report' });
+            } else {
+              if (this.userRole === 3) {
+                showWarning(this.$q, { title: 'No se ha escaneado un código QR', msg: 'Debes de escanear un código QR de un equipo para poder iniciar sesión con este usuario' });
+                setAuthHeader(null);
+                deleteTokenCookie(null);
+                deleteLocalStorage();
+                this.$store.commit('global/RESET_LOCAL_STORAGE');
+                this.$router.replace('/login');
+              } else if (this.userRole === 1 || this.userRole === 2) {
                 this.$router.replace('/');
-            } catch (error) {
-              this.$router.replace('/');
+              }
             }
           } else {
             showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
           }
-          this.btnAction.loader = false;
         } catch (error) {
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+        } finally {
           this.btnAction.loader = false;
         }
+      }
+    },
+
+    async getEquipment() {
+      try {
+        const params = {
+          id: this.$route.params.id
+        }
+        await this.$store.dispatch('equipments/getEquipmentAction', params)
+      } catch (error) {
+        console.log(error)
       }
     },
   },
@@ -129,7 +147,12 @@ export default defineComponent({
     visibilityIcon() {
       return this.model.userPassword.trim() ? (this.show ? 'o_visibility' : 'o_visibility_off') : '';
     },
-  },
+    userRole: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
+      },
+    },
+  }
 });
 
 

@@ -10,6 +10,7 @@
         hide-selected
         bottom-slots
         stack-label
+        :label="item?.innerLabel"
         :behavior="$q.platform.is.ios === true ? 'dialog' : 'menu'"
         :name="item.key"
         :readonly="item.readonly"
@@ -49,7 +50,7 @@
         </template>
     </q-select>
 </template>
-  
+
 <script>
 import { defineComponent } from 'vue';
 
@@ -63,4 +64,3 @@ export default defineComponent({
     },
 });
 </script>
-  

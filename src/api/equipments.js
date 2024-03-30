@@ -67,4 +67,18 @@ export default class EquipmentService {
     static updateEquipment(payload, id) {
         return api.put(this.endpoint + 'update/' + id, payload);
     }
+
+    // Actualizar varios equipos
+    static updateEquipments(payload) {
+        return api.put(this.endpoint + 'updateEquips', payload);
+    }
+
+    static deleteEquipments(equipmentIds) {
+        console.log('Estos son los ids', equipmentIds)
+        return api.delete(this.endpoint + 'delete/', {
+            data: {
+                equipmentIds: equipmentIds
+            }
+        })
+    }
 }

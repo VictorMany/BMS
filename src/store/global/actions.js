@@ -1,4 +1,3 @@
-
 export function changeMenu(context) {
     context.commit('CHANGE_MENU')
 }
@@ -112,15 +111,32 @@ export function changeIsDark(context, newData) {
     context.commit('UPDATE_IS_DARK', newData)
 }
 
-export function formatDate(date) {
-    if (date) {
-        const initialDate = new Date(date);
+export function formatDate(dateString) {
+    if (dateString) {
+        const date = new Date(dateString);
 
-        if (!isNaN(initialDate)) {
-            const optFormat = { day: 'numeric', month: 'long', year: 'numeric' };
-            const fechaFormateada = initialDate.toLocaleDateString('es-MX', optFormat);
-            return fechaFormateada;
+        if (isNaN(date.getTime())) {
+            // Si la conversión a fecha falla, retorna una cadena vacía
+            return '';
         }
+
+        const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const monthsOfYear = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+        const dayOfWeek = daysOfWeek[date.getDay()];
+        const dayOfMonth = date.getDate();
+        const month = monthsOfYear[date.getMonth()];
+        const year = date.getFullYear();
+
+        let hour = date.getHours();
+        const minute = date.getMinutes();
+        const ampm = hour >= 12 ? 'pm' : 'am';
+        hour = hour % 12;
+        hour = hour ? hour : 12; // Convertir 0 a 12 en formato de 12 horas
+
+        const formattedDate = `${dayOfWeek} ${dayOfMonth} de ${month} del ${year} a las ${hour}:${minute.toString().padStart(2, '0')} ${ampm}`;
+
+        return formattedDate;
     } else {
         return '';
     }
