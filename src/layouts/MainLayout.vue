@@ -302,12 +302,6 @@ export default defineComponent({
           link: 'reports', color: 'rgba(122, 122, 122, 1)',
           background: '#f3f3f3ff',
         },
-        // {
-        //   title: 'Tienda',
-        //   link: 'store', color: 'rgba(122, 122, 122, 1)',
-        //   newItem: true,
-        //   background: '#f3f3f3ff',
-        // },
         {
           title: 'Contratos de servicio',
           link: 'contracts', color: 'rgba(122, 122, 122, 1)',
@@ -407,6 +401,10 @@ export default defineComponent({
   created() {
     if (this.userRole === 3) {
       this.btnLinks = this.menuRole3
+      this.setMenu(this.$route);
+    } else if (this.userRole === 2) {
+      this.btnGeneral.splice(6, 1); // hidding contracts
+      this.btnLinks = this.btnGeneral
       this.setMenu(this.$route);
     } else {
       this.btnLinks = this.btnGeneral;

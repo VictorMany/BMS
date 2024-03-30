@@ -459,8 +459,7 @@ export default defineComponent({
     this.checkParamsFromCreated()
     this.checkPermissions()
     this.getEquipments();
-    this.getLocations()
-    this.getDepartments()
+
     this.initForm()
   },
 
@@ -800,10 +799,13 @@ export default defineComponent({
       switch (this.userRole) {
         case 1:
           this.btnActions[0].show = true
+          this.getLocations()
+          this.getDepartments()
           break;
         case 2:
         case 3:
           this.btnActions[0].show = false
+          this.changeSelection = null
           break;
       }
     },
