@@ -38,7 +38,13 @@
         v-if="cardImg"
         class="col-5 img-style border-rounded q-mr-sm"
         :src="cardImg"
-      />
+      >
+        <template v-slot:loading>
+          <div class="card-title row justify-center">
+            <q-spinner-ios size="sm" />
+          </div>
+        </template>
+      </q-img>
 
       <q-card-section
         v-if="cardLabels.length > 0"
