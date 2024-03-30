@@ -2,7 +2,7 @@ import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 import { Notify } from 'quasar';
 import { setAuthHeader } from 'src/api/auth';
-import { deleteLocalStorage, deleteTokenCookie, getTokenFromCookie, showWarning } from 'app/utils/utils';
+import { deleteLocalStorage, deleteTokenCookie, getTokenFromCookie } from 'app/utils/utils';
 const warning = new URL('../../src/assets/png/warning.png', import.meta.url).href
 
 const api = axios.create({ baseURL: 'https://be.bmsystemll.com' })

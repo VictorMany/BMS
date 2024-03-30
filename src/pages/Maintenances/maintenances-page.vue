@@ -145,7 +145,11 @@ export default defineComponent({
 
       columns: [
         { name: 'encharged_name', label: 'Encargado', field: 'encharged_name', align: 'left', sortable: true },
-        { name: 'equipment', label: 'Equipo', field: 'equipment', align: 'left', sortable: true },
+        {
+          name: 'equipment', label: 'Equipo', field: 'equipment', align: 'left', sortable: true,
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
+        },
+
         { name: 'date', label: 'Fecha de mantenimiento', field: 'date', align: 'left', sortable: true },
         {
           name: 'badge',
