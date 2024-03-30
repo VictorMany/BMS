@@ -189,6 +189,7 @@ export default defineComponent({
 @media only screen and (max-width: 599px) {
   .my-card {
     width: 100% !important;
+    max-width: 90vw !important;
   }
 
   .card-title {
@@ -199,6 +200,18 @@ export default defineComponent({
   .img-style {
     width: 80px;
     height: 80px;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+  .my-card {
+    max-width: 89vw !important;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .my-card {
+    max-width: 88vw !important;
   }
 }
 
