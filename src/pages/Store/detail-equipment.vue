@@ -152,6 +152,7 @@ export default defineComponent({
           to: this.getIdToEdit(),
           btnWidth: 'auto'
         },
+
       ],
       btnCloseWindow: {
         iconName: 'exit_to_app',

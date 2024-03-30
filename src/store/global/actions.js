@@ -1,3 +1,5 @@
+import { format, setDefaultOptions } from 'date-fns';
+import { es } from 'date-fns/locale'
 
 export function changeMenu(context) {
     context.commit('CHANGE_MENU')
@@ -114,16 +116,19 @@ export function changeIsDark(context, newData) {
 
 export function formatDate(date) {
     if (date) {
-        const initialDate = new Date(date);
+        const dateToFormat = new Date(date)
 
-        if (!isNaN(initialDate)) {
-            const optFormat = { day: 'numeric', month: 'long', year: 'numeric' };
-            const fechaFormateada = initialDate.toLocaleDateString('es-MX', optFormat);
-            return fechaFormateada;
-        }
+        const day = dateToFormat.getUTCDate().toString().padStart(2, '0');
+        const month = (dateToFormat.getUTCMonth()).toString().padStart(2, '0'); // Los meses van de 0 a 11
+        const year = dateToFormat.getUTCFullYear();
+
+        setDefaultOptions({ locale: es })
+        const result = format(new Date(year, month, day), 'PPPP')
+        return result;
     } else {
         return '';
     }
+
 }
 
 function getModelSelected(item, valueFromServer) {

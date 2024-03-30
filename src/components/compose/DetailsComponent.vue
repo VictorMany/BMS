@@ -78,6 +78,12 @@
                 <span @click="item.link ? navigateTo(item.link) : () => { }">
                   {{ item.affix ? item.affix + item.model : item.model }}
                 </span>
+                <span
+                  class="q-px-xs"
+                  v-if="item.suffix"
+                >
+                  {{ item.suffix }}
+                </span>
               </div>
 
               <div
@@ -285,7 +291,7 @@ export default defineComponent({
 
     detailActions: {
       type: Array,
-      required: true,
+      required: false,
       default: () => ([]),
     },
 

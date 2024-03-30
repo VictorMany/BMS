@@ -7,6 +7,7 @@
         dense
         hide-hint
         hide-bottom-space
+        :label="item?.innerLabel"
         hide-selected
         bottom-slots
         stack-label
@@ -40,7 +41,7 @@
         </template>
     </q-select>
 </template>
-  
+
 <script>
 import { defineComponent } from 'vue';
 
@@ -80,4 +81,3 @@ export default defineComponent({
     }
 });
 </script>
-  

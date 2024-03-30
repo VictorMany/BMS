@@ -61,7 +61,10 @@ $secondary-white: #dce1e6;
     color: $secondary-white;
   }
 
-  .column-style {
+  .q-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
     background-color: #e8ebef !important;
   }
 }
@@ -144,8 +147,13 @@ $secondary-white: #dce1e6;
     color: $secondary-white;
   }
 
-  .column-style {
+
+  .q-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
     background-color: #0e1829 !important;
+
   }
 }
 
@@ -225,6 +233,10 @@ $secondary-white: #dce1e6;
 
 .w-100 {
   width: 100% !important;
+}
+
+.w-auto {
+  width: auto !important;
 }
 
 .border-none,

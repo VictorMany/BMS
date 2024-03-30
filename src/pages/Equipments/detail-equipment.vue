@@ -20,6 +20,63 @@
         </q-scroll-area>
       </div>
     </div>
+
+    <q-dialog
+      v-model="modalConfirm"
+      persistent
+      class="border-rounded"
+    >
+      <q-card
+        class="border-shadow q-pa-sm border-rounded modal-ios"
+        style="width: 400px; height: auto;"
+      >
+        <q-card-section>
+          <div class="title-page text-primary">Eliminar equipo</div>
+        </q-card-section>
+
+        <q-card-section
+          class="q-pt-none row"
+          style="gap: 10px"
+        >
+          <div class="setting__title text-weight-medium">
+          </div>
+          <div class="setting__title">
+            ¿Estás seguro de que quieres eliminar este equipo?
+            <ul>
+              <li class="setting__paragraph">
+                La acción no se puede completar si el equipo tiene reportes o mantenimientos
+              </li>
+            </ul>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            unelevated
+            v-close-popup
+            no-caps
+            class="border-rounded q-my-sm"
+            size="sm"
+            outline
+            align="left"
+            color="blue-7"
+          >
+            Regresar
+          </q-btn>
+          <q-btn
+            unelevated
+            no-caps
+            class="border-rounded q-my-sm"
+            size="sm"
+            align="left"
+            color="blue-7"
+            @click="deleteEquipments"
+          >
+            Confirmar
+          </q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -27,6 +84,7 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import DetailsComponent from 'src/components/compose/DetailsComponent.vue'
+import { showSuccess, showWarning } from 'app/utils/utils'
 
 export default defineComponent({
   name: 'EquipmentsPage',
@@ -37,6 +95,7 @@ export default defineComponent({
   data() {
     return {
       loading: false,
+      modalConfirm: false,
 
       fields: {
         createdAt: '',
@@ -177,6 +236,13 @@ export default defineComponent({
           to: this.getIdToEdit(),
           btnWidth: 'auto'
         },
+        {
+          show: true,
+          btnTitle: 'Eliminar',
+          iconName: 'o_delete',
+          tooltip: 'Eliminar equipo',
+          btnAction: this.openDeleteEquipments
+        }
       ],
       btnCloseWindow: {
         iconName: 'exit_to_app',
@@ -234,6 +300,28 @@ export default defineComponent({
       this.loading = false
     },
 
+    async deleteEquipments() {
+      const equipmentIds = [this.$route.params.id]
+      try {
+        const res = await this.$store.dispatch(
+          'equipments/deleteEquipmentsAction',
+          equipmentIds
+        );
+        if (res === true) {
+          showSuccess(this.$q, { title: 'Éxito al eliminar el equipo', msg: 'Se ha eliminado correctamente' });
+          this.goBack(-1)
+        } else {
+          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    openDeleteEquipments() {
+      this.modalConfirm = true
+    },
+
     getIdToEdit() {
       return `edit-${this.$route.params.id}-equipment`
     },
@@ -255,6 +343,7 @@ export default defineComponent({
         case 3:
           this.btnActions[1].show = false;
           this.btnActions[2].show = false;
+          this.btnActions[3].show = false;
           break;
       }
     },
