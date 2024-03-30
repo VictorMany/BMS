@@ -276,7 +276,7 @@ export default defineComponent({
           comodato: equipment.comodato,
           endDate: equipment.endDate,
           name: equipment.contractName,
-          link: `detail-${equipment.ContractId}-contract`,
+          link: `add-report-${equipment.ContractId}`,
           color: equipment.contractStatus ? '#10D13A' : '#dc4e5f'
         })
       else {
@@ -339,6 +339,7 @@ export default defineComponent({
       switch (this.userRole) {
         case 2:
           this.btnActions[2].show = false;
+          this.btnActions[3].show = false;
           break;
         case 3:
           this.btnActions[1].show = false;

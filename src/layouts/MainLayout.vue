@@ -359,24 +359,24 @@ export default defineComponent({
       ],
 
       menuRole3: [
-        {
-          title: 'Equipos',
-          link: 'equipments',
-          background: '#f3f3f3ff',
-          color: 'rgba(122, 122, 122, 1)',
-        },
-        {
-          title: 'Reportes',
-          link: 'reports',
-          background: '#f3f3f3ff',
-          color: 'rgba(122, 122, 122, 1)',
-        },
-        {
-          title: 'Configuración',
-          link: 'settings',
-          color: 'rgba(122, 122, 122, 1)',
-          background: '#f3f3f3ff',
-        }
+        // {
+        //   title: 'Equipos',
+        //   link: 'equipments',
+        //   background: '#f3f3f3ff',
+        //   color: 'rgba(122, 122, 122, 1)',
+        // },
+        // {
+        //   title: 'Reportes',
+        //   link: 'reports',
+        //   background: '#f3f3f3ff',
+        //   color: 'rgba(122, 122, 122, 1)',
+        // },
+        // {
+        //   title: 'Configuración',
+        //   link: 'settings',
+        //   color: 'rgba(122, 122, 122, 1)',
+        //   background: '#f3f3f3ff',
+        // }
       ],
 
       btnCloseSesion: {
@@ -464,7 +464,7 @@ export default defineComponent({
     async setMenu(route) {
       try {
         this.btnCloseSesion.show = false;
-        this.value = 'www.bmsystemll.com' + route.fullPath;
+        this.value = 'www.bmsystemll.com' + '/login/' + route?.params?.id;
 
         switch (route.name) {
           case 'reports':

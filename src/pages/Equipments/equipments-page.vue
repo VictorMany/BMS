@@ -417,6 +417,7 @@ export default defineComponent({
         {
           name: 'model',
           label: 'Modelo',
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
           field: 'model',
           align: 'left',
           sortable: true,
@@ -459,7 +460,6 @@ export default defineComponent({
     this.checkParamsFromCreated()
     this.checkPermissions()
     this.getEquipments();
-
     this.initForm()
   },
 
