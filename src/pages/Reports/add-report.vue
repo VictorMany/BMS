@@ -56,7 +56,7 @@ export default defineComponent({
         iconName: 'exit_to_app',
         btnBackground: '#FF990020',
         btnColor: '#FF9900',
-        btnAction: this.goBack,
+        btnAction: this.goBack
       },
 
       fields: {
