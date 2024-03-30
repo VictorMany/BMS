@@ -1,15 +1,17 @@
-import { auth, verifyAuthForDetailEquipment } from './middlewareAuth'
+import { auth, recognizeSesion, verifyAuthForDetailEquipment } from './middlewareAuth'
 
 const routes = [
   {
     path: '/login',
     name: 'login',
+    meta: [recognizeSesion],
     component: () => import('src/pages/login-page.vue')
   },
   {
-    path: '/login/detail-:id-equipment',
+    path: '/login/:id',
     name: 'login-equipment',
-    component: () => import('src/pages/login-page.vue')
+    component: () => import('src/pages/login-page.vue'),
+    props: true
   },
   {
     path: '/',

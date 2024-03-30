@@ -302,12 +302,6 @@ export default defineComponent({
           link: 'reports', color: 'rgba(122, 122, 122, 1)',
           background: '#f3f3f3ff',
         },
-        // {
-        //   title: 'Tienda',
-        //   link: 'store', color: 'rgba(122, 122, 122, 1)',
-        //   newItem: true,
-        //   background: '#f3f3f3ff',
-        // },
         {
           title: 'Contratos de servicio',
           link: 'contracts', color: 'rgba(122, 122, 122, 1)',
@@ -365,24 +359,24 @@ export default defineComponent({
       ],
 
       menuRole3: [
-        {
-          title: 'Equipos',
-          link: 'equipments',
-          background: '#f3f3f3ff',
-          color: 'rgba(122, 122, 122, 1)',
-        },
-        {
-          title: 'Reportes',
-          link: 'reports',
-          background: '#f3f3f3ff',
-          color: 'rgba(122, 122, 122, 1)',
-        },
-        {
-          title: 'Configuración',
-          link: 'settings',
-          color: 'rgba(122, 122, 122, 1)',
-          background: '#f3f3f3ff',
-        }
+        // {
+        //   title: 'Equipos',
+        //   link: 'equipments',
+        //   background: '#f3f3f3ff',
+        //   color: 'rgba(122, 122, 122, 1)',
+        // },
+        // {
+        //   title: 'Reportes',
+        //   link: 'reports',
+        //   background: '#f3f3f3ff',
+        //   color: 'rgba(122, 122, 122, 1)',
+        // },
+        // {
+        //   title: 'Configuración',
+        //   link: 'settings',
+        //   color: 'rgba(122, 122, 122, 1)',
+        //   background: '#f3f3f3ff',
+        // }
       ],
 
       btnCloseSesion: {
@@ -407,6 +401,10 @@ export default defineComponent({
   created() {
     if (this.userRole === 3) {
       this.btnLinks = this.menuRole3
+      this.setMenu(this.$route);
+    } else if (this.userRole === 2) {
+      this.btnGeneral.splice(6, 1); // hidding contracts
+      this.btnLinks = this.btnGeneral
       this.setMenu(this.$route);
     } else {
       this.btnLinks = this.btnGeneral;
@@ -466,7 +464,7 @@ export default defineComponent({
     async setMenu(route) {
       try {
         this.btnCloseSesion.show = false;
-        this.value = 'www.bmsystemll.com' + route.fullPath;
+        this.value = 'www.bmsystemll.com' + '/login/' + route?.params?.id;
 
         switch (route.name) {
           case 'reports':

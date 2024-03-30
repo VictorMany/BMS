@@ -5,7 +5,7 @@
       <header-actions
         :titlePage="getTitle()"
         :btn-action="btnAction"
-        :btn-close-window="btnCloseWindow"
+        :btn-close-window="showCloseBtn() ? btnCloseWindow : null"
       />
 
       <div class="main-container-page main-container-page-dark container-form">
@@ -28,7 +28,8 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import FormComponent from 'src/components/compose/FormComponent.vue'
-import { rules, showSuccess, showWarning } from 'app/utils/utils';
+import { deleteLocalStorage, deleteTokenCookie, rules, showSuccess, showWarning } from 'app/utils/utils';
+import { setAuthHeader } from 'src/api/auth';
 
 export default defineComponent({
   name: 'Add-Report',
@@ -174,8 +175,23 @@ export default defineComponent({
             this.fields
           );
           if (res === true) {
-            showSuccess(this.$q, { title: 'Éxito al crear el reporte', msg: 'El reporte se ha agregado' });
-            this.$router.go(-1);
+
+            if (this.userRole == 3) {
+              showSuccess(this.$q, { title: 'El reporte se creó con éxito', msg: 'Redireccionando al incio de sesión' });
+
+              setAuthHeader(null)
+              deleteTokenCookie(null)
+              deleteLocalStorage()
+
+              this.$store.commit('global/RESET_LOCAL_STORAGE')
+
+              this.$router.replace('/login');
+            }
+            else {
+              showSuccess(this.$q, { title: 'Éxito al crear el reporte', msg: 'El reporte se ha agregado' });
+              this.$router.go(-1);
+            }
+
           } else {
             showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
           }
@@ -275,6 +291,10 @@ export default defineComponent({
       }
     },
 
+    showCloseBtn() {
+      return this.userRole == 3 ? false : true
+    },
+
     getEquipmentDefault() {
       if (this.equipment.categoryName && !this.fields.top[1].model) {
         this.updateFieldByKeyInAllArrays('idEquipment', {
@@ -340,7 +360,10 @@ export default defineComponent({
 
   created() {
     this.loading = true
-    this.getEquipments()
+
+    if (!this.equipment) {
+      this.getEquipments()
+    }
 
     if (this.isEditing()) {
       this.getReport()
@@ -350,12 +373,18 @@ export default defineComponent({
   },
 
   mounted() {
+    console.log('SI TENGO EQUIPMENT', this.equipment)
     if (this.equipment) {
       this.getEquipmentDefault()
     }
   },
 
   computed: {
+    userRole: {
+      get() {
+        return this.$store.getters['users/getRoleGetter'];
+      },
+    },
     equipments: {
       get() {
         return this.$store.getters['equipments/getEquipmentsGetter'];
