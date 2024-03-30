@@ -1,6 +1,3 @@
-import { format, setDefaultOptions } from 'date-fns';
-import { es } from 'date-fns/locale'
-
 export function changeMenu(context) {
     context.commit('CHANGE_MENU')
 }
