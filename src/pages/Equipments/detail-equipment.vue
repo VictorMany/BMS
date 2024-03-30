@@ -213,23 +213,23 @@ export default defineComponent({
           link: `detail-${equipment.ContractId}-contract`,
           color: equipment.contractStatus ? '#10D13A' : '#dc4e5f'
         })
-      else {
-        this.detailActions.push(
-          {
-            name: 'Añadir contrato de servicio',
-            link: 'add-contract'
-          }
-        )
-      }
+      // else {
+      //   this.detailActions.push(
+      //     {
+      //       name: 'Añadir contrato de servicio',
+      //       link: 'add-contract'
+      //     }
+      //   )
+      // }
 
-      if (!equipment.PlanId) {
-        this.detailActions.push(
-          {
-            name: 'Añadir plan de mantenimientos',
-            link: 'add-maintenance-plan'
-          }
-        )
-      }
+      // if (!equipment.PlanId) {
+      //   this.detailActions.push(
+      //     {
+      //       name: 'Añadir plan de mantenimientos',
+      //       link: 'add-maintenance-plan'
+      //     }
+      //   )
+      // }
 
       this.loading = false
     },
