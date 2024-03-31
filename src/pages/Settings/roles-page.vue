@@ -39,6 +39,10 @@
                   actividades del sistema.
                 </li>
                 <li>
+                  Administrar Contratos de Servicio: Disponen del poder para crear y gestionar contratos para los
+                  equipos biomédicos.
+                </li>
+                <li>
                   Generar Reportes: Poseen la facultad de generar informes sobre diferentes aspectos del
                   sistema.
                 </li>
@@ -92,6 +96,7 @@
                   Visualizar Planes de Mantenimientos: Tienen autorización para visualizar los planes de
                   mantenimientos existentes y acceder a sus detalles.
                 </li>
+
                 <li>
                   Consultar el Calendario: Disponen de acceso al calendario de actividades del sistema.
                 </li>
@@ -107,7 +112,10 @@
                   No pueden crear o editar Equipos.
                 </li>
                 <li>
-                  No tienen acceso a la gestión de usuarios.
+                  No tienen acceso a la gestión de Usuarios.
+                </li>
+                <li>
+                  No tienen acceso a los Contratos de Servicio.
                 </li>
               </ul>
             </div>
@@ -117,20 +125,15 @@
               Lector
             </div>
             <div class="setting__subtitle">
-              Los Lectores tienen acceso limitado y están enfocados principalmente en la visualización de
-              información. Sus permisos incluyen:
+              Los Lectores tienen acceso limitado y están enfocados principalmente a la generación de reportes de los
+              equipos biomédicos
 
               <div class="text-weight-bold">
                 Permisos
               </div>
               <ul>
                 <li>
-                  Crear, visualizar y cancelar sus propios Reportes: Tienen la capacidad de generar, visualizar
-                  y cancelar los reportes que ellos mismos hayan creado.
-                </li>
-                <li>
-                  Visualizar Equipos: Pueden visualizar los equipos registrados en el sistema y acceder a
-                  ciertos detalles.
+                  Crear Reportes a través del escaneo de un código QR e inicio de sesión
                 </li>
               </ul>
 
@@ -139,25 +142,12 @@
               </div>
               <ul>
                 <li>
-                  No pueden acceder al Dashboard.
+                  No pueden acceder al sistema sin escanear un código QR previamente.
                 </li>
                 <li>
-                  No pueden realizar acciones relacionadas con Mantenimientos o Planes de Mantenimientos.
-                </li>
-                <li>
-                  No pueden acceder al Calendario.
-                </li>
-                <li>
-                  No pueden crear o editar Equipos.
-                </li>
-                <li>
-                  No tienen acceso a la gestión de usuarios.
-                </li>
-                <li>
-                  No pueden acceder a la configuración de permisos.
+                  No pueden acceder a otras secciones del sistema aparte de crear reportes.
                 </li>
               </ul>
-
             </div>
           </div>
         </q-scroll-area>
