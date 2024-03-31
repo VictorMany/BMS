@@ -175,7 +175,6 @@ export default defineComponent({
             this.fields
           );
           if (res === true) {
-
             if (this.userRole == 3) {
               showSuccess(this.$q, { title: 'El reporte se creó con éxito', msg: 'Redireccionando al incio de sesión' });
 
@@ -189,7 +188,7 @@ export default defineComponent({
             }
             else {
               showSuccess(this.$q, { title: 'Éxito al crear el reporte', msg: 'El reporte se ha agregado' });
-              this.$router.go(-1);
+              this.goBack()
             }
 
           } else {
@@ -334,8 +333,12 @@ export default defineComponent({
       return this.$store.$store.getters['global/getDate']
     },
 
+
     goBack() {
-      this.$router.go(-1);
+      if (this.$router?.options?.history?.state?.back)
+        this.$router.go(-1);
+      else
+        this.$router.push({ name: 'equipments' });
     },
 
     getTitle() {
