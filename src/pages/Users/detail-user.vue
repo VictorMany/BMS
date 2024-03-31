@@ -68,7 +68,7 @@ export default defineComponent({
           {
             key: 'birthday',
             label: 'Fecha de nacimiento',
-            type: 'formatedDate',
+            type: 'formatedDateOnly',
             class: 'q-pb-sm',
             model: '',
           },

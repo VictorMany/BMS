@@ -149,19 +149,19 @@ export default defineComponent({
           {
             key: 'nextMaintenanceDate',
             label: 'Próximo mantenimiento',
-            type: 'formatedDate',
+            type: 'formatedDateOnly',
             model: ''
           },
           {
             key: 'warrantyDate',
             label: 'Fecha de garantía',
-            type: 'formatedDate',
+            type: 'formatedDateOnly',
             model: ''
           },
           {
             key: 'acquisitionDate',
             label: 'Fecha de adquisición',
-            type: 'formatedDate',
+            type: 'formatedDateOnly',
             model: ''
           },
           {

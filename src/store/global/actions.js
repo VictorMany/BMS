@@ -142,6 +142,31 @@ export function formatDate(dateString) {
     }
 }
 
+export function formatDateOnly(dateString) {
+    if (dateString) {
+        const date = new Date(dateString);
+
+        if (isNaN(date.getTime())) {
+            // Si la conversión a fecha falla, retorna una cadena vacía
+            return '';
+        }
+
+        const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const monthsOfYear = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+        const dayOfWeek = daysOfWeek[date.getDay()];
+        const dayOfMonth = date.getDate();
+        const month = monthsOfYear[date.getMonth()];
+        const year = date.getFullYear();
+
+        const formattedDate = `${dayOfWeek} ${dayOfMonth} de ${month} del ${year}`;
+
+        return formattedDate;
+    } else {
+        return '';
+    }
+}
+
 function getModelSelected(item, valueFromServer) {
     if (item.options && item.options.length > 0) {
         item.options.forEach(opt => {
@@ -194,6 +219,8 @@ function getModelSelected(item, valueFromServer) {
         return item
     } else if (item.type == 'formatedDate') {
         item.model = formatDate(valueFromServer);
+    } else if (item.type == 'formatedDateOnly') {
+        item.model = formatDateOnly(valueFromServer);
     } else if (item.key == 'isReported') {
         item.model = valueFromServer ? item.model = 'Si' : item.model = 'Sin reportes'
         return item
