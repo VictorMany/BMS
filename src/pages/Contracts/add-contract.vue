@@ -11,7 +11,22 @@
       />
 
       <div class="main-container-page main-container-page-dark container-form">
+        <div
+          class="w-100 absolute-full flex flex-center"
+          v-if="loading"
+        >
+          <div class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded">
+            <q-spinner-pie
+              color="primary"
+              class="q-mt-lg"
+              size="4em"
+            />
+            <div class="text-primary q-ma-lg">Cargando ...</div>
+          </div>
+        </div>
+
         <q-scroll-area
+          v-else
           class="q-pa-md q-pa-lg-lg h-97"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
@@ -223,6 +238,7 @@ export default defineComponent({
     return {
       delaySearch: 300,
       timeoutSearch: null,
+      loading: false,
       paginationProp: {
         rowsPerPage: null
       },
@@ -323,6 +339,7 @@ export default defineComponent({
   },
 
   created() {
+    this.loading = true
     this.getCategories();
   },
 
@@ -441,8 +458,12 @@ export default defineComponent({
             });
           }
         }
+
+        this.loading = false
+
       } catch (error) {
         console.log(error)
+        this.loading = false
       }
     },
 

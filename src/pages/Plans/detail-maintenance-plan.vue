@@ -11,7 +11,23 @@
       />
 
       <div class="main-container-page main-container-page-dark container-form">
+
+        <div
+          class="w-100 absolute-full flex flex-center"
+          v-if="loading"
+        >
+          <div class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded">
+            <q-spinner-pie
+              color="primary"
+              class="q-mt-lg"
+              size="4em"
+            />
+            <div class="text-primary q-ma-lg">Cargando ...</div>
+          </div>
+        </div>
+
         <q-scroll-area
+          v-else
           class="h-97 q-pa-md"
           :thumb-style="$store.getters['global/getThumbStyle']"
         >
@@ -119,6 +135,8 @@ export default defineComponent({
   },
   data() {
     return {
+      loading: false,
+
       btnActions: [
         {
           show: true,
@@ -204,6 +222,7 @@ export default defineComponent({
   },
 
   created() {
+    this.loading = true
     this.checkPermissions()
     this.getMaintenancePlan()
   },
@@ -254,17 +273,24 @@ export default defineComponent({
 
   methods: {
     async getMaintenancePlan() {
-      const params = {
-        id: this.$route.params.id
+      try {
+        const params = {
+          id: this.$route.params.id
+        }
+
+        this.form = { ...this.form, ...await this.$store.dispatch('maintenancePlans/getMaintenancePlanAction', params) }
+
+        this.rows = []
+
+        this.form.equipments.forEach((e => {
+          this.rows = [...this.rows, ...e.children]
+        }))
+        this.loading = false
+
+      } catch (error) {
+        console.log(error)
+        this.loading = false
       }
-
-      this.form = { ...this.form, ...await this.$store.dispatch('maintenancePlans/getMaintenancePlanAction', params) }
-
-      this.rows = []
-
-      this.form.equipments.forEach((e => {
-        this.rows = [...this.rows, ...e.children]
-      }))
     },
 
     async goToMaintenance(payload) {
