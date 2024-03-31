@@ -37,7 +37,6 @@ function handleErrorResponse(error, router) {
     setAuthHeader(null);
     deleteTokenCookie(null);
     deleteLocalStorage();
-    this.$store.commit('global/RESET_LOCAL_STORAGE');
   }
 
   Notify.create({

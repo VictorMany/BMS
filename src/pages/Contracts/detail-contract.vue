@@ -58,7 +58,7 @@
                 class="row"
                 style="gap: 20px;"
               >
-                <div class="col-12 col-sm q-mt-sm">
+                <div class="col-12 col-sm container-table-plans q-mt-sm">
                   <general-table
                     style="overflow: scroll;"
                     class="w-100"

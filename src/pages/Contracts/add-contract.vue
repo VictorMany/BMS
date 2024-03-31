@@ -96,7 +96,7 @@
               />
             </div>
 
-            <div class="col-12 col-sm">
+            <div class="col-12 col-sm container-table-plans">
               <general-table
                 class="w-100"
                 style="height: auto; max-height: 450px;"

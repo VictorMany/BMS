@@ -55,7 +55,7 @@
               <div class="form__item-label text-weight-medium q-mb-xs">
                 Listado de equipos
               </div>
-              <div class="col-12 col-sm q-mt-sm">
+              <div class="col-12 col-sm container-table-plans q-mt-sm">
                 <general-table
                   style="overflow: scroll;"
                   class="w-100"
