@@ -124,7 +124,7 @@ export default defineComponent({
             showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
           }
         } catch (error) {
-          showWarning(this.$q, { msg: 'Inténtalo de nuevo más tarde y si el error persiste, repórtalo' });
+          console.log('error', error)
         } finally {
           this.btnAction.loader = false;
         }

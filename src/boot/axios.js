@@ -33,8 +33,6 @@ function handleErrorResponse(error, router) {
   const message = getErrorMessage(error);
   const caption = getErrorCaption(error);
 
-  console.log(message, 'Este es el mensaje')
-
   if (message === 'Token inválido o expirado') {
     setAuthHeader(null);
     deleteTokenCookie(null);

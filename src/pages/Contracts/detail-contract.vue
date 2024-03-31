@@ -58,7 +58,7 @@
                 class="row"
                 style="gap: 20px;"
               >
-                <div class="col-12 col-sm container-table-plans q-mt-sm">
+                <div class="col-12 col-sm q-mt-sm">
                   <general-table
                     style="overflow: scroll;"
                     class="w-100"
@@ -240,12 +240,14 @@ export default defineComponent({
           label: 'Equipo',
           align: 'left',
           field: 'categoryName',
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
           sortable: true,
         },
         {
           name: 'equipmentModel',
           label: 'Modelo',
           field: 'equipmentModel',
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
           align: 'left',
           sortable: true,
         },
@@ -254,6 +256,7 @@ export default defineComponent({
           label: 'Ubicación',
           field: 'location',
           align: 'left',
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
           sortable: true,
         },
         {

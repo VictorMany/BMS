@@ -96,7 +96,7 @@
               />
             </div>
 
-            <div class="col-12 col-sm container-table-plans">
+            <div class="col-12 col-sm">
               <general-table
                 class="w-100"
                 style="height: auto; max-height: 450px;"
@@ -362,6 +362,7 @@ export default defineComponent({
           label: 'Equipo',
           align: 'left',
           field: 'categoryName',
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
           sortable: true,
         },
         {
@@ -369,6 +370,7 @@ export default defineComponent({
           label: 'Modelo',
           field: 'equipmentModel',
           align: 'left',
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
           sortable: true,
         },
         {
@@ -376,6 +378,7 @@ export default defineComponent({
           label: 'Ubicación',
           field: 'location',
           align: 'left',
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
           sortable: true,
         },
         {

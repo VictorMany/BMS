@@ -187,7 +187,7 @@
               </span>
               <span
                 @click="item.link ? navigateTo(item.link) : () => { }"
-                class="text-link"
+                :class="item.link ? 'text-link' : ''"
               >{{ item.name }} </span>
             </div>
 

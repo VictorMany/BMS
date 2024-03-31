@@ -276,7 +276,7 @@ export default defineComponent({
           comodato: equipment.comodato,
           endDate: equipment.endDate,
           name: equipment.contractName,
-          link: `detail-${equipment.ContractId}-contract`,
+          link: this.userRole == 1 ? `detail-${equipment.ContractId}-contract` : null,
           color: equipment.contractStatus ? '#10D13A' : '#dc4e5f'
         })
       // else {
