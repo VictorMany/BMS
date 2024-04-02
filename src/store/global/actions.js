@@ -154,6 +154,7 @@ export function formatDateOnly(dateString) {
         const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         const monthsOfYear = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
+        date.setUTCHours(date.getUTCHours() + 6);
         const dayOfWeek = daysOfWeek[date.getDay()];
         const dayOfMonth = date.getDate();
         const month = monthsOfYear[date.getMonth()];
