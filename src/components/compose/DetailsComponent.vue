@@ -249,10 +249,11 @@
                   :src="item.model"
                 />
 
-                <embed
+                <iframe
                   v-else-if="isPDF(item.model)"
                   :src="item.model"
                   type="application/pdf"
+                  style="border: none; overflow-y: scroll;"
                   class="form__image64-equipment q-mx-auto q-my-auto"
                 />
 
@@ -332,11 +333,11 @@
             :src="fullFile"
           />
 
-          <embed
+          <iframe
             v-else-if="isPDF(fullFile)"
             :src="fullFile"
             width="100%"
-            style="height: 100%  !important;"
+            style="height: 100%  !important; border: none;"
             type="application/pdf"
           />
         </q-card-section>
