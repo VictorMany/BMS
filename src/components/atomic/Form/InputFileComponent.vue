@@ -12,11 +12,11 @@
                         : $refs.fileUpload.click()
                     "
             >
-                <iframe
+                <embed
                     v-if="pdfPreview"
                     :src="pdfPreview"
                     type="application/pdf"
-                    style="border: none;"
+                    style="border: none; overflow-y: scroll;"
                     width="230px"
                     height="230px"
                 />
