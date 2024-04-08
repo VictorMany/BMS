@@ -181,7 +181,7 @@ export default defineComponent({
 
       btnActions: [
         {
-          show: true,
+          show: false,
           btnTitle: 'Cancelar reporte',
           iconName: 'cancel',
           tooltip: 'Cancelar reporte',
@@ -268,10 +268,12 @@ export default defineComponent({
         }
 
         await this.$store.dispatch('reports/getReportAction', params)
+
         // this.btnActions[0].show = this.getModelValueByKey('showBtn') ? true : false
 
         if (this.getModelValueByKey('reportStatus') === 'Pendiente' && this.userRole != 3) {
           this.btnActions[1].show = true
+          this.btnActions[0].show = true
         }
 
         this.loading = false
