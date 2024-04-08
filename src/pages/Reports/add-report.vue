@@ -44,7 +44,7 @@ export default defineComponent({
 
       btnAction: {
         show: true,
-        btnTitle: 'Guardar',
+        btnTitle: 'Reportar',
         iconName: 'o_send',
         btnWidth: 'auto',
         tooltip: 'Guardar reporte',

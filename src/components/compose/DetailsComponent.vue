@@ -333,11 +333,11 @@
             :src="fullFile"
           />
 
-          <embed
+          <iframe
             v-else-if="isPDF(fullFile)"
             :src="fullFile"
             width="100%"
-            style="height: 100%  !important; border: none; overflow-y: scroll;"
+            style="height: 100%  !important; border: none !important; overflow-y: scroll;"
             type="application/pdf"
           />
         </q-card-section>
