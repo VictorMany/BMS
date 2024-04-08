@@ -112,7 +112,12 @@ export default defineComponent({
             type: 'textarea',
             label: 'Observaciones del mantenimiento',
             model: ''
-          }
+          },
+          {
+            key: 'documentUrl',
+            label: 'Archivo adjunto al mantenimiento',
+            model: ''
+          },
         ],
       },
 

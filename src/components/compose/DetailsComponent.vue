@@ -148,14 +148,14 @@
           v-if="item.key === 'photo' && item.model"
           class="q-mx-auto row q-my-lg"
           :style="type === 'user'
-      ? 'width: 254px !important; height: 254px; border-radius: 50%'
-      : 'width: 100%; min-height: 100%; max-width: 250px'
-      "
+            ? 'width: 254px !important; height: 254px; border-radius: 50%'
+            : 'width: 100%; min-height: 100%; max-width: 250px'
+            "
         >
           <q-img
             :class="[
-      type === 'user' ? 'form__image64' : 'form__image64-equipment border-rounded',
-    ]"
+              type === 'user' ? 'form__image64' : 'form__image64-equipment border-rounded',
+            ]"
             no-spinner
             class="q-mx-auto q-my-auto"
             :src="item.model"
@@ -234,6 +234,56 @@
           </div>
         </div>
 
+        <div v-else-if="item.key === 'documentUrl' && item.model">
+          <div class="q-mb-sm form__item-label text-weight-medium">
+            {{ item.label }}
+          </div>
+
+          <div class="row q-pa-md border-line border-rounded">
+            <div class="col-auto">
+              <div style="width: 214px; height: 214px">
+                <q-img
+                  v-if="isImage(item.model)"
+                  class="form__image64-equipment border-rounded q-mx-auto q-my-auto"
+                  no-spinner
+                  :src="item.model"
+                />
+
+                <embed
+                  v-else-if="isPDF(item.model)"
+                  :src="item.model"
+                  type="application/pdf"
+                  class="form__image64-equipment q-mx-auto q-my-auto"
+                />
+
+              </div>
+            </div>
+            <div class="col-12 col-sm q-px-sm-lg q-pa-xs-sm">
+              <div
+                v-if="getFileName(item.model)"
+                class="form__item-label text-primary ellipsis"
+                style="max-width: 70vw;"
+              >
+                &#x24D8; {{ getFileName(item.model) }}
+              </div>
+
+              <div class="row">
+                <q-btn
+                  unelevated
+                  no-caps
+                  class="border-rounded q-my-sm"
+                  size="sm"
+                  align="left"
+                  color="blue-7"
+                  @click="openFullFile(item.model)"
+                >
+                  Ver archivo en tamaño completo
+                </q-btn>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div
           v-else-if="item.label && item.model"
           class="q-my-md"
@@ -249,32 +299,58 @@
           </div>
         </div>
       </div>
-
-      <!-- <div
-        v-if="detailActions?.length > 0"
-        class="form__item-model row q-py-lg"
-      >
-        <div
-          v-for="(action, index) in detailActions"
-          :key="index"
-          class="col-auto q-mr-lg"
-        >
-          <span
-            @click="action.link ? navigateTo(action.link) : () => { }"
-            class="text-link"
-          >
-            ➤{{ action.name }}
-          </span>
-        </div>
-      </div> -->
     </div>
+
+    <q-dialog
+      v-model="dialog"
+      persistent
+      maximized
+      transition-show="slide-up"
+      transition-hide="slide-down"
+    >
+      <q-card
+        class="text-white alert-container"
+        style="height: 100vh; padding: 0 !important;"
+      >
+        <q-bar style="height: 8%;">
+          <q-space />
+          <btn-action
+            v-bind="btnCloseWindow"
+            :tooltip="'Regresar'"
+          />
+        </q-bar>
+
+        <q-card-section
+          class="q-pt-none flex justify-center"
+          style="height: 92%; width: 100%;"
+        >
+          <q-img
+            v-if="isImage(fullFile)"
+            no-spinner
+            style="max-height: 100%;"
+            fit="contain"
+            :src="fullFile"
+          />
+
+          <embed
+            v-else-if="isPDF(fullFile)"
+            :src="fullFile"
+            width="100%"
+            style="height: 100%  !important;"
+            type="application/pdf"
+          />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
+import BtnAction from '../atomic/BtnAction.vue';
 
 export default defineComponent({
+  components: { BtnAction },
   name: 'DetailsComponent',
   props: {
     type: {
@@ -301,9 +377,66 @@ export default defineComponent({
       default: false,
     }
   },
+
+  data() {
+    return {
+      dialog: false,
+      fullFile: '',
+      btnCloseWindow: {
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.closeDialog
+      },
+    }
+  },
+
   methods: {
     navigateTo(link) {
       this.$router.push(link)
+    },
+
+    isImage(url) {
+      try {
+        // Obtener la parte de la URL antes de los parámetros de consulta
+        const urlWithoutQuery = url.split('?')[0];
+        // Extraer la extensión del archivo de la URL
+        const extension = urlWithoutQuery.split('.').pop().toLowerCase();
+        // Verificar si la extensión corresponde a una imagen
+        return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'tiff', 'ico', 'raw', 'heif', 'heic', 'apng'].includes(extension);
+      } catch (error) {
+        return false
+      }
+    },
+
+    isPDF(url) {
+      try {
+        // Obtener la parte de la URL antes de los parámetros de consulta
+        const urlWithoutQuery = url.split('?')[0];
+        // Extraer la extensión del archivo de la URL
+        const extension = urlWithoutQuery.split('.').pop().toLowerCase();
+        // Verificar si la extensión corresponde a un PDF
+        return extension === 'pdf';
+      } catch (error) {
+        return false
+      }
+    },
+
+    getFileName(url) {
+      try {
+        return url.split('/').pop().split('?')[0]; // Obtener el nombre del archivo de la URL
+      } catch (error) {
+        return ''
+      }
+    },
+
+    closeDialog() {
+      this.dialog = false
+    },
+
+    openFullFile(file) {
+      this.fullFile = file
+      this.dialog = true
     }
   }
 });

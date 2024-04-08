@@ -95,12 +95,12 @@ export default defineComponent({
 
       fields: {
         createdAt: '',
-        extras: [
-          {
-            key: 'showBtn',
-            model: ''
-          }
-        ],
+        // extras: [
+        //   {
+        //     key: 'showBtn',
+        //     model: ''
+        //   }
+        // ],
         top: [],
         left: [
           {
@@ -169,11 +169,19 @@ export default defineComponent({
             model: ''
           }
         ],
+
+        bottom: [
+          {
+            key: 'documentUrl',
+            label: 'Imagen adjunta al reporte',
+            model: ''
+          },
+        ]
       },
 
       btnActions: [
         {
-          show: false,
+          show: true,
           btnTitle: 'Cancelar reporte',
           iconName: 'cancel',
           tooltip: 'Cancelar reporte',
@@ -260,7 +268,7 @@ export default defineComponent({
         }
 
         await this.$store.dispatch('reports/getReportAction', params)
-        this.btnActions[0].show = this.getModelValueByKey('showBtn') ? true : false
+        // this.btnActions[0].show = this.getModelValueByKey('showBtn') ? true : false
 
         if (this.getModelValueByKey('reportStatus') === 'Pendiente' && this.userRole != 3) {
           this.btnActions[1].show = true

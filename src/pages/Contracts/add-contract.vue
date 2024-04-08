@@ -48,9 +48,9 @@
             hide-hint
             hide-bottom-space
             :rules="[
-          rules.requiredString,
-          rules.maxLength(50)
-        ]"
+              rules.requiredString,
+              rules.maxLength(50)
+            ]"
             class="form__input bg-accent q-mb-lg"
           />
 
@@ -187,27 +187,27 @@
                 :placeholder="'Escribe aquí las notas del contrato'"
                 class="form__textarea bg-accent border-rounded"
                 :toolbar="[
-          [
-            {
-              label: $q.lang.editor.fontSize,
-              icon: $q.iconSet.editor.fontSize,
-              fixedLabel: true,
-              fixedIcon: true,
-              list: 'no-icons',
-              options: [
-                'size-1',
-                'size-2',
-                'size-3',
-                'size-4',
-              ],
-            },
-            'bold',
-            'italic',
-            'strike',
-            'underline',
-          ],
-          ['unordered', 'ordered'],
-        ]"
+                  [
+                    {
+                      label: $q.lang.editor.fontSize,
+                      icon: $q.iconSet.editor.fontSize,
+                      fixedLabel: true,
+                      fixedIcon: true,
+                      list: 'no-icons',
+                      options: [
+                        'size-1',
+                        'size-2',
+                        'size-3',
+                        'size-4',
+                      ],
+                    },
+                    'bold',
+                    'italic',
+                    'strike',
+                    'underline',
+                  ],
+                  ['unordered', 'ordered'],
+                ]"
               />
             </div>
           </div>
@@ -564,10 +564,7 @@ export default defineComponent({
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 .main-container-page {
   background-color: white;
 }

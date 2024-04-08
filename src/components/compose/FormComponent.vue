@@ -177,48 +177,16 @@
             class="q-px-sm row justify-center items-top h-100 w-100"
             style="height: 85%"
           >
-            <q-btn
-              unelevated
-              class="btn-background-dark q-mt-md btn-background-color q-pa-md"
-              :class="ImageBase64 && type === 'user' ? 'btn-background' : 'border-rounded'"
-              :style="type === 'user'
-                ? 'width: 205px; height: 205px; border-radius: 50%'
-                : 'width: 100%; max-width: 270px; min-height: 240px; min-width: 240px;'
-                "
-              @click="
-                pdfObject.name
-                  ? clearFileInput($refs.fileUpload)
-                  : $refs.fileUpload.click()
-                "
-            >
-              <q-img
-                :class="[
-                  ImageBase64 && type === 'user'
-                    ? 'form__image64'
-                    : 'form__image',
-                  ImageBase64 && type !== 'user'
-                    ? 'form__image64-equipment border-rounded'
-                    : 'form__image',
-                ]"
-                no-spinner
-                :src="ImageBase64 ? ImageBase64 : getImageUrl('svg/add_img.svg')"
-              />
-            </q-btn>
-
-            <div class="form__item-label text-weight-medium text-center text-underline q-mt-sm w-100 q-mb-auto">
-              <span @click="
-                pdfObject.name
-                  ? clearFileInput($refs.fileUpload)
-                  : $refs.fileUpload.click()
-                ">
-                Carga una imagen desde tus archivos (opcional)
-              </span>
-            </div>
+            <input-file-component
+              :type="type"
+              :upload-file="uploadImage"
+              v-model:default-image="defaultImage"
+            />
           </div>
 
           <div
             v-if="item.readImage && item.model"
-            class="row q-px-sm q-py-xs q-mx-auto q-mt-lg"
+            class="row q-px-sm q-py-xs q-mx-auto q-my-lg"
             :style="type === 'user'
               ? 'width: 254px !important; height: 254px; border-radius: 50%'
               : 'width: 100%; max-width: 250px;'
@@ -244,19 +212,34 @@
         class="col-12"
       >
         <div
-          v-if="item.model != undefined"
-          class="col-12 q-px-sm"
+          v-if="item.model != undefined && item.key !== 'file'"
+          class="q-px-sm q-my-sm"
         >
           <div class="q-my-sm form__item-label text-weight-medium">
             {{ item.label }}
           </div>
-
           <editor-component
             v-model:model="item.model"
             :item="item"
             class="form__textarea bg-accent border-rounded"
           />
+        </div>
 
+        <div
+          v-else-if="item.key === 'file'"
+          class="q-pa-md q-mx-sm q-my-md border-line border-rounded"
+        >
+          <div class="form__item-label text-weight-medium w-100 bg-accent q-pa-sm bg-accent border-rounded">
+            {{ item.label }}
+          </div>
+
+          <input-file-component
+            :upload-file="uploadFile"
+            :icon="item.icon ? item.icon : 'png/add-file.png'"
+            :accept="item.accept"
+            :show-text="false"
+            v-model:default-image="defaultFile"
+          />
         </div>
       </div>
 
@@ -265,14 +248,6 @@
           Todos los campos con * son obligatorios
         </div>
       </div>
-
-      <input
-        ref="fileUpload"
-        type="file"
-        accept="image/*,.jpg, .jpeg, .png"
-        style="display: none"
-        @change="uploadFile($event)"
-      />
     </div>
   </q-form>
 </template>
@@ -280,12 +255,13 @@
 <!-- eslint-disable no-empty -->
 <script>
 import { defineComponent } from 'vue';
+import { showWarning, updateFieldByKeyInAllArrays } from 'app/utils/utils';
 import AutocompleteComponent from 'src/components/atomic/Form/AutocompleteComponent.vue';
 import DateComponent from '../atomic/Form/DateComponent.vue';
 import SelectComponent from '../atomic/Form/SelectComponent.vue';
 import EditorComponent from '../atomic/Form/EditorComponent.vue';
 import InputComponent from '../atomic/Form/InputComponent.vue';
-import { showWarning } from 'app/utils/utils';
+import InputFileComponent from '../atomic/Form/InputFileComponent.vue';
 
 export default defineComponent({
   name: 'FormComponent',
@@ -295,7 +271,8 @@ export default defineComponent({
     DateComponent,
     SelectComponent,
     EditorComponent,
-    InputComponent
+    InputComponent,
+    InputFileComponent
   },
 
   props: {
@@ -338,34 +315,39 @@ export default defineComponent({
     return {
       previousLength: 0,
       localTextfields: this.fields,
-      pdfObject: {
-        name: '',
-        file: {},
-      },
-      ImageBase64: null,
+      defaultImage: null,
+      defaultFile: null,
     };
   },
 
   watch: {
+    fields: {
+      handler(val) {
+        if (!this.defaultImage) {
+          val.right.forEach(e => {
+            if (e.key === 'photo' && e.model) {
+              this.defaultImage = e.model
+            }
+          })
+        }
+
+        if (!this.defaultFile) {
+          val.right.forEach(e => {
+            if (e.key === 'file' && e.model) {
+              this.defaultFile = e.model
+            }
+          })
+        }
+      },
+      deep: true,
+    },
+
     localTextfields: {
       handler(val) {
         this.$emit('update:fields', val);
 
         if (this.$refs.myForm)
           this.$refs.myForm.resetValidation()
-      },
-      deep: true,
-    },
-
-    fields: {
-      handler(val) {
-        if (!this.ImageBase64) {
-          val.right.forEach(e => {
-            if (e.key === 'photo') {
-              this.ImageBase64 = e.model
-            }
-          })
-        }
       },
       deep: true,
     },
@@ -395,50 +377,21 @@ export default defineComponent({
       return true
     },
 
-    uploadFile(e) {
-      const file = e.target.files[0];
-      const photoField = this.localTextfields.right.find(field => field.key === 'photo');
-
-      if (photoField) {
-        photoField.model = file;
-      }
-
-      try {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.ImageBase64 = reader.result;
-        };
-        reader.readAsDataURL(file);
-        if (file !== undefined) {
-          this.pdfObject.name = file.name;
-          this.pdfObject.file = file;
-        }
-      } catch (error) { }
+    uploadImage(file) {
+      updateFieldByKeyInAllArrays(
+        'photo',
+        { model: file },
+        this.fields
+      )
     },
 
-    clearFileInput(ctrl) {
-      try {
-        ctrl.value = null;
-        this.pdfObject.name = '';
-        this.pdfObject.file = {};
-        this.ImageBase64 = null;
-      } catch (ex) { }
-      if (ctrl.value) {
-        ctrl.parentNode.replaceChild(ctrl.cloneNode(true), ctrl);
-      }
+    uploadFile(file) {
+      updateFieldByKeyInAllArrays(
+        'file',
+        { model: file },
+        this.fields
+      )
     },
   },
 });
 </script>
-
-<style lang="scss">
-.btn-background {
-  background: $primary;
-}
-
-.btn-background-color {
-  background-color: rgb(($primary), 0.07);
-  max-width: 500px;
-  height: auto;
-}
-</style>

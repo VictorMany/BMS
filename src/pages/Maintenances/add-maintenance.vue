@@ -26,7 +26,7 @@
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormComponent from 'src/components/compose/FormComponent.vue';
-import { rules, showSuccess, showWarning } from 'app/utils/utils';
+import { rules, showSuccess, showWarning, updateFieldByKeyInAllArrays } from 'app/utils/utils';
 
 export default defineComponent({
   name: 'EquipmentsPage',
@@ -133,6 +133,12 @@ export default defineComponent({
             label: 'Actividades y observaciones del mantenimiento',
             required: false,
             model: '',
+          },
+          {
+            key: 'file',
+            label: 'Elige un documento desde tus archivos (opcional)',
+            model: null,
+            accept: 'image/*,.jpg,.jpeg,.png,application/pdf'
           }
         ],
       },
@@ -208,9 +214,11 @@ export default defineComponent({
             e.label = `${e.cardTitle} - ${e.equipmentName} - No. serie: ${e.serialNumber}`
           })
 
-          this.updateFieldByKeyInAllArrays('idEquipment', {
-            options: this.equipments
-          })
+          updateFieldByKeyInAllArrays(
+            'idEquipment',
+            { options: this.equipments },
+            this.fields
+          )
         })
         return
       } else {
@@ -229,20 +237,27 @@ export default defineComponent({
           e.label = `${e.cardTitle} - ${e.equipmentName} - No. serie: ${e.serialNumber}`
         })
 
-        this.updateFieldByKeyInAllArrays('idEquipment', {
-          options: this.equipments
-        })
+        updateFieldByKeyInAllArrays(
+          'idEquipment',
+          { options: this.equipments },
+          this.fields
+        )
       })
     },
 
     getEquipmentDefault() {
-      this.updateFieldByKeyInAllArrays('idEquipment', {
-        model: {
-          value: this.equipment.IdEquipment,
-          label: this.equipment.categoryName
+      updateFieldByKeyInAllArrays(
+        'idEquipment',
+        {
+          model: {
+            value: this.equipment.IdEquipment,
+            label: this.equipment.categoryName
+          },
+          readonly: true
         },
-        readonly: true
-      })
+        this.fields
+      )
+
 
       this.setModelValueByKey('photo', this.equipment.photo)
       this.setModelValueByKey('serialNumber', this.equipment.serialNumber)
@@ -251,13 +266,17 @@ export default defineComponent({
     getEquipmentFromReport() {
       const label = `${this.report.Equipment.categoryName} - ${this.report.Equipment.equipmentName} - No. serie: ${this.report.Equipment.serialNumber}`
 
-      this.updateFieldByKeyInAllArrays('idEquipment', {
-        model: {
-          value: this.report.Equipment.IdEquipment,
-          label: label
+      updateFieldByKeyInAllArrays(
+        'idEquipment',
+        {
+          model: {
+            value: this.report.Equipment.IdEquipment,
+            label: label
+          },
+          readonly: true
         },
-        readonly: true
-      })
+        this.fields
+      )
 
       this.setModelValueByKey('maintenanceType', {
         value: 'Correctivo',
@@ -288,19 +307,6 @@ export default defineComponent({
         }
       }
       // Si la clave no se encuentra, puedes manejarlo según tus necesidades
-    },
-
-    updateFieldByKeyInAllArrays(key, updates) {
-      for (const arrayKey in this.fields) {
-        if (Array.isArray(this.fields[arrayKey])) {
-          const fieldEntry = this.fields[arrayKey].find(entry => entry.key === key);
-          if (fieldEntry) {
-            Object.assign(fieldEntry, updates);
-            return; // Termina la iteración después de encontrar la primera coincidencia
-          }
-        }
-      }
-      console.error(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
     },
   },
 

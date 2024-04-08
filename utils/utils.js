@@ -144,3 +144,18 @@ export function getTokenFromCookie() {
     }
     return null;
 }
+
+
+// update fields 
+export function updateFieldByKeyInAllArrays(key, updates, fields) {
+    for (const arrayKey in fields) {
+        if (Array.isArray(fields[arrayKey])) {
+            const fieldEntry = fields[arrayKey].find(entry => entry.key === key);
+            if (fieldEntry) {
+                Object.assign(fieldEntry, updates);
+                return; // Termina la iteración después de encontrar la primera coincidencia
+            }
+        }
+    }
+    console.error(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
+}

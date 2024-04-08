@@ -45,7 +45,7 @@ export default defineComponent({
       btnAction: {
         show: true,
         btnTitle: 'Guardar',
-        iconName: 'o_save',
+        iconName: 'o_send',
         btnWidth: 'auto',
         tooltip: 'Guardar reporte',
         btnAction: this.createOrEdit,
@@ -136,6 +136,7 @@ export default defineComponent({
             readonly: this.isEditing(),
           }
         ],
+
         textareas: [
           {
             key: 'report',
@@ -161,6 +162,15 @@ export default defineComponent({
             ['unordered', 'ordered']],
           },
         ],
+
+        bottom: [
+          {
+            key: 'file',
+            label: 'Elige una imagen desde tus archivos (opcional)',
+            model: null,
+            icon: 'png/add-img.png'
+          }
+        ]
       }
     };
   },
@@ -376,7 +386,6 @@ export default defineComponent({
   },
 
   mounted() {
-    console.log('SI TENGO EQUIPMENT', this.equipment)
     if (this.equipment) {
       this.getEquipmentDefault()
     }

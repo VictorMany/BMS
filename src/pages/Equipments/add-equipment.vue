@@ -83,7 +83,7 @@
 import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import FormComponent from 'src/components/compose/FormComponent.vue';
-import { rules, showSuccess, showWarning } from '../../../utils/utils';
+import { rules, showSuccess, showWarning, updateFieldByKeyInAllArrays } from '../../../utils/utils';
 
 export default defineComponent({
   key: 'AddEquipment',
@@ -357,9 +357,11 @@ export default defineComponent({
     async getCategories() {
       try {
         await this.$store.dispatch('equipments/getAllCategoriesAction')
-        this.updateFieldByKeyInAllArrays('CategoryId', {
+
+        updateFieldByKeyInAllArrays('CategoryId', {
           options: JSON.parse(JSON.stringify(this.categories))
-        })
+        }, this.fields)
+
       } catch (error) {
         console.log(error)
       }
@@ -368,9 +370,11 @@ export default defineComponent({
     async getLocations() {
       try {
         await this.$store.dispatch('equipments/getAllLocationsAction')
-        this.updateFieldByKeyInAllArrays('LocationId', {
+
+        updateFieldByKeyInAllArrays('LocationId', {
           options: JSON.parse(JSON.stringify(this.locations))
-        })
+        }, this.fields)
+
       } catch (error) {
         console.log(error)
       }
@@ -379,9 +383,11 @@ export default defineComponent({
     async getDepartments() {
       try {
         await this.$store.dispatch('equipments/getAllDepartmentsAction')
-        this.updateFieldByKeyInAllArrays('DepartmentId', {
+
+        updateFieldByKeyInAllArrays('DepartmentId', {
           options: JSON.parse(JSON.stringify(this.departments))
-        })
+        }, this.fields)
+
       } catch (error) {
         console.log(error)
       }
@@ -409,19 +415,6 @@ export default defineComponent({
           }
         }
       }
-    },
-
-    updateFieldByKeyInAllArrays(key, updates) {
-      for (const arrayKey in this.fields) {
-        if (Array.isArray(this.fields[arrayKey])) {
-          const fieldEntry = this.fields[arrayKey].find(entry => entry.key === key);
-          if (fieldEntry) {
-            Object.assign(fieldEntry, updates);
-            return; // Termina la iteración después de encontrar la primera coincidencia
-          }
-        }
-      }
-      console.error(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
     },
 
     getTitle() {
@@ -453,17 +446,17 @@ export default defineComponent({
     filterCategories(val, update) {
       if (val === '') {
         update(() => {
-          this.updateFieldByKeyInAllArrays('CategoryId', {
+          updateFieldByKeyInAllArrays('CategoryId', {
             options: this.categories
-          })
+          }, this.fields)
         })
         return
       }
       update(() => {
         const needle = val.toLowerCase()
-        this.updateFieldByKeyInAllArrays('CategoryId', {
+        updateFieldByKeyInAllArrays('CategoryId', {
           options: this.categories.filter(v => this.removeAccents(v.label.toLowerCase()).includes(this.removeAccents(needle)))
-        })
+        }, this.fields)
       })
     },
 
@@ -474,58 +467,58 @@ export default defineComponent({
     filterLocations(val, update) {
       if (val === '') {
         update(() => {
-          this.updateFieldByKeyInAllArrays('LocationId', {
+          updateFieldByKeyInAllArrays('LocationId', {
             options: this.locations
-          })
+          }, this.fields)
         })
         return
       }
 
       update(() => {
         const needle = val.toLowerCase()
-        this.updateFieldByKeyInAllArrays('LocationId', {
+        updateFieldByKeyInAllArrays('LocationId', {
           options: this.locations.filter(v => this.removeAccents(v.label.toLowerCase()).includes(this.removeAccents(needle)))
-        })
+        }, this.fields)
       })
     },
 
     filterDepartments(val, update) {
       if (val === '') {
         update(() => {
-          this.updateFieldByKeyInAllArrays('DepartmentId', {
+          updateFieldByKeyInAllArrays('DepartmentId', {
             options: this.departments
-          })
+          }, this.fields)
         })
         return
       }
 
       update(() => {
         const needle = val.toLowerCase()
-        this.updateFieldByKeyInAllArrays('DepartmentId', {
+        updateFieldByKeyInAllArrays('DepartmentId', {
           options: this.departments.filter(v => this.removeAccents(v.label.toLowerCase()).includes(this.removeAccents(needle)))
-        })
+        }, this.fields)
       })
     },
 
     setModelCategory(val) {
       const category = this.categories.find((cat) => cat.categoryName === val)
-      this.updateFieldByKeyInAllArrays('CategoryId', {
+      updateFieldByKeyInAllArrays('CategoryId', {
         model: category ? category : val
-      })
+      }, this.fields)
     },
 
     setModelLocation(val) {
       const location = this.locations.find((loc) => loc.locationName === val)
-      this.updateFieldByKeyInAllArrays('LocationId', {
+      updateFieldByKeyInAllArrays('LocationId', {
         model: location ? location : val
-      })
+      }, this.fields)
     },
 
     setModelDepartment(val) {
       const department = this.departments.find((dep) => dep.departmentName === val)
-      this.updateFieldByKeyInAllArrays('DepartmentId', {
+      updateFieldByKeyInAllArrays('DepartmentId', {
         model: department ? department : val
-      })
+      }, this.fields)
     }
   },
 

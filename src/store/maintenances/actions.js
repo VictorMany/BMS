@@ -65,6 +65,7 @@ export async function postMaintenanceAction(context, maintenance) {
         reportRelated: '',
         idEquipment: '',
         userId: '',
+        file: ''
     }
 
     // We call the global action to format our payload
