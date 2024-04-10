@@ -55,7 +55,7 @@
     </div>
 
     <div
-      v-if="btnActions.length > 0"
+      v-if="isJustOneAction() === 1"
       class="col-xs-auto column content-end lt-md"
       :class="{ 'q-ml-auto': !switchContent }"
     >
@@ -69,10 +69,43 @@
             v-if="btn.show"
             v-bind="btn"
             :btn-title="''"
-            class="q-ml-sm"
           />
         </div>
       </div>
+    </div>
+
+    <div
+      v-else-if="isJustOneAction() > 0"
+      class="col-xs-auto column content-end lt-md"
+      :class="{ 'q-ml-auto': !switchContent }"
+    >
+      <q-fab
+        icon="more_vert"
+        square
+        direction="down"
+        unelevated
+        class="border-rounded"
+        vertical-actions-align="right"
+        style="background-color: #1e65e820; color: #1e65e8;"
+        padding="xs"
+      >
+        <div
+          class="alert-container border-rounded"
+          style="width: max-content;"
+        >
+          <div
+            v-for="(btn, i) in btnActions"
+            :key="i"
+            class="col-12 q-pr-md q-pl-sm"
+          >
+            <btn-action
+              v-if="btn.show"
+              v-bind="btn"
+              style="width: 100% !important;"
+            />
+          </div>
+        </div>
+      </q-fab>
     </div>
 
     <div
@@ -174,6 +207,17 @@ export default defineComponent({
   methods: {
     changeMenu() {
       this.$bus.emit('open-menu-from-child');
+    },
+
+    isJustOneAction() {
+      let totalShown = 0;
+
+      this.btnActions.forEach(element => {
+        if (element?.show === true) {
+          totalShown++
+        }
+      });
+      return totalShown
     }
   },
 
