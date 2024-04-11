@@ -6,11 +6,11 @@
         <q-scroll-area
           class="fit h-100 q-px-sm"
           :thumb-style="{
-        borderRadius: '5px',
-        background: 'rgba(29, 100, 231, 0.2)',
-        width: '5px',
-        opacity: 1,
-      }"
+            borderRadius: '5px',
+            background: 'rgba(29, 100, 231, 0.2)',
+            width: '5px',
+            opacity: 1,
+          }"
         >
           <div class="row container-stats">
             <graph-component
@@ -119,7 +119,7 @@
           <div class=" not-show-in-mobile row w-100">
             <div class="col">
               <div class="card-graphics__title text-start ellipsis">
-                Últimos reportes
+                Últimos reportes pendientes
               </div>
             </div>
             <div class="col-auto">
@@ -439,7 +439,7 @@ export default defineComponent({
       },
 
       btnAction: {
-        title: 'Ver todos',
+        title: 'Ir a reportes pendientes',
         style: {
           paddingLeft: '0',
           paddingRight: '1.5rem',
@@ -447,7 +447,7 @@ export default defineComponent({
           fontSize: '10px !important'
         },
         color: '#FFFFFF',
-        to: 'reports',
+        btnAction: this.goToReports,
         backgroundGradient:
           'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
         size: 'sm',
@@ -622,6 +622,17 @@ export default defineComponent({
       this.loadedCustomStats = true
     },
 
+    goToReports() {
+
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        paramsReportsPage: {
+          reportStatus: 'Pendiente'
+        }
+      });
+
+      this.$router.push('reports')
+    },
+
     getChartValue(totals, stat) {
       const customVar1 = totals.find((e) => e[0] === stat.var1)?.[1];
       const customVar2 = totals.find((e) => e[0] === stat.var2)?.[1];
@@ -682,10 +693,7 @@ export default defineComponent({
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 .container-stats {
   gap: 10px;
   padding-bottom: 10px;

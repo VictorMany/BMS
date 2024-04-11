@@ -230,6 +230,7 @@ export default defineComponent({
       this.subtitle = this.user?.userName
       this.params.userId = this.$route.query.user
     }
+
     this.getReports()
   },
 
