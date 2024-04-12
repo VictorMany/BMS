@@ -3,9 +3,11 @@
         <div class="col-auto flex justify-center">
             <q-btn
                 unelevated
-                class="btn-background-dark q-mt-md btn-background-color q-pa-md"
-                :class="defaultImageLocal && type === 'user' ? 'btn-background' : 'border-rounded'"
-                :style="'width: 100%; max-width: 270px; min-height: 240px; min-width: 240px;'"
+                class="btn-background-dark q-mt-md btn-background-color q-pa-md border-rounded"
+                :style="type === 'user'
+                    ? 'width: 205px; height: 205px; border-radius: 50% !important'
+                    : 'width: 100%; max-width: 270px; min-height: 240px; min-width: 240px;'
+                    "
                 @click="
                     tempSelected
                         ? clearFileInput($refs.fileUpload)

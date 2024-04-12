@@ -249,7 +249,7 @@
                   :src="item.model"
                 />
 
-                <embed
+                <iframe
                   v-else-if="isPDF(item.model)"
                   :src="item.model"
                   type="application/pdf"

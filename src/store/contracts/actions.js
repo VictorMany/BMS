@@ -50,9 +50,8 @@ export async function postContractAction(context, contract) {
         observations: contract.observations,
         equipmentIds: contract.equipmentIds,
         comodato: contract.comodato,
-        contractStatus: true,
-        startDate: contract.startDate,
-        endDate: contract.endDate,
+        startDate: contract.startDate ? contract.startDate : null,
+        endDate: contract.endDate ? contract.endDate : null,
         maintenanceDates: contract.maintenanceDates
     }
 
@@ -81,10 +80,11 @@ export async function updateContractAction(context, contract) {
     const payload = {
         contractName: contract.contractName,
         observations: contract.observations,
-        userId: 1,
         equipmentIds: contract.equipmentIds,
-        startDate: contract.startDate,
-        endDate: contract.endDate,
+        comodato: contract.comodato,
+        startDate: contract.startDate ? contract.startDate : null,
+        endDate: contract.endDate ? contract.endDate : null,
+        maintenanceDates: contract.maintenanceDates
     }
 
     return await service.updateContract(payload, contract.id).then(async (response) => {

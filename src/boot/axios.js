@@ -47,7 +47,10 @@ function handleErrorResponse(error, router) {
   });
 
   if (shouldRedirectToLogin(error)) {
-    router.push({ name: 'login' });
+    const name = router?.currentRoute?.value?.name
+    const params = router?.currentRoute?.value?.params?.id
+
+    if (!name === 'login-equipment' && params) router.push({ name: 'login' });
   }
 }
 

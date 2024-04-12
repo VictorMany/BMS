@@ -278,7 +278,7 @@ export default defineComponent({
   props: {
     type: {
       type: String,
-      default: '',
+      default: 'equipment',
       required: false,
     },
     model: {
