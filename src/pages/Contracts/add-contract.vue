@@ -370,7 +370,7 @@ export default defineComponent({
 
       try {
         this.form.startDate = this.startDate.model
-        this.form.endDate = this.startDate.model
+        this.form.endDate = this.endDate.model
 
         const res = await this.$store.dispatch(
           'contracts/postContractAction',
