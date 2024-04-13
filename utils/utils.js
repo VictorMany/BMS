@@ -11,7 +11,7 @@ export const rules = {
     validPhoneNumber: (val) => /^\d{10}$/.test(val) || 'El número de teléfono debe tener 10 dígitos',
     alphanumeric: (val) => {
         if (val) {
-            return /^[a-zA-ZáéíóúÁÉÍÓÚ0-9&\s()_[\]-]+$/.test(val) || 'El campo solo debe contener letras y números';
+            return /^[a-zA-ZáéíóúüÁÉÍÓÚÜäÄëËïÏöÖüÜ0-9&\s()_[\]-]+$/.test(val) || 'El campo solo debe contener letras, números y acentos';
         }
         return true; // Si no hay un valor, no se aplica la regla
     },
