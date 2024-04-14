@@ -116,8 +116,11 @@
             </div>
           </div>
 
-          <div class=" not-show-in-mobile row w-100">
-            <div class="col">
+          <div
+            class="row w-100"
+            style="gap: 10px"
+          >
+            <div class="col-12 col-sm">
               <div class="card-graphics__title text-start ellipsis">
                 Últimos reportes pendientes
               </div>
