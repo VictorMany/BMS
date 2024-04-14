@@ -134,7 +134,7 @@
             </div>
           </div>
 
-          <div class="q-pt-md not-show-in-mobile">
+          <div class="q-pt-md container-table-plans">
             <general-table
               v-model:row-selected="rowSelected"
               :show-pagination="false"
@@ -143,8 +143,6 @@
               :actions-table="actionsTable"
               :loading="loadingReportsTable"
               height="100%"
-              class="w-100"
-              style="width: 100% !important;"
             />
           </div>
         </q-scroll-area>
