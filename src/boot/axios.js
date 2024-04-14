@@ -50,7 +50,7 @@ function handleErrorResponse(error, router) {
     const name = router?.currentRoute?.value?.name
     const params = router?.currentRoute?.value?.params?.id
 
-    if (!name === 'login-equipment' && params) router.push({ name: 'login' });
+    if (name != 'login-equipment' && !params) router.push({ name: 'login' });
   }
 }
 
