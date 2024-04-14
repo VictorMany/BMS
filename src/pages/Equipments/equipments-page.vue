@@ -33,11 +33,11 @@
                 <item-card
                   v-bind="equipment"
                   :status="equipment.isReported ?
-          {
-            tooltip: 'Tiene reporte(s) sin atender',
-            color: '#FF9900',
-            label: 'Reportado'
-          } : null"
+                    {
+                      tooltip: 'Tiene reporte(s) sin atender',
+                      color: '#FF9900',
+                      label: 'Reportado'
+                    } : null"
                   :index="index"
                   :card-action="goToDetails"
                 />
@@ -544,6 +544,11 @@ export default defineComponent({
       this.loading = true
 
       await this.$store.dispatch('equipments/getEquipmentsAction', this.params)
+
+      if (this.params.page > 1 && this.equipments.length === 0) {
+        this.params.page = 1
+        this.getEquipments()
+      }
 
       this.paramsFromCreated = false
 
