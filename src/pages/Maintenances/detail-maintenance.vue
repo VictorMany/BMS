@@ -192,7 +192,8 @@ export default defineComponent({
     position: absolute;
     left: 0;
     top: 0;
-    width: 100vw !important;
+    width: 100%;
+    min-width: 70vw !important;
   }
 
   // .q-scrollarea {
