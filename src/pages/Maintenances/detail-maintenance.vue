@@ -195,6 +195,11 @@ export default defineComponent({
     width: 100vw !important;
     min-width: 900px !important;
     min-height: 800px !important;
+
+  }
+
+  .q-scrollarea {
+    min-height: 900px !important;
   }
 
   .container-style {
