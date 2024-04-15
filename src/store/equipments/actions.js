@@ -245,7 +245,6 @@ export async function updateEquipmentsAction(context, payload) {
         payload.form.acquisitionDate?.model && { acquisitionDate: payload.form.acquisitionDate?.model }
     );
 
-    console.log(idEquipments, equipmentData, 'EL FORM en el update')
 
     return await service.updateEquipments({ idEquipments, equipmentData }).then(async (response) => {
         if (response.status == 200) {

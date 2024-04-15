@@ -192,7 +192,7 @@ export default defineComponent({
     position: absolute;
     left: 0;
     top: 0;
-    width: 100vw !important;
+    width: 595px !important;
   }
 
   .container-style {
