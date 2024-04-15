@@ -254,9 +254,8 @@
                   :src="item.model"
                   type="application/pdf"
                   style="border: none; overflow-y: scroll;"
-                  class="form__image64-equipment q-mx-auto q-my-auto"
+                  class="form__image64-equipment"
                 />
-
               </div>
             </div>
             <div class="col-12 col-sm q-px-sm-lg q-pa-xs-sm">

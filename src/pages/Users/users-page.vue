@@ -369,7 +369,6 @@ export default defineComponent({
     findItemByFilterAndValue(value, key) {
       for (const item of this.inputSearch.items) {
         if (item.options) {
-          console.log(item.options, key)
           const foundOption = item.options.find(option => option.value === value && option.filter === key);
           if (foundOption) {
             return foundOption;

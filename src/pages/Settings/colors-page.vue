@@ -11,12 +11,12 @@
         <q-scroll-area
           class="h-97"
           :thumb-style="{
-          right: '1px',
-          borderRadius: '5px',
-          background: 'rgba(29, 100, 231, 0.2)',
-          width: '5px',
-          opacity: 1,
-        }"
+            right: '1px',
+            borderRadius: '5px',
+            background: 'rgba(29, 100, 231, 0.2)',
+            width: '5px',
+            opacity: 1,
+          }"
         >
           <div class="row">
             <div class="info__detail w-100 q-mb-sm">Elige el tema principal para las interfaces del sistema</div>
@@ -140,7 +140,6 @@ export default defineComponent({
   },
 
   created() {
-    console.log('EL TIPO DE PLATAFORMA', Platform.is.android)
     if (Platform.is?.android) {
       this.laptop = 'phone.png'
       this.lightPic = 'phone-light.png'
@@ -175,10 +174,7 @@ export default defineComponent({
 })
 </script>
 
-<style
-  scoped
-  lang="scss"
->
+<style scoped lang="scss">
 .body--light {
   .card-page {
     background: white;

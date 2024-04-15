@@ -1,9 +1,10 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
+    <div class="card-page printable-content">
       <header-actions
         :title-page="'Detalles del mantenimiento'"
         :btn-close-window="btnCloseWindow"
+        :download-pdf="download"
       />
       <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
@@ -24,6 +25,8 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import DetailsComponent from 'src/components/compose/DetailsComponent.vue'
+import { showWarning } from 'app/utils/utils'
+
 
 export default defineComponent({
   name: 'EquipmentsPage',
@@ -31,6 +34,7 @@ export default defineComponent({
     HeaderActions,
     DetailsComponent,
   },
+
   data() {
     return {
       loading: false,
@@ -129,9 +133,22 @@ export default defineComponent({
       },
     }
   },
+
   methods: {
     goBack() {
       this.$router.go(-1);
+    },
+
+    async download() {
+      try {
+        const printOptions = {
+          orientation: 'portrait', // Establece la orientación en modo retrato
+        };
+        // Abre el cuadro de diálogo de impresión para imprimir solo el contenido dentro de .printable-content
+        window.print(printOptions);
+      } catch (error) {
+        showWarning(this.$q, { msg: 'No se pudo completar la descarga', title: 'Ocurrió un error' })
+      }
     },
 
     async getMaintenance() {
@@ -146,6 +163,7 @@ export default defineComponent({
       this.loading = false
     },
   },
+
   mounted() {
     this.getMaintenance();
   },
@@ -155,5 +173,44 @@ export default defineComponent({
 <style scoped>
 .main-container-page {
   background-color: white;
+}
+</style>
+
+<style lang="scss">
+/* Estilo para ocultar todo excepto el contenido imprimible */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .printable-content,
+  .printable-content * {
+    visibility: visible;
+  }
+
+  .printable-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw !important;
+  }
+
+  .container-style {
+    padding: 0 !important;
+  }
+
+  body,
+  .card-page,
+  .body--dark .card-info,
+  .body--dark .main-container-page-dark {
+    background-color: #f8fafc !important;
+  }
+
+  #downloadPDF,
+  .q-btn,
+  .q-icon,
+  .q-drawer-container {
+    display: none;
+  }
 }
 </style>

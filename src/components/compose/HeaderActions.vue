@@ -120,6 +120,29 @@
     </div>
 
     <div
+      v-if="downloadPdf"
+      class="col-xs-auto column content-end btn-close-order"
+    >
+      <q-btn
+        id="downloadPDF"
+        :disable="!showDownloadBtn"
+        no-caps
+        size="sm"
+        flat
+        class="bg-accent border-rounded q-pr-sm"
+        @click="downloadPdf()"
+      >
+        <span class="setting__title">Exportar</span>
+        <q-avatar
+          class="avatar-item q-ml-sm"
+          size="sm"
+        >
+          <img :src="getImageUrl('pdf.png')" />
+        </q-avatar>
+      </q-btn>
+    </div>
+
+    <div
       v-if="btnCloseWindow"
       class="col-xs-auto column content-end btn-close-order"
     >
@@ -156,6 +179,11 @@ export default defineComponent({
       type: String,
       required: false,
       default: '',
+    },
+    downloadPdf: {
+      type: Function,
+      required: false,
+      default: null
     },
     subtitlePage: {
       type: String,
@@ -200,9 +228,21 @@ export default defineComponent({
     return {
       searchModelLocal: this.searchModel,
       switchContentLocal: this.switchContent,
+      showDownloadBtn: false
     };
   },
 
+  setup() {
+    const getImageUrl = (url) => {
+      try {
+        return new URL(`../../assets/png/${url}`,
+          import.meta.url).href
+      } catch (error) { /* empty */ }
+    };
+    return {
+      getImageUrl,
+    };
+  },
 
   methods: {
     changeMenu() {
@@ -221,6 +261,12 @@ export default defineComponent({
     }
   },
 
+  mounted() {
+    // Utiliza setTimeout para mostrar el botón después de 3 segundos
+    setTimeout(() => {
+      this.showDownloadBtn = true;
+    }, 3000);
+  },
 
   watch: {
     searchModelLocal(value) {
