@@ -126,6 +126,7 @@
       <q-btn
         id="downloadPDF"
         :disable="!showDownloadBtn"
+        :loading="!showDownloadBtn"
         no-caps
         size="sm"
         flat
@@ -139,6 +140,9 @@
         >
           <img :src="getImageUrl('pdf.png')" />
         </q-avatar>
+        <template #loading>
+          <q-spinner-dots color="primary" />
+        </template>
       </q-btn>
     </div>
 
