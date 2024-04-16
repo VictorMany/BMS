@@ -121,7 +121,7 @@
 
     <div
       v-if="downloadPdf"
-      class="col-xs-auto column content-end btn-close-order not-show-in-mobile"
+      class="col-xs-auto column content-end btn-close-order"
     >
       <q-btn
         id="downloadPDF"

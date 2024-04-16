@@ -141,13 +141,17 @@ export default defineComponent({
 
     async download() {
       try {
+        // Realizar scroll hasta el final de la página
+        window.scrollTo(0, document.body.scrollHeight);
+        // Esperar un breve tiempo para asegurarse de que el scroll se haya completado
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Luego de realizar el scroll, abrir el cuadro de diálogo de impresión
         const printOptions = {
           orientation: 'portrait', // Establece la orientación en modo retrato
         };
-        // Abre el cuadro de diálogo de impresión para imprimir solo el contenido dentro de .printable-content
         window.print(printOptions);
       } catch (error) {
-        showWarning(this.$q, { msg: 'No se pudo completar la descarga', title: 'Ocurrió un error' })
+        showWarning(this.$q, { msg: 'No se pudo completar la descarga', title: 'Ocurrió un error' });
       }
     },
 
