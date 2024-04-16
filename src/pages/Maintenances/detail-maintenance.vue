@@ -201,7 +201,7 @@ export default defineComponent({
   }
 
   body {
-    width: 800px !important;
+    width: 1000px !important;
   }
 
   // .q-scrollarea {
