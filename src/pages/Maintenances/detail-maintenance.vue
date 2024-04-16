@@ -7,15 +7,10 @@
         :download-pdf="download"
       />
       <div class="main-container-page main-container-page-dark container-form">
-        <q-scroll-area
-          style="height: 2200px;"
-          :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
-        >
-          <details-component
-            :fields="fields"
-            :loading="loading"
-          />
-        </q-scroll-area>
+        <details-component
+          :fields="fields"
+          :loading="loading"
+        />
       </div>
     </div>
   </q-page>
