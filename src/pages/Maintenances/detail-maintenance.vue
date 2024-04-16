@@ -8,7 +8,7 @@
       />
       <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
-          class="h-97"
+          class="h-97 not-show-in-print"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
         >
           <details-component
@@ -184,6 +184,10 @@ export default defineComponent({
 /* Estilo para ocultar todo excepto el contenido imprimible */
 @media print {
   body * {
+    visibility: hidden;
+  }
+
+  .not-show-in-print {
     visibility: hidden;
   }
 
