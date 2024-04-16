@@ -200,6 +200,9 @@ export default defineComponent({
     min-width: 70vw !important;
   }
 
+  .custom-col-xs,
+  .custom-col-sm,
+  .custom-col-md,
   .custom-col-lg {
     width: 50% !important;
   }
