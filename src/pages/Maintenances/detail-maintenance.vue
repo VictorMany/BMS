@@ -200,8 +200,8 @@ export default defineComponent({
     min-width: 70vw !important;
   }
 
-  body {
-    width: 1000px !important;
+  .custom-col-lg {
+    width: 50% !important;
   }
 
   // .q-scrollarea {
