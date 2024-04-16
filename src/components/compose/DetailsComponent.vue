@@ -65,14 +65,14 @@
             >
               <div
                 v-if="item.type != 'title'"
-                class="col-12 custom-col-sm q-pr-lg q-pb-xs form__item-label text-weight-medium"
+                class="col-12 custom-col-sm col-md q-pr-lg q-pb-xs form__item-label text-weight-medium"
               >
                 {{ item.label }}
               </div>
 
               <div
                 v-if="item.type !== 'status'"
-                class="col-12 custom-col-sm form__item-model text-weight-thin"
+                class="col-12 custom-col-xs col-md form__item-model text-weight-thin"
                 :class="{ 'text-link': item.link }"
               >
                 <span @click="item.link ? navigateTo(item.link) : () => { }">
@@ -88,7 +88,7 @@
 
               <div
                 v-if="item.type === 'status'"
-                class="col-12 custom-col-sm form__item-model"
+                class="col-12 custom-col-xs col-md form__item-model"
               >
                 <q-chip
                   class="q-ma-none border-rounded"
