@@ -7,10 +7,15 @@
         :download-pdf="download"
       />
       <div class="main-container-page main-container-page-dark container-form">
-        <details-component
-          :fields="fields"
-          :loading="loading"
-        />
+        <q-scroll-area
+          class="h-97"
+          :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
+        >
+          <details-component
+            :fields="fields"
+            :loading="loading"
+          />
+        </q-scroll-area>
       </div>
     </div>
   </q-page>
@@ -182,10 +187,6 @@ export default defineComponent({
     visibility: hidden;
   }
 
-  .not-show-in-print {
-    visibility: hidden;
-  }
-
   .printable-content,
   .printable-content * {
     visibility: visible;
@@ -197,6 +198,10 @@ export default defineComponent({
     top: 0;
     width: 100%;
     min-width: 70vw !important;
+  }
+
+  body {
+    width: 800px !important;
   }
 
   // .q-scrollarea {

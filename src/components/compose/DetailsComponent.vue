@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-lg-5 col-sm-6 q-pb-xs">
+    <div class="q-pb-xs custom-col-xs custom-col-sm custom-col-lg">
       <div class="row">
         <!-- TOP SECTION -->
         <div
@@ -126,7 +126,7 @@
     </div>
 
     <!-- RIGHT SECTION -->
-    <div class="col-12 col-sm q-py-sm">
+    <div class="custom-col-xs custom-col-sm q-py-sm">
       <div
         v-for="(item, i) in fields.right"
         v-bind="item"
@@ -441,3 +441,46 @@ export default defineComponent({
   }
 });
 </script>
+
+
+<style>
+/* Para tamaños de pantalla extra pequeños (xs) */
+.custom-col-xs {
+  width: 100%;
+}
+
+/* Para tamaños de pantalla pequeños (sm) */
+@media (min-width: 586px) {
+  .custom-col-sm {
+    width: 50%;
+  }
+}
+
+/* Para tamaños de pantalla medianos (md) */
+@media (min-width: 768px) {
+  .custom-col-md {
+    width: 100%;
+  }
+}
+
+/* Para tamaños de pantalla grandes (lg) */
+@media (min-width: 992px) {
+  .custom-col-lg {
+    width: 50%;
+  }
+}
+
+/* Para tamaños de pantalla extra grandes (xl) */
+@media (min-width: 1200px) {
+  .custom-col-xl {
+    width: 50%;
+  }
+}
+
+/* Para tamaños de pantalla extra extra grandes (xxl) */
+@media (min-width: 1920px) {
+  .custom-col-xxl {
+    width: 50%;
+  }
+}
+</style>
