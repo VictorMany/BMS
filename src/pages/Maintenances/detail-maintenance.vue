@@ -8,7 +8,7 @@
       />
       <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
-          class="h-97 not-show-in-print"
+          style="height: 2200px;"
           :thumb-style="{ right: '6px', borderRadius: '5px', background: 'rgba(29, 100, 231, 0.2)', width: '5px', opacity: 1 }"
         >
           <details-component
