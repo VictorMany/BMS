@@ -234,7 +234,10 @@
           </div>
         </div>
 
-        <div v-else-if="item.key === 'documentUrl' && item.model">
+        <div
+          class="no-printable-content"
+          v-else-if="item.key === 'documentUrl' && item.model"
+        >
           <div class="q-mb-sm form__item-label text-weight-medium">
             {{ item.label }}
           </div>

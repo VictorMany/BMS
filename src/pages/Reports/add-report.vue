@@ -121,6 +121,11 @@ export default defineComponent({
             ],
             rules: [rules.requiredObject],
           },
+          {
+            key: 'reportedBy',
+            label: 'Nombre de quien reporta',
+            model: ''
+          },
         ],
         right: [
           {

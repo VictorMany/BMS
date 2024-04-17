@@ -120,12 +120,17 @@ export default defineComponent({
           },
           {
             key: 'userName',
-            label: 'Encargado',
+            label: 'Usuario',
             model: ''
           },
           {
             key: 'reason',
             label: 'Motivo',
+            model: ''
+          },
+          {
+            key: 'reportedBy',
+            label: 'Persona quien reporta',
             model: ''
           },
           {
@@ -146,7 +151,7 @@ export default defineComponent({
             type: 'status',
             model: '',
             color: ''
-          },
+          }
         ],
 
         textareas: [

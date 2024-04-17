@@ -93,6 +93,7 @@ export async function postReportAction(context, report) {
         reportUrgency: '',
         idEquipment: '',
         userId: '',
+        reportedBy: '',
         file: ''
     }
 

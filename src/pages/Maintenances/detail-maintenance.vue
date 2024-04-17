@@ -15,8 +15,27 @@
             :fields="fields"
             :loading="loading"
           />
+
+          <div
+            style="gap: 20px; visibility: hidden;"
+            class="row q-px-md print-signs"
+          >
+            <div class="col text-center form__item-label text-weight-medium">
+              Firma del ing. biomédico
+              <div class="border-line q-pa-lg border-rounded ">
+
+              </div>
+            </div>
+            <div class="col text-center form__item-label text-weight-medium">
+              Firma de aceptación
+              <div class="border-line q-pa-lg border-rounded">
+              </div>
+            </div>
+          </div>
         </q-scroll-area>
       </div>
+
+
     </div>
   </q-page>
 </template>
@@ -185,6 +204,14 @@ export default defineComponent({
 @media print {
   body * {
     visibility: hidden;
+  }
+
+  .no-printable-content {
+    display: none;
+  }
+
+  .print-signs {
+    visibility: visible;
   }
 
   .printable-content,
