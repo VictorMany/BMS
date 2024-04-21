@@ -297,7 +297,7 @@
         </div>
 
         <div
-          v-else-if="item.key === 'documentUrl'"
+          v-else-if="item.key === 'documentUrl' && item.btnAction"
           class="no-printable-content q-pa-md border-line border-rounded"
         >
           <div class="form__item-label text-weight-medium w-100 bg-accent q-pa-sm bg-accent border-rounded">
