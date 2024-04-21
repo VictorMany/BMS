@@ -98,6 +98,14 @@ export async function formatDetails(context, { keys, fields }) {
         updateFieldByKeyInAllArrays(fields, 'photo', {
             model: keys.Equipment.photo
         })
+
+        updateFieldByKeyInAllArrays(fields, 'equipmentBrand', {
+            model: keys.Equipment.equipmentBrand
+        })
+
+        updateFieldByKeyInAllArrays(fields, 'locationName', {
+            model: keys.Equipment.locationName
+        })
     }
 
     return fields;
@@ -240,5 +248,5 @@ function updateFieldByKeyInAllArrays(fields, key, updates) {
             }
         }
     }
-    console.error(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
+    console.log(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
 }

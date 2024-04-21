@@ -312,7 +312,7 @@ export default defineComponent({
           }
         }
       }
-      console.error(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
+      console.log(`No se encontró la entrada para la clave '${key}' en ningún arreglo o no tiene opciones.`);
     },
 
     getTitle() {

@@ -63,10 +63,7 @@
               v-if="item.model"
               class="row items-center q-px-sm q-py-xs"
             >
-              <div
-                v-if="item.type != 'title'"
-                class="col-12 custom-col-sm col-md q-pr-lg q-pb-xs form__item-label text-weight-medium"
-              >
+              <div class="col-12 custom-col-sm col-md q-pr-lg q-pb-xs form__item-label text-weight-medium">
                 {{ item.label }}
               </div>
 
@@ -105,7 +102,7 @@
           <div class="row w-100 q-pa-none">
             <div
               v-for="(item, i) in fields.textareas"
-              class="col q-pa-sm"
+              class="col q-px-sm q-pt-sm"
               :key="i"
             >
               <div class="col-12 h-100">
@@ -165,12 +162,12 @@
     </div>
 
     <!-- BOTTOM AREA -->
-
-    <div class="col-12 q-pa-sm q-my-sm">
+    <div class="col-12 q-px-sm">
       <div
         v-for="(item, i) in fields.bottom"
         v-bind="item"
         :key="i"
+        class="q-my-md"
       >
         <div v-if="item.key === 'contract' && item.model">
           <div class="col-12 form__item-label q-mb-xs text-weight-medium">
@@ -236,7 +233,7 @@
 
         <div
           class="no-printable-content"
-          v-else-if="item.key === 'documentUrl' && item.model"
+          v-else-if="item.key === 'documentUrl' && item.model && item.model.length > 0"
         >
           <div class="q-mb-sm form__item-label text-weight-medium">
             {{ item.label }}
@@ -246,15 +243,15 @@
             <div class="col-auto">
               <div style="width: 214px; height: 214px">
                 <q-img
-                  v-if="isImage(item.model)"
+                  v-if="isImage(item.model[0])"
                   class="form__image64-equipment border-rounded q-mx-auto q-my-auto"
                   no-spinner
-                  :src="item.model"
+                  :src="item.model[0]"
                 />
 
                 <iframe
-                  v-else-if="isPDF(item.model)"
-                  :src="item.model"
+                  v-else-if="isPDF(item.model[0])"
+                  :src="item.model[0]"
                   type="application/pdf"
                   style="border: none; overflow-y: scroll;"
                   class="form__image64-equipment"
@@ -263,11 +260,11 @@
             </div>
             <div class="col-12 col-sm q-px-sm-lg q-pa-xs-sm">
               <div
-                v-if="getFileName(item.model)"
+                v-if="getFileName(item.model[0])"
                 class="form__item-label text-primary ellipsis"
                 style="max-width: 70vw;"
               >
-                &#x24D8; {{ getFileName(item.model) }}
+                &#x24D8; {{ getFileName(item.model[0]) }}
               </div>
 
               <div class="row">
@@ -278,7 +275,7 @@
                   size="sm"
                   align="left"
                   color="blue-7"
-                  @click="openFullFile(item.model)"
+                  @click="openFullFile(item.model[0])"
                 >
                   Ver archivo en tamaño completo
                 </q-btn>
@@ -287,10 +284,7 @@
           </div>
         </div>
 
-        <div
-          v-else-if="item.label && item.model"
-          class="q-my-md"
-        >
+        <div v-else-if="item.key !== 'documentUrl' && item.label && item.model">
           <div class="col-12 q-pr-md form__item-label text-weight-medium q-mb-xs">
             {{ item.label }}
           </div>
@@ -300,6 +294,24 @@
               v-html="item.model"
             />
           </div>
+        </div>
+
+        <div
+          v-else-if="item.key === 'documentUrl'"
+          class="no-printable-content q-pa-md border-line border-rounded"
+        >
+          <div class="form__item-label text-weight-medium w-100 bg-accent q-pa-sm bg-accent border-rounded">
+            {{ item.label }}
+          </div>
+
+          <input-file-component
+            :upload-file="item.uploadFile"
+            :icon="item.icon ? item.icon : 'png/add-file.png'"
+            :accept="item.accept"
+            :show-text="false"
+            :btn-action="item.btnAction"
+            :loading-load-action="item.loadingLoadAction"
+          />
         </div>
       </div>
     </div>
@@ -351,9 +363,10 @@
 <script>
 import { defineComponent } from 'vue';
 import BtnAction from '../atomic/BtnAction.vue';
+import InputFileComponent from '../atomic/Form/InputFileComponent.vue';
 
 export default defineComponent({
-  components: { BtnAction },
+  components: { BtnAction, InputFileComponent },
   name: 'DetailsComponent',
   props: {
     type: {

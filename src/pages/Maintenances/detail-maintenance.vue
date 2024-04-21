@@ -16,10 +16,7 @@
             :loading="loading"
           />
 
-          <div
-            style="gap: 20px; visibility: hidden;"
-            class="row q-px-md print-signs"
-          >
+          <div class="row q-px-md print-signs">
             <div class="col text-center form__item-label text-weight-medium">
               Firma del ing. biomédico
               <div class="border-line q-pa-lg border-rounded ">
@@ -34,8 +31,6 @@
           </div>
         </q-scroll-area>
       </div>
-
-
     </div>
   </q-page>
 </template>
@@ -44,7 +39,7 @@
 import { defineComponent } from 'vue'
 import HeaderActions from 'src/components/compose/HeaderActions.vue'
 import DetailsComponent from 'src/components/compose/DetailsComponent.vue'
-import { showWarning } from 'app/utils/utils'
+import { showSuccess, showWarning, updateFieldByKeyInAllArrays } from 'app/utils/utils'
 
 
 export default defineComponent({
@@ -74,6 +69,16 @@ export default defineComponent({
           {
             key: 'equipmentModel',
             label: 'Modelo del equipo',
+            model: ''
+          },
+          {
+            key: 'equipmentBrand',
+            label: 'Marca del equipo',
+            model: ''
+          },
+          {
+            key: 'locationName',
+            label: 'Ubicación del equipo',
             model: ''
           },
           {
@@ -138,9 +143,12 @@ export default defineComponent({
           },
           {
             key: 'documentUrl',
-            label: 'Archivo adjunto al mantenimiento',
-            model: ''
-          },
+            label: 'Adjunta un archivo a tu mantenimiento (opcional)',
+            model: null,
+            accept: 'image/*,.jpg,.jpeg,.png,application/pdf',
+            btnAction: this.uploadFileForMaintenance,
+            loadingLoadAction: false
+          }
         ],
       },
 
@@ -158,13 +166,36 @@ export default defineComponent({
       this.$router.go(-1);
     },
 
+    async uploadFileForMaintenance(file) {
+      updateFieldByKeyInAllArrays(
+        'documentUrl',
+        { loadingLoadAction: true },
+        this.fields
+      )
+      const params = {
+        id: this.$route?.params?.id,
+        file: file
+      }
+
+      await this.$store.dispatch('maintenances/uploadFileAction', params)
+
+      showSuccess(this.$q, { title: 'Se cargó el archivo exitosamente', msg: 'El archivo adjunto se ha agregado al mantenimiento' })
+
+      updateFieldByKeyInAllArrays(
+        'documentUrl',
+        { loadingLoadAction: true },
+        this.fields
+      )
+      this.getMaintenance()
+    },
+
     async download() {
       try {
         // Realizar scroll hasta el final de la página
         window.scrollTo(0, document.body.scrollHeight);
         // Esperar un breve tiempo para asegurarse de que el scroll se haya completado
         await new Promise(resolve => setTimeout(resolve, 1000));
-        // Luego de realizar el scroll, abrir el cuadro de diálogo de impresión
+        // Luego de realizar el scroll, abrir el cua hdro de diálogo de impresión
         const printOptions = {
           orientation: 'portrait', // Establece la orientación en modo retrato
         };
@@ -200,8 +231,14 @@ export default defineComponent({
 </style>
 
 <style lang="scss">
+.print-signs {
+  gap: 20px;
+  display: none;
+}
+
 /* Estilo para ocultar todo excepto el contenido imprimible */
 @media print {
+
   body * {
     visibility: hidden;
   }
@@ -211,7 +248,7 @@ export default defineComponent({
   }
 
   .print-signs {
-    visibility: visible;
+    display: flex;
   }
 
   .printable-content,
@@ -234,10 +271,6 @@ export default defineComponent({
     width: 50% !important;
   }
 
-  // .q-scrollarea {
-  //   min-height: 900px !important;
-  // }
-
   .container-style {
     padding: 0 !important;
   }
@@ -253,7 +286,7 @@ export default defineComponent({
   .q-btn,
   .q-icon,
   .q-drawer-container {
-    display: none;
+    display: none !important;
   }
 }
 </style>

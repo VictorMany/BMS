@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-auto flex justify-center">
+        <div class="col-12 col-sm-auto flex justify-center">
             <q-btn
                 unelevated
                 class="btn-background-dark q-mt-md btn-background-color q-pa-md border-rounded"
@@ -58,8 +58,8 @@
         >
             <div class="row">
                 <q-btn
-                    unelevated
                     v-close-popup
+                    unelevated
                     no-caps
                     class="border-rounded q-my-sm"
                     size="sm"
@@ -85,6 +85,29 @@
                     Seleccionar archivo diferente
                 </q-btn>
             </div>
+
+        </div>
+
+        <div
+            v-if="btnAction && (pdfPreview || defaultImageLocal && !showText)"
+            class="col-12 col-sm-auto col-md-auto column justify-end"
+        >
+            <q-btn
+                class="border-rounded q-mt-sm"
+                color="secondary"
+                size="sm"
+                unelevated
+                no-caps
+                :loading="loadingLoadAction"
+                @click="btnAction(file)"
+            >
+                Cargar archivo
+                <q-icon
+                    class="avatar-item q-ml-sm"
+                    size="xs"
+                    name="o_cloud_upload"
+                />
+            </q-btn>
         </div>
     </div>
 
@@ -139,8 +162,21 @@ export default defineComponent({
             type: String,
             required: false,
             default: 'image/*,.jpg, .jpeg, .png'
+        },
+
+        btnAction: {
+            type: Function,
+            required: false,
+            default: null
+        },
+
+        loadingLoadAction: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
+
     setup() {
         const getImageUrl = (url) => {
             try {
@@ -156,6 +192,7 @@ export default defineComponent({
         return {
             defaultImageLocal: null,
             tempSelected: '',
+            file: null,
             pdfPreview: null
         };
     },
@@ -190,7 +227,7 @@ export default defineComponent({
 
         uploadFileLocal(e) {
             try {
-                const file = e.target.files[0];
+                this.file = e.target.files[0];
 
                 const reader = new FileReader();
 
@@ -198,19 +235,19 @@ export default defineComponent({
                     this.defaultImageLocal = reader.result;
                 };
 
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(this.file);
 
-                if (file !== undefined) {
-                    this.tempSelected = file.name;
+                if (this.file !== undefined) {
+                    this.tempSelected = this.file.name;
                     // Verifica si el archivo seleccionado es un PDF
-                    if (file.type === 'application/pdf') {
-                        this.pdfPreview = URL.createObjectURL(file);
+                    if (this.file.type === 'application/pdf') {
+                        this.pdfPreview = URL.createObjectURL(this.file);
                     } else {
                         this.pdfPreview = null;
                     }
                 }
 
-                this.uploadFile(file)
+                this.uploadFile(this.file)
 
             } catch (error) { /* empty */ }
         }

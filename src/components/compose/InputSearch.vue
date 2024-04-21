@@ -31,15 +31,16 @@
       >
         <q-chip
           v-if="filter?.title"
-          class="border-rounded bg-secondary q-pr-xs text-white"
+          class="border-rounded bg-secondary q-pr-xs text-white transform"
           style="font-size: 10px"
           :label="filter?.title"
+          @click.passive="addFilter(filter)"
         >
           <q-icon
             name="close"
             size="12px"
             class="cursor-pointer q-ml-xs border-rounded text-weight-bolder"
-            @click="addFilter(filter)"
+            @click.stop="addFilter(filter)"
           />
         </q-chip>
       </div>
@@ -69,11 +70,11 @@
               :style="`height: ${heightModalLocal}px !important`"
               class="fit"
               :thumb-style="{
-      borderRadius: '5px',
-      background: 'rgba(29, 100, 231, 0.2)',
-      width: '0px',
-      opacity: 1,
-    }"
+                borderRadius: '5px',
+                background: 'rgba(29, 100, 231, 0.2)',
+                width: '0px',
+                opacity: 1,
+              }"
             >
               <q-list class="q-px-none border-rounded">
                 <div
@@ -244,6 +245,7 @@ export default defineComponent({
     },
 
     addFilter(opt) {
+      console.log('LA OPT', opt)
       // Check if the filter already exists
       let filterIndex = this.activeFilters.findIndex(obj => obj['filter'] === opt['filter']);
       if (filterIndex !== -1) {
@@ -296,10 +298,7 @@ export default defineComponent({
 });
 </script>
 
-<style
-  scoped
-  lang="scss"
->
+<style scoped lang="scss">
 .input-style {
   font-style: normal;
   font-weight: 400;

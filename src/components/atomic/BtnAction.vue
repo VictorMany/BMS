@@ -1,6 +1,6 @@
 <template>
   <q-btn
-    class="btn-style border-shadow border-rounded"
+    class="btn-style border-shadow border-rounded transform"
     :class="btnTitle ? 'q-pr-sm' : 'q-pa-none'"
     :unelevated="btnUnelevated"
     :outline="btnOutlined"
@@ -152,9 +152,5 @@ export default defineComponent({
   color: v-bind(btnColor) !important;
   font-weight: v-bind(btnWeight) !important;
   font-size: 13px !important;
-}
-
-.btn-style:hover {
-  transform: scale(1.02);
 }
 </style>

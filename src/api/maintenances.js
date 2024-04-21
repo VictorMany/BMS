@@ -35,4 +35,8 @@ export default class MaintenanceService {
             params
         });
     }
+
+    static uploadFile(file, id) {
+        return api.post(this.endpoint + 'uploadFile/' + id, file);
+    }
 }
