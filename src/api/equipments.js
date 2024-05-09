@@ -10,8 +10,8 @@ export default class EquipmentService {
         });
     }
 
-    static getCategories(params) {
-        return api.get(this.endpoint + 'listCatGetEq', { params });
+    static getCategories() {
+        return api.get(this.endpoint + 'listCatGetEq');
     }
 
     static getAllCategories() {

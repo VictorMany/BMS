@@ -115,7 +115,7 @@
               </div>
             </div>
           </div>
-
+          <!-- PENDING REPORTS-->
           <div
             class="row w-100"
             style="gap: 10px"
@@ -123,6 +123,40 @@
             <div class="col-12 col-sm">
               <div class="card-graphics__title text-start ellipsis">
                 Últimos reportes pendientes
+              </div>
+            </div>
+            <div class="col-auto">
+              <btn-action
+                :btn-title="btnAction.title"
+                :btn-color="btnAction.color"
+                :btn-background-gradient="btnAction.backgroundGradient"
+                :icon-name="btnAction.icon"
+                :btn-size="btnAction.size"
+                v-bind="btnAction"
+              />
+            </div>
+          </div>
+
+          <div class="q-mt-md q-mb-lg container-table-plans">
+            <general-table
+              v-model:row-selected="rowSelected"
+              :show-pagination="false"
+              :rows="reports"
+              :columns="columns"
+              :actions-table="actionsTable"
+              :loading="loadingReportsTable"
+              height="100%"
+            />
+          </div>
+
+          <!-- PENDING MAINTENANCES-->
+          <div
+            class="row w-100"
+            style="gap: 10px"
+          >
+            <div class="col-12 col-sm">
+              <div class="card-graphics__title text-start ellipsis">
+                Mantenimientos pendientes
               </div>
             </div>
             <div class="col-auto">
