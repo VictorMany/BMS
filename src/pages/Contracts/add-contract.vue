@@ -442,7 +442,9 @@ export default defineComponent({
 
     async getCategories() {
       try {
-        await this.$store.dispatch('equipments/getCategoriesAction')
+        await this.$store.dispatch('equipments/getCategoriesAction', {
+          filterPlanDates: false,
+        })
         this.localCategories = JSON.parse(JSON.stringify(this.categories));
 
         if (this.isEditing()) {
