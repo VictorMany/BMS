@@ -161,12 +161,12 @@
             </div>
             <div class="col-auto">
               <btn-action
-                :btn-title="btnAction.title"
-                :btn-color="btnAction.color"
-                :btn-background-gradient="btnAction.backgroundGradient"
-                :icon-name="btnAction.icon"
-                :btn-size="btnAction.size"
-                v-bind="btnAction"
+                :btn-title="btnActionMaintenance.title"
+                :btn-color="btnActionMaintenance.color"
+                :btn-background-gradient="btnActionMaintenance.backgroundGradient"
+                :icon-name="btnActionMaintenance.icon"
+                :btn-size="btnActionMaintenance.size"
+                v-bind="btnActionMaintenance"
               />
             </div>
           </div>
@@ -489,6 +489,22 @@ export default defineComponent({
         icon: '',
       },
 
+      btnActionMaintenance: {
+        title: 'Ir a mantenimientos pendientes',
+        style: {
+          paddingLeft: '0',
+          paddingRight: '1.5rem',
+          textAlign: 'center',
+          fontSize: '10px !important'
+        },
+        color: '#FFFFFF',
+        btnAction: this.goToMaintenances,
+        backgroundGradient:
+          'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
+        size: 'sm',
+        icon: '',
+      },
+
       columns: [
         {
           name: 'reason',
@@ -658,7 +674,6 @@ export default defineComponent({
     },
 
     goToReports() {
-
       this.$store.dispatch('global/addGlobalsToLocalStorage', {
         paramsReportsPage: {
           reportStatus: 'Pendiente'
@@ -666,6 +681,16 @@ export default defineComponent({
       });
 
       this.$router.push('reports')
+    },
+
+    goToMaintenances() {
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        paramsReportsPage: {
+          maintenanceType: 'Preventivo'
+        }
+      });
+
+      this.$router.push('maintenances')
     },
 
     getChartValue(totals, stat) {
