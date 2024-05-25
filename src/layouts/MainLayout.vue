@@ -1,49 +1,28 @@
 <template>
   <q-layout view="lHh lpR lFf">
-    <q-drawer
-      show-if-above
-      :breakpoint="1000"
-      v-model="leftDrawerOpen"
-      class="cursor-pointer non-selectable main-menu row items-center"
-    >
+    <q-drawer show-if-above :breakpoint="1000" v-model="leftDrawerOpen"
+      class="cursor-pointer non-selectable main-menu row items-center">
       <!-- drawer content -->
-      <div
-        style="height: 97vh;"
-        class="q-pl-md w-100 drawer"
-      >
+      <div style="height: 97vh;" class="q-pl-md w-100 drawer">
         <div class="side-menu border-rounded">
           <div class="row">
             <div class="title text-center q-pt-lg w-100">BMS</div>
             <!-- HERE WERE NOTIFICATIONS-->
           </div>
-          <q-scroll-area
-            class="q-px-md q-py-sm"
-            style="height: 85%"
-            :thumb-style="{
-              right: '4px',
-              borderRadius: '5px',
-              background: 'rgba(29, 100, 231, 0.2)',
-              width: '5px',
-              opacity: 1,
-            }"
-          >
-            <div
-              class="q-pa-md border-rounded card-info"
-              v-if="showEquipmentDetails()"
-            >
+          <q-scroll-area class="q-px-md q-py-sm" style="height: 85%" :thumb-style="{
+            right: '4px',
+            borderRadius: '5px',
+            background: 'rgba(29, 100, 231, 0.2)',
+            width: '5px',
+            opacity: 1,
+          }">
+            <div class="q-pa-md border-rounded card-info" v-if="showEquipmentDetails()">
               <div class="col-12 text-weight-medium text-primary q-pb-sm text-center">
                 Información del equipo
               </div>
-              <div
-                v-if="equipment.photo"
-                class="q-mx-auto row q-my-sm"
-                :style="'width: 100%;'"
-              >
-                <q-img
-                  class="form__image64-equipment q-mx-auto q-my-auto border-rounded"
-                  no-spinner
-                  :src="equipment?.photo"
-                />
+              <div v-if="equipment.photo" class="q-mx-auto row q-my-sm" :style="'width: 100%;'">
+                <q-img class="form__image64-equipment q-mx-auto q-my-auto border-rounded" no-spinner
+                  :src="equipment?.photo" />
               </div>
               <div class="row">
                 <div class="col-12 q-my-sm">
@@ -51,11 +30,8 @@
                     <div class="col form__item-label text-weight-medium">
                       Estatus del equipo
                     </div>
-                    <q-chip
-                      class="q-ma-none col-auto q-mr-xs border-rounded"
-                      dark
-                      :style="`color: ${getStatus.color(equipment.equipmentStatus)}; background-color: ${getStatus.color(equipment.equipmentStatus)}26; font-size: 12px`"
-                    >
+                    <q-chip class="q-ma-none col-auto q-mr-xs border-rounded" dark
+                      :style="`color: ${getStatus.color(equipment.equipmentStatus)}; background-color: ${getStatus.color(equipment.equipmentStatus)}26; font-size: 12px`">
                       {{ getStatus.model(equipment.equipmentStatus) }}
                     </q-chip>
                   </div>
@@ -71,24 +47,13 @@
               </div>
             </div>
 
-            <div
-              class="q-pa-md border-rounded card-info"
-              v-if="showUserDetails()"
-            >
+            <div class="q-pa-md border-rounded card-info" v-if="showUserDetails()">
               <div class="col-12 text-weight-medium text-primary q-pb-sm text-center">
                 Información del usuario
               </div>
 
-              <div
-                v-if="user.photo"
-                class="q-mx-auto row q-my-sm"
-                :style="'width: 100%;'"
-              >
-                <q-img
-                  class="form__image64 q-mx-auto q-my-auto"
-                  no-spinner
-                  :src="user?.photo"
-                />
+              <div v-if="user.photo" class="q-mx-auto row q-my-sm" :style="'width: 100%;'">
+                <q-img class="form__image64 q-mx-auto q-my-auto" no-spinner :src="user?.photo" />
               </div>
 
               <div class="row">
@@ -97,20 +62,14 @@
                     <div class="col form__item-label text-weight-medium">
                       Estatus del usuario
                     </div>
-                    <q-chip
-                      class="q-ma-none col-auto q-mr-xs border-rounded"
-                      dark
-                      :style="`color: ${getStatus.color(user?.userStatus)}; background-color: ${getStatus.color(user?.userStatus)}26; font-size: 12px`"
-                    >
+                    <q-chip class="q-ma-none col-auto q-mr-xs border-rounded" dark
+                      :style="`color: ${getStatus.color(user?.userStatus)}; background-color: ${getStatus.color(user?.userStatus)}26; font-size: 12px`">
                       {{ getStatus.model(user?.userStatus) }}
                     </q-chip>
                   </div>
                 </div>
                 <div class="col-8">
-                  <div
-                    v-if="user?.email"
-                    class="col-12 form__item-label text-weight-medium"
-                  >
+                  <div v-if="user?.email" class="col-12 form__item-label text-weight-medium">
                     {{ 'Correo electrónico' }}
                   </div>
                   <div class="col-12  form__item-model q-mb-md">
@@ -129,7 +88,7 @@
                     {{ getRole.model(user?.userRole) }}
                   </div>
                 </div>
-                <!-- 
+                <!--
                 <div class="row justify-end">
                   <qrcode-vue
                     :value="value"
@@ -145,55 +104,27 @@
 
             <q-list v-else-if="!showEquipmentDetails()">
               <div class="q-pt-none">
-                <div
-                  v-for="(btn, index) in currentMenu"
-                  :key="index"
-                >
+                <div v-for="(btn, index) in currentMenu" :key="index">
                   <div v-if="btn.title">
-                    <btn-menu
-                      v-bind="btn"
-                      :index="index"
-                      :selected="selected"
-                    />
+                    <btn-menu v-bind="btn" :index="index" :selected="selected" :child="btn.child ? btn.child : null" />
                   </div>
-                  <q-separator
-                    v-if="btn == 'divider'"
-                    class="q-my-md"
-                  />
-                  <div
-                    class="container container-qr-code border-rounded column content-center q-pt-md"
-                    v-if="btn == 'qrcode'"
-                  >
-                    <qrcode-vue
-                      :value="value"
-                      :size="size"
-                      class="border-rounded q-mx-auto qr-code-style "
-                      background="#F3F3F3"
-                      foreground="#062841"
-                      :margin="2"
-                      level="L"
-                    />
+                  <q-separator v-if="btn == 'divider'" class="q-my-md" />
+                  <div class="container container-qr-code border-rounded column content-center q-pt-md"
+                    v-if="btn == 'qrcode'">
+                    <qrcode-vue :value="value" :size="size" class="border-rounded q-mx-auto qr-code-style "
+                      background="#F3F3F3" foreground="#062841" :margin="2" level="L" />
 
                     <div class="row justify-center items-center q-pb-md">
-                      <div
-                        class="text-center q-px-lg"
-                        style="color: #062841;"
-                      >
+                      <div class="text-center q-px-lg" style="color: #062841;">
                         No. serie → {{ equipment?.serialNumber }}
                       </div>
-                      <btn-action
-                        v-show="isDownloading === false"
-                        v-bind="btnExport"
-                      />
+                      <btn-action v-show="isDownloading === false" v-bind="btnExport" />
                     </div>
                   </div>
                 </div>
               </div>
               <div v-if="btnCloseSesion.show">
-                <btn-action
-                  class="q-mt-xl"
-                  v-bind="btnCloseSesion"
-                />
+                <btn-action class="q-mt-xl" v-bind="btnCloseSesion" />
               </div>
             </q-list>
           </q-scroll-area>
@@ -284,8 +215,20 @@ export default defineComponent({
         },
         {
           title: 'Mantenimientos',
-          link: 'maintenances', color: 'rgba(122, 122, 122, 1)',
+          color: 'rgba(122, 122, 122, 1)',
           background: '#f3f3f3ff',
+          child: [
+            {
+              title: 'Agendados',
+              link: 'scheduled', color: 'rgba(122, 122, 122, 1)',
+              background: '#f3f3f3ff',
+            },
+            {
+              title: 'Historial',
+              link: 'maintenances', color: 'rgba(122, 122, 122, 1)',
+              background: '#f3f3f3ff',
+            }
+          ]
         },
         {
           title: 'Planes de mantenimientos',

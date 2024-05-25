@@ -204,7 +204,7 @@ export default defineComponent({
             icon: 'o_supervisor_account'
           },
           {
-            title: 'Categoría',
+            title: 'Categoría del equipo',
             filter: 'category',
             icon: 'o_badge'
           },

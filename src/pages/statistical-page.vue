@@ -343,8 +343,8 @@ export default defineComponent({
             tooltip: {
               callbacks: {
                 label: function (context) {
-                  const label = context.dataset.additionalInfo[context.dataIndex];
-                  return label;
+                  let info = context.dataset.additionalInfo[context.dataIndex] + ' → ' + context.dataset.label + ': ' + context.formattedValue;
+                  return info;
                 },
               },
             }
@@ -490,7 +490,7 @@ export default defineComponent({
       },
 
       btnActionMaintenance: {
-        title: 'Ir a mantenimientos pendientes',
+        title: 'Ir a mantenimientos agendados',
         style: {
           paddingLeft: '0',
           paddingRight: '1.5rem',
@@ -684,13 +684,8 @@ export default defineComponent({
     },
 
     goToMaintenances() {
-      this.$store.dispatch('global/addGlobalsToLocalStorage', {
-        paramsReportsPage: {
-          maintenanceType: 'Preventivo'
-        }
-      });
-
-      this.$router.push('maintenances')
+      this.$store.dispatch('global/addGlobalsToLocalStorage');
+      this.$router.push('scheduled')
     },
 
     getChartValue(totals, stat) {

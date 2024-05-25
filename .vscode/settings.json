@@ -11,7 +11,7 @@
       "javascript"
   ],
   "workbench.colorTheme": "Bearded Theme Arc Blueberry",
-  "workbench.iconTheme": "material-icon-theme",
+  "workbench.iconTheme": "vscode-icons",
   "diffEditor.ignoreTrimWhitespace": false,
   "terminal.integrated.env.osx": {},
   "console-ninja.featureSet": "Community"

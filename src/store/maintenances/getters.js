@@ -13,6 +13,19 @@ export function getMaintenancesGetter(state) {
     return maintenances
 }
 
+export function getScheduledMaintenancesGetter(state) {
+  let maintenances = state.maintenances.map(maintenance => ({
+      id: maintenance.MaintenanceId,
+      type_maintenance: maintenance.maintenanceType,
+      encharged_name: maintenance.User?.userName,
+      date: formatDate(maintenance.createdAt),
+      total_cost: maintenance.cost,
+      status: maintenance.maintenanceType,
+      equipment: maintenance?.Equipment?.categoryName + ' - ' + maintenance?.Equipment?.equipmentName
+  }));
+  return maintenances
+}
+
 export function getPaginationGetter(state) {
     return state.pagination
 }
