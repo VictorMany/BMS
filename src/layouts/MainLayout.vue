@@ -129,7 +129,7 @@
                     {{ getRole.model(user?.userRole) }}
                   </div>
                 </div>
-                <!-- 
+                <!--
                 <div class="row justify-end">
                   <qrcode-vue
                     :value="value"
@@ -154,6 +154,7 @@
                       v-bind="btn"
                       :index="index"
                       :selected="selected"
+                      :child="btn.child ? btn.child : null"
                     />
                   </div>
                   <q-separator
@@ -286,6 +287,18 @@ export default defineComponent({
           title: 'Historial de mantenimientos',
           link: 'maintenances', color: 'rgba(122, 122, 122, 1)',
           background: '#f3f3f3ff',
+          child: [
+            {
+              title: 'Agendados',
+              link: 'scheduled', color: 'rgba(122, 122, 122, 1)',
+              background: '#f3f3f3ff',
+            },
+            {
+              title: 'Historial',
+              link: 'maintenances', color: 'rgba(122, 122, 122, 1)',
+              background: '#f3f3f3ff',
+            }
+          ]
         },
         {
           title: 'Planes de mantenimientos',

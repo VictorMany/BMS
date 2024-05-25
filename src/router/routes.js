@@ -94,6 +94,12 @@ const routes = [
         component: () => import('src/pages/Maintenances/maintenances-page.vue')
       },
       {
+        path: 'scheduled',
+        name: 'scheduled',
+        meta: [auth],
+        component: () => import('src/pages/Maintenances/scheduled-page.vue')
+      },
+      {
         path: 'add-maintenance',
         name: 'add-maintenance',
         props: true,

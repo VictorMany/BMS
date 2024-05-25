@@ -1,19 +1,32 @@
 <template>
-  <q-item
-    clickable
-    tag="a"
-    class="item border-rounded"
-    @click="navigateTo"
-  >
+  <q-expansion-item v-if="child" v-model="isExpanded" class="border-rounded" style="overflow: hidden;"
+    :class="isExpanded ? 'bg-accent margin-top' : 'item'">
+    <template v-slot:header>
+      <q-item-section>
+        <q-item-label class="q-item-label">
+          {{ title }}
+        </q-item-label>
+      </q-item-section>
+    </template>
+
+    <q-card-section class="q-py-xs">
+      <div v-for="(opt, j) in child" :key="j" class="item-filter border-rounded">
+        <q-item clickable tag="a" class="border-rounded q-my-sm bg-accent" dense @click="navigateTo(opt.link)">
+          <q-item-section>
+            <div class="row flex-center align-center justify-between">
+              <q-item-label class="q-item-label col-auto">{{ opt.title }}</q-item-label>
+            </div>
+          </q-item-section>
+        </q-item>
+      </div>
+    </q-card-section>
+  </q-expansion-item>
+
+  <q-item v-else clickable tag="a" class="item border-rounded" @click="navigateTo(link)">
     <q-item-section>
       <div class="row flex-center align-center justify-between">
         <q-item-label class="q-item-label col-auto">{{ title }}</q-item-label>
-        <q-chip
-          v-if="newItem"
-          class="border-rounded bg-accent text-primary"
-          style="font-size: 9px"
-          label="Nuevo"
-        />
+        <q-chip v-if="newItem" class="border-rounded bg-accent text-primary" style="font-size: 9px" label="Nuevo" />
       </div>
     </q-item-section>
   </q-item>
@@ -55,27 +68,39 @@ export default defineComponent({
       type: String,
     },
 
+    child: {
+      type: Array,
+      required: false,
+      default: null,
+    },
+
     background: {
       type: String,
     }
   },
 
+  data() {
+    return {
+      isExpanded: false
+    }
+  },
+
   methods: {
-    navigateTo() {
+    navigateTo(payload) {
       if (this.onClickFunction) {
         this.onClickFunction()
       }
 
-      if (!this.link) {
+      if (!payload) {
         return;
       }
 
-      if (typeof this.link === 'string') {
-        this.$router.push({ path: this.link });
+      if (typeof payload === 'string') {
+        this.$router.push({ path: payload });
         return;
       }
 
-      const { id, link, searchByIdEquipment, searchByIdUser } = this.link;
+      const { id, link, searchByIdEquipment, searchByIdUser } = payload;
 
       if (id !== undefined) {
         this.$router.push({ name: link, params: { id } });
@@ -111,7 +136,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .item {
   margin-top: 0.8rem;
   background-color: v-bind(localBackgroundColor) !important;
@@ -121,5 +146,10 @@ export default defineComponent({
 .q-item-label {
   font-weight: 300;
   font-size: 14px;
+  color: v-bind(localColor) !important;
+}
+
+.margin-top {
+  margin-top: 0.8rem;
 }
 </style>
