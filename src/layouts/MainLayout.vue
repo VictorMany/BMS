@@ -283,7 +283,7 @@ export default defineComponent({
           background: '#f3f3f3ff',
         },
         {
-          title: 'Mantenimientos',
+          title: 'Historial de mantenimientos',
           link: 'maintenances', color: 'rgba(122, 122, 122, 1)',
           background: '#f3f3f3ff',
         },

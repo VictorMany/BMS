@@ -3,7 +3,7 @@
     <div class="card-page">
       <header-actions
         titlePage="Mantenimientos"
-        :subtitle-page="subtitle"
+        subtitle-page="Historial de mantenimientos"
         :btnAction="btnAction"
         :btn-close-window="showCloseBtn() ? btnCloseWindow : null"
         :inputSearch="inputSearch"
