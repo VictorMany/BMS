@@ -1,41 +1,81 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
-  <q-table :style="`height: ${height}`" :row-key="rowKey" :rows="rows" :columns="columns" :rows-per-page-options="[-1]"
-    :hide-pagination="!showPagination" :loading="loading"
-    :class="{ 'sticky': !loading, 'show-selection': changeSelection }" :selected-rows-label="getSelectedString"
-    selection="multiple" v-model:selected="localSelected"
+  <q-table
+    :style="`height: ${height}`"
+    :row-key="rowKey"
+    :rows="rows"
+    :columns="columns"
+    :rows-per-page-options="[-1]"
+    :hide-pagination="!showPagination"
+    :loading="loading"
+    :class="{ 'sticky': !loading, 'show-selection': changeSelection }"
+    :selected-rows-label="getSelectedString"
+    selection="multiple"
+    v-model:selected="localSelected"
     class="table-style font-style my-sticky-header-table q-mt-none bg-white border-rounded hide-selection"
-    @selection="changeSelectionLocal">
+    @selection="changeSelectionLocal"
+  >
     <template v-slot:loading>
-      <q-inner-loading showing color="primary">
-        <q-spinner-pie color="primary" class="q-mt-lg" size="4em" />
+      <q-inner-loading
+        showing
+        color="primary"
+      >
+        <q-spinner-pie
+          color="primary"
+          class="q-mt-lg"
+          size="4em"
+        />
       </q-inner-loading>
     </template>
 
     <template v-slot:pagination>
-      <div v-if="showPagination" class="row justify-center">
-        <q-pagination v-model="pagination.page" dense class="q-mt-none pagination-style" size="md" direction-links
-          :max="pagination.totalPages" :max-pages="6" boundary-numbers @update:model-value="changePagination" />
+      <div
+        v-if="showPagination"
+        class="row justify-center"
+      >
+        <q-pagination
+          v-model="pagination.page"
+          dense
+          class="q-mt-none pagination-style"
+          size="md"
+          direction-links
+          :max="pagination.totalPages"
+          :max-pages="6"
+          boundary-numbers
+          @update:model-value="changePagination"
+        />
       </div>
     </template>
 
     <template v-slot:body-cell-actions="props">
       <q-td :props="props">
-        <icon-action v-for="(action, i) in actionsTable" :key="i" v-bind="action" :row="props"
-          @click="rowClicked(props, action.icnAction)" />
+        <icon-action
+          v-for="(action, i) in actionsTable"
+          :key="i"
+          v-bind="action"
+          :row="props"
+          @click="rowClicked(props, action.icnAction)"
+        />
       </q-td>
     </template>
 
     <template v-slot:body-cell-badge="props">
       <q-td :props="props">
-        <q-badge class="justify-center border-rounded" :class="checkColor(props.value)"
-          :label="props.value === true ? 'Activo' : props.value === false ? 'Inactivo' : props.value" />
+        <q-badge
+          class="justify-center border-rounded"
+          :class="checkColor(props.value)"
+          :label="props.value === true ? 'Activo' : props.value === false ? 'Inactivo' : props.value"
+        />
       </q-td>
     </template>
 
     <template v-slot:body-cell-badge-priority="props">
       <q-td :props="props">
-        <q-badge class="justify-center border-rounded" :class="checkColor(props.value)" :label="props.value" />
+        <q-badge
+          class="justify-center border-rounded"
+          :class="checkColor(props.value)"
+          :label="props.value"
+        />
       </q-td>
     </template>
   </q-table>
@@ -167,7 +207,7 @@ export default defineComponent({
           color = 'badge-pending';
           break;
         case 'Agendado':
-          color = 'badge-pending';
+          color = 'badge-attended';
           break;
         //Priorities
         case 'Alta':

@@ -64,8 +64,8 @@
                   :columns="columns"
                   v-model:row-selected="rowSelected"
                   :pagination-prop="{
-          rowsPerPage: null
-        }"
+                    rowsPerPage: null
+                  }"
                   :show-pagination="false"
                   :actions-table="actionsTable"
                 />
@@ -263,10 +263,7 @@ export default defineComponent({
 
     rowSelected: {
       handler(val) {
-        console.log(val.id)
-
         if (val.action === 'Maintenance') {
-          console.log(val.id)
           this.goToMaintenance(val.id);
         }
       },
@@ -359,10 +356,7 @@ export default defineComponent({
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 .main-container-page {
   background-color: white;
 }

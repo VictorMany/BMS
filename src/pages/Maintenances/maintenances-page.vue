@@ -2,8 +2,7 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions
-        titlePage="Mantenimientos"
-        subtitle-page="Historial de mantenimientos"
+        titlePage="Historial de mantenimientos"
         :btnAction="btnAction"
         :btn-close-window="showCloseBtn() ? btnCloseWindow : null"
         :inputSearch="inputSearch"

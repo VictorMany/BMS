@@ -12,12 +12,12 @@
         <q-scroll-area
           class="h-100"
           :thumb-style="{
-          right: '0px',
-          borderRadius: '5px',
-          background: 'rgba(29, 100, 231, 0.2)',
-          width: '5px',
-          opacity: 0,
-        }"
+            right: '0px',
+            borderRadius: '5px',
+            background: 'rgba(29, 100, 231, 0.2)',
+            width: '5px',
+            opacity: 0,
+          }"
         >
           <q-list>
             <div
@@ -34,14 +34,14 @@
                   <div class="row">
                     <div class="col">
                       <q-item-label class="setting__title">{{
-          item.title
-        }}</q-item-label>
+                        item.title
+                        }}</q-item-label>
                       <q-item-label
                         class="setting__subtitle"
                         caption
                       >{{
-            item.subtitle
-          }}</q-item-label>
+                        item.subtitle
+                        }}</q-item-label>
                     </div>
                     <div class="col-auto">
                       <q-toggle
@@ -302,10 +302,7 @@ export default defineComponent({
 });
 </script>
 
-<style
-  scoped
-  lang="scss"
->
+<style scoped lang="scss">
 .body--light {
   .card-page {
     background: white;

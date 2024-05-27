@@ -51,6 +51,7 @@ export async function getEquipmentAction(context, params) {
                 }, { root: true });
             }
 
+            console.log('Este es el equipment a retornar', equipment)
             return equipment
         } else {
             return response

@@ -17,12 +17,13 @@ export function getEquipmentsGetter(state) {
     value: equipment.IdEquipment,
     serialNumber: equipment.serialNumber,
     equipmentModel: equipment.equipmentModel,
-
     equipmentName: equipment.equipmentName,
     categoryName: equipment.categoryName,
-
     isReported: equipment.isReported,
     status: equipment.isReported ? 'Reportado' : 'Sin reportes',
+
+    // FOR THE SCHEDULED MAINTENANCES
+    date: 'Lunes 10, Marzo'
   }));
   return equipments
 }

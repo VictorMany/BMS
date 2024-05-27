@@ -192,18 +192,6 @@ export default defineComponent({
       }
     },
 
-    getDate() {
-      return this.$store.$store.getters['global/getDate']
-    },
-
-    goBack() {
-      this.$router.go(-1);
-    },
-
-    getCreatedAt() {
-      return this.$store.getters['global/getDate']
-    },
-
     async filterEquipments(val, update) {
       if (val === '') {
         await update(async () => {
@@ -245,6 +233,18 @@ export default defineComponent({
       })
     },
 
+    getDate() {
+      return this.$store.$store.getters['global/getDate']
+    },
+
+    goBack() {
+      this.$router.go(-1);
+    },
+
+    getCreatedAt() {
+      return this.$store.getters['global/getDate']
+    },
+
     getEquipmentDefault() {
       updateFieldByKeyInAllArrays(
         'idEquipment',
@@ -258,6 +258,10 @@ export default defineComponent({
         this.fields
       )
 
+      this.setModelValueByKey('maintenanceType', {
+        value: 'Preventivo',
+        label: 'Preventivo'
+      })
 
       this.setModelValueByKey('photo', this.equipment.photo)
       this.setModelValueByKey('serialNumber', this.equipment.serialNumber)
@@ -288,6 +292,31 @@ export default defineComponent({
       this.setModelValueByKey('observations', 'Mantenimiento a causa de un reporte por: ' + this.report.reason)
     },
 
+    getEquipmentFromScheduled() {
+      updateFieldByKeyInAllArrays(
+        'idEquipment',
+        {
+          model: {
+            value: this.equipment.IdEquipment,
+            label: this.equipment.categoryName
+          },
+          readonly: true
+        },
+        this.fields
+      )
+
+      this.setModelValueByKey('maintenanceType', {
+        value: 'Preventivo',
+        label: 'Preventivo'
+      })
+
+      this.setModelValueByKey('photo', this.equipment.photo)
+      this.setModelValueByKey('serialNumber', this.equipment.serialNumber)
+      this.setModelValueByKey('cost', '0.00')
+      this.setModelValueByKey('reason', 'Mantenimiento Preventivo/Agendado')
+      this.setModelValueByKey('observations', 'Este mantenimiento ha sido previamente agendado')
+    },
+
     setModelValueByKey(key, value) {
       // Busca la clave en todas las secciones del objeto fields
       for (const sectionKey in this.fields) {
@@ -310,16 +339,15 @@ export default defineComponent({
     },
   },
 
-  created() {
-    this.getEquipments({})
-  },
-
   mounted() {
-    if (this.equipment) {
+    if (this.equipment && !this.equipment?.isFromScheduled) {
       this.getEquipmentDefault()
-    }
-    else if (this.report) {
+    } else if (this.report) {
       this.getEquipmentFromReport()
+    } else if (this.equipment?.isFromScheduled) {
+      this.getEquipmentFromScheduled()
+    } else {
+      this.getEquipments({})
     }
   },
 

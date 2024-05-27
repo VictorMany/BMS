@@ -1,6 +1,11 @@
 <template>
-  <q-expansion-item v-if="child" v-model="isExpanded" class="border-rounded" style="overflow: hidden;"
-    :class="isExpanded ? 'bg-accent margin-top' : 'item'">
+  <q-expansion-item
+    v-if="child"
+    v-model="isExpanded"
+    class="border-rounded"
+    style="overflow: hidden;"
+    :class="isExpanded ? 'bg-accent margin-top' : 'item'"
+  >
     <template v-slot:header>
       <q-item-section>
         <q-item-label class="q-item-label">
@@ -10,11 +15,25 @@
     </template>
 
     <q-card-section class="q-py-xs">
-      <div v-for="(opt, j) in child" :key="j" class="item-filter border-rounded">
-        <q-item clickable tag="a" class="border-rounded q-my-sm bg-accent" dense @click="navigateTo(opt.link)">
+      <div
+        v-for="(opt, j) in child"
+        :key="j"
+        class="item-filter border-rounded"
+      >
+        <q-item
+          clickable
+          tag="a"
+          class="border-rounded q-my-sm bg-accent"
+          dense
+          @click="navigateTo(opt.link)"
+        >
           <q-item-section>
             <div class="row flex-center align-center justify-between">
-              <q-item-label class="q-item-label col-auto">{{ opt.title }}</q-item-label>
+              <q-item-label
+                class="q-item-label col-auto"
+                style="color: rgba(122, 122, 122, 1) !important"
+              >{{ opt.title
+                }}</q-item-label>
             </div>
           </q-item-section>
         </q-item>
@@ -22,11 +41,22 @@
     </q-card-section>
   </q-expansion-item>
 
-  <q-item v-else clickable tag="a" class="item border-rounded" @click="navigateTo(link)">
+  <q-item
+    v-else
+    clickable
+    tag="a"
+    class="item border-rounded"
+    @click="navigateTo(link)"
+  >
     <q-item-section>
       <div class="row flex-center align-center justify-between">
         <q-item-label class="q-item-label col-auto">{{ title }}</q-item-label>
-        <q-chip v-if="newItem" class="border-rounded bg-accent text-primary" style="font-size: 9px" label="Nuevo" />
+        <q-chip
+          v-if="newItem"
+          class="border-rounded bg-accent text-primary"
+          style="font-size: 9px"
+          label="Nuevo"
+        />
       </div>
     </q-item-section>
   </q-item>

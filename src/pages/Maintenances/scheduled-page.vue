@@ -1,42 +1,94 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
-      <header-actions titlePage="Mantenimientos agendados" :subtitle-page="subtitle" :btnAction="btnAction"
-        :inputSearch="inputSearch" v-model:searchModel="searchModel" v-model:switch-content="switchContent" />
+      <header-actions
+        titlePage="Mantenimientos agendados"
+        :subtitle-page="subtitle"
+        :inputSearch="inputSearch"
+        v-model:searchModel="searchModel"
+        v-model:switch-content="switchContent"
+      />
 
-      <div class="main-container-page q-pa-sm" :class="{ 'card-color main-container-page-dark': switchContent === 1 }">
-        <q-scroll-area v-if="switchContent === 1" style="height: 93% !important" class="fit"
-          :thumb-style="$store.getters['global/getThumbStyle']">
+      <div
+        class="main-container-page q-pa-sm"
+        :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
+      >
+        <q-scroll-area
+          v-if="switchContent === 1"
+          style="height: 93% !important"
+          class="fit"
+          :thumb-style="$store.getters['global/getThumbStyle']"
+        >
           <div style="max-width: 100%">
-            <div v-if="maintenances.length > 0" class="row container-cards">
-              <div v-for="(maintenance, index) in cards" :key="index"
-                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto">
-                <item-card v-bind="maintenance" :index="index" :card-action="goToGenerate" />
+            <div
+              v-if="scheduled.length > 0"
+              class="row container-cards"
+            >
+              <div
+                v-for="(maintenance, index) in cards"
+                :key="index"
+                class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
+              >
+                <item-card
+                  v-bind="maintenance"
+                  :index="index"
+                  :card-action="goToMaintenance"
+                />
               </div>
             </div>
 
-            <div v-else-if="loading" class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded">
-              <q-spinner-pie color="primary" class="q-mt-lg" size="4em" />
+            <div
+              v-else-if="loading"
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+            >
+              <q-spinner-pie
+                color="primary"
+                class="q-mt-lg"
+                size="4em"
+              />
               <div class="text-primary q-ma-lg">Cargando mantenimientos</div>
             </div>
 
-            <div class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded" v-else-if="loading === false">
+            <div
+              class="q-ma-md q-ma-sm-xl q-pa-xl text-center no-info border-rounded"
+              v-else-if="loading === false"
+            >
               No hay mantenimientos para mostrar
               <strong class="text-negative">!</strong>
             </div>
           </div>
         </q-scroll-area>
 
-        <div v-if="switchContent === 1 && maintenances.length > 0" style="height: 6.55%"
-          class="row justify-center q-pt-sm">
-          <q-pagination v-model="localPagination.page" :disable="loading" dense class="q-mt-none pagination-style"
-            :max="localPagination.totalPages" size="md" direction-links boundary-numbers :max-pages="6"
-            @update:model-value="changePagination" />
+        <div
+          v-if="switchContent === 1 && scheduled.length > 0"
+          style="height: 6.55%"
+          class="row justify-center q-pt-sm"
+        >
+          <q-pagination
+            v-model="localPagination.page"
+            :disable="loading"
+            dense
+            class="q-mt-none pagination-style"
+            :max="localPagination.totalPages"
+            size="md"
+            direction-links
+            boundary-numbers
+            :max-pages="6"
+            @update:model-value="changePagination"
+          />
         </div>
 
-        <general-table v-else-if="switchContent === 2" v-model:row-selected="rowSelected" :height="'100%'"
-          :rows="rows" :loading="loading" :columns="columns" :actions-table="actionsTable"
-          :pagination-prop="pagination" @change-pagination="changePagination" />
+        <general-table
+          v-else-if="switchContent === 2"
+          v-model:row-selected="rowSelected"
+          :height="'100%'"
+          :rows="rows"
+          :loading="loading"
+          :columns="columns"
+          :actions-table="actionsTable"
+          :pagination-prop="pagination"
+          @change-pagination="changePagination"
+        />
       </div>
       <!-- Main container -->
     </div>
@@ -108,9 +160,9 @@ export default defineComponent({
 
       actionsTable: [
         {
-          icnName: 'read_more',
+          icnName: 'engineering',
           icnSize: 'sm',
-          icnAction: 'Generate',
+          icnAction: 'Maintenance',
           tooltip: 'Realizar mantenimiento',
         }
       ],
@@ -152,8 +204,8 @@ export default defineComponent({
   watch: {
     rowSelected: {
       handler(val) {
-        if (val.action === 'Generate') {
-          this.goToGenerate(val.id);
+        if (val.action === 'Maintenance') {
+          this.goToMaintenance(val.id);
         }
       },
       deep: true,
@@ -174,13 +226,13 @@ export default defineComponent({
   },
 
   computed: {
-    maintenances() {
+    scheduled() {
       return this.$store.getters['equipments/getEquipmentsGetter'];
     },
 
     rows() {
       // Mapea la información de equipos a las filas requeridas por la tabla
-      return this.maintenances.map((e) => {
+      return this.scheduled.map((e) => {
         return {
           id: e.id,
           equipmentName: e.equipmentName,
@@ -211,19 +263,19 @@ export default defineComponent({
     },
 
     cards() {
-      return this.maintenances.map((e) => {
+      return this.scheduled.map((e) => {
         return {
           id: e.id,
-          cardTitle: e.equipment,
+          cardTitle: e.equipmentName,
           bottomStatus: {
             tooltip: 'El mantenimiento está agendado y pendiente por realizarse',
-            color: '#d1b410',
+            color: '#1e65e8',
             label: 'Agendado'
           },
           cardLabels: [
             {
-              label: 'Encargado',
-              info: e.encharged_name,
+              label: 'Modelo',
+              info: e.equipmentModel,
             },
             {
               label: 'Fecha',
@@ -251,8 +303,34 @@ export default defineComponent({
       this.loading = false
     },
 
-    goToGenerate(payload) {
-      this.$router.push({ name: 'detail-maintenance', params: { id: payload } });
+    async getEquipment(id) {
+      return await this.$store.dispatch('equipments/getEquipmentAction', { id })
+    },
+
+    async goToMaintenance(payload) {
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+      this.$store.commit('reports/MUTATE_REPORT', null)
+
+      let equipment = await this.getEquipment(payload)
+
+      const formattedMaintenance = {
+        id: payload,
+        IdEquipment: payload,
+
+        // FOR THE DETAILS MAINTENANCE AND REPORT
+        serialNumber: equipment.serialNumber,
+        equipmentModel: equipment.equipmentModel,
+        equipmentName: equipment.equipmentName,
+        categoryName: equipment.categoryName,
+        isFromScheduled: true,
+        date: 'Lunes 10, Marzo'
+      }
+
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', formattedMaintenance)
+
+      this.$router.push({
+        name: 'add-maintenance'
+      });
     },
 
     setSelectedFilter(opt) {
