@@ -23,15 +23,17 @@ export async function getMaintenancePlanAction(context, params) {
         if (response.status == 200) {
             // We call the global action to format our payload
             let res = response.data.contents.maintenancePlan
+
             const payload = {
                 observations: res.observations,
                 planName: res.planName,
-                maintenanceDates: res.MaintenancePlanDates,
+                maintenanceDates: cleanMaintenancePlanDates(res.MaintenancePlanDates),
                 equipments: res.Equipment,
                 equipmentIds: res.equipmentIds,
                 createdAt: formatDate(res.createdAt),
                 id: res.PlanId
             }
+
             return payload
         } else {
             return response
@@ -88,4 +90,15 @@ export async function updateMaintenancePlanAction(context, plan) {
             return response
         }
     })
+}
+
+function cleanMaintenancePlanDates(dates) {
+    const aux = []
+    dates.forEach(date => {
+        if (!aux.includes(date)) {
+            aux.push(date)
+        }
+    });
+
+    return aux
 }
