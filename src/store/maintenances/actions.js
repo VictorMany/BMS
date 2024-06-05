@@ -66,6 +66,7 @@ export async function postMaintenanceAction(context, maintenance) {
     reportRelated: '',
     idEquipment: '',
     userId: '',
+    planDateId: '',
     file: ''
   }
 

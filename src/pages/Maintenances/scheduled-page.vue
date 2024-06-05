@@ -4,8 +4,6 @@
       <header-actions
         titlePage="Mantenimientos agendados"
         :subtitle-page="subtitle"
-        :inputSearch="inputSearch"
-        v-model:searchModel="searchModel"
         v-model:switch-content="switchContent"
       />
 
@@ -110,9 +108,6 @@ export default defineComponent({
   },
   data() {
     return {
-      delaySearch: 300,
-      searchModel: null,
-      timeoutSearch: null,
       loading: true,
       switchContent: 1,
       paramsFromCreated: false,
@@ -171,29 +166,7 @@ export default defineComponent({
 
       selectedFilterText: 'userName',
 
-      inputSearch: {
-        show: true,
-        inputLabel: 'Encargado',
-        setSelectedFilter: this.setSelectedFilter,
-        setSelectedOptionFilter: this.setSelectedOptionFilter,
-        heightModal: 100,
-        items: [
-          {
-            title: 'Encargado',
-            filter: 'userName',
-            icon: 'o_supervisor_account'
-          },
-          {
-            title: 'Categoría del equipo',
-            filter: 'category',
-            icon: 'o_badge'
-          },
-        ],
-      },
-
-      params: {
-        date: '2024-03-01'
-      },
+      params: {},
     }
   },
 
@@ -210,19 +183,6 @@ export default defineComponent({
       },
       deep: true,
     },
-
-    searchModel(val) {
-      if (!this.paramsFromCreated) {
-        this.params = { ...this.params, [this.selectedFilterText]: val }
-        clearTimeout(this.timeoutSearch);
-        this.timeoutSearch = setTimeout(() => {
-
-          this.params.page = 1
-
-          this.getScheduled();
-        }, this.delaySearch);
-      }
-    },
   },
 
   computed: {
@@ -238,7 +198,8 @@ export default defineComponent({
           equipmentName: e.equipmentName,
           equipmentModel: e.equipmentModel,
           serialNumber: e.serialNumber,
-          date: '12/03/2024',
+          date: e.maintenanceDate,
+          PlanDateId: e.PlanDateId,
           status: 'Agendado'
         };
       });
@@ -279,7 +240,7 @@ export default defineComponent({
             },
             {
               label: 'Fecha',
-              info: e.date,
+              info: e.maintenanceDate,
             }
           ],
         };
@@ -297,8 +258,9 @@ export default defineComponent({
     async getScheduled() {
       this.loading = true
 
-      await this.$store.dispatch('equipments/getEquipmentsByDateAction', this.params);
+      await this.$store.dispatch('equipments/getPendingMaintenancesAction', this.params);
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
+
 
       this.loading = false
     },
@@ -311,7 +273,7 @@ export default defineComponent({
       this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
       this.$store.commit('reports/MUTATE_REPORT', null)
 
-      let equipment = await this.getEquipment(payload)
+      let equipment = this.scheduled.find(e => e.id === payload);
 
       const formattedMaintenance = {
         id: payload,
@@ -323,7 +285,9 @@ export default defineComponent({
         equipmentName: equipment.equipmentName,
         categoryName: equipment.categoryName,
         isFromScheduled: true,
-        date: 'Lunes 10, Marzo'
+        photo: equipment.cardImg,
+        date: equipment.maintenanceDate,
+        PlanDateId: equipment.PlanDateId
       }
 
       this.$store.commit('equipments/MUTATE_EQUIPMENT', formattedMaintenance)
@@ -331,39 +295,6 @@ export default defineComponent({
       this.$router.push({
         name: 'add-maintenance'
       });
-    },
-
-    setSelectedFilter(opt) {
-      if (this.selectedFilterText) {
-        delete this.params[this.selectedFilterText]
-        if (this.searchModel) {
-          this.params[opt.filter] = this.searchModel
-          this.getScheduled();
-        }
-      }
-
-      this.selectedFilterText = opt.filter
-      this.inputSearch.inputLabel = opt.title;
-
-      if (opt.value && opt.filter) {
-        this.params[opt.filter] = this.searchModel
-        this.getScheduled();
-      }
-    },
-
-    setSelectedOptionFilter(activeFilters, removedFilter = null) {
-      if (activeFilters.length) {
-        activeFilters.forEach(item => {
-          this.params[item.filter] = item.value
-        })
-      }
-      if (removedFilter) {
-        delete this.params[removedFilter]
-      }
-
-      this.params.page = 1
-
-      this.getScheduled();
     },
 
     changePagination(pagination) {

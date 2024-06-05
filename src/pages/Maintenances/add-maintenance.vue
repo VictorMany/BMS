@@ -57,7 +57,12 @@ export default defineComponent({
         createdAt: this.getCreatedAt(),
         id: null,
         reportRelated: null,
-
+        extras: [
+          {
+            key: 'planDateId',
+            model: ''
+          }
+        ],
         top: [
           {
             key: 'idEquipment',
@@ -311,6 +316,7 @@ export default defineComponent({
       })
 
       this.setModelValueByKey('photo', this.equipment.photo)
+      this.setModelValueByKey('planDateId', this.equipment.PlanDateId)
       this.setModelValueByKey('serialNumber', this.equipment.serialNumber)
       this.setModelValueByKey('cost', '0.00')
       this.setModelValueByKey('reason', 'Mantenimiento Preventivo/Agendado')

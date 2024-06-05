@@ -1,4 +1,4 @@
-import { formatDate } from '../global/actions';
+import { formatDate, formatDateOnly } from '../global/actions';
 
 export function getEquipmentsGetter(state) {
   let equipments = state.equipments.map(equipment => ({
@@ -23,7 +23,9 @@ export function getEquipmentsGetter(state) {
     status: equipment.isReported ? 'Reportado' : 'Sin reportes',
 
     // FOR THE SCHEDULED MAINTENANCES
-    date: 'Lunes 10, Marzo'
+    maintenanceDate: formatDateOnly(equipment?.maintenanceDate),
+    PlanDateId: equipment?.PlanDateId
+    // id: equipment.idEquipment,
   }));
   return equipments
 }
