@@ -95,12 +95,6 @@ export default defineComponent({
 
       fields: {
         createdAt: '',
-        // extras: [
-        //   {
-        //     key: 'showBtn',
-        //     model: ''
-        //   }
-        // ],
         top: [],
         left: [
           {

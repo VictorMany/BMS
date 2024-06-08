@@ -16,9 +16,9 @@
       <div class="row">
         {{ titlePage }}
       </div>
-      <!-- <div class="row text-weight-light setting__title">
+      <div class="row text-weight-light setting__title">
         {{ subtitlePage }}
-      </div> -->
+      </div>
     </div>
 
     <div

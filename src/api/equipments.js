@@ -2,6 +2,9 @@ import { api } from 'boot/axios'; // Asegúrate de que la ruta sea la correcta s
 
 export default class EquipmentService {
     static endpoint = '/bms/equipment/';
+    static endpointMaintenances = '/bms/maintenancePlan/';
+
+    listAllMaintenancePlanDates
 
     // Obtiene todos los equipos
     static getEquipments(params) {
@@ -35,14 +38,21 @@ export default class EquipmentService {
         let date = params.date;
         // delete params.date
 
-        return api.get('/bms/maintenancePlan/listByDate/' + date, {
+        return api.get(this.endpointMaintenances + 'listByDate/' + date, {
             params
         })
     }
 
-    // Obtiene todos los equipos
+    // Obtiene todos los mantenimientos pendientes
+    static getPendingMaintenances(params) {
+        return api.get(this.endpointMaintenances + 'listAllMaintenancePlanDates', {
+            params
+        })
+    }
+
+    // Obtiene todas las fechas del mes
     static getDatesPerMonth(params) {
-        return api.get('/bms/maintenancePlan/listByMonth/' + params)
+        return api.get(this.endpointMaintenances + 'listByMonth/' + params)
     }
 
 
@@ -73,7 +83,6 @@ export default class EquipmentService {
     }
 
     static deleteEquipments(equipmentIds) {
-        console.log('Estos son los ids', equipmentIds)
         return api.delete(this.endpoint + 'delete/', {
             data: {
                 equipmentIds: equipmentIds

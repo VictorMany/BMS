@@ -2,8 +2,7 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions
-        titlePage="Mantenimientos"
-        :subtitle-page="subtitle"
+        titlePage="Historial de mantenimientos"
         :btnAction="btnAction"
         :btn-close-window="showCloseBtn() ? btnCloseWindow : null"
         :inputSearch="inputSearch"
@@ -204,7 +203,7 @@ export default defineComponent({
             icon: 'o_supervisor_account'
           },
           {
-            title: 'Categoría',
+            title: 'Categoría del equipo',
             filter: 'category',
             icon: 'o_badge'
           },

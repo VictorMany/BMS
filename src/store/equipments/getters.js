@@ -1,4 +1,4 @@
-import { formatDate } from '../global/actions';
+import { formatDate, formatDateOnly } from '../global/actions';
 
 export function getEquipmentsGetter(state) {
   let equipments = state.equipments.map(equipment => ({
@@ -17,12 +17,15 @@ export function getEquipmentsGetter(state) {
     value: equipment.IdEquipment,
     serialNumber: equipment.serialNumber,
     equipmentModel: equipment.equipmentModel,
-
     equipmentName: equipment.equipmentName,
     categoryName: equipment.categoryName,
-
     isReported: equipment.isReported,
     status: equipment.isReported ? 'Reportado' : 'Sin reportes',
+
+    // FOR THE SCHEDULED MAINTENANCES
+    maintenanceDate: formatDateOnly(equipment?.maintenanceDate),
+    PlanDateId: equipment?.PlanDateId
+    // id: equipment.idEquipment,
   }));
   return equipments
 }

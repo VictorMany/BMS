@@ -132,6 +132,19 @@ export async function getEquipmentsByDateAction(context, params) {
     })
 }
 
+export async function getPendingMaintenancesAction(context, params) {
+    return service.getPendingMaintenances(params).then(async (response) => {
+        if (response.status == 200) {
+            context.commit('MUTATE_EQUIPMENTS', response.data.contents.maintenancePlanDates)
+            context.commit('MUTATE_DETAILS', response.data.contents)
+            return true
+        }
+        else {
+            return response
+        }
+    })
+}
+
 export async function getDatesPerMonthAction(context, params) {
     return service.getDatesPerMonth(params).then(async (response) => {
         if (response.status == 200) {

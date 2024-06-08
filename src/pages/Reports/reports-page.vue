@@ -3,7 +3,6 @@
     <div class="card-page">
       <header-actions
         title-page="Reportes"
-        :subtitle-page="subtitle"
         :btnAction="btnAction"
         :inputSearch="inputSearch"
         :btn-close-window="showCloseBtn() ? btnCloseWindow : null"

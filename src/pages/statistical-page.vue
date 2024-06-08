@@ -115,7 +115,7 @@
               </div>
             </div>
           </div>
-
+          <!-- PENDING REPORTS-->
           <div
             class="row w-100"
             style="gap: 10px"
@@ -137,7 +137,7 @@
             </div>
           </div>
 
-          <div class="q-pt-md container-table-plans">
+          <div class="q-mt-md q-mb-lg container-table-plans">
             <general-table
               v-model:row-selected="rowSelected"
               :show-pagination="false"
@@ -146,6 +146,41 @@
               :actions-table="actionsTable"
               :loading="loadingReportsTable"
               height="100%"
+            />
+          </div>
+
+          <!-- PENDING MAINTENANCES-->
+          <div
+            class="row w-100"
+            style="gap: 10px"
+          >
+            <div class="col-12 col-sm">
+              <div class="card-graphics__title text-start ellipsis">
+                Mantenimientos pendientes
+              </div>
+            </div>
+            <div class="col-auto">
+              <btn-action
+                :btn-title="btnActionMaintenance.title"
+                :btn-color="btnActionMaintenance.color"
+                :btn-background-gradient="btnActionMaintenance.backgroundGradient"
+                :icon-name="btnActionMaintenance.icon"
+                :btn-size="btnActionMaintenance.size"
+                v-bind="btnActionMaintenance"
+              />
+            </div>
+          </div>
+
+          <div class="q-pt-md container-table-plans">
+            <general-table
+              v-model:row-selected="rowSelectedScheduled"
+              height="100%"
+              :rows="rows"
+              :columns="columnsScheduled"
+              :actions-table="actionsTableScheduled"
+              :loading="loadingScheduledTable"
+              :pagination-prop="pagination"
+              @change-pagination="changePagination"
             />
           </div>
         </q-scroll-area>
@@ -173,9 +208,20 @@ export default defineComponent({
   data() {
     return {
       loadingReportsTable: true,
+      loadingScheduledTable: true,
       loadedCustomStats: false,
       loadedReports: false,
       loadedMaintenances: false,
+
+      localPagination: {
+        totalPages: 1,
+        descending: false,
+        page: 1,
+      },
+
+      params: {
+        date: '2024-03-01'
+      },
 
       selectedOption1: {
         name: 'Porcentaje de mantenimientos correctivos',
@@ -309,8 +355,8 @@ export default defineComponent({
             tooltip: {
               callbacks: {
                 label: function (context) {
-                  const label = context.dataset.additionalInfo[context.dataIndex];
-                  return label;
+                  let info = context.dataset.additionalInfo[context.dataIndex] + ' → ' + context.dataset.label + ': ' + context.formattedValue;
+                  return info;
                 },
               },
             }
@@ -455,6 +501,22 @@ export default defineComponent({
         icon: '',
       },
 
+      btnActionMaintenance: {
+        title: 'Ir a mantenimientos agendados',
+        style: {
+          paddingLeft: '0',
+          paddingRight: '1.5rem',
+          textAlign: 'center',
+          fontSize: '10px !important'
+        },
+        color: '#FFFFFF',
+        btnAction: this.goToMaintenances,
+        backgroundGradient:
+          'linear-gradient(269.25deg, #1e65e8 -4.79%, #1e65e8 94.27%)',
+        size: 'sm',
+        icon: '',
+      },
+
       columns: [
         {
           name: 'reason',
@@ -494,6 +556,31 @@ export default defineComponent({
         },
       ],
 
+      columnsScheduled: [
+        {
+          name: 'equipmentName', label: 'Equipo', field: 'equipmentName', align: 'left', sortable: true,
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
+        },
+        {
+          name: 'equipmentModel', label: 'Modelo', field: 'equipmentModel', align: 'left', sortable: true,
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
+        },
+        {
+          name: 'serialNumber', label: 'No. Serie', field: 'serialNumber', align: 'left', sortable: true,
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
+        },
+        { name: 'date', label: 'Fecha agendada', field: 'date', align: 'left', sortable: true },
+        {
+          name: 'badge',
+          required: true,
+          label: 'Tipo',
+          align: 'center',
+          field: row => row.status,
+          sortable: true
+        },
+        { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
+      ],
+
       actionsTable: [
         {
           icnName: 'read_more',
@@ -503,7 +590,17 @@ export default defineComponent({
         },
       ],
 
+      actionsTableScheduled: [
+        {
+          icnName: 'engineering',
+          icnSize: 'sm',
+          icnAction: 'Maintenance',
+          tooltip: 'Realizar mantenimiento',
+        }
+      ],
+
       rowSelected: {},
+      rowSelectedScheduled: {},
     };
   },
 
@@ -514,6 +611,7 @@ export default defineComponent({
       this.getPeriodicReportsStats();
       this.getPeriodicMaintenancesStats();
       this.getReports();
+      this.getScheduled();
       this.getStats();
     }
   },
@@ -521,6 +619,24 @@ export default defineComponent({
   computed: {
     reports() {
       return this.$store.getters['reports/getReportsGetter'];
+    },
+
+    scheduled() {
+      return this.$store.getters['equipments/getEquipmentsGetter'];
+    },
+
+    rows() {
+      // Mapea la información de equipos a las filas requeridas por la tabla
+      return this.scheduled.map((e) => {
+        return {
+          id: e.id,
+          equipmentName: e.equipmentName,
+          equipmentModel: e.equipmentModel,
+          serialNumber: e.serialNumber,
+          date: e.maintenanceDate,
+          status: 'Agendado'
+        };
+      });
     },
 
     stats() {
@@ -542,6 +658,12 @@ export default defineComponent({
     userRole() {
       return this.$store.getters['users/getRoleGetter'];
     },
+
+    pagination: {
+      get() {
+        return JSON.parse(JSON.stringify(this.$store.getters['equipments/getPaginationGetter']));
+      },
+    },
   },
 
   methods: {
@@ -550,6 +672,16 @@ export default defineComponent({
       const params = { rowsPerPage: 3, reportStatus: 'Pendiente' };
       await this.$store.dispatch('reports/getReportsAction', params);
       this.loadingReportsTable = false
+    },
+
+    async getScheduled() {
+      this.loadingScheduledTable = true
+      this.params.rowsPerPage = 5
+
+      await this.$store.dispatch('equipments/getPendingMaintenancesAction', this.params);
+      this.localPagination = JSON.parse(JSON.stringify(this.pagination))
+
+      this.loadingScheduledTable = false
     },
 
     async getPercentage(data, chart) {
@@ -623,22 +755,36 @@ export default defineComponent({
       this.loadedCustomStats = true
     },
 
-    goToReports() {
+    async goToMaintenance(payload) {
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
+      this.$store.commit('reports/MUTATE_REPORT', null)
 
-      this.$store.dispatch('global/addGlobalsToLocalStorage', {
-        paramsReportsPage: {
-          reportStatus: 'Pendiente'
-        }
+      let equipment = this.scheduled.find(e => e.id === payload);
+
+      const formattedMaintenance = {
+        id: payload,
+        IdEquipment: payload,
+
+        // FOR THE DETAILS MAINTENANCE AND REPORT
+        serialNumber: equipment.serialNumber,
+        equipmentModel: equipment.equipmentModel,
+        categoryName: `${equipment.equipmentName} - ${equipment.equipmentName} - No. serie: ${equipment.serialNumber}`,
+        // categoryName: equipment.categoryName,
+        isFromScheduled: true,
+        photo: equipment.cardImg,
+        date: equipment.maintenanceDate,
+        PlanDateId: equipment.PlanDateId
+      }
+
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', formattedMaintenance)
+
+      this.$router.push({
+        name: 'add-maintenance'
       });
-
-      this.$router.push('reports')
     },
 
-    getChartValue(totals, stat) {
-      const customVar1 = totals.find((e) => e[0] === stat.var1)?.[1];
-      const customVar2 = totals.find((e) => e[0] === stat.var2)?.[1];
-
-      return (customVar1 / customVar2) * 100
+    async getEquipment(id) {
+      return await this.$store.dispatch('equipments/getEquipmentAction', { id })
     },
 
     async getPeriodicReportsStats() {
@@ -677,8 +823,43 @@ export default defineComponent({
       this.loadedMaintenances = true;
     },
 
+    goToReports() {
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        paramsReportsPage: {
+          reportStatus: 'Pendiente'
+        }
+      });
+
+      this.$router.push('reports')
+    },
+
+    goToMaintenances() {
+      this.$store.dispatch('global/addGlobalsToLocalStorage');
+      this.$router.push('scheduled')
+    },
+
     goToDetails(payload) {
       this.$router.push({ name: 'detail-report', params: { id: payload } });
+    },
+
+    getChartValue(totals, stat) {
+      const customVar1 = totals.find((e) => e[0] === stat.var1)?.[1];
+      const customVar2 = totals.find((e) => e[0] === stat.var2)?.[1];
+
+      return (customVar1 / customVar2) * 100
+    },
+
+    changePagination(pagination) {
+      this.localPagination.page = pagination
+
+      this.params = {
+        ...this.params, ...{
+          page: this.localPagination.page,
+          rowsPerPage: this.localPagination.rowsPerPage,
+        }
+      }
+
+      this.getScheduled();
     },
   },
   watch: {
@@ -686,6 +867,15 @@ export default defineComponent({
       handler(val) {
         if (val.action === 'Detail') {
           this.goToDetails(val.id);
+        }
+      },
+      deep: true,
+    },
+
+    rowSelectedScheduled: {
+      handler(val) {
+        if (val.action === 'Maintenance') {
+          this.goToMaintenance(val.id);
         }
       },
       deep: true,

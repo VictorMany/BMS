@@ -443,7 +443,7 @@ export default defineComponent({
     async getCategories() {
       try {
         await this.$store.dispatch('equipments/getCategoriesAction', {
-          filterContracts: true,
+          filterPlanDates: false,
         })
         this.localCategories = JSON.parse(JSON.stringify(this.categories));
 
@@ -476,7 +476,7 @@ export default defineComponent({
           ...node.children,
           ...await this.$store.dispatch('equipments/getEquipmentsByCategoryAction', {
             categoryId: key,
-            filterContracts: true
+            filterPlanDates: false,
           })]
 
 

@@ -129,7 +129,7 @@
                     {{ getRole.model(user?.userRole) }}
                   </div>
                 </div>
-                <!-- 
+                <!--
                 <div class="row justify-end">
                   <qrcode-vue
                     :value="value"
@@ -154,6 +154,7 @@
                       v-bind="btn"
                       :index="index"
                       :selected="selected"
+                      :child="btn.child ? btn.child : null"
                     />
                   </div>
                   <q-separator
@@ -286,6 +287,18 @@ export default defineComponent({
           title: 'Mantenimientos',
           link: 'maintenances', color: 'rgba(122, 122, 122, 1)',
           background: '#f3f3f3ff',
+          child: [
+            {
+              title: 'Agendados',
+              link: 'scheduled',
+              background: '#f3f3f3ff',
+            },
+            {
+              title: 'Historial',
+              link: 'maintenances',
+              background: '#f3f3f3ff',
+            }
+          ]
         },
         {
           title: 'Planes de mantenimientos',
@@ -477,6 +490,12 @@ export default defineComponent({
             if (!this.showEquipmentDetails() || !this.showUserDetails()) {
               this.btnCloseSesion.show = true;
               this.selected = this.btnLinks.findIndex((e) => e.link === route.name);
+            }
+            break;
+          case 'scheduled':
+            if (!this.showEquipmentDetails() || !this.showUserDetails()) {
+              this.btnCloseSesion.show = true;
+              this.selected = this.btnLinks.findIndex((e) => e.link === 'maintenances');
             }
             break;
           case 'detail-equipment':

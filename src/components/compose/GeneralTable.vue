@@ -206,7 +206,10 @@ export default defineComponent({
         case 'Pendiente':
           color = 'badge-pending';
           break;
-        //Priorities 
+        case 'Agendado':
+          color = 'badge-attended';
+          break;
+        //Priorities
         case 'Alta':
           color = 'badge-high';
           break;
@@ -248,10 +251,7 @@ export default defineComponent({
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 .font-style {
   font-size: 13px;
   font-weight: 200;
