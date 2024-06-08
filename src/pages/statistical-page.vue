@@ -676,9 +676,8 @@ export default defineComponent({
 
     async getScheduled() {
       this.loadingScheduledTable = true
-      this.params.rowsPerPage = 5
 
-      await this.$store.dispatch('equipments/getPendingMaintenancesAction', this.params);
+      await this.$store.dispatch('equipments/getPendingMaintenancesAction', { rowsPerPage: 5 });
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
 
       this.loadingScheduledTable = false
