@@ -633,7 +633,7 @@ export default defineComponent({
           equipmentName: e.equipmentName,
           equipmentModel: e.equipmentModel,
           serialNumber: e.serialNumber,
-          date: '12/03/2024',
+          date: e.maintenanceDate,
           status: 'Agendado'
         };
       });
@@ -678,7 +678,7 @@ export default defineComponent({
       this.loadingScheduledTable = true
       this.params.rowsPerPage = 5
 
-      await this.$store.dispatch('equipments/getEquipmentsByDateAction', this.params);
+      await this.$store.dispatch('equipments/getPendingMaintenancesAction', this.params);
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
 
       this.loadingScheduledTable = false
@@ -759,7 +759,7 @@ export default defineComponent({
       this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
       this.$store.commit('reports/MUTATE_REPORT', null)
 
-      let equipment = await this.getEquipment(payload)
+      let equipment = this.scheduled.find(e => e.id === payload);
 
       const formattedMaintenance = {
         id: payload,
@@ -768,10 +768,12 @@ export default defineComponent({
         // FOR THE DETAILS MAINTENANCE AND REPORT
         serialNumber: equipment.serialNumber,
         equipmentModel: equipment.equipmentModel,
-        equipmentName: equipment.equipmentName,
-        categoryName: equipment.categoryName,
+        categoryName: `${equipment.equipmentName} - ${equipment.equipmentName} - No. serie: ${equipment.serialNumber}`,
+        // categoryName: equipment.categoryName,
         isFromScheduled: true,
-        date: 'Lunes 10, Marzo'
+        photo: equipment.cardImg,
+        date: equipment.maintenanceDate,
+        PlanDateId: equipment.PlanDateId
       }
 
       this.$store.commit('equipments/MUTATE_EQUIPMENT', formattedMaintenance)

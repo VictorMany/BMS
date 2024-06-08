@@ -261,7 +261,6 @@ export default defineComponent({
       await this.$store.dispatch('equipments/getPendingMaintenancesAction', this.params);
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
 
-
       this.loading = false
     },
 
@@ -283,7 +282,7 @@ export default defineComponent({
         serialNumber: equipment.serialNumber,
         equipmentModel: equipment.equipmentModel,
         equipmentName: equipment.equipmentName,
-        categoryName: equipment.categoryName,
+        categoryName: `${equipment.equipmentName} - ${equipment.equipmentName} - No. serie: ${equipment.serialNumber}`,
         isFromScheduled: true,
         photo: equipment.cardImg,
         date: equipment.maintenanceDate,
