@@ -30,6 +30,12 @@
             />
           </div>
 
+          <div class="q-my-md row w-100">
+            <div class="card-graphics__title text-start ellipsis">
+              Estadísticas del mes actual
+            </div>
+          </div>
+
           <div class="row container-stats">
             <graph-component
               class="col-12 col-md col-lg"
