@@ -31,7 +31,7 @@
           </div>
 
           <div class="q-my-md row w-100">
-            <div class="card-graphics__title text-start ellipsis">
+            <div class="card-graphics__title subtitle text-start ellipsis">
               Estadísticas del mes actual
             </div>
           </div>
@@ -87,7 +87,7 @@
           </div>
 
           <div class="q-my-md row w-100">
-            <div class="card-graphics__title text-start ellipsis">
+            <div class="card-graphics__title subtitle text-weight-bolder text-start ellipsis">
               Totales para indicadores clave
             </div>
           </div>
@@ -104,7 +104,7 @@
               >
                 <div
                   class="row q-pa-xs border-rounded h-100"
-                  style="background-color:  rgba(16, 108, 144, 0.038)"
+                  :style="returnStyle(key)"
                 >
                   <div
                     class="col q-pa-xs"
@@ -127,7 +127,7 @@
             style="gap: 10px"
           >
             <div class="col-12 col-sm">
-              <div class="card-graphics__title text-start ellipsis">
+              <div class="card-graphics__title subtitle text-start ellipsis">
                 Últimos reportes pendientes
               </div>
             </div>
@@ -161,7 +161,7 @@
             style="gap: 10px"
           >
             <div class="col-12 col-sm">
-              <div class="card-graphics__title text-start ellipsis">
+              <div class="card-graphics__title subtitle text-start ellipsis">
                 Mantenimientos pendientes
               </div>
             </div>
@@ -828,6 +828,12 @@ export default defineComponent({
       this.loadedMaintenances = true;
     },
 
+    returnStyle(key) {
+      if (key?.includes('del mes pasado')) return 'background-color:  rgba(16, 16, 255, 0.068)'
+      else if (key?.includes('este mes')) return 'background-color: rgba(100, 16, 150, 0.068)'
+      else return 'background-color: rgba(100, 100, 50, 0.068)'
+    },
+
     goToReports() {
       this.$store.dispatch('global/addGlobalsToLocalStorage', {
         paramsReportsPage: {
@@ -910,5 +916,9 @@ export default defineComponent({
 
 .h {
   color: #2effb9;
+}
+
+.subtitle {
+  font-weight: 600;
 }
 </style>
