@@ -3,12 +3,11 @@
     <div class="card-page">
       <header-actions
         titlePage="Mantenimientos agendados"
-        :subtitle-page="subtitle"
         v-model:switch-content="switchContent"
       />
 
       <div
-        class="main-container-page q-pa-sm"
+        class="main-container-page q-pa-sm h-93"
         :class="{ 'card-color main-container-page-dark': switchContent === 1 }"
       >
         <q-scroll-area
@@ -79,8 +78,9 @@
         <general-table
           v-else-if="switchContent === 2"
           v-model:row-selected="rowSelected"
+          rowKey="PlanDateId"
           :height="'100%'"
-          :rows="rows"
+          :rows="scheduled"
           :loading="loading"
           :columns="columns"
           :actions-table="actionsTable"
@@ -110,22 +110,12 @@ export default defineComponent({
     return {
       loading: true,
       switchContent: 1,
-      paramsFromCreated: false,
-      subtitle: '',
 
       localPagination: {
         totalPages: 1,
         descending: false,
         rowsPerPage: 20,
         page: 1,
-      },
-
-      btnCloseWindow: {
-        iconName: 'exit_to_app',
-        btnBackground: '#FF990020',
-        btnColor: '#FF9900',
-        btnAction: this.goBack,
-        shouldHide: this.$route.query?.equipment || this.$route.query?.user
       },
 
       columns: [
@@ -141,7 +131,7 @@ export default defineComponent({
           name: 'serialNumber', label: 'No. Serie', field: 'serialNumber', align: 'left', sortable: true,
           style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
         },
-        { name: 'date', label: 'Fecha agendada', field: 'date', align: 'left', sortable: true },
+        { name: 'maintenanceDate', label: 'Fecha agendada', field: 'maintenanceDate', align: 'left', sortable: true },
         {
           name: 'badge',
           required: true,
@@ -163,8 +153,6 @@ export default defineComponent({
       ],
 
       rowSelected: {},
-
-      selectedFilterText: 'userName',
 
       params: {},
     }
@@ -198,7 +186,7 @@ export default defineComponent({
           equipmentName: e.equipmentName,
           equipmentModel: e.equipmentModel,
           serialNumber: e.serialNumber,
-          date: e.maintenanceDate,
+          maintenanceDate: e.maintenanceDate,
           PlanDateId: e.PlanDateId,
           status: 'Agendado'
         };
@@ -214,12 +202,6 @@ export default defineComponent({
     user: {
       get() {
         return this.$store.getters['users/getUserGetter'];
-      },
-    },
-
-    localStorage: {
-      get() {
-        return JSON.parse(JSON.stringify(this.$store.getters['global/getlocalStorageGetter']));
       },
     },
 
@@ -246,12 +228,6 @@ export default defineComponent({
         };
       });
     },
-
-    equipment: {
-      get() {
-        return this.$store.getters['equipments/getEquipmentGetter'];
-      },
-    },
   },
 
   methods: {
@@ -264,10 +240,6 @@ export default defineComponent({
       this.loading = false
     },
 
-    async getEquipment(id) {
-      return await this.$store.dispatch('equipments/getEquipmentAction', { id })
-    },
-
     async goToMaintenance(payload) {
       this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
       this.$store.commit('reports/MUTATE_REPORT', null)
@@ -277,7 +249,6 @@ export default defineComponent({
       const formattedMaintenance = {
         id: payload,
         IdEquipment: payload,
-
         // FOR THE DETAILS MAINTENANCE AND REPORT
         serialNumber: equipment.serialNumber,
         equipmentModel: equipment.equipmentModel,
@@ -285,7 +256,7 @@ export default defineComponent({
         categoryName: `${equipment.equipmentName} - ${equipment.equipmentName} - No. serie: ${equipment.serialNumber}`,
         isFromScheduled: true,
         photo: equipment.cardImg,
-        date: equipment.maintenanceDate,
+        maintenanceDate: equipment.maintenanceDate,
         PlanDateId: equipment.PlanDateId
       }
 

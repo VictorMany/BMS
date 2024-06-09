@@ -181,6 +181,7 @@
             <general-table
               v-model:row-selected="rowSelectedScheduled"
               height="100%"
+              rowKey="PlanDateId"
               :rows="rows"
               :columns="columnsScheduled"
               :actions-table="actionsTableScheduled"
@@ -222,11 +223,12 @@ export default defineComponent({
       localPagination: {
         totalPages: 1,
         descending: false,
+        rowsPerPage: 5,
         page: 1,
       },
 
-      params: {
-        date: '2024-03-01'
+      paramsScheduled: {
+        rowsPerPage: 5,
       },
 
       selectedOption1: {
@@ -683,7 +685,7 @@ export default defineComponent({
     async getScheduled() {
       this.loadingScheduledTable = true
 
-      await this.$store.dispatch('equipments/getPendingMaintenancesAction', { rowsPerPage: 5 });
+      await this.$store.dispatch('equipments/getPendingMaintenancesAction', this.paramsScheduled);
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
 
       this.loadingScheduledTable = false
@@ -863,10 +865,10 @@ export default defineComponent({
     changePagination(pagination) {
       this.localPagination.page = pagination
 
-      this.params = {
-        ...this.params, ...{
+      this.paramsScheduled = {
+        ...this.paramsScheduled, ...{
           page: this.localPagination.page,
-          rowsPerPage: this.localPagination.rowsPerPage,
+          rowsPerPage: 5,
         }
       }
 

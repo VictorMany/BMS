@@ -222,7 +222,6 @@ export default defineComponent({
     const equipment = this.$route?.query?.equipment
     if (equipment) {
       this.subtitle = this.equipment?.categoryName
-
       this.params.IdEquipment = equipment
       this.params.page = 1
       this.btnAction.show = this.equipment?.equipmentStatus
