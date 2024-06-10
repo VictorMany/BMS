@@ -7,6 +7,7 @@
         :btn-action="btnAction"
         :btn-close-window="btnCloseWindow"
       />
+
       <div class="main-container-page main-container-page-dark container-form">
         <q-scroll-area
           class="h-97 q-pa-xs-none q-pa-lg-sm"
@@ -54,8 +55,8 @@ export default defineComponent({
       },
 
       fields: {
-        createdAt: this.getCreatedAt(),
         id: null,
+        createdAt: this.getCreatedAt(),
         reportRelated: null,
         extras: [
           {
@@ -147,8 +148,6 @@ export default defineComponent({
           }
         ],
       },
-
-      defaultEquipment: null
     };
   },
   methods: {
@@ -200,9 +199,7 @@ export default defineComponent({
     async filterEquipments(val, update) {
       if (val === '') {
         await update(async () => {
-
           await this.getEquipments()
-
           this.equipments.map(e => {
             e.label = `${e.cardTitle} - ${e.equipmentModel} - No. serie: ${e.serialNumber}`
           })
@@ -221,7 +218,6 @@ export default defineComponent({
         if (this.equipments.length >= 20) {
           params.rowsPerPage = this.paginationEquipments.totalItems
         }
-
         await this.getEquipments(params)
       }
 
@@ -236,10 +232,6 @@ export default defineComponent({
           this.fields
         )
       })
-    },
-
-    getDate() {
-      return this.$store.$store.getters['global/getDate']
     },
 
     goBack() {

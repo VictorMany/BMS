@@ -1,6 +1,7 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
+
       <header-actions
         titlePage="Historial de mantenimientos"
         :btnAction="btnAction"
