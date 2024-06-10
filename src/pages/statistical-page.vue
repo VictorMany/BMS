@@ -638,6 +638,7 @@ export default defineComponent({
       return this.scheduled.map((e) => {
         return {
           id: e.id,
+          PlanDateId: e.PlanDateId,
           equipmentName: e.equipmentName,
           equipmentModel: e.equipmentModel,
           serialNumber: e.serialNumber,
@@ -766,11 +767,12 @@ export default defineComponent({
       this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
       this.$store.commit('reports/MUTATE_REPORT', null)
 
-      let equipment = this.scheduled.find(e => e.id === payload);
+      let equipment = this.scheduled.find(e => e.PlanDateId === payload);
 
       const formattedMaintenance = {
         id: payload,
-        IdEquipment: payload,
+        IdEquipment: equipment.id,
+        PlanDateId: equipment.PlanDateId,
 
         // FOR THE DETAILS MAINTENANCE AND REPORT
         serialNumber: equipment.serialNumber,
@@ -780,7 +782,6 @@ export default defineComponent({
         isFromScheduled: true,
         photo: equipment.cardImg,
         date: equipment.maintenanceDate,
-        PlanDateId: equipment.PlanDateId
       }
 
       this.$store.commit('equipments/MUTATE_EQUIPMENT', formattedMaintenance)
@@ -888,7 +889,7 @@ export default defineComponent({
     rowSelectedScheduled: {
       handler(val) {
         if (val.action === 'Maintenance') {
-          this.goToMaintenance(val.id);
+          this.goToMaintenance(val.key);
         }
       },
       deep: true,

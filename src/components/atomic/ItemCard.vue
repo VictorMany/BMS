@@ -1,7 +1,7 @@
 <template>
   <q-card
     class="my-card cursor-pointer non-selectable border-rounded q-pa-sm"
-    @click="cardAction(id)"
+    @click="cardAction ? cardAction(id) : () => { }"
   >
     <q-card-section class="q-pa-xs">
       <div class="row flex align-center ellipsis">
@@ -141,15 +141,13 @@ export default defineComponent({
     cardAction: {
       type: Function,
       required: false,
+      default: null
     },
   },
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 .my-card {
   width: 230px;
   height: 100% !important;
