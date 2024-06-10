@@ -78,7 +78,7 @@ export const rules = {
     },
     requiredAutocomplete: (val) => {
         if (typeof val === 'string') {
-            if (/^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-]+$/.test(val)) {
+            if (/^[a-zA-ZáéíóúÁÉÍÓÚ0-9\s-.]+$/.test(val)) {
                 return val.trim().length > 0 || 'El campo es obligatorio';
             } else {
                 return 'El campo solo debe contener letras y números';

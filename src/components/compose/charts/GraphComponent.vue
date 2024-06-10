@@ -59,12 +59,11 @@
                     padding="8px"
                     color="accent"
                     unelevated
-                    @click="showForm = !showForm"
+                    @click="saveStat()"
                 >
                     <q-icon
                         name="save"
                         color="primary"
-                        @click="saveStat()"
                     />
                 </q-btn>
             </q-page-sticky>
@@ -220,6 +219,8 @@ export default {
             }
 
             this.reloadCustomStats()
+
+            this.showForm = !this.showForm
         },
 
         async updateStat() {

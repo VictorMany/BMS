@@ -233,26 +233,26 @@ export default defineComponent({
 
       selectedOption1: {
         name: 'Porcentaje de mantenimientos correctivos',
-        var1: 'Mantenimientos correctivos',
-        var2: 'Total de mantenimientos',
+        var1: '8-. Mantenimientos correctivos de este mes',
+        var2: '7-. Total de mantenimientos de este mes',
       },
 
       selectedOption2: {
         name: 'Porcentaje de mantenimientos preventivos',
-        var1: 'Mantenimientos preventivos',
-        var2: 'Total de mantenimientos',
+        var1: '9-. Mantenimientos preventivos de este mes',
+        var2: '7-. Total de mantenimientos de este mes',
       },
 
       selectedOption3: {
         name: 'Porcentaje de atención a reportes por falla',
-        var1: 'Mantenimientos correctivos',
-        var2: 'Total de reportes',
+        var1: '8-. Mantenimientos correctivos de este mes',
+        var2: '10-. Total de reportes de este mes',
       },
 
       selectedOption4: {
         name: 'Porcentaje de equipos con falla repentina',
-        var1: 'Mantenimientos correctivos',
-        var2: 'Total de equipos',
+        var1: '8-. Mantenimientos correctivos de este mes',
+        var2: '1-. Total de equipos',
       },
 
       chartConfigReports: {
@@ -734,23 +734,23 @@ export default defineComponent({
         await this.customStats.forEach(stat => {
           const totals = Object.entries(this.stats.statistics)
 
-          switch (stat.StatisticId) {
-            case 1:
+          switch (Number(stat.description)) {
+            case 0:
               this.customData1.data.datasets[0].label = stat.name
               this.selectedOption1 = stat
               this.getPercentage(this.getChartValue(totals, stat), this.customData1)
               break;
-            case 2:
+            case 1:
               this.customData2.data.datasets[0].label = stat.name
               this.selectedOption2 = stat
               this.getPercentage(this.getChartValue(totals, stat), this.customData2)
               break;
-            case 3:
+            case 2:
               this.customData3.data.datasets[0].label = stat.name
               this.selectedOption3 = stat
               this.getPercentage(this.getChartValue(totals, stat), this.customData3)
               break;
-            case 4:
+            case 3:
               this.customData4.data.datasets[0].label = stat.name
               this.selectedOption4 = stat
               this.getPercentage(this.getChartValue(totals, stat), this.customData4)
