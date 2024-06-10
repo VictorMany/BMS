@@ -110,6 +110,7 @@ export default defineComponent({
     return {
       loading: true,
       switchContent: 1,
+      paramsFromCreated: false,
 
       localPagination: {
         totalPages: 1,
@@ -205,6 +206,12 @@ export default defineComponent({
       },
     },
 
+    localStorage: {
+      get() {
+        return JSON.parse(JSON.stringify(this.$store.getters['global/getlocalStorageGetter']));
+      },
+    },
+
     cards() {
       return this.scheduled.map((e) => {
         return {
@@ -230,12 +237,22 @@ export default defineComponent({
     },
   },
 
+  created() {
+    this.checkParamsFromCreated()
+  },
+
   methods: {
     async getScheduled() {
       this.loading = true
 
       await this.$store.dispatch('equipments/getPendingMaintenancesAction', this.params);
       this.localPagination = JSON.parse(JSON.stringify(this.pagination))
+
+      this.paramsFromCreated = false
+      this.localPagination = JSON.parse(JSON.stringify(this.pagination))
+      this.$store.dispatch('global/addGlobalsToLocalStorage', {
+        paramsScheduledPage: { ...this.params }
+      });
 
       this.loading = false
     },
@@ -253,7 +270,7 @@ export default defineComponent({
         serialNumber: equipment.serialNumber,
         equipmentModel: equipment.equipmentModel,
         equipmentName: equipment.equipmentName,
-        categoryName: `${equipment.equipmentName} - ${equipment.equipmentName} - No. serie: ${equipment.serialNumber}`,
+        categoryName: `${equipment.equipmentName} - ${equipment.equipmentModel} - No. serie: ${equipment.serialNumber}`,
         isFromScheduled: true,
         photo: equipment.cardImg,
         maintenanceDate: equipment.maintenanceDate,
@@ -265,6 +282,16 @@ export default defineComponent({
       this.$router.push({
         name: 'add-maintenance'
       });
+    },
+
+    checkParamsFromCreated() {
+      if (this.localStorage?.paramsScheduledPage) {
+        this.params = { ...this.localStorage?.paramsScheduledPage };
+      }
+
+      if (this.localStorage?.search) {
+        this.paramsFromCreated = true
+      }
     },
 
     changePagination(pagination) {

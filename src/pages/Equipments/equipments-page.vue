@@ -543,6 +543,7 @@ export default defineComponent({
     async getEquipments() {
       this.loading = true
 
+      this.$store.commit('equipments/MUTATE_EQUIPMENTS', []);
       await this.$store.dispatch('equipments/getEquipmentsAction', this.params)
 
       if (this.params.page > 1 && this.equipments.length === 0) {

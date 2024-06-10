@@ -421,7 +421,7 @@ export default defineComponent({
 
       const report = JSON.parse(JSON.stringify(this.reports.find(e => e.id == payload)))
 
-      report.Equipment.categoryName += ` - ${report.Equipment.equipmentName} - No. serie: ${report.Equipment.serialNumber}`
+      report.Equipment.equipmentName += ` - ${report.Equipment?.equipmentModel} - No. serie: ${report.Equipment.serialNumber}`
 
       this.$store.commit('reports/MUTATE_REPORT', report)
 

@@ -546,7 +546,7 @@ export default defineComponent({
           name: 'date',
           label: 'Fecha del reporte',
           field: 'date',
-          align: 'center',
+          align: 'left',
           sortable: true,
         },
         {
@@ -775,7 +775,7 @@ export default defineComponent({
         // FOR THE DETAILS MAINTENANCE AND REPORT
         serialNumber: equipment.serialNumber,
         equipmentModel: equipment.equipmentModel,
-        categoryName: `${equipment.equipmentName} - ${equipment.equipmentName} - No. serie: ${equipment.serialNumber}`,
+        categoryName: `${equipment.equipmentName} - ${equipment.equipmentModel} - No. serie: ${equipment.serialNumber}`,
         // categoryName: equipment.categoryName,
         isFromScheduled: true,
         photo: equipment.cardImg,

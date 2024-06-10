@@ -19,7 +19,7 @@ export async function getEquipmentAction(context, params) {
             // We call the global action to format our payload
             const equipment = response.data.contents.equipment
 
-            const categoryName = `${equipment.categoryName} - ${equipment.equipmentName} - No. serie: ${equipment.serialNumber}`
+            const categoryName = `${equipment.equipmentName} - ${equipment.equipmentModel} - No. serie: ${equipment.serialNumber}`
             const IdEquipment = params.id
 
             const {
