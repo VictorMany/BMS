@@ -2,7 +2,10 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Estadísticas'" />
-      <div class="main-container-page container-form q-px-sm">
+      <div
+        class="main-container-page container-form q-px-sm"
+        style="overflow-y: scroll !important;"
+      >
         <div class="row container-stats">
           <graph-component
             class="col-12 col-md"
