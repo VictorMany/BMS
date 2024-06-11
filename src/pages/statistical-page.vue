@@ -2,195 +2,185 @@
   <q-page class="flex flex-center cursor-pointer non-selectable">
     <div class="card-page">
       <header-actions :titlePage="'Estadísticas'" />
-      <div class="main-container-page container-form">
-        <q-scroll-area
-          class="fit h-100 q-px-sm"
-          :thumb-style="{
-            borderRadius: '5px',
-            background: 'rgba(29, 100, 231, 0.2)',
-            width: '5px',
-            opacity: 1,
-          }"
+      <div class="main-container-page container-form q-px-sm">
+        <div class="row container-stats">
+          <graph-component
+            class="col-12 col-md"
+            title-card="Reportes"
+            type="area"
+            :payload="chartConfigReports"
+            :loaded="loadedReports"
+          />
+
+          <graph-component
+            class="col-12 col-md"
+            title-card="Mantenimientos"
+            type="area"
+            :payload="chartConfigMaintenances"
+            :loaded="loadedMaintenances"
+          />
+        </div>
+
+        <div class="q-my-md row w-100">
+          <div class="card-graphics__title subtitle text-start ellipsis">
+            Estadísticas del mes actual
+          </div>
+        </div>
+
+        <div class="row container-stats">
+          <graph-component
+            class="col-12 col-md col-lg"
+            title-card="Porcentaje de mantenimientos correctivos"
+            type="doghnut"
+            :payload="customData1"
+            :options="stats.statistics"
+            :selected-option="selectedOption1"
+            :loaded="loadedCustomStats"
+            :reload-custom-stats="getCustomStats"
+            :position="0"
+          />
+
+          <graph-component
+            class="col-12 col-md col-lg"
+            title-card="Porcentaje de mantenimientos preventivos"
+            type="doghnut"
+            :payload="customData2"
+            :options="stats.statistics"
+            :selected-option="selectedOption2"
+            :loaded="loadedCustomStats"
+            :reload-custom-stats="getCustomStats"
+            :position="1"
+          />
+
+          <graph-component
+            class="col-12 col-md col-lg"
+            title-card="Porcentaje de atención a reportes por falla"
+            type="doghnut"
+            :payload="customData3"
+            :options="stats.statistics"
+            :selected-option="selectedOption3"
+            :loaded="loadedCustomStats"
+            :reload-custom-stats="getCustomStats"
+            :position="2"
+          />
+
+          <graph-component
+            class="col-12 col-md col-lg"
+            title-card="Porcentaje de equipos con falla repentina"
+            type="doghnut"
+            :payload="customData4"
+            :options="stats.statistics"
+            :selected-option="selectedOption4"
+            :loaded="loadedCustomStats"
+            :reload-custom-stats="getCustomStats"
+            :position="3"
+          />
+        </div>
+
+        <div class="q-my-md row w-100">
+          <div class="card-graphics__title subtitle text-weight-bolder text-start ellipsis">
+            Totales para indicadores clave
+          </div>
+        </div>
+
+        <div
+          class="q-my-md"
+          v-if="stats.statistics"
         >
-          <div class="row container-stats">
-            <graph-component
-              class="col-12 col-md"
-              title-card="Reportes"
-              type="area"
-              :payload="chartConfigReports"
-              :loaded="loadedReports"
-            />
-
-            <graph-component
-              class="col-12 col-md"
-              title-card="Mantenimientos"
-              type="area"
-              :payload="chartConfigMaintenances"
-              :loaded="loadedMaintenances"
-            />
-          </div>
-
-          <div class="q-my-md row w-100">
-            <div class="card-graphics__title subtitle text-start ellipsis">
-              Estadísticas del mes actual
-            </div>
-          </div>
-
-          <div class="row container-stats">
-            <graph-component
-              class="col-12 col-md col-lg"
-              title-card="Porcentaje de mantenimientos correctivos"
-              type="doghnut"
-              :payload="customData1"
-              :options="stats.statistics"
-              :selected-option="selectedOption1"
-              :loaded="loadedCustomStats"
-              :reload-custom-stats="getCustomStats"
-              :position="0"
-            />
-
-            <graph-component
-              class="col-12 col-md col-lg"
-              title-card="Porcentaje de mantenimientos preventivos"
-              type="doghnut"
-              :payload="customData2"
-              :options="stats.statistics"
-              :selected-option="selectedOption2"
-              :loaded="loadedCustomStats"
-              :reload-custom-stats="getCustomStats"
-              :position="1"
-            />
-
-            <graph-component
-              class="col-12 col-md col-lg"
-              title-card="Porcentaje de atención a reportes por falla"
-              type="doghnut"
-              :payload="customData3"
-              :options="stats.statistics"
-              :selected-option="selectedOption3"
-              :loaded="loadedCustomStats"
-              :reload-custom-stats="getCustomStats"
-              :position="2"
-            />
-
-            <graph-component
-              class="col-12 col-md col-lg"
-              title-card="Porcentaje de equipos con falla repentina"
-              type="doghnut"
-              :payload="customData4"
-              :options="stats.statistics"
-              :selected-option="selectedOption4"
-              :loaded="loadedCustomStats"
-              :reload-custom-stats="getCustomStats"
-              :position="3"
-            />
-          </div>
-
-          <div class="q-my-md row w-100">
-            <div class="card-graphics__title subtitle text-weight-bolder text-start ellipsis">
-              Totales para indicadores clave
-            </div>
-          </div>
-
-          <div
-            class="q-my-md"
-            v-if="stats.statistics"
-          >
-            <div class="border-rounded card-graphics row q-pa-sm">
+          <div class="border-rounded card-graphics row q-pa-sm">
+            <div
+              v-for="(key, index) in Object.keys(stats.statistics)"
+              class="col-12 col-sm-6 card-graphics__title q-pa-xs"
+              :key="index"
+            >
               <div
-                v-for="(key, index) in Object.keys(stats.statistics)"
-                class="col-12 col-sm-6 card-graphics__title q-pa-xs"
-                :key="index"
+                class="row q-pa-xs border-rounded h-100"
+                :style="returnStyle(key)"
               >
                 <div
-                  class="row q-pa-xs border-rounded h-100"
-                  :style="returnStyle(key)"
+                  class="col q-pa-xs"
+                  style="overflow-wrap: break-word;"
                 >
-                  <div
-                    class="col q-pa-xs"
-                    style="overflow-wrap: break-word;"
-                  >
-                    {{ key }}
-                  </div>
-                  <div class="col-auto flex flex-center">
-                    <span class="text-primary text-weight-bolder bg-accent border-rounded q-px-md q-py-xs">
-                      {{ stats.statistics[key] }}
-                    </span>
-                  </div>
+                  {{ key }}
+                </div>
+                <div class="col-auto flex flex-center">
+                  <span class="text-primary text-weight-bolder bg-accent border-rounded q-px-md q-py-xs">
+                    {{ stats.statistics[key] }}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
-          <!-- PENDING REPORTS-->
-          <div
-            class="row w-100"
-            style="gap: 10px"
-          >
-            <div class="col-12 col-sm">
-              <div class="card-graphics__title subtitle text-start ellipsis">
-                Últimos reportes pendientes
-              </div>
-            </div>
-            <div class="col-auto">
-              <btn-action
-                :btn-title="btnAction.title"
-                :btn-color="btnAction.color"
-                :btn-background-gradient="btnAction.backgroundGradient"
-                :icon-name="btnAction.icon"
-                :btn-size="btnAction.size"
-                v-bind="btnAction"
-              />
+        </div>
+        <!-- PENDING REPORTS-->
+        <div
+          class="row w-100"
+          style="gap: 10px"
+        >
+          <div class="col-12 col-sm">
+            <div class="card-graphics__title subtitle text-start ellipsis">
+              Últimos reportes pendientes
             </div>
           </div>
-
-          <div class="q-mt-md q-mb-lg container-table-plans">
-            <general-table
-              v-model:row-selected="rowSelected"
-              :show-pagination="false"
-              :rows="reports"
-              :columns="columns"
-              :actions-table="actionsTable"
-              :loading="loadingReportsTable"
-              height="100%"
+          <div class="col-auto">
+            <btn-action
+              :btn-title="btnAction.title"
+              :btn-color="btnAction.color"
+              :btn-background-gradient="btnAction.backgroundGradient"
+              :icon-name="btnAction.icon"
+              :btn-size="btnAction.size"
+              v-bind="btnAction"
             />
           </div>
+        </div>
 
-          <!-- PENDING MAINTENANCES-->
-          <div
-            class="row w-100"
-            style="gap: 10px"
-          >
-            <div class="col-12 col-sm">
-              <div class="card-graphics__title subtitle text-start ellipsis">
-                Mantenimientos pendientes
-              </div>
-            </div>
-            <div class="col-auto">
-              <btn-action
-                :btn-title="btnActionMaintenance.title"
-                :btn-color="btnActionMaintenance.color"
-                :btn-background-gradient="btnActionMaintenance.backgroundGradient"
-                :icon-name="btnActionMaintenance.icon"
-                :btn-size="btnActionMaintenance.size"
-                v-bind="btnActionMaintenance"
-              />
+        <div class="q-mt-md q-mb-lg">
+          <general-table
+            v-model:row-selected="rowSelected"
+            :show-pagination="false"
+            :rows="reports"
+            :columns="columns"
+            :actions-table="actionsTable"
+            :loading="loadingReportsTable"
+            height="100%"
+          />
+        </div>
+
+        <!-- PENDING MAINTENANCES-->
+        <div
+          class="row w-100"
+          style="gap: 10px"
+        >
+          <div class="col-12 col-sm">
+            <div class="card-graphics__title subtitle text-start ellipsis">
+              Mantenimientos pendientes
             </div>
           </div>
-
-          <div class="q-pt-md container-table-plans">
-            <general-table
-              v-model:row-selected="rowSelectedScheduled"
-              height="100%"
-              rowKey="PlanDateId"
-              :rows="rows"
-              :columns="columnsScheduled"
-              :actions-table="actionsTableScheduled"
-              :loading="loadingScheduledTable"
-              :pagination-prop="pagination"
-              @change-pagination="changePagination"
+          <div class="col-auto">
+            <btn-action
+              :btn-title="btnActionMaintenance.title"
+              :btn-color="btnActionMaintenance.color"
+              :btn-background-gradient="btnActionMaintenance.backgroundGradient"
+              :icon-name="btnActionMaintenance.icon"
+              :btn-size="btnActionMaintenance.size"
+              v-bind="btnActionMaintenance"
             />
           </div>
-        </q-scroll-area>
+        </div>
+
+        <div class="q-pt-md">
+          <general-table
+            v-model:row-selected="rowSelectedScheduled"
+            height="100%"
+            rowKey="PlanDateId"
+            :rows="rows"
+            :columns="columnsScheduled"
+            :actions-table="actionsTableScheduled"
+            :loading="loadingScheduledTable"
+            :pagination-prop="pagination"
+            @change-pagination="changePagination"
+          />
+        </div>
       </div>
     </div>
   </q-page>
