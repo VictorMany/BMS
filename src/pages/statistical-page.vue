@@ -536,9 +536,9 @@ export default defineComponent({
           sortable: true,
         },
         {
-          name: 'date',
+          name: 'maintenanceDate',
           label: 'Fecha del reporte',
-          field: 'date',
+          field: 'maintenanceDate',
           align: 'left',
           sortable: true,
         },
@@ -570,7 +570,7 @@ export default defineComponent({
           name: 'serialNumber', label: 'No. Serie', field: 'serialNumber', align: 'left', sortable: true,
           style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
         },
-        { name: 'date', label: 'Fecha agendada', field: 'date', align: 'left', sortable: true },
+        { name: 'maintenanceDate', label: 'Fecha agendada', field: 'maintenanceDate', align: 'left', sortable: true },
         {
           name: 'badge',
           required: true,
@@ -635,7 +635,7 @@ export default defineComponent({
           equipmentName: e.equipmentName,
           equipmentModel: e.equipmentModel,
           serialNumber: e.serialNumber,
-          date: e.maintenanceDate,
+          maintenanceDate: e.maintenanceDate,
           status: 'Agendado'
         };
       });
@@ -774,7 +774,6 @@ export default defineComponent({
         // categoryName: equipment.categoryName,
         isFromScheduled: true,
         photo: equipment.cardImg,
-        date: equipment.maintenanceDate,
       }
 
       this.$store.commit('equipments/MUTATE_EQUIPMENT', formattedMaintenance)

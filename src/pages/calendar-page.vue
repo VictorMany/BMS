@@ -51,32 +51,26 @@
               v-if="switchContent === 1"
               class="fit h-90"
               :thumb-style="{
-          right: '6px',
-          borderRadius: '5px',
-          background: 'rgba(29, 100, 231, 0.2)',
-          width: '5px',
-          opacity: 1,
-        }"
+                right: '6px',
+                borderRadius: '5px',
+                background: 'rgba(29, 100, 231, 0.2)',
+                width: '5px',
+                opacity: 1,
+              }"
             >
               <div
-                v-if="equipments && equipments.length > 0"
+                v-if="scheduled && scheduled.length > 0"
                 class="row container-cards"
               >
                 <div
-                  class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
-                  v-for="(equipment, index) in equipments"
+                  v-for="(maintenance, index) in cards"
                   :key="index"
+                  class="col-xs-12 col-sm-auto col-md-auto col-lg-auto col-xl-auto"
                 >
                   <item-card
-                    v-bind="equipment"
-                    :status="equipment.isReported ?
-          {
-            tooltip: 'Tiene reporte(s) sin atender',
-            color: '#FF9900',
-            label: 'Reportado'
-          } : null"
+                    v-bind="maintenance"
                     :index="index"
-                    :card-action="goToDetails"
+                    @click="goToMaintenance(maintenance.PlanDateId)"
                   />
                 </div>
               </div>
@@ -103,7 +97,7 @@
             </q-scroll-area>
 
             <div
-              v-if="switchContent === 1 && equipments.length > 0"
+              v-if="switchContent === 1 && scheduled.length > 0"
               class="row justify-center q-pt-sm"
               style="height: 6.55%"
             >
@@ -125,7 +119,7 @@
               v-else-if="switchContent === 2"
               v-model:row-selected="rowSelected"
               class="w-100 h-100"
-              :rows="rows"
+              :rows="scheduled"
               :columns="columns"
               :actions-table="actionsTable"
               :pagination-prop="pagination"
@@ -178,6 +172,14 @@ export default defineComponent({
       switchContent: 1,
       timeoutSearch: null,
 
+      rowSelected: {},
+
+      selectedFilterText: 'name',
+
+      params: {
+        date: ''
+      },
+
       localPagination: {
         totalPages: 1,
         descending: false,
@@ -185,59 +187,32 @@ export default defineComponent({
         page: 1,
       },
 
-      rowSelected: {},
-
-      selectedFilterText: 'name',
-
-      params: {
-        date: '2024-03-01'
-      },
-
       columns: [
         {
-          name: 'equipment',
+          name: 'equipmentName', label: 'Equipo', field: 'equipmentName', align: 'left', sortable: true,
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
+        },
+        {
+          name: 'equipmentModel', label: 'Modelo', field: 'equipmentModel', align: 'left', sortable: true,
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
+        },
+        {
+          name: 'serialNumber', label: 'No. Serie', field: 'serialNumber', align: 'left', sortable: true,
+          style: 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px',
+        },
+        { name: 'maintenanceDate', label: 'Fecha agendada', field: 'maintenanceDate', align: 'left', sortable: true },
+        {
+          name: 'badge',
           required: true,
-          label: 'Equipo',
-          align: 'left',
-          field: 'equipment',
-          format: (val) => `${val}`,
-          sortable: true,
-        },
-        {
-          name: 'model',
-          label: 'Modelo',
-          field: 'model',
-          align: 'left',
-          sortable: true,
-        },
-        {
-          name: 'no_serie',
-          label: 'No. serie',
-          field: 'no_serie',
+          label: 'Tipo',
           align: 'center',
-          sortable: true,
+          field: () => 'Agendado',
+          sortable: true
         },
-        {
-          name: 'actions',
-          label: 'Acciones',
-          field: 'actions',
-          align: 'center',
-        },
+        { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
       ],
 
       actionsTable: [
-        {
-          icnName: 'read_more',
-          icnSize: 'sm',
-          icnAction: 'Detail',
-          tooltip: 'Detalle de equipo',
-        },
-        {
-          icnName: 'o_edit',
-          icnSize: 'xs',
-          icnAction: 'Edit',
-          tooltip: 'Editar equipo',
-        },
         {
           icnName: 'engineering',
           icnSize: 'xs',
@@ -312,14 +287,32 @@ export default defineComponent({
 
     async goToMaintenance(payload) {
       this.$store.commit('equipments/MUTATE_EQUIPMENT', null)
-      await this.getEquipment(payload)
+      this.$store.commit('reports/MUTATE_REPORT', null)
+
+      let equipment = this.scheduled.find(e => e.PlanDateId === payload);
+
+      const formattedMaintenance = {
+        id: payload,
+        IdEquipment: equipment.id,
+        PlanDateId: equipment.PlanDateId,
+        // FOR THE DETAILS MAINTENANCE AND REPORT
+        serialNumber: equipment.serialNumber,
+        equipmentModel: equipment.equipmentModel,
+        equipmentName: equipment.equipmentName,
+        categoryName: `${equipment.equipmentName} - ${equipment.equipmentModel} - No. serie: ${equipment.serialNumber}`,
+        isFromScheduled: true,
+        photo: equipment.cardImg,
+      }
+
+      this.$store.commit('equipments/MUTATE_EQUIPMENT', formattedMaintenance)
+
       this.$router.push({
         name: 'add-maintenance'
       });
     },
 
-    async getEquipment(id) {
-      await this.$store.dispatch('equipments/getEquipmentAction', { id })
+    findEquipmentById(id) {
+      return this.scheduled.find(e => e.id === id)?.PlanDateId;
     },
 
     checkPermissions() {
@@ -371,14 +364,6 @@ export default defineComponent({
       return fechaFormateada;
     },
 
-    goToDetails(payload) {
-      this.$router.push({ name: 'detail-equipment', params: { id: payload } });
-    },
-
-    goToEdit(payload) {
-      this.$router.push({ name: 'edit-equipment', params: { id: payload } });
-    },
-
     changePagination(pagination) {
       this.localPagination.page = pagination
 
@@ -395,13 +380,13 @@ export default defineComponent({
 
   watch: {
     rowSelected: {
-      handler(val) {
-        if (val.action === 'Edit') {
-          this.goToEdit(val.id);
-        } else if (val.action === 'Detail') {
-          this.goToDetails(val.id);
-        } else if (val.action === 'Maintenance') {
-          this.goToMaintenance(val.id);
+      async handler(val) {
+        try {
+          if (val.action === 'Maintenance') {
+            this.goToMaintenance(await this.findEquipmentById(val.id));
+          }
+        } catch (error) {
+          console.log(error)
         }
       },
       deep: true,
@@ -409,21 +394,33 @@ export default defineComponent({
   },
 
   computed: {
-    equipments() {
-      return this.$store.getters['equipments/getEquipmentsGetter'];
-    },
-
-    rows() {
-      // Mapea la información de equipos a las filas requeridas por la tabla
-      return this.equipments.map((e) => {
+    cards() {
+      return this.scheduled.map((e) => {
         return {
           id: e.id,
-          equipment: e.cardTitle,
-          model: e.cardLabels[0].info,
-          no_serie: e.cardLabels[1].info,
-          date: e.cardDate,
+          cardTitle: e.equipmentName,
+          PlanDateId: e.PlanDateId,
+          bottomStatus: {
+            tooltip: 'El mantenimiento está agendado y pendiente por realizarse',
+            color: '#1e65e8',
+            label: 'Agendado'
+          },
+          cardLabels: [
+            {
+              label: 'Modelo',
+              info: e.equipmentModel,
+            },
+            {
+              label: 'Fecha',
+              info: e.maintenanceDate,
+            }
+          ],
         };
       });
+    },
+
+    scheduled() {
+      return this.$store.getters['equipments/getEquipmentsGetter'];
     },
 
     pagination: {
@@ -447,10 +444,7 @@ export default defineComponent({
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 .container-colorama {
   max-width: 420px !important;
 }

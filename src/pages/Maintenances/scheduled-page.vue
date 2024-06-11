@@ -138,7 +138,7 @@ export default defineComponent({
           required: true,
           label: 'Tipo',
           align: 'center',
-          field: row => row.status,
+          field: () => 'Agendado',
           sortable: true
         },
         { name: 'actions', label: 'Acciones', field: 'actions', align: 'center' }
@@ -177,21 +177,6 @@ export default defineComponent({
   computed: {
     scheduled() {
       return this.$store.getters['equipments/getEquipmentsGetter'];
-    },
-
-    rows() {
-      // Mapea la información de equipos a las filas requeridas por la tabla
-      return this.scheduled.map((e) => {
-        return {
-          id: e.id,
-          equipmentName: e.equipmentName,
-          equipmentModel: e.equipmentModel,
-          serialNumber: e.serialNumber,
-          maintenanceDate: e.maintenanceDate,
-          PlanDateId: e.PlanDateId,
-          status: 'Agendado'
-        };
-      });
     },
 
     pagination: {

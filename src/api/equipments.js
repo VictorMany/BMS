@@ -4,8 +4,6 @@ export default class EquipmentService {
     static endpoint = '/bms/equipment/';
     static endpointMaintenances = '/bms/maintenancePlan/';
 
-    listAllMaintenancePlanDates
-
     // Obtiene todos los equipos
     static getEquipments(params) {
         return api.get(this.endpoint + 'list', {
