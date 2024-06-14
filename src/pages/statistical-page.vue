@@ -536,9 +536,9 @@ export default defineComponent({
           sortable: true,
         },
         {
-          name: 'maintenanceDate',
+          name: 'date',
           label: 'Fecha del reporte',
-          field: 'maintenanceDate',
+          field: 'date',
           align: 'left',
           sortable: true,
         },
