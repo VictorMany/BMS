@@ -33,13 +33,13 @@
                     <q-item-section>
                       <q-item-label class="setting__title">{{
                         item.title
-                      }}</q-item-label>
+                        }}</q-item-label>
                       <q-item-label
                         class="setting__subtitle"
                         caption
                       >{{
                         item.subtitle
-                      }}</q-item-label>
+                        }}</q-item-label>
                     </q-item-section>
                   </q-item>
                 </div>
@@ -195,7 +195,7 @@ export default defineComponent({
           link: 'users'
         },
         {
-          title: 'Cargar equipos desde un archivo excel',
+          title: 'Cargar equipos desde un archivo excel (BETA)',
           subtitle: 'Te permite agregar varios regsitros desde una fuente de datos local (.xlsx)',
           img: 'excel.png',
           action: this.openLoadEquipments
