@@ -939,11 +939,10 @@ export default defineComponent({
 
 /* Estilo para ocultar todo excepto el contenido imprimible */
 @media print {
-
   @page {
     size: A4 portrait;
     /* Orientación vertical */
-    margin: 5px;
+    margin: 0px;
     /* Sin márgenes para maximizar el uso del espacio */
   }
 
@@ -973,17 +972,17 @@ export default defineComponent({
   }
 
   .graph-component-50 {
-    width: 46.8% !important;
-    height: 65% !important
+    width: 48.5% !important;
+    height: 100% !important
   }
 
   .graph-component-25 {
-    width: 23% !important;
+    width: 23.5% !important;
   }
 
   .graph-component-50 canvas {
     width: 90% !important;
-    height: 65% !important;
+    height: 100% !important;
   }
 
   .container-style {

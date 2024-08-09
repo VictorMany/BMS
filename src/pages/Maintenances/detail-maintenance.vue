@@ -267,7 +267,6 @@ export default defineComponent({
 
   .custom-col-xs,
   .custom-col-sm,
-  .custom-col-md,
   .custom-col-lg {
     width: 50% !important;
   }

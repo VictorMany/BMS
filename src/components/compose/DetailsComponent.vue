@@ -472,13 +472,6 @@ export default defineComponent({
   }
 }
 
-/* Para tamaños de pantalla medianos (md) */
-@media (min-width: 768px) {
-  .custom-col-md {
-    width: 100%;
-  }
-}
-
 /* Para tamaños de pantalla grandes (lg) */
 @media (min-width: 992px) {
   .custom-col-lg {
