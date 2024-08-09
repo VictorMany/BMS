@@ -1,14 +1,18 @@
 <template>
   <q-page class="flex flex-center cursor-pointer non-selectable">
-    <div class="card-page">
-      <header-actions :titlePage="'Estadísticas'" />
+    <div class="card-page printable-content">
+      <header-actions
+        :titlePage="'Estadísticas'"
+        :download-pdf="download"
+        :show-download-btn="loadedCustomStats"
+      />
       <div
         class="main-container-page container-form q-px-sm"
         style="overflow-y: scroll !important;"
       >
         <div class="row container-stats">
           <graph-component
-            class="col-12 col-md"
+            class="col-12 col-md graph-component-50"
             title-card="Reportes"
             type="area"
             :payload="chartConfigReports"
@@ -16,7 +20,7 @@
           />
 
           <graph-component
-            class="col-12 col-md"
+            class="col-12 col-md graph-component-50"
             title-card="Mantenimientos"
             type="area"
             :payload="chartConfigMaintenances"
@@ -32,7 +36,7 @@
 
         <div class="row container-stats">
           <graph-component
-            class="col-12 col-md col-lg"
+            class="col-12 col-md col-lg graph-component-25"
             title-card="Porcentaje de mantenimientos correctivos"
             type="doghnut"
             :payload="customData1"
@@ -44,7 +48,7 @@
           />
 
           <graph-component
-            class="col-12 col-md col-lg"
+            class="col-12 col-md col-lg graph-component-25"
             title-card="Porcentaje de mantenimientos preventivos"
             type="doghnut"
             :payload="customData2"
@@ -56,7 +60,7 @@
           />
 
           <graph-component
-            class="col-12 col-md col-lg"
+            class="col-12 col-md col-lg graph-component-25"
             title-card="Porcentaje de atención a reportes por falla"
             type="doghnut"
             :payload="customData3"
@@ -68,7 +72,7 @@
           />
 
           <graph-component
-            class="col-12 col-md col-lg"
+            class="col-12 col-md col-lg graph-component-25"
             title-card="Porcentaje de equipos con falla repentina"
             type="doghnut"
             :payload="customData4"
@@ -80,14 +84,14 @@
           />
         </div>
 
-        <div class="q-my-md row w-100">
+        <div class="q-my-md row w-100 no-printable-content">
           <div class="card-graphics__title subtitle text-weight-bolder text-start ellipsis">
             Totales para indicadores clave
           </div>
         </div>
 
         <div
-          class="q-my-md"
+          class="q-my-md no-printable-content"
           v-if="stats.statistics"
         >
           <div class="border-rounded card-graphics row q-pa-sm">
@@ -117,7 +121,7 @@
         </div>
         <!-- PENDING REPORTS-->
         <div
-          class="row w-100"
+          class="row w-100 no-printable-content"
           style="gap: 10px"
         >
           <div class="col-12 col-sm">
@@ -137,7 +141,7 @@
           </div>
         </div>
 
-        <div class="q-mt-md q-mb-lg">
+        <div class="q-mt-md q-mb-lg no-printable-content">
           <general-table
             v-model:row-selected="rowSelected"
             :show-pagination="false"
@@ -151,7 +155,7 @@
 
         <!-- PENDING MAINTENANCES-->
         <div
-          class="row w-100"
+          class="row w-100 no-printable-content"
           style="gap: 10px"
         >
           <div class="col-12 col-sm">
@@ -171,7 +175,7 @@
           </div>
         </div>
 
-        <div class="q-pt-md">
+        <div class="q-pt-md no-printable-content">
           <general-table
             v-model:row-selected="rowSelectedScheduled"
             height="100%"
@@ -196,6 +200,7 @@ import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
 import BtnAction from 'src/components/atomic/BtnAction.vue';
 import GraphComponent from 'src/components/compose/charts/GraphComponent.vue';
+import { showWarning } from 'app/utils/utils';
 
 export default defineComponent({
   name: 'StatisticalPage',
@@ -823,11 +828,25 @@ export default defineComponent({
       this.loadedMaintenances = true;
     },
 
+
+    async download() {
+      try {
+        // Realizar scroll hasta el final de la página
+        window.scrollTo(0, document.body.scrollHeight);
+        // Esperar un breve tiempo para asegurarse de que el scroll se haya completado
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        window.print();
+      } catch (error) {
+        showWarning(this.$q, { msg: 'No se pudo completar la descarga', title: 'Ocurrió un error' });
+      }
+    },
+
     returnStyle(key) {
       if (key?.includes('del mes pasado')) return 'background-color:  rgba(16, 16, 255, 0.068)'
       else if (key?.includes('este mes')) return 'background-color: rgba(100, 16, 150, 0.068)'
       else return 'background-color: rgba(100, 100, 50, 0.068)'
     },
+
 
     goToReports() {
       this.$store.dispatch('global/addGlobalsToLocalStorage', {
@@ -890,7 +909,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .container-stats {
   gap: 10px;
   padding-bottom: 10px;
@@ -915,5 +934,78 @@ export default defineComponent({
 
 .subtitle {
   font-weight: 600;
+}
+
+
+/* Estilo para ocultar todo excepto el contenido imprimible */
+@media print {
+
+  @page {
+    size: A4 portrait;
+    /* Orientación vertical */
+    margin: 5px;
+    /* Sin márgenes para maximizar el uso del espacio */
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .no-printable-content {
+    display: none;
+  }
+
+  .print-signs {
+    display: flex;
+  }
+
+  .printable-content,
+  .printable-content * {
+    visibility: visible;
+  }
+
+  .printable-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-width: 70vw !important;
+  }
+
+  .graph-component-50 {
+    width: 46.8% !important;
+    height: 65% !important
+  }
+
+  .graph-component-25 {
+    width: 23% !important;
+  }
+
+  .graph-component-50 canvas {
+    width: 90% !important;
+    height: 65% !important;
+  }
+
+  .container-style {
+    padding: 0 !important;
+  }
+
+  #downloadPDF,
+  .q-btn,
+  .q-icon,
+  .q-drawer-container {
+    display: none !important;
+  }
+
+  .card-graphics {
+    background: white !important;
+  }
+
+  body,
+  .card-page,
+  .body--dark .card-info,
+  .body--dark .main-container-page-dark {
+    background-color: #f8fafc !important;
+  }
 }
 </style>

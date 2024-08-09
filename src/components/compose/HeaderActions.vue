@@ -227,12 +227,16 @@ export default defineComponent({
       default: () => { },
       required: false,
     },
+    showDownloadBtn: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   data() {
     return {
       searchModelLocal: this.searchModel,
-      switchContentLocal: this.switchContent,
-      showDownloadBtn: false
+      switchContentLocal: this.switchContent
     };
   },
 
@@ -263,13 +267,6 @@ export default defineComponent({
       });
       return totalShown
     }
-  },
-
-  mounted() {
-    // Utiliza setTimeout para mostrar el botón después de 3 segundos
-    setTimeout(() => {
-      this.showDownloadBtn = true;
-    }, 3000);
   },
 
   watch: {

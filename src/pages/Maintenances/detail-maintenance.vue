@@ -4,6 +4,7 @@
       <header-actions
         :title-page="'Detalles del mantenimiento'"
         :btn-close-window="btnCloseWindow"
+        :show-download-btn="!loading"
         :download-pdf="download"
       />
       <div class="main-container-page main-container-page-dark container-form">

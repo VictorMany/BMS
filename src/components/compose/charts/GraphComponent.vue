@@ -78,7 +78,7 @@
                 {{ name.model }}
             </div>
 
-            <div class="container-graph">
+            <div class="container-graph column justify-center">
                 <doghnut-chart
                     :chart-data="payload.data"
                     :chart-options="payload.options"

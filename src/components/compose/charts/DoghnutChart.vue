@@ -29,14 +29,14 @@
 
   <div
     v-else
-    class="q-pa-md border-rounded q-my-md text-center"
+    class="q-pa-md border-rounded q-my-auto text-center"
   >
     <q-spinner-pie
       color="primary"
       class="q-mt-lg"
       size="4em"
     />
-    <div class="text-primary q-ma-lg">Cargando ...</div>
+    <div class="text-primary q-ma-lg">Cargando</div>
   </div>
 </template>
 
@@ -64,7 +64,7 @@ ChartJS.register(
 );
 
 export default {
-  name: 'BarChart',
+  name: 'DonughChart',
   components: { Doughnut },
   props: {
     chartData: {
@@ -101,7 +101,7 @@ export default {
 
 .label {
   font-weight: 600;
-  font-size: 35px;
+  font-size: 26px;
   color: v-bind(color);
   position: absolute;
   margin-top: -60%;

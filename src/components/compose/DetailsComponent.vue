@@ -459,7 +459,7 @@ export default defineComponent({
 </script>
 
 
-<style>
+<style lang="scss" scoped>
 /* Para tamaños de pantalla extra pequeños (xs) */
 .custom-col-xs {
   width: 100%;
@@ -482,20 +482,6 @@ export default defineComponent({
 /* Para tamaños de pantalla grandes (lg) */
 @media (min-width: 992px) {
   .custom-col-lg {
-    width: 50%;
-  }
-}
-
-/* Para tamaños de pantalla extra grandes (xl) */
-@media (min-width: 1200px) {
-  .custom-col-xl {
-    width: 50%;
-  }
-}
-
-/* Para tamaños de pantalla extra extra grandes (xxl) */
-@media (min-width: 1920px) {
-  .custom-col-xxl {
     width: 50%;
   }
 }
