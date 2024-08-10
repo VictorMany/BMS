@@ -179,7 +179,7 @@ export default defineComponent({
             label: 'Número de serie*',
             model: '',
             readonly: this.isEditing(),
-            rules: [rules.requiredString, rules.maxLength(30), rules.alphanumeric],
+            rules: [rules.requiredString, rules.maxLength(30)],
           },
           {
             key: 'equipmentBrand',
