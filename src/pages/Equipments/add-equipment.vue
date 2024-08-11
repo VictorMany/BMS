@@ -172,7 +172,7 @@ export default defineComponent({
             label: 'Modelo del equipo*',
             model: '',
             readonly: this.isEditing(),
-            rules: [rules.requiredString, rules.maxLength(60), rules.alphanumeric],
+            rules: [rules.requiredString, rules.maxLength(60)],
           },
           {
             key: 'serialNumber',
@@ -186,7 +186,7 @@ export default defineComponent({
             label: 'Marca*',
             model: '',
             readonly: this.isEditing(),
-            rules: [rules.requiredString, rules.maxLength(60), rules.alphanumeric],
+            rules: [rules.requiredString, rules.maxLength(60)],
           },
           {
             key: 'manufacturingYear',
@@ -223,7 +223,7 @@ export default defineComponent({
             key: 'provider',
             label: 'Proveedor',
             model: '',
-            rules: [rules.maxLength(50), rules.alphanumeric],
+            rules: [rules.maxLength(50)],
           },
           {
             key: 'price',
