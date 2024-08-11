@@ -130,21 +130,20 @@ export default defineComponent({
             setModel: this.setModelCategory,
             options: [],
             model: null,
-            shouldShow: !this.isEditing(),
             rules: [rules.requiredAutocomplete],
           },
-          {
-            key: 'categoryName',
-            label: 'Categoría del equipo*',
-            model: '',
-            shouldShow: this.isEditing(),
-            readonly: true
-          },
+          // {
+          //   key: 'categoryName',
+          //   label: 'Categoría del equipo*',
+          //   model: '',
+          //   shouldShow: this.isEditing(),
+          //   readonly: true
+          // },
           {
             key: 'equipmentName',
             label: 'Nombre del equipo*',
             model: '',
-            readonly: this.isEditing(),
+            // readonly: this.isEditing(),
           },
           {
             key: 'LocationId',
@@ -171,28 +170,28 @@ export default defineComponent({
             key: 'equipmentModel',
             label: 'Modelo del equipo*',
             model: '',
-            readonly: this.isEditing(),
+            // readonly: this.isEditing(),
             rules: [rules.requiredString, rules.maxLength(60), rules.alphanumeric],
           },
           {
             key: 'serialNumber',
             label: 'Número de serie*',
             model: '',
-            readonly: this.isEditing(),
+            // readonly: this.isEditing(),
             rules: [rules.requiredString, rules.maxLength(30)],
           },
           {
             key: 'equipmentBrand',
             label: 'Marca*',
             model: '',
-            readonly: this.isEditing(),
+            // readonly: this.isEditing(),
             rules: [rules.requiredString, rules.maxLength(60), rules.alphanumeric],
           },
           {
             key: 'manufacturingYear',
             label: 'Año del equipo*',
             type: 'number',
-            readonly: this.isEditing(),
+            // readonly: this.isEditing(),
             rules: [
               rules.validYear,
               rules.validateYearNotGreaterThanCurrent,
@@ -213,7 +212,7 @@ export default defineComponent({
             label: 'Estatus*',
             type: 'select',
             model: null,
-            shouldShow: this.isEditing(),
+            // shouldShow: this.isEditing(),
             options: [
               { label: 'Activo', index: 1, value: 1 },
               { label: 'Inactivo', index: 2, value: 0 },
@@ -234,7 +233,8 @@ export default defineComponent({
             rules: [
               rules.numeric,
               rules.nonNegative,
-              rules.maxDecimalPlaces
+              rules.maxDecimalPlaces,
+              rules.maxValue,
             ],
           },
           {
@@ -272,13 +272,13 @@ export default defineComponent({
   methods: {
     async initInfo() {
       this.loading = true
+      await this.getCategories()
       await this.getLocations()
       await this.getDepartments()
 
       if (this.isEditing()) {
         await this.getEquipment()
       } else {
-        await this.getCategories()
         this.loading = false
       }
     },

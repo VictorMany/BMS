@@ -9,6 +9,10 @@ export const rules = {
     validYear: (val) => /^\d{4}$/.test(val) || 'Debe ser un año válido (formato: YYYY)',
     validEmail: (val) => /\S+@\S+\.\S+/.test(val) || 'Formato de correo electrónico inválido',
     validPhoneNumber: (val) => /^\d{10}$/.test(val) || 'El número de teléfono debe tener 10 dígitos',
+    maxValue(val) {
+        const numericVal = Number(val)
+        return (numericVal <= 99999999) || `El campo no debe exceder ${99999999} unidades`;
+    },
     alphanumeric: (val) => {
         if (val) {
             return /^[a-zA-ZáéíóúÁÉÍÓÚäÄëËïÏöÖüÜ0-9&\s()_[\]-]+$/.test(val) || 'El campo solo debe contener letras, números y acentos';
