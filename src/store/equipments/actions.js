@@ -206,15 +206,21 @@ export async function postEquipmentsFromExcelAction(context, excel) {
 export async function updateEquipmentAction(context, equipment) {
     // Those are the keys you need in your payload and find in the fields
     let keys = {
-        equipmentStatus: '',
+        department: '',
+        equipmentName: '',
+        equipmentBrand: '',
+        equipmentModel: '',
+        CategoryId: '',
         LocationId: '',
         DepartmentId: '',
+        location: '',
+        manufacturingYear: '',
         observations: '',
+        price: '',
+        provider: '',
         serialNumber: '',
         trackingNumber: '',
         warrantyDate: '',
-        price: '',
-        provider: '',
         acquisitionDate: '',
         photo: ''
     }
