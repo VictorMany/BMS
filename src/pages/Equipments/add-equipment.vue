@@ -170,7 +170,7 @@ export default defineComponent({
             key: 'equipmentModel',
             label: 'Modelo del equipo*',
             model: '',
-            readonly: this.isEditing(),
+            // readonly: this.isEditing(),
             rules: [rules.requiredString, rules.maxLength(60)],
           },
           {
@@ -184,7 +184,7 @@ export default defineComponent({
             key: 'equipmentBrand',
             label: 'Marca*',
             model: '',
-            readonly: this.isEditing(),
+            // readonly: this.isEditing(),
             rules: [rules.requiredString, rules.maxLength(60)],
           },
           {
