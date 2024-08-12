@@ -134,11 +134,11 @@
                 gestionar el inventario y cumplir con los requisitos
                 regulatorios y de cumplimiento.
               </p>
-              <a
+              <!-- <a
                 @click="navigateTo('terms-and-conditions')"
                 target="_blank"
                 class="text-primary"
-              >Términos y condiciones</a>
+              >Términos y condiciones</a> -->
             </div>
           </div>
         </q-scroll-area>
