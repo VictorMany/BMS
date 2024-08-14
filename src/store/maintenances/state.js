@@ -1,6 +1,7 @@
 export default function () {
     return {
         maintenances: [],
+        totalCost: JSON.parse(localStorage.getItem('totalCost')) || null,
 
         message: '',
 

@@ -29,3 +29,7 @@ export function getScheduledMaintenancesGetter(state) {
 export function getPaginationGetter(state) {
     return state.pagination
 }
+
+export function getTotalCostGetter(state) {
+    return state.totalCost
+}

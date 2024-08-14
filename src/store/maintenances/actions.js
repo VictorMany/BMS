@@ -4,6 +4,12 @@ export async function getMaintenancesAction(context, params) {
   return service.getMaintenances(params).then(async (response) => {
     if (response.status == 200) {
       context.commit('MUTATE_MAINTENANCES', response.data.contents.maintenances)
+      const costs = {
+        correctiveCost: response.data?.contents?.correctiveCost,
+        preventiveCost: response.data?.contents?.preventiveCost,
+        totalCost: response.data?.contents?.totalCost,
+      }
+      context.commit('MUTATE_TOTAL_COST', costs)
       context.commit('MUTATE_DETAILS', response.data.contents)
       return true
     } else {
@@ -28,29 +34,29 @@ export async function getMaintenanceAction(context, params) {
   })
 }
 
-export async function getMaintenancesByEquipmentAction(context, params) {
-  return service.getMaintenancesByEquipment(params).then(async (response) => {
-    if (response.status == 200) {
-      context.commit('MUTATE_MAINTENANCES', response.data.contents.maintenances)
-      context.commit('MUTATE_DETAILS', response.data.contents)
-      return true
-    } else {
-      return response
-    }
-  })
-}
+// export async function getMaintenancesByEquipmentAction(context, params) {
+//   return service.getMaintenancesByEquipment(params).then(async (response) => {
+//     if (response.status == 200) {
+//       context.commit('MUTATE_MAINTENANCES', response.data.contents.maintenances)
+//       context.commit('MUTATE_DETAILS', response.data.contents)
+//       return true
+//     } else {
+//       return response
+//     }
+//   })
+// }
 
-export async function getMaintenancesByUserAction(context, params) {
-  return service.getMaintenancesByUser(params).then(async (response) => {
-    if (response.status == 200) {
-      context.commit('MUTATE_MAINTENANCES', response.data.contents.maintenances)
-      context.commit('MUTATE_DETAILS', response.data.contents)
-      return true
-    } else {
-      return response
-    }
-  })
-}
+// export async function getMaintenancesByUserAction(context, params) {
+//   return service.getMaintenancesByUser(params).then(async (response) => {
+//     if (response.status == 200) {
+//       context.commit('MUTATE_MAINTENANCES', response.data.contents.maintenances)
+//       context.commit('MUTATE_DETAILS', response.data.contents)
+//       return true
+//     } else {
+//       return response
+//     }
+//   })
+// }
 
 export async function postMaintenanceAction(context, maintenance) {
   // Those are the keys you need in your payload and find in the fields

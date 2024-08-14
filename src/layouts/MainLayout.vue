@@ -40,7 +40,9 @@
                 :style="'width: 100%;'"
               >
                 <q-img
-                  class="form__image64-equipment q-mx-auto q-my-auto border-rounded"
+                  class="q-mx-auto q-my-auto border-rounded"
+                  height="100px"
+                  width="100%"
                   no-spinner
                   :src="equipment?.photo"
                 />
@@ -60,12 +62,89 @@
                     </q-chip>
                   </div>
                 </div>
-                <div class="col-8">
+
+                <div class="col-12">
                   <div class="col-12 form__item-label text-weight-medium">
                     Detalles del equipo
                   </div>
-                  <div class="col-12  form__item-model q-mb-md">
+                  <div class="col-12  form__item-model">
                     {{ equipment?.categoryName }}
+                  </div>
+                </div>
+
+                <div
+                  v-if="equipment?.price"
+                  class="col-12 q-my-sm"
+                >
+                  <div class="row">
+                    <div class="col form__item-label text-weight-medium">
+                      Precio del equipo
+                    </div>
+                    <div class="col-auto form__item-model">
+                      $ {{ equipment?.price }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="costs?.totalCost">
+                <q-separator class="ticket-separator" />
+                <div class="col-12 text-weight-medium text-primary q-pb-md text-center">
+                  Costos de mantenimientos
+                </div>
+                <div
+                  v-if="costs?.preventiveCost"
+                  class="row q-mb-sm"
+                >
+                  <div class="col-auto form__item-label text-weight-medium">
+                    Costos preventivos
+                  </div>
+                  <q-separator
+                    class="col dashed-line q-mx-xs"
+                    vertical
+                    inset
+                    color="transparent"
+                  />
+                  <div class="col-auto form__item-model">
+                    $ {{ costs?.preventiveCost }}
+                  </div>
+                </div>
+                <div
+                  v-if="costs?.correctiveCost"
+                  class="row q-mb-sm"
+                >
+                  <div class="col-auto form__item-label text-weight-medium">
+                    Costos correctivos
+                  </div>
+                  <q-separator
+                    class="col dashed-line q-mx-xs"
+                    vertical
+                    inset
+                    color="transparent"
+                  />
+                  <div class="col-auto form__item-model">
+                    $ {{ costs?.correctiveCost }}
+                  </div>
+                </div>
+
+                <div
+                  v-if="costs?.totalCost"
+                  class="row q-mb-sm"
+                >
+                  <div class="col-12 q-mb-md">
+                    <q-separator />
+                  </div>
+                  <div class="col-auto form__item-label text-weight-medium">
+                    Costo total
+                  </div>
+                  <q-separator
+                    class="col dashed-line q-mx-xs"
+                    vertical
+                    inset
+                    color="transparent"
+                  />
+                  <div class="col-auto form__item-model">
+                    $ {{ costs?.totalCost }}
                   </div>
                 </div>
               </div>
@@ -129,17 +208,6 @@
                     {{ getRole.model(user?.userRole) }}
                   </div>
                 </div>
-                <!--
-                <div class="row justify-end">
-                  <qrcode-vue
-                    :value="value"
-                    :size="100"
-                    foreground="#062841"
-                    background="#F3F3F3"
-                    :margin="3"
-                    level="L"
-                  />
-                </div> -->
               </div>
             </div>
 
@@ -226,31 +294,12 @@ export default defineComponent({
     QrcodeVue,
   },
 
-  setup() {
-    const getImageUrl = (url) => {
-      try {
-        return new URL(`../assets/${url}`, import.meta.url).href;
-        // eslint-disable-next-line no-empty
-      } catch (error) { }
-    };
-    const routerWatch = (route) => {
-      return route;
-    };
-
-    return {
-      getImageUrl,
-      routerWatchTest() {
-        return routerWatch;
-      },
-    };
-  },
   data() {
     return {
       value: '',
+      modalDates: false,
       leftDrawerOpen: false,
       size: 500,
-      btnSelected: 0,
-      imageNotification: 'svg/notifications_.svg',
       btnLinks: [],
       selected: null,
       getStatus: {
@@ -371,26 +420,7 @@ export default defineComponent({
         }
       ],
 
-      menuRole3: [
-        // {
-        //   title: 'Equipos',
-        //   link: 'equipments',
-        //   background: '#f3f3f3ff',
-        //   color: 'rgba(122, 122, 122, 1)',
-        // },
-        // {
-        //   title: 'Reportes',
-        //   link: 'reports',
-        //   background: '#f3f3f3ff',
-        //   color: 'rgba(122, 122, 122, 1)',
-        // },
-        // {
-        //   title: 'Configuración',
-        //   link: 'settings',
-        //   color: 'rgba(122, 122, 122, 1)',
-        //   background: '#f3f3f3ff',
-        // }
-      ],
+      menuRole3: [],
 
       btnCloseSesion: {
         show: true,
@@ -438,6 +468,12 @@ export default defineComponent({
     equipment: {
       get() {
         return this.$store.getters['equipments/getEquipmentGetter'];
+      },
+    },
+
+    costs: {
+      get() {
+        return this.$store.getters['maintenances/getTotalCostGetter'];
       },
     },
 
@@ -663,23 +699,6 @@ export default defineComponent({
   width: 100%;
   height: auto;
 }
-
-// .text {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   opacity: 0;
-//   background-color: rgba(0, 0, 0, 0.3);
-//   color: #fff;
-//   text-align: center;
-//   transition: opacity 0.3s ease;
-// }
-
-// .container:hover .text {
-//   opacity: 1;
-// }
 
 .container-qr-code {
   background: #f3f3f3;

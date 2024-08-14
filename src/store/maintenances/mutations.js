@@ -20,3 +20,17 @@ export function ADD_MAINTENANCE(state, payload) {
 export function UPDATE_MAINTENANCE(state, payload) {
     state.maintenances = [...state.maintenances, payload];
 }
+
+export function MUTATE_TOTAL_COST(state, payload) {
+    try {
+        if (payload === null) {
+            localStorage.removeItem('totalCost');
+            state.totalCost = null;
+            return;
+        }
+        state.totalCost = payload;
+        localStorage.setItem('totalCost', JSON.stringify(payload));
+    } catch (error) {
+        console.log(error)
+    }
+}

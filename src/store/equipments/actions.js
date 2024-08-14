@@ -28,6 +28,7 @@ export async function getEquipmentAction(context, params) {
                 equipmentBrand,
                 equipmentStatus,
                 equipmentName,
+                price,
                 // department,
                 photo
             } = equipment
@@ -41,6 +42,7 @@ export async function getEquipmentAction(context, params) {
                 categoryName,
                 // department,
                 equipmentName,
+                price,
                 IdEquipment
             })
 
