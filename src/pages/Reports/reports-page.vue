@@ -393,7 +393,7 @@ export default defineComponent({
     },
 
     showCloseBtn() {
-      return this.$route.query.equipment
+      return this.$route.query.equipment || this.$route.query.user
     },
 
     goToAddReport() {
