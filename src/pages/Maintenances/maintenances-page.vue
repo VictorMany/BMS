@@ -235,6 +235,10 @@ export default defineComponent({
     this.getMaintenances()
   },
 
+  unmounted() {
+    this.$store.commit('maintenances/MUTATE_TOTAL_COST', null);
+  },
+
   watch: {
     rowSelected: {
       handler(val) {
