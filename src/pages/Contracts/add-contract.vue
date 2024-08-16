@@ -211,6 +211,22 @@
               />
             </div>
           </div>
+
+          <div class="q-pa-md q-my-md border-line border-rounded">
+            <div class="form__item-label text-weight-medium w-100 bg-accent q-pa-sm bg-accent border-rounded">
+              Elige un documento desde tus archivos (opcional)
+            </div>
+
+            <input-file-component
+              :upload-file="uploadFile"
+              :show-text="false"
+              icon="png/add-file.png"
+              accept="application/pdf"
+              type="file"
+              v-model:default-image="form.file"
+            />
+
+          </div>
         </q-scroll-area>
       </div>
     </q-form>
@@ -224,14 +240,15 @@ import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
 import { rules, showWarning, showSuccess } from 'app/utils/utils';
 import DateComponent from 'src/components/atomic/Form/DateComponent.vue';
-
+import InputFileComponent from 'src/components/atomic/Form/InputFileComponent.vue';
 
 export default defineComponent({
   name: 'AddContract',
   components: {
     HeaderActions,
     GeneralTable,
-    DateComponent
+    DateComponent,
+    InputFileComponent
   },
 
   data() {
@@ -239,6 +256,8 @@ export default defineComponent({
       delaySearch: 300,
       timeoutSearch: null,
       loading: false,
+      defaultFile: null,
+
       paginationProp: {
         rowsPerPage: null
       },
@@ -267,6 +286,7 @@ export default defineComponent({
         createdAt: this.getCreatedAt(),
         equipmentIds: [],
         comodato: false,
+        file: null
       },
 
       filter: ref(''),
@@ -444,6 +464,7 @@ export default defineComponent({
       try {
         await this.$store.dispatch('equipments/getCategoriesAction', {
           filterPlanDates: false,
+          // categoryId: 
         })
         this.localCategories = JSON.parse(JSON.stringify(this.categories));
 
@@ -485,6 +506,17 @@ export default defineComponent({
         else done([])
       } catch (error) {
         console.log(error)
+      }
+    },
+
+    uploadFile(file) {
+      try {
+        // Realizar otras operaciones si es necesario
+        if (file !== undefined) {
+          this.form.file = file;
+        }
+      } catch (error) {
+        /* Manejar el error si es necesario */
       }
     },
 
