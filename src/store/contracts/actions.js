@@ -45,27 +45,18 @@ export async function getContractAction(context, params) {
 
 export async function postContractAction(context, payload) {
     // // We call the global action to format our payload
-    // const payload = {
-    //     contractName: contract.contractName,
-    //     observations: contract.observations,
-    //     equipmentIds: contract.equipmentIds,
-    //     comodato: contract.comodato,
-    //     startDate: contract.startDate ? contract.startDate : null,
-    //     endDate: contract.endDate ? contract.endDate : null,
-    //     maintenanceDates: contract.maintenanceDates,
-    //     file: contract?.file ? contract.file : null,
-    // }
 
     const formData = new FormData();
     formData.append('contractName', payload.contractName);
     formData.append('observations', payload.observations);
     formData.append('equipmentIds', payload.equipmentIds);
+    formData.append('comodato', payload.comodato);
     formData.append('startDate', payload.startDate ? payload.startDate : null);
     formData.append('endDate', payload.endDate ? payload.endDate : null);
-    formData.append('maintenanceDates', payload.maintenanceDates);
+    formData.append('maintenanceDates', payload?.maintenanceDates ? payload.maintenanceDates : null);
     formData.append('file', payload?.file ? payload.file : null);
 
-    return await service.postContract(payload).then(async (response) => {
+    return await service.postContract(formData).then(async (response) => {
         if (response.status == 201) {
             return true
         } else {
