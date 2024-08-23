@@ -37,6 +37,9 @@ export default defineComponent({
   },
   data() {
     return {
+
+      defaultFile: null,
+
       btnAction: {
         show: true,
         btnTitle: 'Guardar',

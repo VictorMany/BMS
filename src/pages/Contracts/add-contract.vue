@@ -223,7 +223,7 @@
               icon="png/add-file.png"
               accept="application/pdf"
               type="file"
-              v-model:default-image="form.file"
+              v-model:default-image="defaultFile"
             />
 
           </div>
@@ -337,12 +337,23 @@ export default defineComponent({
         model: '',
       },
 
-      rules
+      rules,
+      originalDocument: null
     };
 
   },
 
   watch: {
+    form: {
+      handler(val) {
+        if (!this.defaultFile) {
+          if (val.file) {
+            this.defaultFile = val.file
+          }
+        }
+      },
+      deep: true,
+    },
     'form.comodato'() {
       this.startDate.model = ''
       this.endDate.model = ''
@@ -417,6 +428,9 @@ export default defineComponent({
         this.form = { ...this.form, ...await this.$store.dispatch('contracts/getContractAction', params) }
         this.startDate.model = await this.form?.startDate
         this.endDate.model = await this.form?.endDate
+
+        this.originalDocument = this.form?.file
+
       } catch (error) {
         console.log(error)
       }
@@ -430,10 +444,18 @@ export default defineComponent({
         this.form.startDate = this.startDate?.model
         this.form.endDate = this.endDate?.model
 
+
+        if (typeof (this.form.file) === 'string') {
+          delete this.form.file
+
+          this.form.removeDocument = true
+        }
+
         const res = await this.$store.dispatch(
           'contracts/updateContractAction',
           this.form
         );
+
         if (res === true) {
           showSuccess(this.$q, { title: 'Éxito al editar el contrato', msg: 'El contrato se ha actualizado' });
           this.$router.go(-1);
@@ -450,6 +472,7 @@ export default defineComponent({
       this.$refs.myForm.validate().then(success => {
         if (success && this.validatePayload()) {
           if (this.isEditing()) {
+
             this.editContract()
           } else {
             this.createContract()

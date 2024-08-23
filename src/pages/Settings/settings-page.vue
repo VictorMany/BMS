@@ -33,13 +33,13 @@
                     <q-item-section>
                       <q-item-label class="setting__title">{{
                         item.title
-                        }}</q-item-label>
+                      }}</q-item-label>
                       <q-item-label
                         class="setting__subtitle"
                         caption
                       >{{
                         item.subtitle
-                        }}</q-item-label>
+                      }}</q-item-label>
                     </q-item-section>
                   </q-item>
                 </div>
@@ -215,6 +215,12 @@ export default defineComponent({
         {
           title: 'Acerca de nosotros',
           subtitle: 'Información y contacto',
+          img: 'about.png',
+          link: 'about-us'
+        },
+        {
+          title: 'Videotutoriales',
+          subtitle: 'Videos de la funcionalidad principal del sistema',
           img: 'about.png',
           link: 'about-us'
         }
