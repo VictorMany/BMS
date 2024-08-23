@@ -91,6 +91,9 @@ export async function updateContractAction(context, payload) {
     if (payload?.file)
         formData.append('file', payload?.file);
 
+    if (payload?.removeDocument)
+        formData.append('removeDocument', true);
+
     return await service.updateContract(formData, payload.id).then(async (response) => {
         if (response.status == 200) {
             // context.commit('ADD_MAINTENANCE', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
