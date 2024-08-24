@@ -33,13 +33,13 @@
                     <q-item-section>
                       <q-item-label class="setting__title">{{
                         item.title
-                      }}</q-item-label>
+                        }}</q-item-label>
                       <q-item-label
                         class="setting__subtitle"
                         caption
                       >{{
                         item.subtitle
-                      }}</q-item-label>
+                        }}</q-item-label>
                     </q-item-section>
                   </q-item>
                 </div>
@@ -221,8 +221,8 @@ export default defineComponent({
         {
           title: 'Videotutoriales',
           subtitle: 'Videos de la funcionalidad principal del sistema',
-          img: 'about.png',
-          link: 'about-us'
+          img: 'yt.png',
+          action: this.openPlaylist
         }
       ]
     }
@@ -256,6 +256,11 @@ export default defineComponent({
   methods: {
     openLoadEquipments() {
       this.modalLoadEquipments = true
+    },
+
+    openPlaylist() {
+      const playlistUrl = 'https://www.youtube.com/playlist?list=PLvKgqxM__s4mI68wyTHRYqPl2dJUGH9Y8'; // Reemplaza 'TU_PLAYLIST_ID' con el ID de tu playlist
+      window.open(playlistUrl, '_blank');
     },
 
     uploadFile(e) {
