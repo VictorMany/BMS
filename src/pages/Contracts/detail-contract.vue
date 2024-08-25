@@ -167,7 +167,7 @@
               class="no-printable-content"
               v-if="form.file"
             >
-              <div class="q-mb-sm form__item-label text-weight-medium">
+              <div class="q-mb-sm form__item-label text-weight-medium q-mt-lg q-mb-sm">
                 Archivo adjunto al contrato
               </div>
 

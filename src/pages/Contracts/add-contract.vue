@@ -219,6 +219,7 @@
 
             <input-file-component
               :upload-file="uploadFile"
+              :removeFile="removeFile"
               :show-text="false"
               icon="png/add-file.png"
               accept="application/pdf"
@@ -447,8 +448,6 @@ export default defineComponent({
 
         if (typeof (this.form.file) === 'string') {
           delete this.form.file
-
-          this.form.removeDocument = true
         }
 
         const res = await this.$store.dispatch(
@@ -537,10 +536,15 @@ export default defineComponent({
         // Realizar otras operaciones si es necesario
         if (file !== undefined) {
           this.form.file = file;
+          delete this.form?.removeDocument
         }
       } catch (error) {
         /* Manejar el error si es necesario */
       }
+    },
+
+    removeFile() {
+      this.form.removeDocument = true
     },
 
     getTitle() {
