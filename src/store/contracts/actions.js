@@ -34,6 +34,7 @@ export async function getContractAction(context, params) {
                 endDate: res.endDate,
                 comodato: res.comodato,
                 contractStatus: res.contractStatus,
+                file: res.documentUrls?.length > 0 ? res.documentUrls[0] : null,
                 id: res.ContractId
             }
             return payload
@@ -43,19 +44,20 @@ export async function getContractAction(context, params) {
     })
 }
 
-export async function postContractAction(context, contract) {
-    // We call the global action to format our payload
-    const payload = {
-        contractName: contract.contractName,
-        observations: contract.observations,
-        equipmentIds: contract.equipmentIds,
-        comodato: contract.comodato,
-        startDate: contract.startDate ? contract.startDate : null,
-        endDate: contract.endDate ? contract.endDate : null,
-        maintenanceDates: contract.maintenanceDates
-    }
+export async function postContractAction(context, payload) {
 
-    return await service.postContract(payload).then(async (response) => {
+    // // We call the global action to format our payload
+    const formData = new FormData();
+    formData.append('contractName', payload.contractName);
+    formData.append('observations', payload.observations);
+    formData.append('equipmentIds', payload.equipmentIds);
+    formData.append('comodato', payload.comodato);
+    formData.append('startDate', payload.startDate ? payload.startDate : null);
+    formData.append('endDate', payload.endDate ? payload.endDate : null);
+    formData.append('maintenanceDates', payload?.maintenanceDates ? payload.maintenanceDates : null);
+    formData.append('file', payload?.file ? payload.file : null);
+
+    return await service.postContract(formData).then(async (response) => {
         if (response.status == 201) {
             return true
         } else {
@@ -75,19 +77,24 @@ export async function deleteContractAction(context, contract) {
 }
 
 
-export async function updateContractAction(context, contract) {
+export async function updateContractAction(context, payload) {
     // Those are the keys you need in your payload and find in the fields
-    const payload = {
-        contractName: contract.contractName,
-        observations: contract.observations,
-        equipmentIds: contract.equipmentIds,
-        comodato: contract.comodato,
-        startDate: contract.startDate ? contract.startDate : null,
-        endDate: contract.endDate ? contract.endDate : null,
-        maintenanceDates: contract.maintenanceDates
-    }
 
-    return await service.updateContract(payload, contract.id).then(async (response) => {
+    const formData = new FormData();
+    formData.append('contractName', payload.contractName);
+    formData.append('observations', payload.observations);
+    formData.append('equipmentIds', payload.equipmentIds);
+    formData.append('comodato', payload.comodato);
+    formData.append('startDate', payload.startDate ? payload.startDate : null);
+    formData.append('endDate', payload.endDate ? payload.endDate : null);
+    // formData.append('maintenanceDates', payload?.maintenanceDates ? payload.maintenanceDates : null);
+    if (payload?.file)
+        formData.append('file', payload?.file);
+
+    if (payload?.removeDocument)
+        formData.append('removeDocument', true);
+
+    return await service.updateContract(formData, payload.id).then(async (response) => {
         if (response.status == 200) {
             // context.commit('ADD_MAINTENANCE', response.data)    // mutamos el arreglo local y agregamos el nuevo usuario, de manera que no consultamos la base de datos
             return true

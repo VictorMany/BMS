@@ -162,11 +162,90 @@
                 />
               </div>
             </div>
+
+            <div
+              class="no-printable-content"
+              v-if="form.file"
+            >
+              <div class="q-mb-sm form__item-label text-weight-medium q-mt-lg q-mb-sm">
+                Archivo adjunto al contrato
+              </div>
+
+              <div class="row q-pa-md border-line border-rounded">
+                <div class="col-auto">
+                  <div style="width: 214px; height: 214px">
+                    <iframe
+                      :src="form?.file"
+                      type="application/pdf"
+                      style="border: none; overflow-y: scroll;"
+                      class="form__image64-equipment"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-sm q-px-sm-lg q-pa-xs-sm">
+                  <div
+                    v-if="getFileName(form.file?.name)"
+                    class="form__item-label text-primary ellipsis"
+                    style="max-width: 70vw;"
+                  >
+                    &#x24D8; {{ getFileName(form.file) }}
+                  </div>
+
+                  <div class="row">
+                    <q-btn
+                      unelevated
+                      no-caps
+                      class="border-rounded q-my-sm"
+                      size="sm"
+                      align="left"
+                      color="blue-7"
+                      @click="openFullFile(form.file)"
+                    >
+                      Ver archivo en tamaño completo
+                    </q-btn>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </q-scroll-area>
       </div>
     </q-form>
   </q-page>
+
+  <q-dialog
+    v-model="dialog"
+    persistent
+    maximized
+    transition-show="slide-up"
+    transition-hide="slide-down"
+  >
+    <q-card
+      class="text-white alert-container"
+      style="height: 100vh; padding: 0 !important;"
+    >
+      <q-bar style="height: 8%;">
+        <q-space />
+        <btn-action
+          v-bind="btnCloseDialog"
+          :tooltip="'Regresar'"
+        />
+      </q-bar>
+
+      <q-card-section
+        class="q-pt-none flex justify-center"
+        style="height: 92%; width: 100%;"
+      >
+        <iframe
+          :src="fullFile"
+          width="100%"
+          style="height: 100%  !important; border: none !important; overflow-y: scroll;"
+          type="application/pdf"
+        />
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+
 </template>
 
 <script>
@@ -175,16 +254,27 @@ import { defineComponent } from 'vue';
 import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
 import { showSuccess, showWarning } from 'app/utils/utils';
+import BtnAction from 'src/components/atomic/BtnAction.vue';
 
 export default defineComponent({
   name: 'EquipmentsPage',
   components: {
     HeaderActions,
-    GeneralTable
+    GeneralTable,
+    BtnAction
   },
   data() {
     return {
       loading: false,
+
+      dialog: false,
+      fullFile: '',
+      btnCloseDialog: {
+        iconName: 'exit_to_app',
+        btnBackground: '#FF990020',
+        btnColor: '#FF9900',
+        btnAction: this.closeDialog
+      },
 
       rowsPerPage: {
         rowsPerPage: null
@@ -361,6 +451,23 @@ export default defineComponent({
       }
     },
 
+    closeDialog() {
+      this.dialog = false
+    },
+
+    getFileName(url) {
+      try {
+        return url.split('/').pop().split('?')[0]; // Obtener el nombre del archivo de la URL
+      } catch (error) {
+        return ''
+      }
+    },
+
+    openFullFile(file) {
+      this.fullFile = file
+      this.dialog = true
+    },
+
     checkPermissions() {
       switch (this.userRole) {
         case 2:
@@ -386,10 +493,7 @@ export default defineComponent({
 });
 </script>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 .main-container-page {
   background-color: white;
 }

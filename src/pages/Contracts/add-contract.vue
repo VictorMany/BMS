@@ -211,6 +211,23 @@
               />
             </div>
           </div>
+
+          <div class="q-pa-md q-my-md border-line border-rounded">
+            <div class="form__item-label text-weight-medium w-100 bg-accent q-pa-sm bg-accent border-rounded">
+              Elige un documento desde tus archivos (opcional)
+            </div>
+
+            <input-file-component
+              :upload-file="uploadFile"
+              :removeFile="removeFile"
+              :show-text="false"
+              icon="png/add-file.png"
+              accept="application/pdf"
+              type="file"
+              v-model:default-image="defaultFile"
+            />
+
+          </div>
         </q-scroll-area>
       </div>
     </q-form>
@@ -224,14 +241,15 @@ import HeaderActions from 'src/components/compose/HeaderActions.vue';
 import GeneralTable from 'src/components/compose/GeneralTable.vue';
 import { rules, showWarning, showSuccess } from 'app/utils/utils';
 import DateComponent from 'src/components/atomic/Form/DateComponent.vue';
-
+import InputFileComponent from 'src/components/atomic/Form/InputFileComponent.vue';
 
 export default defineComponent({
   name: 'AddContract',
   components: {
     HeaderActions,
     GeneralTable,
-    DateComponent
+    DateComponent,
+    InputFileComponent
   },
 
   data() {
@@ -239,6 +257,8 @@ export default defineComponent({
       delaySearch: 300,
       timeoutSearch: null,
       loading: false,
+      defaultFile: null,
+
       paginationProp: {
         rowsPerPage: null
       },
@@ -267,6 +287,7 @@ export default defineComponent({
         createdAt: this.getCreatedAt(),
         equipmentIds: [],
         comodato: false,
+        file: null
       },
 
       filter: ref(''),
@@ -317,12 +338,23 @@ export default defineComponent({
         model: '',
       },
 
-      rules
+      rules,
+      originalDocument: null
     };
 
   },
 
   watch: {
+    form: {
+      handler(val) {
+        if (!this.defaultFile) {
+          if (val.file) {
+            this.defaultFile = val.file
+          }
+        }
+      },
+      deep: true,
+    },
     'form.comodato'() {
       this.startDate.model = ''
       this.endDate.model = ''
@@ -397,6 +429,9 @@ export default defineComponent({
         this.form = { ...this.form, ...await this.$store.dispatch('contracts/getContractAction', params) }
         this.startDate.model = await this.form?.startDate
         this.endDate.model = await this.form?.endDate
+
+        this.originalDocument = this.form?.file
+
       } catch (error) {
         console.log(error)
       }
@@ -410,10 +445,16 @@ export default defineComponent({
         this.form.startDate = this.startDate?.model
         this.form.endDate = this.endDate?.model
 
+
+        if (typeof (this.form.file) === 'string') {
+          delete this.form.file
+        }
+
         const res = await this.$store.dispatch(
           'contracts/updateContractAction',
           this.form
         );
+
         if (res === true) {
           showSuccess(this.$q, { title: 'Éxito al editar el contrato', msg: 'El contrato se ha actualizado' });
           this.$router.go(-1);
@@ -430,6 +471,7 @@ export default defineComponent({
       this.$refs.myForm.validate().then(success => {
         if (success && this.validatePayload()) {
           if (this.isEditing()) {
+
             this.editContract()
           } else {
             this.createContract()
@@ -444,6 +486,7 @@ export default defineComponent({
       try {
         await this.$store.dispatch('equipments/getCategoriesAction', {
           filterPlanDates: false,
+          // categoryId: 
         })
         this.localCategories = JSON.parse(JSON.stringify(this.categories));
 
@@ -486,6 +529,22 @@ export default defineComponent({
       } catch (error) {
         console.log(error)
       }
+    },
+
+    uploadFile(file) {
+      try {
+        // Realizar otras operaciones si es necesario
+        if (file !== undefined) {
+          this.form.file = file;
+          delete this.form?.removeDocument
+        }
+      } catch (error) {
+        /* Manejar el error si es necesario */
+      }
+    },
+
+    removeFile() {
+      this.form.removeDocument = true
     },
 
     getTitle() {

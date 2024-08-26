@@ -140,6 +140,12 @@ export default defineComponent({
             default: () => { },
         },
 
+        removeFile: {
+            type: Function,
+            required: false,
+            default: () => { },
+        },
+
         defaultImage: {
             type: [String, File],
             required: false,
@@ -219,6 +225,7 @@ export default defineComponent({
                 this.defaultImageLocal = null;
                 this.tempSelected = '';
                 this.pdfPreview = null;
+                this.removeFile()
             } catch (error) { /**/ }
             if (ctrl.value) {
                 ctrl.parentNode.replaceChild(ctrl.cloneNode(true), ctrl);

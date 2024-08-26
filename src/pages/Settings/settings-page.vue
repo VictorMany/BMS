@@ -217,6 +217,12 @@ export default defineComponent({
           subtitle: 'Información y contacto',
           img: 'about.png',
           link: 'about-us'
+        },
+        {
+          title: 'Videotutoriales',
+          subtitle: 'Videos de la funcionalidad principal del sistema',
+          img: 'yt.png',
+          action: this.openPlaylist
         }
       ]
     }
@@ -250,6 +256,11 @@ export default defineComponent({
   methods: {
     openLoadEquipments() {
       this.modalLoadEquipments = true
+    },
+
+    openPlaylist() {
+      const playlistUrl = 'https://www.youtube.com/playlist?list=PLvKgqxM__s4mI68wyTHRYqPl2dJUGH9Y8'; // Reemplaza 'TU_PLAYLIST_ID' con el ID de tu playlist
+      window.open(playlistUrl, '_blank');
     },
 
     uploadFile(e) {
